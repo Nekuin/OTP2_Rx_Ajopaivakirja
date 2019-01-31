@@ -22,7 +22,7 @@ public class Vehicle {
 	}
 	
 	public boolean isMaintained() {
-		return false;
+		return maintained;
 	}
 
 	public String getRegNr() {
