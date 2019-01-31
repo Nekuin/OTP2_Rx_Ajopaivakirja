@@ -1,6 +1,6 @@
 package controller;
 
-public class DriverController implements DriverControllerIF {
+public class DriverController implements IDriverController {
 
 	@Override
 	public long getStartingTime() {
