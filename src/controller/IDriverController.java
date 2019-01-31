@@ -1,6 +1,6 @@
 package controller;
 
-public interface DriverControllerIF {
+public interface IDriverController {
 	public abstract long getStartingTime();
 	public abstract long getFinishingTime();
 	public abstract String getStartingPoint();
