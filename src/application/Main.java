@@ -16,6 +16,9 @@ public class Main extends Application {
 			DriverView dv = new DriverView();
 			root.setCenter(dv.getDriverView());
 			
+			NavigationBar navbar = new NavigationBar();
+			root.setTop(navbar.getNavigationBar());
+			
 			
 			Scene scene = new Scene(root,400,400);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
