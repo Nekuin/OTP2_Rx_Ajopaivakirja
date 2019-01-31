@@ -8,7 +8,9 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 //DAO
 
-public class AjoAccessObject {
+public class AjoAccessObject implements AjoDAO_IF {
+	
+	private Connection myConnect;
 	
 	SessionFactory istuntotehdas= null;
 	
