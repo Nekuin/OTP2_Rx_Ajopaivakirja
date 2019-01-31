@@ -2,13 +2,13 @@ package model;
 
 public class Vehicle {
 
-	String regNr;
-	double drivenDistance;
-	int maxCargoLoad;
-	String model;
-	String brand;
-	int carID;
-	boolean maintained;
+	private String regNr;
+	private double drivenDistance;
+	private int maxCargoLoad;
+	private String model;
+	private String brand;
+	private int carID;
+	private boolean maintained;
 	
 	public Vehicle(String regNr, double drivenDistance, int maxCargoLoad, String model, String brand, int carID,
 			boolean maintained) {
@@ -23,5 +23,61 @@ public class Vehicle {
 	
 	public boolean isMaintained() {
 		return false;
+	}
+
+	public String getRegNr() {
+		return regNr;
+	}
+
+	public void setRegNr(String regNr) {
+		this.regNr = regNr;
+	}
+
+	public double getDrivenDistance() {
+		return drivenDistance;
+	}
+
+	public void setDrivenDistance(double drivenDistance) {
+		this.drivenDistance = drivenDistance;
+	}
+
+	public int getMaxCargoLoad() {
+		return maxCargoLoad;
+	}
+
+	public void setMaxCargoLoad(int maxCargoLoad) {
+		this.maxCargoLoad = maxCargoLoad;
+	}
+
+	public String getModel() {
+		return model;
+	}
+
+	public void setModel(String model) {
+		this.model = model;
+	}
+
+	public String getBrand() {
+		return brand;
+	}
+
+	public void setBrand(String brand) {
+		this.brand = brand;
+	}
+
+	public int getCarID() {
+		return carID;
+	}
+
+	public void setCarID(int carID) {
+		this.carID = carID;
+	}
+
+	public boolean getMaintained() {
+		return maintained;
+	}
+	
+	public void setMaintained(boolean maintained) {
+		this.maintained = maintained;
 	}
 }
