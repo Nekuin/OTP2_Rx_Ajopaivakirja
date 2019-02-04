@@ -18,7 +18,11 @@ public class Employee implements IEmployee{
 		this.name = name;
 		this.employeeID = employeeID;
 	}
-	
+
+	public Employee() {
+	}
+
+
 	@Override
 	public String getName() {
 		return name;

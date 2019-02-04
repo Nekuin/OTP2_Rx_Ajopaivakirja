@@ -1,13 +1,18 @@
 package model;
 import java.sql.Connection;
+import java.util.List;
+
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 //DAO
 
-public class AjoAccessObject {
+public class AjoAccessObject implements IAjo {
 	
 	private Connection myConnect;
 	
@@ -35,5 +40,87 @@ public class AjoAccessObject {
 		} catch (Exception e) {
 			
 		}
+	}
+	
+	@Override
+	public boolean createDriver (Driver driversLicense) {
+		Session istunto = istuntotehdas.openSession();
+		Transaction t = null;
+		try {
+			t = istunto.beginTransaction();
+			istunto.saveOrUpdate(driversLicense);
+			t.commit();
+			return true;
+		} catch (Exception e) {
+			if(t != null) t.rollback();
+			e.printStackTrace();
+		} finally {
+			istunto.close();
+		}
+		return false;
+	}
+	
+	@Override
+	public Driver readDriver (String driversLicense) {
+		
+		Transaction t = null;
+		Driver driver = new Driver();
+		
+		try(Session istunto = istuntotehdas.openSession()){
+			t = istunto.getTransaction();
+			t.begin();
+			istunto.load(driver, driversLicense);
+			t.commit();
+			return driver;
+		} catch (Exception e) {
+			if(t != null) t.rollback();
+			e.printStackTrace();
+		} 
+		return null;
+	}
+	
+	@Override
+	public List<Driver> readDriver(){
+		//parempi varmaa avata uus session ja sulkea se lopuksi
+		Session istunto = istuntotehdas.openSession();
+		List<Driver> driver = null;
+		try {
+			driver = (List<Driver>)istunto.createQuery("from Driver").list();
+		} catch (HibernateException e) {e.printStackTrace();}
+		finally {
+			istunto.close();
+			}
+		return driver;
+	}
+	
+	@Override
+	public boolean updateDriver(Driver driver) {
+		Transaction t = null;
+		try(Session istunto = istuntotehdas.openSession();){
+			t = istunto.beginTransaction();
+			istunto.saveOrUpdate(driver);
+			t.commit();
+			return true;
+		}catch(Exception e) {
+			if(t != null) t.rollback();
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	@Override
+	public boolean deleteDriver(String driversLicense) {
+		Transaction t = null;
+		try(Session istunto = istuntotehdas.openSession();){
+			t = istunto.beginTransaction();
+			Driver d = (Driver)istunto.get(Driver.class, driversLicense);
+			istunto.delete(d);
+			t.commit();
+			return true;
+		}catch (Exception e) {
+			if(t != null) t.rollback();
+			e.printStackTrace();
+		}
+		return false;
 	}
 }

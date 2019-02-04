@@ -29,6 +29,10 @@ public class Driver extends Employee implements IDriver{
 		this.driversLicense = driversLicense;
 	}
 	
+	public Driver() {
+		super();
+	}
+
 	@Override
 	public String getDriversLicense() {
 		return driversLicense;
