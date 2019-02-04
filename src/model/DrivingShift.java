@@ -4,7 +4,7 @@ import javax.persistence.*;
 //kk
 
 @Entity
-@Table(name="drivingshifts")
+@Table(name="Drivingshifts")
 public class DrivingShift {
 	
 	@Id
@@ -23,6 +23,7 @@ public class DrivingShift {
 	@Column(name="shiftdriven")
 	private boolean shiftDriven;
 	
+	@Transient
 	private Driver shiftDriver;
 
 	public DrivingShift(int shiftID, String startTime, String finishTime, Driver shiftDriver) {
@@ -70,8 +71,8 @@ public class DrivingShift {
 		return shiftDriven;
 	}
 
-	public void setShiftDriven(boolean shiftDriven) {
-		this.shiftDriven = shiftDriven;
+	public void setShiftDriven() {
+		this.shiftDriven = true;
 	}
 	
 	

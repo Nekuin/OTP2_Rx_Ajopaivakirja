@@ -1,13 +1,31 @@
 package model;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name="Vehicles")
 public class Vehicle {
 
-	private String regNr;
-	private double drivenDistance;
-	private int maxCargoLoad;
-	private String model;
-	private String brand;
+	@Id
+	@Column(name="carID")
 	private int carID;
+	
+	@Column(name="regnr")
+	private String regNr;
+	
+	@Column(name="drivendistance")
+	private double drivenDistance;
+	
+	@Column(name="maxcargoload")
+	private int maxCargoLoad;
+	
+	@Column(name="model")
+	private String model;
+	
+	@Column(name="brand")
+	private String brand;
+	
+	@Column(name="maintained")
 	private boolean maintained;
 	
 	public Vehicle(String regNr, double drivenDistance, int maxCargoLoad, String model, String brand, int carID,
