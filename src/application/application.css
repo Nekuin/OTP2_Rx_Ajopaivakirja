@@ -1,4 +1,25 @@
 /* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
 .navbar {
-	-fx-background-color: #000000;
+	-fx-background-color: #FFFFFF;
+}
+
+.navButton{
+	-fx-background-color: #AAAAAA;
+	-fx-border-radius: 0;
+	-fx-background-radius: 0;
+}
+
+.navButton:hover{
+	-fx-background-color: #BBBBBB;
+	-fx-border-radius: 0;
+	-fx-background-radius: 0;
+}
+
+.navButton:focused{
+	-fx-background-radius: 0;
+	-fx-border-width: 0;
+}
+
+.navButton:selected{
+	-fx-background-insets: 0 0 0 0, 0, 0, 0;
 }
