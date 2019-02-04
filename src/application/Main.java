@@ -12,7 +12,7 @@ public class Main extends Application {
 	
 	@Override
 	public void init() {
-		AjoAccessObject a = new AjoAccessObject();
+		//AjoAccessObject a = new AjoAccessObject();
 	}
 	
 	@Override
@@ -24,6 +24,7 @@ public class Main extends Application {
 			root.setCenter(dv.getDriverView());
 			
 			NavigationBar navbar = new NavigationBar();
+			
 			root.setTop(navbar.getNavigationBar());
 			
 			

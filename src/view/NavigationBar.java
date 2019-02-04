@@ -10,6 +10,7 @@ public class NavigationBar {
 	
 	public NavigationBar() {
 		this.hbox = createNavBar();
+		this.hbox.getStyleClass().add("navbar");
 	}
 	
 	private HBox createNavBar() {
