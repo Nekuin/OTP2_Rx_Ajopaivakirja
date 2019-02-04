@@ -18,10 +18,12 @@ public class DrivingShift {
 	private String finishTime;
 	
 	@Column(name="shiftdriver")
-	private Driver shiftDriver;
+	private String shiftDriverName;
 	
 	@Column(name="shiftdriven")
 	private boolean shiftDriven;
+	
+	private Driver shiftDriver;
 
 	public DrivingShift(int shiftID, String startTime, String finishTime, Driver shiftDriver) {
 		this.shiftID = shiftID;
@@ -29,6 +31,7 @@ public class DrivingShift {
 		this.finishTime = finishTime;
 		this.shiftDriver = shiftDriver;
 		this.shiftDriven = false;
+		this.shiftDriverName = shiftDriver.getName();
 	}
 
 	public int getShiftID() {
