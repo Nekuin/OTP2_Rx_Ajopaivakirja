@@ -7,6 +7,9 @@ import javax.persistence.*;
 public class Vehicle {
 
 	@Id
+	@Column(name="carID")
+	private int carID;
+	
 	@Column(name="regnr")
 	private String regNr;
 	
@@ -15,9 +18,14 @@ public class Vehicle {
 	
 	@Column(name="maxcargoload")
 	private int maxCargoLoad;
+	
+	@Column(name="model")
 	private String model;
+	
+	@Column(name="brand")
 	private String brand;
-	private int carID;
+	
+	@Column(name="maintained")
 	private boolean maintained;
 	
 	public Vehicle(String regNr, double drivenDistance, int maxCargoLoad, String model, String brand, int carID,
