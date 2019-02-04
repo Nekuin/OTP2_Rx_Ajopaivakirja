@@ -6,7 +6,9 @@ public class HrManager extends Employee {
 		super(name, employeeID);
 	}
 	
-	public void addDriver() {
+	public void addDriver(String name, int employeeID, String driversLicense) {
+		Driver driver = new Driver(name, employeeID, driversLicense);
+		//drivers.add(driver);
 		
 	}
 	
