@@ -1,14 +1,30 @@
 package model;
 
-public class Driver extends Employee {
+import javax.persistence.*;
 
+@Entity
+@Table(name="Drivers")
+public class Driver extends Employee {
+	
+	@Id
+	@Column(name="driverid")
+	private int driverID;
+
+	@Column(name="driverslicense")
 	private String driversLicense;
+	
+	@Column(name="drivenhours")
 	private double drivenHours;
+	
+	@Column(name="drivendistance")
 	private double drivenDistance;
+	
+	@Column(name="drivencargo")
 	private double drivenCargo;
 	
 	public Driver(String name, int employeeID, String driversLicense) {
 		super(name, employeeID);
+		this.driverID = employeeID;
 		this.driversLicense = driversLicense;
 	}
 	
