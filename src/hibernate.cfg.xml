@@ -19,5 +19,6 @@
 
 		<!-- Mallitason DTO-oliot, pakkausnimet mukaan -->
 		<mapping class="model.Driver"/><mapping class="model.Employee"></mapping>
+		<mapping class="model.DrivingShift"></mapping>
 	</session-factory>
 </hibernate-configuration>
