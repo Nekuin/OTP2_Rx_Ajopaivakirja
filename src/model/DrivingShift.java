@@ -1,7 +1,7 @@
 package model;
 
 import javax.persistence.*;
-//kkkk
+//kk
 
 @Entity
 @Table(name="Drivingshifts")
