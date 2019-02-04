@@ -1,9 +1,19 @@
 package model;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name="Vehicles")
 public class Vehicle {
 
+	@Id
+	@Column(name="regnr")
 	private String regNr;
+	
+	@Column(name="drivendistance")
 	private double drivenDistance;
+	
+	@Column(name="maxcargoload")
 	private int maxCargoLoad;
 	private String model;
 	private String brand;
