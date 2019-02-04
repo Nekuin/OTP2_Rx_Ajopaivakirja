@@ -30,6 +30,46 @@ public class DrivingShift {
 		this.shiftDriver = shiftDriver;
 		this.shiftDriven = false;
 	}
+
+	public int getShiftID() {
+		return shiftID;
+	}
+
+	public void setShiftID(int shiftID) {
+		this.shiftID = shiftID;
+	}
+
+	public String getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(String startTime) {
+		this.startTime = startTime;
+	}
+
+	public String getFinishTime() {
+		return finishTime;
+	}
+
+	public void setFinishTime(String finishTime) {
+		this.finishTime = finishTime;
+	}
+
+	public Driver getShiftDriver() {
+		return shiftDriver;
+	}
+
+	public void setShiftDriver(Driver shiftDriver) {
+		this.shiftDriver = shiftDriver;
+	}
+
+	public boolean isShiftDriven() {
+		return shiftDriven;
+	}
+
+	public void setShiftDriven(boolean shiftDriven) {
+		this.shiftDriven = shiftDriven;
+	}
 	
 	
 
