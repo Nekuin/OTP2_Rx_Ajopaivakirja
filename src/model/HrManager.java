@@ -8,7 +8,6 @@ public class HrManager extends Employee {
 	
 	public void addDriver(String name, int employeeID, String driversLicense) {
 		Driver driver = new Driver(name, employeeID, driversLicense);
-		//drivers.add(driver);
 		
 	}
 	
