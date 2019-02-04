@@ -20,11 +20,17 @@ public class DrivingShift {
 	@Column(name="shiftdriver")
 	private String shiftDriverName;
 	
+	@Column(name="cargo")
+	private int cargoID;
+	
 	@Column(name="shiftdriven")
 	private boolean shiftDriven;
 	
 	@Transient
 	private Driver shiftDriver;
+	
+	@Transient
+	private Cargo cargo;
 
 	public DrivingShift(int shiftID, String startTime, String finishTime, Driver shiftDriver) {
 		this.shiftID = shiftID;
@@ -73,6 +79,10 @@ public class DrivingShift {
 
 	public void setShiftDriven() {
 		this.shiftDriven = true;
+	}
+	
+	public void setCargo(Cargo cargo) {
+		this.cargoID = cargo.getCargoID();
 	}
 	
 	
