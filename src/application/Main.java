@@ -12,7 +12,7 @@ public class Main extends Application {
 	
 	@Override
 	public void init() {
-		//AjoAccessObject a = new AjoAccessObject();
+		AjoAccessObject a = new AjoAccessObject();
 	}
 	
 	@Override

@@ -3,12 +3,7 @@ package model;
 import javax.persistence.*;
 
 @Entity
-@Table(name="Drivers")
 public class Driver extends Employee {
-	
-	@Id
-	@Column(name="driverid")
-	private int driverID;
 
 	@Column(name="driverslicense")
 	private String driversLicense;
@@ -24,7 +19,6 @@ public class Driver extends Employee {
 	
 	public Driver(String name, int employeeID, String driversLicense) {
 		super(name, employeeID);
-		this.driverID = employeeID;
 		this.driversLicense = driversLicense;
 	}
 	

@@ -3,7 +3,7 @@ package model;
 import javax.persistence.*;
 
 @Entity
-@Table(name="Employees")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Employee {
 	
 	@Id
