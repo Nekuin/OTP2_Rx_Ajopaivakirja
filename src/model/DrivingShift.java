@@ -70,8 +70,8 @@ public class DrivingShift {
 		return shiftDriven;
 	}
 
-	public void setShiftDriven(boolean shiftDriven) {
-		this.shiftDriven = shiftDriven;
+	public void setShiftDriven() {
+		this.shiftDriven = true;
 	}
 	
 	
