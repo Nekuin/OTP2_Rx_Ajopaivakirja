@@ -21,5 +21,6 @@
 		<mapping class="model.Driver"/><mapping class="model.Employee"></mapping>
 		<mapping class="model.DrivingShift"></mapping>
 		<mapping class="model.Vehicle"></mapping>
+		<mapping class="model.Cargo"></mapping>
 	</session-factory>
 </hibernate-configuration>
