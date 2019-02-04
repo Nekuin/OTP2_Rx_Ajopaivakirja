@@ -6,12 +6,13 @@ import javax.persistence.*;
 @Table(name="Employees")
 public class Employee {
 	
-	@Column(name="name")
-	private String name;
-	
 	@Id
 	@Column(name="employeeID")
 	private int employeeID;
+	
+	@Column(name="name")
+	private String name;
+	
 	
 	public Employee(String name, int employeeID) {
 		this.name = name;
