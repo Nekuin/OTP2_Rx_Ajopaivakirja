@@ -54,8 +54,9 @@ public class Driver extends Employee {
 		this.drivenCargo = drivenCargo;
 	}
 	
-	public boolean driveShift(int shiftID) {
-		return false;
+	public boolean driveShift(DrivingShift shift) {
+		shift.setShiftDriven();
+		return shift.isShiftDriven();
 	}
 	
 }
