@@ -1,8 +1,16 @@
 package model;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name="Employees")
 public class Employee {
 	
+	@Column(name="name")
 	private String name;
+	
+	@Id
+	@Column(name="employeeID")
 	private int employeeID;
 	
 	public Employee(String name, int employeeID) {
