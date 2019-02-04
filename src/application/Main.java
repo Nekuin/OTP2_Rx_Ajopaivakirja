@@ -20,15 +20,14 @@ public class Main extends Application {
 		try {
 			//asd dev
 			BorderPane root = new BorderPane();
+			NavigationBar navbar = new NavigationBar(root);
+			
 			DriverView dv = new DriverView();
 			root.setCenter(dv.getDriverView());
-			
-			NavigationBar navbar = new NavigationBar();
-			
 			root.setTop(navbar.getNavigationBar());
 			
 			
-			Scene scene = new Scene(root,400,400);
+			Scene scene = new Scene(root,720,600);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.show();
