@@ -1,6 +1,5 @@
 package model;
 import java.sql.Connection;
-
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
@@ -8,7 +7,7 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 //DAO
 
-public class AjoAccessObject implements AjoDAO_IF {
+public class AjoAccessObject {
 	
 	private Connection myConnect;
 	
@@ -24,6 +23,17 @@ public class AjoAccessObject implements AjoDAO_IF {
 			System.out.println("Oh no");
 			StandardServiceRegistryBuilder.destroy( registry );
 			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	protected void finalize() {
+		try {
+			if(myConnect!=null) {
+				myConnect.close();
+			}
+		} catch (Exception e) {
+			
 		}
 	}
 }
