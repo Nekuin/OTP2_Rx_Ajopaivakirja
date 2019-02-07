@@ -23,7 +23,7 @@ public class DriverView {
 	
 	private VBox driverTitle() {
 		VBox vbox = new VBox();
-		Text text = new Text("Täyteläistä informaatiota kuljettajista.\nLisätietoja: ei ole");
+		Text text = new Text("informaatiota");
 		
 		vbox.getChildren().add(text);
 		return vbox;
