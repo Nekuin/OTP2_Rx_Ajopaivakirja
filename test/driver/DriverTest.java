@@ -11,6 +11,12 @@ class DriverTest {
 	//kllk
 
 	@Test
+	@DisplayName("testing the tests")
+	void test() {
+		assertEquals(true, true, "true was not true");
+	}
+	
+	@Test
 	@DisplayName("Make driver")
 	void createDriver() {
 		IDriver driver = new Driver("Kalle", 1, "AB");
@@ -20,5 +26,7 @@ class DriverTest {
 		
 		assertEquals(true, test, "Creating the driver failed!");
 	}
+	
+	
 
 }
