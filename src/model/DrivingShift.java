@@ -33,16 +33,16 @@ public class DrivingShift {
 	private boolean shiftDriven;
 	
 	@Transient
-	private Vehicle vehicle;
+	private IVehicle vehicle;
 	
 	@Transient
 	private Driver shiftDriver;
 	
 	@Transient
-	private Cargo cargo;
+	private ICargo cargo;
 	
 	@Transient
-	private Client client;
+	private IClient client;
 
 	public DrivingShift(int shiftID, String startTime, String finishTime, Driver shiftDriver) {
 		this.shiftID = shiftID;
@@ -93,17 +93,17 @@ public class DrivingShift {
 		this.shiftDriven = true;
 	}
 	
-	public void setVehicle(Vehicle vehicle) {
+	public void setVehicle(IVehicle vehicle) {
 		this.vehicleID = vehicle.getCarID();
 		this.vehicle = vehicle;
 	}
 	
-	public void setCargo(Cargo cargo) {
+	public void setCargo(ICargo cargo) {
 		this.cargoID = cargo.getCargoID();
 		this.cargo = cargo;
 	}
 	
-	public void setClient(Client client) {
+	public void setClient(IClient client) {
 		this.clientID = client.getClientID();
 		this.client = client;
 	}

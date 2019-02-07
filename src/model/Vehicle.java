@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="Vehicles")
-public class Vehicle {
+public class Vehicle implements IVehicle {
 
 	@Id
 	@Column(name="carID")
@@ -39,62 +39,82 @@ public class Vehicle {
 		this.maintained = maintained;
 	}
 	
+	@Override
 	public boolean isMaintained() {
 		return maintained;
 	}
 
+	@Override
 	public String getRegNr() {
 		return regNr;
 	}
 
+	@Override
 	public void setRegNr(String regNr) {
 		this.regNr = regNr;
 	}
 
+	@Override
 	public double getDrivenDistance() {
 		return drivenDistance;
 	}
 
+	
 	public void setDrivenDistance(double drivenDistance) {
 		this.drivenDistance = drivenDistance;
 	}
+	
+	@Override
+	public void addDrivenDistance(double driven) {
+		this.drivenDistance += driven;
+	}
 
+	@Override
 	public int getMaxCargoLoad() {
 		return maxCargoLoad;
 	}
 
+	@Override
 	public void setMaxCargoLoad(int maxCargoLoad) {
 		this.maxCargoLoad = maxCargoLoad;
 	}
 
+	@Override
 	public String getModel() {
 		return model;
 	}
 
+	@Override
 	public void setModel(String model) {
 		this.model = model;
 	}
 
+	@Override
 	public String getBrand() {
 		return brand;
 	}
 
+	@Override
 	public void setBrand(String brand) {
 		this.brand = brand;
 	}
 
+	@Override
 	public int getCarID() {
 		return carID;
 	}
 
+	@Override
 	public void setCarID(int carID) {
 		this.carID = carID;
 	}
 
+	@Override
 	public boolean getMaintained() {
 		return maintained;
 	}
-	
+
+	@Override
 	public void setMaintained(boolean maintained) {
 		this.maintained = maintained;
 	}

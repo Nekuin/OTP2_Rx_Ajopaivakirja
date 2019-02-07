@@ -3,7 +3,7 @@ package model;
 import javax.persistence.*;
 
 @Entity
-public class Driver extends Employee {
+public class Driver extends Employee implements IDriver{
 
 	@Column(name="driverslicense")
 	private String driversLicense;
@@ -22,6 +22,7 @@ public class Driver extends Employee {
 		this.driversLicense = driversLicense;
 	}
 	
+	@Override
 	public String getDriversLicense() {
 		return driversLicense;
 	}
@@ -54,9 +55,34 @@ public class Driver extends Employee {
 		this.drivenCargo = drivenCargo;
 	}
 	
-	public boolean driveShift(DrivingShift shift) {
+	@Override
+	public boolean driveShift(IDrivingShift shift) {
 		shift.setShiftDriven();
 		return shift.isShiftDriven();
+	}
+
+	@Override
+	public void addDrivenHours(double drivenHours) {
+		this.drivenHours += drivenHours;
+		
+	}
+
+	@Override
+	public void addDrivenDistance(double drivenDistance) {
+		this.drivenDistance += drivenDistance;
+		
+	}
+
+	@Override
+	public void addDrivenCargo(double drivenCargo) {
+		this.drivenCargo += drivenCargo;
+		
+	}
+
+	
+	public boolean driveShift(IDrivingShift shift) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
 }
