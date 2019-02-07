@@ -4,7 +4,7 @@
   <artifactId>OTP-1-R6</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <build>
-  <testSourceDirectory>test/driver</testSourceDirectory>
+  
     <sourceDirectory>src</sourceDirectory>
     <resources>
       <resource>
