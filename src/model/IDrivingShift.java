@@ -45,5 +45,17 @@ public interface IDrivingShift {
 	 */
 	public Driver getShiftDriver();
 	
+	/**
+	 * Returns if the shift is driven or not
+	 * @return
+	 */
+	public boolean isShiftDriven();
+	
+	/**
+	 * Set shift driven or not driven
+	 * @param shiftDriven
+	 */
+	public void setShiftDriven(boolean shiftDriven);
+	
 
 }
