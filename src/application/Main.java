@@ -1,12 +1,11 @@
 package application;
 	
 import javafx.application.Application;
-import javafx.stage.Stage;
-import model.AjoAccessObject;
-import view.*;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 import model.*;
+import view.*;
 
 
 public class Main extends Application {
