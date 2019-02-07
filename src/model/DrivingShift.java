@@ -36,7 +36,7 @@ public class DrivingShift {
 	private IVehicle vehicle;
 	
 	@Transient
-	private Driver shiftDriver;
+	private IDriver shiftDriver;
 	
 	@Transient
 	private ICargo cargo;
