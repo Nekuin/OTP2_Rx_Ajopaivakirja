@@ -77,7 +77,7 @@ public class DrivingShift {
 		this.finishTime = finishTime;
 	}
 
-	public Driver getShiftDriver() {
+	public IDriver getShiftDriver() {
 		return shiftDriver;
 	}
 
