@@ -20,17 +20,29 @@ public class DrivingShift {
 	@Column(name="shiftdriver")
 	private String shiftDriverName;
 	
-	@Column(name="cargo")
+	@Column(name="cargoid")
 	private int cargoID;
+	
+	@Column(name="clientid")
+	private int clientID;
+	
+	@Column(name="vehicleid")
+	private int vehicleID;
 	
 	@Column(name="shiftdriven")
 	private boolean shiftDriven;
+	
+	@Transient
+	private Vehicle vehicle;
 	
 	@Transient
 	private Driver shiftDriver;
 	
 	@Transient
 	private Cargo cargo;
+	
+	@Transient
+	private Client client;
 
 	public DrivingShift(int shiftID, String startTime, String finishTime, Driver shiftDriver) {
 		this.shiftID = shiftID;
@@ -81,8 +93,19 @@ public class DrivingShift {
 		this.shiftDriven = true;
 	}
 	
+	public void setVehicle(Vehicle vehicle) {
+		this.vehicleID = vehicle.getCarID();
+		this.vehicle = vehicle;
+	}
+	
 	public void setCargo(Cargo cargo) {
 		this.cargoID = cargo.getCargoID();
+		this.cargo = cargo;
+	}
+	
+	public void setClient(Client client) {
+		this.clientID = client.getClientID();
+		this.client = client;
 	}
 	
 	
