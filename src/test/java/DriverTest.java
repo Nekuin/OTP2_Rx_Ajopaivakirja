@@ -19,5 +19,10 @@ class DriverTest {
 		
 		assertEquals(true, test, "Creating the driver failed!");
 	}
+	
+	@Test
+	void test() {
+		assertEquals(2, 2);
+	}
 
 }
