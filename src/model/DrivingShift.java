@@ -36,7 +36,7 @@ public class DrivingShift {
 	private IVehicle vehicle;
 	
 	@Transient
-	private Driver shiftDriver;
+	private IDriver shiftDriver;
 	
 	@Transient
 	private ICargo cargo;
@@ -77,7 +77,7 @@ public class DrivingShift {
 		this.finishTime = finishTime;
 	}
 
-	public Driver getShiftDriver() {
+	public IDriver getShiftDriver() {
 		return shiftDriver;
 	}
 
