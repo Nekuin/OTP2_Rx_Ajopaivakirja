@@ -6,6 +6,7 @@ import model.AjoAccessObject;
 import view.*;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import model.*;
 
 
 public class Main extends Application {
@@ -13,6 +14,8 @@ public class Main extends Application {
 	@Override
 	public void init() {
 		AjoAccessObject a = new AjoAccessObject();
+		IDriver driver = new Driver("nimi", 1, "AB");
+		a.createDriver((Driver)driver);
 	}
 	
 	@Override
