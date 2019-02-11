@@ -6,20 +6,27 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import application.MockTest;
 
 import static org.mockito.Mockito.*;
 
 import model.*;
 
-class DriverTest {
+@ExtendWith(MockitoExtension.class)
+public class DriverTest {
 	
+	@Mock
 	static AjoAccessObject a;
 	static IDriver testdriver;
+
 	
 	@BeforeAll
 	public static void setup() {
-		a = mock(AjoAccessObject.class);
+		a = new AjoAccessObject();
 	}
 	
 	@BeforeEach
@@ -32,7 +39,7 @@ class DriverTest {
 	void test() {
 		assertEquals(true, true, "true was not true");
 	}
-
+	
 	// not working, lets use mock objects
 	@Test
 	@DisplayName("Make driver")
