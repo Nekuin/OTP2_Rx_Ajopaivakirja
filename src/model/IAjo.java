@@ -13,6 +13,6 @@ public interface IAjo {
 	public Driver readDriver(String driversLicense);
 	
 	public boolean updateDriver(Driver driver);
-	public boolean deleteDriver(String driversLicense);
+	public boolean deleteDriver(int driversLicense);
 
 }

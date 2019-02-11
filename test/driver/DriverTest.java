@@ -14,11 +14,12 @@ import model.*;
 class DriverTest {
 	
 	static AjoAccessObject a;
-	IDriver testdriver = new Driver();
+	static IDriver testdriver;
 	
 	@BeforeAll
 	public static void setup() {
 		a = mock(AjoAccessObject.class);
+		testdriver = new Driver();
 	}
 
 	@Test
@@ -67,10 +68,8 @@ class DriverTest {
 	@Test
 	@DisplayName("Delete driver")
 	void deleteDriver() {
-		
-		
-		//boolean test = a.deleteDriver();
-		
+		//do a mock test
+		boolean test = a.deleteDriver(testdriver.getEmployeeID());
 		assertEquals(true, test, "Creating the driver failed!");
 	}
 }
