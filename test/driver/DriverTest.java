@@ -56,7 +56,7 @@ class DriverTest {
 	void deleteDriver() {
 		
 		
-		//boolean test = a.deleteDriver();
+		boolean test = a.deleteDriver(testdriver.getEmployeeID());
 		
 		assertEquals(true, test, "Creating the driver failed!");
 	}
