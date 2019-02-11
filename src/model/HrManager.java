@@ -2,6 +2,7 @@ package model;
 
 public class HrManager extends Employee {
 
+	private AjoAccessObject a;
 	/**
 	 * Constructor for then hr manager
 	 * @param name name of the hr manager
