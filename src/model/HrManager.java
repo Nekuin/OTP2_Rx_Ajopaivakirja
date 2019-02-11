@@ -11,6 +11,10 @@ public class HrManager extends Employee {
 		super(name, employeeID);
 	}
 	
+	public void setAjoAccessObject(AjoAccessObject a) {
+		this.a = a;
+	}
+	
 	/**
 	 * 
 	 * @param name
