@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import model.*;
 
 class DriverTest {
-	//kllk
+	//kll
 	IDriver testdriver = new Driver("Kalle", 1, "AB");
 	AjoAccessObject a = new AjoAccessObject();
 
