@@ -6,8 +6,8 @@ public class Client implements IClient {
 	
 	/**
 	 * Constructor of the client
-	 * @param name
-	 * @param clientID
+	 * @param name name of the client
+	 * @param clientID id of the client
 	 */
 	public Client(String name, int clientID) {
 		this.name = name;
