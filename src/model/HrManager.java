@@ -17,10 +17,10 @@ public class HrManager extends Employee {
 	}
 	
 	/**
-	 * 
-	 * @param name
-	 * @param employeeID
-	 * @param driversLicense
+	 * Add driver to the database
+	 * @param name name of the driver
+	 * @param employeeID id of the driver
+	 * @param driversLicense drivers license of the driver
 	 */
 	public boolean addDriver(String name, int employeeID, String driversLicense) {
 		IDriver driver = new Driver(name, employeeID, driversLicense);
