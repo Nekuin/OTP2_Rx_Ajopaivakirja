@@ -7,12 +7,12 @@ import java.util.List;
 public interface IAjo {
 	
 	//public Driver[] readDriver();
-	public List<Driver> readDriver();
+	public List<IDriver> readDriver();
 	
-	public boolean createDriver(Driver driver);
+	public boolean createDriver(IDriver driver);
 	public Driver readDriver(String driversLicense);
 	
-	public boolean updateDriver(Driver driver);
+	public boolean updateDriver(IDriver driver);
 	public boolean deleteDriver(int driversLicense);
 
 }

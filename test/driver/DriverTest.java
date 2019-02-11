@@ -3,6 +3,7 @@ package driver;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;
@@ -19,7 +20,11 @@ class DriverTest {
 	@BeforeAll
 	public static void setup() {
 		a = mock(AjoAccessObject.class);
-		testdriver = new Driver();
+	}
+	
+	@BeforeEach
+	public void resetDriver() {
+		testdriver = new Driver("Kalle", 1, "AB");
 	}
 
 	@Test
@@ -32,21 +37,16 @@ class DriverTest {
 	@Test
 	@DisplayName("Make driver")
 	void createDriver() {
-
-		Driver driver = new Driver("Kalle", 1, "AB");
-
 		//mock what createDriver will return
-		when(a.createDriver(driver)).thenReturn(true);
-		boolean test = a.createDriver(driver);
+		when(a.createDriver(testdriver)).thenReturn(true);
+		boolean test = a.createDriver(testdriver);
 		assertEquals(true, test, "Creating the driver failed!");
 	}
 	
 	@Test
 	@DisplayName("Driver ID")
 	void testID() {
-		//IDriver driver = new Driver ("Kalle", 1, "AB");
 		testdriver.setEmployeeID(11);
-		
 		assertEquals(11, testdriver.getEmployeeID(), "Driver ID did not change!");
 	}
 	
@@ -69,6 +69,7 @@ class DriverTest {
 	@DisplayName("Delete driver")
 	void deleteDriver() {
 		//do a mock test
+		when(a.deleteDriver(testdriver.getEmployeeID())).thenReturn(true);
 		boolean test = a.deleteDriver(testdriver.getEmployeeID());
 		assertEquals(true, test, "Creating the driver failed!");
 	}

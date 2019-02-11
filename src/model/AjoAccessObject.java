@@ -43,12 +43,12 @@ public class AjoAccessObject implements IAjo {
 	}
 	
 	@Override
-	public boolean createDriver (Driver driversLicense) {
+	public boolean createDriver (IDriver driver) {
 		Session istunto = istuntotehdas.openSession();
 		Transaction t = null;
 		try {
 			t = istunto.beginTransaction();
-			istunto.saveOrUpdate(driversLicense);
+			istunto.saveOrUpdate(driver);
 			t.commit();
 			return true;
 		} catch (Exception e) {
@@ -80,12 +80,12 @@ public class AjoAccessObject implements IAjo {
 	}
 	
 	@Override
-	public List<Driver> readDriver(){
+	public List<IDriver> readDriver(){
 		//parempi varmaa avata uus session ja sulkea se lopuksi
 		Session istunto = istuntotehdas.openSession();
-		List<Driver> driver = null;
+		List<IDriver> driver = null;
 		try {
-			driver = (List<Driver>)istunto.createQuery("from Driver").list();
+			driver = (List<IDriver>)istunto.createQuery("from Driver").list();
 		} catch (HibernateException e) {e.printStackTrace();}
 		finally {
 			istunto.close();
@@ -94,7 +94,7 @@ public class AjoAccessObject implements IAjo {
 	}
 	
 	@Override
-	public boolean updateDriver(Driver driver) {
+	public boolean updateDriver(IDriver driver) {
 		Transaction t = null;
 		try(Session istunto = istuntotehdas.openSession();){
 			t = istunto.beginTransaction();
