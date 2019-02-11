@@ -1,7 +1,6 @@
 package model;
 
 public interface IVehicle {
-	public boolean isMaintained();
 	public String getRegNr();
 	public void setRegNr(String regNr);
 	public double getDrivenDistance();
