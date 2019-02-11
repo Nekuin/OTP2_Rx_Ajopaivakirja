@@ -2,6 +2,7 @@ package cargo;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +11,12 @@ import model.ICargo;
 
 public class CargoTest {
 	
-	ICargo testCargo = new Cargo(7001, 2300, false);
+	static ICargo testCargo;
+	
+	@BeforeEach
+	void resetCargo() {
+		testCargo = new Cargo(7001, 2300, false);
+	}
 	
 	@Test
 	@DisplayName("Test getCargoID")

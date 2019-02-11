@@ -2,6 +2,7 @@ package vehicle;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +11,12 @@ import model.Vehicle;
 
 public class VehicleTest {
 
-	IVehicle testCar = new Vehicle("YKS-111", 0.0, 1000, "Sprinter", "Mercedes-Benz", 1001, true); 
+	static IVehicle testCar;
+	
+	@BeforeEach
+	void resetVehicle() {
+		testCar = new Vehicle("YKS-111", 0.0, 1000, "Sprinter", "Mercedes-Benz", 1001, true); 
+	}
 	
 	@Test
 	@DisplayName("Test getModel")
