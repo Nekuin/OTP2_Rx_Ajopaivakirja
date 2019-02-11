@@ -29,6 +29,9 @@ public class Driver extends Employee implements IDriver{
 		this.driversLicense = driversLicense;
 	}
 	
+	/**
+	 * Empty constructor for the driver
+	 */
 	public Driver() {
 		super();
 	}

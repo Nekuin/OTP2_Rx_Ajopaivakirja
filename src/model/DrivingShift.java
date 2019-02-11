@@ -44,6 +44,13 @@ public class DrivingShift {
 	@Transient
 	private IClient client;
 
+	/**
+	 * 
+	 * @param shiftID id for the shift
+	 * @param startTime starting time of the shift
+	 * @param finishTime time the shift is to be finished
+	 * @param shiftDriver driver of the shift
+	 */
 	public DrivingShift(int shiftID, String startTime, String finishTime, Driver shiftDriver) {
 		this.shiftID = shiftID;
 		this.startTime = startTime;
@@ -53,6 +60,9 @@ public class DrivingShift {
 		this.shiftDriverName = shiftDriver.getName();
 	}
 	
+	/**
+	 * empty constructor for the driving shift
+	 */
 	public DrivingShift() {
 		
 	}

@@ -1,8 +1,6 @@
 package model;
 
 public class HrManager extends Employee {
-	
-	private AjoAccessObject a;
 
 	/**
 	 * Constructor for then hr manager

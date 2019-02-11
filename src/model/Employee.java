@@ -13,12 +13,19 @@ public class Employee implements IEmployee{
 	@Column(name="name")
 	private String name;
 	
-	
+	/**
+	 * Constructor of the employee
+	 * @param name name of the employee
+	 * @param employeeID id of the employee
+	 */
 	public Employee(String name, int employeeID) {
 		this.name = name;
 		this.employeeID = employeeID;
 	}
 
+	/**
+	 * Empty constructor for the employee
+	 */
 	public Employee() {
 	}
 
