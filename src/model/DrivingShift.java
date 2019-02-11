@@ -52,6 +52,10 @@ public class DrivingShift {
 		this.shiftDriven = false;
 		this.shiftDriverName = shiftDriver.getName();
 	}
+	
+	public DrivingShift() {
+		
+	}
 
 	public int getShiftID() {
 		return shiftID;
