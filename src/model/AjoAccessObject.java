@@ -109,11 +109,11 @@ public class AjoAccessObject implements IAjo {
 	}
 	
 	@Override
-	public boolean deleteDriver(String driversLicense) {
+	public boolean deleteDriver(String driverID) {
 		Transaction t = null;
 		try(Session istunto = istuntotehdas.openSession();){
 			t = istunto.beginTransaction();
-			Driver d = (Driver)istunto.get(Driver.class, driversLicense);
+			Driver d = (Driver)istunto.get(Driver.class, driverID);
 			istunto.delete(d);
 			t.commit();
 			return true;

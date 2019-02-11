@@ -38,11 +38,6 @@ public class Vehicle implements IVehicle {
 		this.carID = carID;
 		this.maintained = maintained;
 	}
-	
-	@Override
-	public boolean isMaintained() {
-		return maintained;
-	}
 
 	@Override
 	public String getRegNr() {
