@@ -6,20 +6,27 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
+import org.mockito.junit.jupiter.MockitoExtension;
+
 
 import static org.mockito.Mockito.*;
 
 import model.*;
 
-class DriverTest {
+@ExtendWith(MockitoExtension.class)
+public class DriverTest {
 	
+	@Mock
 	static AjoAccessObject a;
 	static IDriver testdriver;
+
 	
 	@BeforeAll
 	public static void setup() {
-		a = mock(AjoAccessObject.class);
+		System.out.println("testing");
+		a = new AjoAccessObject();
 	}
 	
 	@BeforeEach
@@ -32,7 +39,7 @@ class DriverTest {
 	void test() {
 		assertEquals(true, true, "true was not true");
 	}
-
+	
 	// not working, lets use mock objects
 	@Test
 	@DisplayName("Make driver")
@@ -71,6 +78,7 @@ class DriverTest {
 		//do a mock test
 		when(a.deleteDriver(testdriver.getEmployeeID())).thenReturn(true);
 		boolean test = a.deleteDriver(testdriver.getEmployeeID());
-		assertEquals(true, test, "Creating the driver failed!");
+		System.out.println(test);
+		assertEquals(true, test, "Deleting the driver failed!");
 	}
 }
