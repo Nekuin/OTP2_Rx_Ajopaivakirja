@@ -70,11 +70,17 @@ public class Main extends Application implements IView {
 		return drivers;
 	}
 
+	/**
+	 * Update user interface with a Collection of new drivers
+	 */
 	@Override
 	public void setDriverData(Collection<IDriver> drivers) {
 		this.dv.updateDrivers(drivers);
 	}
 
+	/**
+	 * Change between Driver view and HR View
+	 */
 	@Override
 	public void changeView(int view) {
 		if(view == Main.DRIVER_VIEW) {
