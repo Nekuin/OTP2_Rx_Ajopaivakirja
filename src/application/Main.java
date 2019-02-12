@@ -1,5 +1,9 @@
 package application;
 	
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hibernate.SessionFactory;
 
 import javafx.application.Application;
@@ -15,13 +19,9 @@ public class Main extends Application {
 	
 	@Override
 	public void init() {
-		AjoAccessObject a = new AjoAccessObject();
-		IDriver driver = new Driver("nimi", 1, "AB");
-		a.createDriver((Driver)driver);
-		
-		/*SessionFactory factory = (SessionFactory) HibernateUtil.getSessionFactory().openSession();
-		System.out.println("Session 1: " + factory.hashCode());
-		System.out.println("Session 2: " + factory.hashCode());*/
+		HibernateUtil h = new HibernateUtil();
+		HibernateUtil.getSessionFactory();
+
 	}
 	
 	@Override

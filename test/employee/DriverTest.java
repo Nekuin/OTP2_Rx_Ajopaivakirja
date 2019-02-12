@@ -14,19 +14,21 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import static org.mockito.Mockito.*;
 
 import model.*;
+import util.HibernateUtil;
 
 @ExtendWith(MockitoExtension.class)
 public class DriverTest {
 	
 	@Mock
-	static AjoAccessObject a;
+	static HibernateUtil util;
 	static IDriver testdriver;
 
 	
 	@BeforeAll
 	public static void setup() {
 		System.out.println("testing");
-		a = new AjoAccessObject();
+		util = new HibernateUtil();
+		HibernateUtil.getSessionFactory();
 	}
 	
 	@BeforeEach
@@ -44,10 +46,8 @@ public class DriverTest {
 	@Test
 	@DisplayName("Make driver")
 	void createDriver() {
-		//mock what createDriver will return
-		when(a.createDriver(testdriver)).thenReturn(true);
-		boolean test = a.createDriver(testdriver);
-		assertEquals(true, test, "Creating the driver failed!");
+		//not yet implemented
+		
 	}
 	
 	@Test
@@ -75,10 +75,6 @@ public class DriverTest {
 	@Test
 	@DisplayName("Delete driver")
 	void deleteDriver() {
-		//do a mock test
-		when(a.deleteDriver(testdriver.getEmployeeID())).thenReturn(true);
-		boolean test = a.deleteDriver(testdriver.getEmployeeID());
-		System.out.println(test);
-		assertEquals(true, test, "Deleting the driver failed!");
+		//not yet implemented
 	}
 }
