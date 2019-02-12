@@ -3,9 +3,12 @@ package application;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -20,17 +23,19 @@ public class Main extends Application implements IView {
 	private IDriverView dv;
 	private IHRView hr;
 	
+	private DriverAccessObject a;
+	
 	@Override
 	public void init() {
-		/*
-		DriverAccessObject a = new DriverAccessObject();
-		Collection<IDriver> drivers = this.getTestDrivers();
-		drivers.forEach(e -> {
-			a.createDriver(e);
-		});
-		List<Driver> result = a.readDriver();
-		result.forEach(System.out::println);
-		*/
+		new Thread(() -> {
+			this.a = new DriverAccessObject();
+			Collection<IDriver> drivers = this.getTestDrivers();
+			drivers.forEach(e -> {
+				a.createDriver(e);
+			});
+			Collection<IDriver> asd = a.readDriver().stream().collect(Collectors.toList());
+			this.setDriverData(asd);
+		}).start();
 	}
 	
 	@Override
@@ -43,6 +48,9 @@ public class Main extends Application implements IView {
 			//create and set driver view
 			this.dv = new DriverView();
 			root.setCenter(dv.getDriverView());
+			
+			
+			
 			
 			//create and set Navigation bar
 			NavigationBar navbar = new NavigationBar(this);
@@ -58,6 +66,12 @@ public class Main extends Application implements IView {
 			
 			Scene scene = new Scene(root,720,600);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			
+			primaryStage.setOnCloseRequest(e -> {
+				Platform.exit();
+				System.exit(0);
+			});
+			
 			primaryStage.setScene(scene);
 			primaryStage.show();
 		} catch(Exception e) {
@@ -68,6 +82,8 @@ public class Main extends Application implements IView {
 	public static void main(String[] args) {
 		launch(args);
 	}
+	
+	
 	
 	private Collection<IDriver> getTestDrivers(){
 		Collection<IDriver> drivers = new ArrayList<>();
