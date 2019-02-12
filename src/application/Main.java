@@ -3,6 +3,8 @@ package application;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -20,7 +22,13 @@ public class Main extends Application implements IView {
 	
 	@Override
 	public void init() {
-		//HibernateUtil.getSessionFactory();
+		DriverAccessObject a = new DriverAccessObject();
+		Collection<IDriver> drivers = this.getTestDrivers();
+		drivers.forEach(e -> {
+			a.createDriver(e);
+		});
+		List<Driver> result = a.readDriver();
+		result.forEach(System.out::println);
 	}
 	
 	@Override
@@ -43,7 +51,7 @@ public class Main extends Application implements IView {
 			
 			
 			//for testing
-			this.setDriverData(getTestDrivers());
+			//this.setDriverData(getTestDrivers());
 			
 			
 			Scene scene = new Scene(root,720,600);
