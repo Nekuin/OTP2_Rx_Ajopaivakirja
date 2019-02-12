@@ -1,7 +1,10 @@
 package application;
 	
+
 import java.util.ArrayList;
 import java.util.List;
+
+import org.hibernate.SessionFactory;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -16,13 +19,9 @@ public class Main extends Application {
 	
 	@Override
 	public void init() {
-		/*
-		AjoAccessObject a = new AjoAccessObject();
-		IDriver driver = new Driver("nimi", 1, "AB");
-		a.createDriver((Driver)driver);
-		*/
 		HibernateUtil h = new HibernateUtil();
 		HibernateUtil.getSessionFactory();
+
 	}
 	
 	@Override
