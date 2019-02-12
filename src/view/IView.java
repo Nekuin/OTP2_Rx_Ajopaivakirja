@@ -5,5 +5,5 @@ import java.util.Collection;
 import model.IDriver;
 
 public interface IView {
-	public void updateDrivers(Collection<IDriver> drivers);
+	public void setDriverData(Collection<IDriver> drivers);
 }

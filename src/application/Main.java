@@ -3,27 +3,21 @@ package application;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
-
-import org.hibernate.SessionFactory;
-
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import model.*;
-import util.HibernateUtil;
 import view.*;
 
 
-public class Main extends Application {
+public class Main extends Application implements IView {
 	
-	private DriverView dv;
+	private IDriverView dv;
 	
 	@Override
 	public void init() {
-		HibernateUtil.getSessionFactory();
-
+		//HibernateUtil.getSessionFactory();
 	}
 	
 	@Override
@@ -33,9 +27,12 @@ public class Main extends Application {
 			BorderPane root = new BorderPane();
 			NavigationBar navbar = new NavigationBar(root);
 			
-			dv = new DriverView();
+			this.dv = new DriverView();
 			root.setCenter(dv.getDriverView());
 			root.setTop(navbar.getNavigationBar());
+			
+			//for testing
+			this.setDriverData(getTestDrivers());
 			
 			
 			Scene scene = new Scene(root,720,600);
@@ -50,9 +47,20 @@ public class Main extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
-
 	
-	public void updateDrivers(Collection<String> drivers) {
+	private Collection<IDriver> getTestDrivers(){
+		Collection<IDriver> drivers = new ArrayList<>();
+		IDriver d1 = new Driver("Eka", 1, "A");
+		IDriver d2 = new Driver("Toka", 2, "B");
+		IDriver d3 = new Driver("Kolmas", 3, "AB");
+		drivers.add(d1);
+		drivers.add(d2);
+		drivers.add(d3);
+		return drivers;
+	}
+
+	@Override
+	public void setDriverData(Collection<IDriver> drivers) {
 		this.dv.updateDrivers(drivers);
 	}
 }
