@@ -1,10 +1,13 @@
 package application;
 	
+import org.hibernate.SessionFactory;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import model.*;
+import util.HibernateUtil;
 import view.*;
 
 
@@ -15,6 +18,10 @@ public class Main extends Application {
 		AjoAccessObject a = new AjoAccessObject();
 		IDriver driver = new Driver("nimi", 1, "AB");
 		a.createDriver((Driver)driver);
+		
+		/*SessionFactory factory = (SessionFactory) HibernateUtil.getSessionFactory().openSession();
+		System.out.println("Session 1: " + factory.hashCode());
+		System.out.println("Session 2: " + factory.hashCode());*/
 	}
 	
 	@Override
