@@ -4,7 +4,7 @@ public class HrManager extends Employee {
 
 	private AjoAccessObject a;
 	/**
-	 * Constructor for then hr manager
+	 * Constructor for the hr manager
 	 * @param name name of the hr manager
 	 * @param employeeID id of the hr manager
 	 */
