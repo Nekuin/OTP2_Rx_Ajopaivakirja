@@ -13,7 +13,10 @@ import view.*;
 
 public class Main extends Application implements IView {
 	
+	public static int DRIVER_VIEW = 1, HR_VIEW = 2;
+	private BorderPane root;
 	private IDriverView dv;
+	private IHRView hr;
 	
 	@Override
 	public void init() {
@@ -23,13 +26,21 @@ public class Main extends Application implements IView {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			//asd dev
-			BorderPane root = new BorderPane();
-			NavigationBar navbar = new NavigationBar(root);
 			
+			//create root BorderPane
+			this.root = new BorderPane();
+			
+			//create and set driver view
 			this.dv = new DriverView();
 			root.setCenter(dv.getDriverView());
+			
+			//create and set Navigation bar
+			NavigationBar navbar = new NavigationBar(this);
 			root.setTop(navbar.getNavigationBar());
+			
+			//create hr view
+			this.hr = new HRView();
+			
 			
 			//for testing
 			this.setDriverData(getTestDrivers());
@@ -62,5 +73,14 @@ public class Main extends Application implements IView {
 	@Override
 	public void setDriverData(Collection<IDriver> drivers) {
 		this.dv.updateDrivers(drivers);
+	}
+
+	@Override
+	public void changeView(int view) {
+		if(view == Main.DRIVER_VIEW) {
+			this.root.setCenter(this.dv.getDriverView());
+		} else if(view == Main.HR_VIEW) {
+			this.root.setCenter(this.hr.getHRView());
+		}
 	}
 }

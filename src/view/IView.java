@@ -6,4 +6,5 @@ import model.IDriver;
 
 public interface IView {
 	public void setDriverData(Collection<IDriver> drivers);
+	public void changeView(int view);
 }
