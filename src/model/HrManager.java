@@ -12,6 +12,14 @@ public class HrManager extends Employee {
 		super(name, employeeID);
 	}
 	
+	
+	/**
+	 * Empty constructor for HrManager
+	 */
+	public HrManager() {
+		
+	}
+	
 	public void setAjoAccessObject(AjoAccessObject a) {
 		this.a = a;
 	}

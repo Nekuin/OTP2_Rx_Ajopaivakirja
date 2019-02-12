@@ -41,6 +41,14 @@ public class Cargo implements ICargo {
 	}
 	
 	
+	/**
+	 * Empty constructor for cargo
+	 */
+	public Cargo() {
+		
+	}
+	
+	
 	
 	@Override
 	public boolean isHazardous() {

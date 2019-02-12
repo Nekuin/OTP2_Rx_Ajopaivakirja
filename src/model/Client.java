@@ -13,6 +13,13 @@ public class Client implements IClient {
 		this.name = name;
 		this.clientID = clientID;
 	}
+	
+	/**
+	 * Empty constructor for client
+	 */
+	public Client() {
+		
+	}
 
 	@Override
 	public String getName() {
