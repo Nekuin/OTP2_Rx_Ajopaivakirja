@@ -1,0 +1,26 @@
+<hibernate-configuration>
+	<session-factory>
+		<!-- Käytä MySQL-tietokantaa -->
+		<property name="hibernate.dialect">org.hibernate.dialect.MariaDBDialect</property>
+
+		<!-- Yhteyden perustiedot: ajuri, palvelin käyttäjätunnus/salasana -->
+		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="hibernate.connection.url">jdbc:mysql://10.114.34.91:3306/ajopaivakirja</property>
+		<property name="hibernate.connection.username">root</property>
+		<property name="hibernate.connection.password">otp1-r6</property>
+
+		<!-- create , create-drop, update tai validate -->
+		<!-- Älä käytä tuotantoversioissa, ts, älä anna Hibernaten enää muuttaa taulurakennetta  -->
+		<!-- Ekalla kerralla create, kun kanta olemassa validate -->
+		<property name="hbm2ddl.auto">validate</property>
+
+		<!-- kun true, kaiuta kaikki SQL-lauseet stdout:iin -->
+		<property name="show_sql">false</property>
+
+		<!-- Mallitason DTO-oliot, pakkausnimet mukaan -->
+		<mapping class="model.Driver"/><mapping class="model.Employee"></mapping>
+		<mapping class="model.DrivingShift"></mapping>
+		<mapping class="model.Vehicle"></mapping>
+		<mapping class="model.Cargo"></mapping>
+	</session-factory>
+</hibernate-configuration>
