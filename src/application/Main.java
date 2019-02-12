@@ -2,6 +2,7 @@ package application;
 	
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
@@ -17,6 +18,8 @@ import view.*;
 
 public class Main extends Application {
 	
+	private DriverView dv;
+	
 	@Override
 	public void init() {
 		HibernateUtil h = new HibernateUtil();
@@ -31,7 +34,7 @@ public class Main extends Application {
 			BorderPane root = new BorderPane();
 			NavigationBar navbar = new NavigationBar(root);
 			
-			DriverView dv = new DriverView();
+			dv = new DriverView();
 			root.setCenter(dv.getDriverView());
 			root.setTop(navbar.getNavigationBar());
 			
@@ -47,5 +50,10 @@ public class Main extends Application {
 	
 	public static void main(String[] args) {
 		launch(args);
+	}
+
+	
+	public void updateDrivers(Collection<String> drivers) {
+		this.dv.updateDrivers(drivers);
 	}
 }
