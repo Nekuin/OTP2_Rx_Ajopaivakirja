@@ -1,15 +1,19 @@
 package view;
 
+import java.util.Collection;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import model.IDriver;
 
-public class DriverView {
+public class DriverView implements IDriverView{
 	
 	private BorderPane bpane;
+	ObservableList<String> drivers;
 	
 	public DriverView() {
 		bpane = new BorderPane();
@@ -31,7 +35,7 @@ public class DriverView {
 	
 	private VBox driverInfo() {
 		VBox vbox = new VBox();
-		ObservableList<String> drivers = FXCollections.observableArrayList();
+		drivers = FXCollections.observableArrayList();
 		drivers.addAll("joku", "joku toinen", "hullu");
 		
 		ListView lv = new ListView();
@@ -40,6 +44,13 @@ public class DriverView {
 		vbox.getChildren().add(lv);
 		return vbox;
 	}
+
+	@Override
+	public void updateDrivers(Collection<IDriver> drivers) {
+		
+	}
+
+	
 	
 	
 }
