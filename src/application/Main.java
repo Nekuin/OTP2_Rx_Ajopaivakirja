@@ -19,7 +19,6 @@ public class Main extends Application {
 	
 	@Override
 	public void init() {
-		HibernateUtil h = new HibernateUtil();
 		HibernateUtil.getSessionFactory();
 
 	}
