@@ -22,6 +22,7 @@ public class Main extends Application implements IView {
 	
 	@Override
 	public void init() {
+		/*
 		DriverAccessObject a = new DriverAccessObject();
 		Collection<IDriver> drivers = this.getTestDrivers();
 		drivers.forEach(e -> {
@@ -29,6 +30,7 @@ public class Main extends Application implements IView {
 		});
 		List<Driver> result = a.readDriver();
 		result.forEach(System.out::println);
+		*/
 	}
 	
 	@Override

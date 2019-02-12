@@ -13,41 +13,26 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.mockito.Mockito.*;
 
+import org.hibernate.SessionFactory;
+
 import model.*;
 import util.HibernateUtil;
 
 @ExtendWith(MockitoExtension.class)
 public class DriverTest {
 	
-	@Mock
-	static HibernateUtil util;
+	
 	static IDriver testdriver;
 
 	
 	@BeforeAll
 	public static void setup() {
 		System.out.println("testing");
-		util = new HibernateUtil();
-		HibernateUtil.getSessionFactory();
 	}
 	
 	@BeforeEach
 	public void resetDriver() {
 		testdriver = new Driver("Kalle", 1, "AB");
-	}
-
-	@Test
-	@DisplayName("testing the tests")
-	void test() {
-		assertEquals(true, true, "true was not true");
-	}
-	
-	// not working, lets use mock objects
-	@Test
-	@DisplayName("Make driver")
-	void createDriver() {
-		//not yet implemented
-		
 	}
 	
 	@Test
@@ -72,9 +57,4 @@ public class DriverTest {
 		assertEquals("C1", testdriver.getDriversLicense(), "Drivers license has not changed!");
 	}
 	
-	@Test
-	@DisplayName("Delete driver")
-	void deleteDriver() {
-		//not yet implemented
-	}
 }
