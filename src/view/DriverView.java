@@ -1,6 +1,8 @@
 package view;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -8,9 +10,11 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.scene.control.Button;
+import model.Driver;
 import model.IDriver;
 
-public class DriverView implements IDriverView{
+public class DriverView {
 	
 	private BorderPane bpane;
 	ObservableList<String> drivers;
@@ -19,7 +23,16 @@ public class DriverView implements IDriverView{
 		bpane = new BorderPane();
 		bpane.setLeft(driverTitle());
 		bpane.setRight(driverInfo());
+		Button update = new Button("update");
+		update.setOnAction(e -> {
+			List<String> names = new ArrayList<>();
+			names.add("asd");
+			names.add("assdsd");
+			this.updateDrivers(names);
+		});
+		bpane.setBottom(update);
 	}
+	
 	
 	public BorderPane getDriverView() {
 		return this.bpane;
@@ -45,12 +58,8 @@ public class DriverView implements IDriverView{
 		return vbox;
 	}
 
-	@Override
-	public void updateDrivers(Collection<IDriver> drivers) {
-		
+	
+	public void updateDrivers(Collection<String> names) {
+		drivers = FXCollections.observableArrayList(names);
 	}
-
-	
-	
-	
 }
