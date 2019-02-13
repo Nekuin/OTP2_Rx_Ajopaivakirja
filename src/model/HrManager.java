@@ -8,7 +8,7 @@ public class HrManager extends Employee {
 	 * @param name name of the hr manager
 	 * @param employeeID id of the hr manager
 	 */
-	public HrManager(String name, int employeeID) {
+	public HrManager(String name) {
 		super(name);
 	}
 	
