@@ -7,6 +7,8 @@ import util.HibernateUtil;
 public class testiMain {
 
 	public static void main(String[] args) {
+		
+		//Hascode testi
 
 		SessionFactory factory = HibernateUtil.getSessionFactory();
 
