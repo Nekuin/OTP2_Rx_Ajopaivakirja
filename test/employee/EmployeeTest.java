@@ -15,7 +15,7 @@ public class EmployeeTest {
 	
 	@BeforeEach
 	void resetEmployee() {
-		testEmployee = new Employee("Röi Ukko", 2001);
+		testEmployee = new Employee("Röi Ukko");
 	}
 	
 	@Test
