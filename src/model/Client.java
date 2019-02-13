@@ -1,17 +1,31 @@
 package model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="Client")
 public class Client implements IClient {
-	private String name;
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name = "clientid")
 	private int clientID;
+	
+	@Column(name="name")
+	private String name;
+	
 	
 	/**
 	 * Constructor of the client
 	 * @param name name of the client
 	 * @param clientID id of the client
 	 */
-	public Client(String name, int clientID) {
+	public Client(String name) {
 		this.name = name;
-		this.clientID = clientID;
 	}
 	
 	/**

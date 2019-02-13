@@ -9,7 +9,7 @@ public class HrManager extends Employee {
 	 * @param employeeID id of the hr manager
 	 */
 	public HrManager(String name, int employeeID) {
-		super(name, employeeID);
+		super(name);
 	}
 	
 	
@@ -30,8 +30,8 @@ public class HrManager extends Employee {
 	 * @param employeeID id of the driver
 	 * @param driversLicense drivers license of the driver
 	 */
-	public boolean addDriver(String name, int employeeID, String driversLicense) {
-		IDriver driver = new Driver(name, employeeID, driversLicense);
+	public boolean addDriver(String name, String driversLicense) {
+		IDriver driver = new Driver(name,driversLicense);
 		return a.createDriver(driver);
 		
 	}
@@ -41,7 +41,7 @@ public class HrManager extends Employee {
 	}
 	
 	public void addDrivingShift(int shiftID, String startTime, String finishTime, Driver shiftDriver) {
-		DrivingShift shift = new DrivingShift(shiftID, startTime, finishTime, shiftDriver);
+		DrivingShift shift = new DrivingShift(startTime, finishTime, shiftDriver);
 	}
 	
 	public void removeDrivingShift(int shiftID) {

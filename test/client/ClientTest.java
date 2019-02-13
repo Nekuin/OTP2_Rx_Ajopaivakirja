@@ -15,7 +15,7 @@ public class ClientTest {
 	
 	@BeforeEach
 	void resetClient() {
-		testClient = new Client("Hookoo", 800);
+		testClient = new Client("Hookoo");
 	}
 	
 	@Test

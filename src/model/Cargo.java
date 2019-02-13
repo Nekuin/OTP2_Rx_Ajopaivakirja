@@ -7,6 +7,7 @@ import javax.persistence.*;
 public class Cargo implements ICargo {
 	
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="cargoID")
 	private int cargoID;
 	
@@ -22,8 +23,7 @@ public class Cargo implements ICargo {
 	 * @param weight weight of the cargo
 	 * @param hazardous is the cargo hazardous
 	 */
-	public Cargo(int cargoID, double weight, boolean hazardous) {
-		this.cargoID = cargoID;
+	public Cargo(double weight, boolean hazardous) {
 		this.weight = weight;
 		this.hazardous = hazardous;
 	}
