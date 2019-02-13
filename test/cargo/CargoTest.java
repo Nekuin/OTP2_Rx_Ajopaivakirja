@@ -15,7 +15,7 @@ public class CargoTest {
 	
 	@BeforeEach
 	void resetCargo() {
-		testCargo = new Cargo(7001, 2300, false);
+		testCargo = new Cargo(2300, false);
 	}
 	
 	@Test

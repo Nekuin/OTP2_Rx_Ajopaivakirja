@@ -15,7 +15,7 @@ public class VehicleTest {
 	
 	@BeforeEach
 	void resetVehicle() {
-		testCar = new Vehicle("YKS-111", 0.0, 1000, "Sprinter", "Mercedes-Benz", 1001, true); 
+		testCar = new Vehicle("YKS-111", 0.0, 1000, "Sprinter", "Mercedes-Benz", true); 
 	}
 	
 	@Test
