@@ -32,7 +32,7 @@ public class DriverTest {
 	
 	@BeforeEach
 	public void resetDriver() {
-		testdriver = new Driver("Kalle", 1, "AB");
+		testdriver = new Driver("Kalle", "AB");
 	}
 	
 	@Test
