@@ -16,6 +16,7 @@ public class HibernateUtil {
 		try {
 			Configuration configuration = new Configuration();
 			configuration.configure("hibernate.cfg.xml");
+			configuration.addAnnotatedClass(model.Driver.class);
 			System.out.println("Configuration loaded");
 			
 			ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();

@@ -48,6 +48,11 @@ public class Employee implements IEmployee{
 	@Override
 	public void setEmployeeID(int employeeID) {
 		this.employeeID = employeeID;
-	}	
+	}
+	
+	@Override
+	public String toString() {
+		return "Employee: " + this.name + ", id: " + this.employeeID;
+	}
 	
 }

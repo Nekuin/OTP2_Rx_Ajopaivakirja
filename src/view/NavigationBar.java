@@ -1,5 +1,6 @@
 package view;
 
+import application.Main;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -8,10 +9,10 @@ import javafx.scene.layout.VBox;
 public class NavigationBar {
 	
 	private HBox hbox;
-	private BorderPane root;
+	private IView view;
 	
-	public NavigationBar(BorderPane root) {
-		this.root = root;
+	public NavigationBar(IView view) {
+		this.view = view;
 		this.hbox = createNavBar();
 		this.hbox.getStyleClass().add("navbar");
 	}
@@ -19,21 +20,21 @@ public class NavigationBar {
 	private HBox createNavBar() {
 		HBox box = new HBox();
 		
-		Button navButton1 = new Button("Driver view");
-		Button navButton2 = new Button("Second view");
+		Button driverViewButton = new Button("Driver view");
+		Button hrViewButton = new Button("HR view");
 		
-		navButton1.setOnAction(e -> {
-			//change view n stuff
+		driverViewButton.setOnAction(e -> {
+			this.view.changeView(Main.DRIVER_VIEW);
 		});
 		
-		navButton2.setOnAction(e -> {
-			//change view here too n stuff
+		hrViewButton.setOnAction(e -> {
+			this.view.changeView(Main.HR_VIEW);
 		});
 		
-		navButton1.getStyleClass().add("navButton");
-		navButton2.getStyleClass().add("navButton");
+		driverViewButton.getStyleClass().add("navButton");
+		hrViewButton.getStyleClass().add("navButton");
 		
-		box.getChildren().addAll(navButton1, navButton2);
+		box.getChildren().addAll(driverViewButton, hrViewButton);
 		return box;
 	}
 	

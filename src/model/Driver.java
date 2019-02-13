@@ -97,7 +97,10 @@ public class Driver extends Employee implements IDriver{
 		return shift.isShiftDriven();
 	}
 
-	
+	@Override
+	public String toString() {
+		return super.toString() + ", license: " + this.driversLicense;
+	}
 
 	
 

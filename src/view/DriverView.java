@@ -13,7 +13,7 @@ import model.IDriver;
 public class DriverView implements IDriverView{
 	
 	private BorderPane bpane;
-	ObservableList<String> drivers;
+	private ObservableList<IDriver> drivers;
 	
 	public DriverView() {
 		bpane = new BorderPane();
@@ -21,14 +21,10 @@ public class DriverView implements IDriverView{
 		bpane.setRight(driverInfo());
 	}
 	
-	public BorderPane getDriverView() {
-		return this.bpane;
-	}
-	
+
 	private VBox driverTitle() {
 		VBox vbox = new VBox();
 		Text text = new Text("informaatiota");
-		
 		vbox.getChildren().add(text);
 		return vbox;
 	}
@@ -36,21 +32,30 @@ public class DriverView implements IDriverView{
 	private VBox driverInfo() {
 		VBox vbox = new VBox();
 		drivers = FXCollections.observableArrayList();
-		drivers.addAll("joku", "joku toinen", "hullu");
 		
-		ListView lv = new ListView();
+		ListView<IDriver> lv = new ListView<>();
 		lv.setItems(drivers);
+		
+		lv.setOnMouseClicked(e -> {
+			IDriver clicked = lv.getSelectionModel().getSelectedItem();
+			System.out.println("clicked on: " + clicked);
+		});
 		
 		vbox.getChildren().add(lv);
 		return vbox;
 	}
 
+
 	@Override
 	public void updateDrivers(Collection<IDriver> drivers) {
-		
+		this.drivers.addAll(drivers);
 	}
 
-	
-	
+
+	@Override
+	public BorderPane getDriverView() {
+		return this.bpane;
+	}
+
 	
 }
