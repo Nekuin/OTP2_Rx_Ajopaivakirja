@@ -4,6 +4,7 @@ package application;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,7 +36,9 @@ public class Main extends Application implements IView {
 			});
 			Collection<IDriver> asd = a.readDriver().stream().collect(Collectors.toList());
 			this.setDriverData(asd);
+			this.setShiftData(getTestShifts());
 		}).start();
+		
 	}
 	
 	@Override
@@ -95,6 +98,16 @@ public class Main extends Application implements IView {
 		drivers.add(d3);
 		return drivers;
 	}
+	
+	private Collection<DrivingShift> getTestShifts(){
+		Collection<DrivingShift> shifts = new ArrayList<>();
+		Collection<IDriver> drivers = getTestDrivers();
+		Iterator<IDriver> i = drivers.iterator();
+		while(i.hasNext()) {
+			shifts.add(new DrivingShift("06:00", "14:00", i.next()));
+		}
+		return shifts;
+	}
 
 	/**
 	 * Update user interface with a Collection of new drivers
@@ -102,6 +115,10 @@ public class Main extends Application implements IView {
 	@Override
 	public void setDriverData(Collection<IDriver> drivers) {
 		this.dv.updateDrivers(drivers);
+	}
+	
+	public void setShiftData(Collection<DrivingShift> shifts) {
+		this.dv.updateShifts(shifts);
 	}
 
 	/**

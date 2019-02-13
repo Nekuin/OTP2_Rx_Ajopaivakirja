@@ -20,12 +20,9 @@ public class DriverView implements IDriverView{
 	
 	public DriverView() {
 		bpane = new BorderPane();
-		GridPane leftGrid = new GridPane();
-		Text text = new Text("informaatiota");
-		leftGrid.add(text, 0, 0);
-		leftGrid.add(driverInfo(), 0, 1);
+
 		
-		bpane.setLeft(leftGrid);
+		bpane.setLeft(driverInfo());
 		bpane.setRight(shiftInfo());
 	}
 	
@@ -34,6 +31,7 @@ public class DriverView implements IDriverView{
 		GridPane grid = new GridPane();
 		Text title = new Text("Shift info");
 		
+		shifts = FXCollections.observableArrayList();
 		ListView<DrivingShift> lv = new ListView<>();
 		lv.setItems(shifts);
 		
@@ -42,26 +40,40 @@ public class DriverView implements IDriverView{
 		return grid;
 	}
 	
-	private VBox driverInfo() {
-		VBox vbox = new VBox();
+	private GridPane driverInfo() {
+		GridPane grid = new GridPane();
+		Text text = new Text("Driver info");
+		grid.add(text, 0, 0);
 		drivers = FXCollections.observableArrayList();
 		
 		ListView<IDriver> lv = new ListView<>();
 		lv.setItems(drivers);
+		grid.add(lv, 0, 1);
 		
 		lv.setOnMouseClicked(e -> {
 			IDriver clicked = lv.getSelectionModel().getSelectedItem();
 			System.out.println("clicked on: " + clicked);
+			this.getShifts(clicked.getEmployeeID());
 		});
+		return grid;
 		
-		vbox.getChildren().add(lv);
-		return vbox;
 	}
 
 
 	@Override
 	public void updateDrivers(Collection<IDriver> drivers) {
+		this.drivers.clear();
 		this.drivers.addAll(drivers);
+	}
+	
+	@Override
+	public void updateShifts(Collection<DrivingShift> shifts) {
+		this.shifts.clear();
+		this.shifts.addAll(shifts);
+	}
+	
+	private void getShifts(int employeeID) {
+		System.out.println("[PH]getting all the shifts for id: " + employeeID);
 	}
 
 
