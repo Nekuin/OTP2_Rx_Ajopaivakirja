@@ -27,7 +27,21 @@ public class DriverAccessObject {
 			session.saveOrUpdate(driver);
 			t.commit();
 			return true;
-		} catch (Exception e) {
+		} catch (HibernateException e) {
+			if(t != null) t.rollback();
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	public boolean updateDriver(IDriver driver) {
+		Transaction t = null;
+		try(Session session = sf.openSession()) {
+			t = session.beginTransaction();
+			session.saveOrUpdate(driver);
+			t.commit();
+			return true;
+		} catch (HibernateException e) {
 			if(t != null) t.rollback();
 			e.printStackTrace();
 		}
@@ -42,7 +56,7 @@ public class DriverAccessObject {
 			session.load(driver, id);
 			t.commit();
 			return driver;
-		} catch (Exception e) {
+		} catch (HibernateException e) {
 			if(t != null) t.rollback();
 			e.printStackTrace();
 		}
@@ -66,5 +80,20 @@ public class DriverAccessObject {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public boolean deleteDriver(int id) {
+		Transaction t = null;
+		try(Session session = sf.openSession()){
+			t = session.beginTransaction();
+			Driver d = session.get(Driver.class, id);
+			session.delete(d);
+			t.commit();
+			return true;
+		} catch (HibernateException e) {
+			if(t != null) t.rollback();
+			e.printStackTrace();
+		}
+		return false;
 	}
 }
