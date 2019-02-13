@@ -2,7 +2,7 @@ package model;
 
 public class HrManager extends Employee {
 
-	private AjoAccessObject a;
+	private DriverAccessObject a;
 	/**
 	 * Constructor for the hr manager
 	 * @param name name of the hr manager
@@ -20,7 +20,7 @@ public class HrManager extends Employee {
 		
 	}
 	
-	public void setAjoAccessObject(AjoAccessObject a) {
+	public void setAjoAccessObject(DriverAccessObject a) {
 		this.a = a;
 	}
 	
