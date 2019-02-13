@@ -122,6 +122,9 @@ public class DrivingShift {
 		this.client = client;
 	}
 	
-	
+	@Override
+	public String toString() {
+		return this.startTime + "-" + this.finishTime + ", driver: " + this.shiftDriverName;
+	}
 
 }
