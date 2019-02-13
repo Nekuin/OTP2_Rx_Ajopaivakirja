@@ -17,7 +17,7 @@ public class DrivingShiftTest {
 	
 	@BeforeAll
 	public static void setup() {
-		testDriver = new Driver("Kalle", 1, "AB");
+		testDriver = new Driver("Kalle", "AB");
 	}
 	
 	@BeforeEach
