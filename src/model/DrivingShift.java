@@ -52,7 +52,7 @@ public class DrivingShift {
 	 * @param finishTime time the shift is to be finished
 	 * @param shiftDriver driver of the shift
 	 */
-	public DrivingShift(String startTime, String finishTime, Driver shiftDriver) {
+	public DrivingShift(String startTime, String finishTime, IDriver shiftDriver) {
 		this.startTime = startTime;
 		this.finishTime = finishTime;
 		this.shiftDriver = shiftDriver;
