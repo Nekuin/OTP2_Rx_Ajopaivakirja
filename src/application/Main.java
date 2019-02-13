@@ -117,6 +117,7 @@ public class Main extends Application implements IView {
 		this.dv.updateDrivers(drivers);
 	}
 	
+	@Override
 	public void setShiftData(Collection<DrivingShift> shifts) {
 		this.dv.updateShifts(shifts);
 	}
