@@ -87,9 +87,9 @@ public class Main extends Application implements IView {
 	
 	private Collection<IDriver> getTestDrivers(){
 		Collection<IDriver> drivers = new ArrayList<>();
-		IDriver d1 = new Driver("Eka", 1, "A");
-		IDriver d2 = new Driver("Toka", 2, "B");
-		IDriver d3 = new Driver("Kolmas", 3, "AB");
+		IDriver d1 = new Driver("Eka", "A");
+		IDriver d2 = new Driver("Toka", "B");
+		IDriver d3 = new Driver("Kolmas", "AB");
 		drivers.add(d1);
 		drivers.add(d2);
 		drivers.add(d3);

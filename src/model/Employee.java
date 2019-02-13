@@ -7,6 +7,7 @@ import javax.persistence.*;
 public class Employee implements IEmployee{
 	
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="employeeID")
 	private int employeeID;
 	
@@ -16,11 +17,9 @@ public class Employee implements IEmployee{
 	/**
 	 * Constructor of the employee
 	 * @param name name of the employee
-	 * @param employeeID id of the employee
 	 */
-	public Employee(String name, int employeeID) {
+	public Employee(String name) {
 		this.name = name;
-		this.employeeID = employeeID;
 	}
 
 	/**

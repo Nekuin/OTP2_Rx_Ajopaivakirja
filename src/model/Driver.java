@@ -21,11 +21,10 @@ public class Driver extends Employee implements IDriver{
 	/**
 	 * Constructor of the driver
 	 * @param name
-	 * @param employeeID
 	 * @param driversLicense
 	 */
-	public Driver(String name, int employeeID, String driversLicense) {
-		super(name, employeeID);
+	public Driver(String name, String driversLicense) {
+		super(name);
 		this.driversLicense = driversLicense;
 	}
 	
