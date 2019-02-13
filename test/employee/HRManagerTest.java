@@ -14,7 +14,7 @@ public class HRManagerTest {
 	
 	@BeforeEach
 	void resetHR() {
-		testHR = new HrManager("HR Heikki", 400);
+		testHR = new HrManager("HR Heikki");
 	}
 	
 	@Test
