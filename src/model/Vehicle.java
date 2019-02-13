@@ -7,6 +7,7 @@ import javax.persistence.*;
 public class Vehicle implements IVehicle {
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="carID")
 	private int carID;
 	
@@ -28,14 +29,13 @@ public class Vehicle implements IVehicle {
 	@Column(name="maintained")
 	private boolean maintained;
 	
-	public Vehicle(String regNr, double drivenDistance, int maxCargoLoad, String model, String brand, int carID,
+	public Vehicle(String regNr, double drivenDistance, int maxCargoLoad, String model, String brand,
 			boolean maintained) {
 		this.regNr = regNr;
 		this.drivenDistance = drivenDistance;
 		this.maxCargoLoad = maxCargoLoad;
 		this.model = model;
 		this.brand = brand;
-		this.carID = carID;
 		this.maintained = maintained;
 	}
 

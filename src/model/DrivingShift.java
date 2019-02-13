@@ -8,6 +8,7 @@ import javax.persistence.*;
 public class DrivingShift {
 	
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="shiftid")
 	private int shiftID;
 	
@@ -51,8 +52,7 @@ public class DrivingShift {
 	 * @param finishTime time the shift is to be finished
 	 * @param shiftDriver driver of the shift
 	 */
-	public DrivingShift(int shiftID, String startTime, String finishTime, Driver shiftDriver) {
-		this.shiftID = shiftID;
+	public DrivingShift(String startTime, String finishTime, Driver shiftDriver) {
 		this.startTime = startTime;
 		this.finishTime = finishTime;
 		this.shiftDriver = shiftDriver;
