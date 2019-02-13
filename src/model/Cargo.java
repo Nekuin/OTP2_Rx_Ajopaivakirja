@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class Cargo implements ICargo {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="cargoID")
 	private int cargoID;
 	
