@@ -14,5 +14,6 @@ public class testiMain {
 
 		System.out.println("Session 1: " + factory.hashCode());
 		System.out.println("Session 2: " + factory.hashCode());
+		System.out.println("Session 3: " + factory.hashCode());
 	}
 }
