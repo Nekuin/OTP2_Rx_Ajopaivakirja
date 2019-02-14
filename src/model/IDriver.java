@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Set;
+
 public interface IDriver extends IEmployee {
 	
 	/**
@@ -56,5 +58,9 @@ public interface IDriver extends IEmployee {
 	 * @return
 	 */
 	public boolean driveShift(IDrivingShift shift);
+	
+	public void addDrivingShift(DrivingShift drivingShift);
+	
+	public Set<DrivingShift> getShifts();
 
 }

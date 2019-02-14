@@ -4,6 +4,7 @@ package application;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import javafx.application.Application;
@@ -28,12 +29,26 @@ public class Main extends Application implements IView {
 	public void init() {
 		new Thread(() -> {
 			this.a = new DriverAccessObject();
-			Collection<IDriver> drivers = this.getTestDrivers();
-			drivers.forEach(e -> {
+			
+			//get test driver and shift as a List
+			List<IDriver> d = getTestDrivers().stream().collect(Collectors.toList());
+			List<DrivingShift> s = getTestShifts().stream().collect(Collectors.toList());
+			
+			//add test shifts to drivers
+			for(int i = 0; i < d.size(); i++) {
+				d.get(i).addDrivingShift(s.get(i));
+			}
+
+			//create drivers to database, and print info
+			d.forEach(e -> {
+				System.out.println(e + " " + e.getShifts());
 				a.createDriver(e);
 			});
+			
+			//read and set test drivers to DriverView
 			Collection<IDriver> asd = a.readDriver().stream().collect(Collectors.toList());
 			this.setDriverData(asd);
+			//set shifts to driverView
 			this.setShiftData(getTestShifts());
 			
 		}).start();
@@ -105,10 +120,10 @@ public class Main extends Application implements IView {
 		ICargo cargo = new Cargo();
 		IClient client = new Client();
 		
-		while(i.hasNext()) {
+		drivers.forEach(e -> {
 			shifts.add(new DrivingShift(client, cargo));
-		}
-		
+		});
+		System.out.println("finished");
 		return shifts;
 	}
 

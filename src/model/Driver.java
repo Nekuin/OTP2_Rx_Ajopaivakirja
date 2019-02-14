@@ -1,8 +1,10 @@
 package model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.*;
+
 
 @Entity
 public class Driver extends Employee implements IDriver{
@@ -18,7 +20,7 @@ public class Driver extends Employee implements IDriver{
 	
 	@Column(name="drivencargo")
 	private double drivenCargo;
-	
+
 	@OneToMany(mappedBy="driver")
 	private Set<DrivingShift> shifts;
 	
@@ -29,7 +31,8 @@ public class Driver extends Employee implements IDriver{
 	 */
 	public Driver(String name, String driversLicense) {
 		super(name);
-		this.driversLicense = driversLicense;
+		this.driversLicense = driversLicense; 
+		this.shifts = new HashSet<>();
 	}
 	
 	/**
@@ -105,7 +108,14 @@ public class Driver extends Employee implements IDriver{
 		return super.toString() + ", license: " + this.driversLicense;
 	}
 
+	@Override
+	public void addDrivingShift(DrivingShift drivingShift) {
+		shifts.add(drivingShift);
+	}
 	
+	public Set<DrivingShift> getShifts() {
+		return this.shifts;
+	}
 
 	
 	
