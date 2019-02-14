@@ -22,7 +22,7 @@ public class DrivingShiftTest {
 	
 	@BeforeEach
 	public void resetDrivingShift() {
-		testShift = new DrivingShift("8:00", "16:00",(Driver) testDriver);
+		testShift = new DrivingShift();
 	}
 	
 	@Test
