@@ -40,8 +40,8 @@ public class HrManager extends Employee {
 		return a.deleteDriver(employeeID);
 	}
 	
-	public void addDrivingShift(int shiftID, String startTime, String finishTime, Driver shiftDriver) {
-		DrivingShift shift = new DrivingShift(startTime, finishTime, shiftDriver);
+	public void addDrivingShift(IClient client, ICargo cargo) {
+		DrivingShift shift = new DrivingShift(client, cargo);
 	}
 	
 	public void removeDrivingShift(int shiftID) {
