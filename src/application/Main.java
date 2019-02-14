@@ -3,7 +3,6 @@ package application;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,32 +23,37 @@ public class Main extends Application implements IView {
 	private IHRView hr;
 	
 	private DriverAccessObject a;
+	private DrivingShiftAO shiftAO;
 	
 	@Override
 	public void init() {
 		new Thread(() -> {
 			this.a = new DriverAccessObject();
+			this.shiftAO = new DrivingShiftAO();
 			
 			//get test driver and shift as a List
 			List<IDriver> d = getTestDrivers().stream().collect(Collectors.toList());
 			List<DrivingShift> s = getTestShifts().stream().collect(Collectors.toList());
 			
-			//add test shifts to drivers
-			for(int i = 0; i < d.size(); i++) {
-				d.get(i).addDrivingShift(s.get(i));
-			}
-
-			//create drivers to database, and print info
-			d.forEach(e -> {
-				System.out.println(e + " " + e.getShifts());
-				a.createDriver(e);
-			});
+			d.forEach(System.out::println);
+			s.forEach(System.out::println);
 			
-			//read and set test drivers to DriverView
-			Collection<IDriver> asd = a.readDriver().stream().collect(Collectors.toList());
-			this.setDriverData(asd);
-			//set shifts to driverView
-			this.setShiftData(getTestShifts());
+			IDriver eka = d.get(0);
+			eka.addDrivingShift(s.get(0));
+			eka.addDrivingShift(s.get(1));
+			IDriver toka = d.get(1);
+			toka.addDrivingShift(s.get(2));
+			this.a.updateDriver(eka);
+			this.a.updateDriver(toka);
+			System.out.println("with shifts:");
+			d.forEach(System.out::println);
+			
+			//read and print drivers from database
+			IDriver driver = this.a.readDriver(1);
+			IDrivingShift shift = this.shiftAO.readDrivingShift(driver.getShift().get(0).getShiftID());
+			//prints Employee: Eka, id: 1, license: A shifts: [Shift id: 1 null null, Shift id: 2 null null] their shift: Shift id: 1 null null
+			//need to create ManyToOne stuff for client and cargo
+			System.out.println(driver + " their shift: " + shift);
 			
 		}).start();
 		
@@ -110,20 +114,32 @@ public class Main extends Application implements IView {
 		drivers.add(d1);
 		drivers.add(d2);
 		drivers.add(d3);
+		drivers.forEach(e -> {
+			this.a.createDriver(e);
+		});
+		System.out.println("finished creating drivers");
 		return drivers;
+		
 	}
+	
 	
 	private Collection<DrivingShift> getTestShifts(){
 		Collection<DrivingShift> shifts = new ArrayList<>();
-		Collection<IDriver> drivers = getTestDrivers();
-		Iterator<IDriver> i = drivers.iterator();
 		ICargo cargo = new Cargo();
 		IClient client = new Client();
 		
-		drivers.forEach(e -> {
-			shifts.add(new DrivingShift(client, cargo));
+		DrivingShift eka = new DrivingShift(client, cargo);
+		DrivingShift toka = new DrivingShift(client, cargo);
+		DrivingShift kolmas = new DrivingShift(client, cargo);
+		shifts.add(eka);
+		shifts.add(toka);
+		shifts.add(kolmas);
+		/*
+		shifts.forEach(e -> {
+			this.shiftAO.createDrivingShift(e);
 		});
-		System.out.println("finished");
+		*/
+		System.out.println("finished creating shifts");
 
 		return shifts;
 	}

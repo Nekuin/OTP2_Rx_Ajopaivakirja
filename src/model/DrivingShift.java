@@ -48,8 +48,9 @@ public class DrivingShift implements IDrivingShift{
 	@Transient
 	private IClient client;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Driver driver;
+	
 
 	/**
 	 * Constructor for driving shift
@@ -100,7 +101,7 @@ public class DrivingShift implements IDrivingShift{
 		return shiftDriver;
 	}
 
-	public void setShiftDriver(Driver shiftDriver) {
+	public void setShiftDriver(IDriver shiftDriver) {
 		this.shiftDriver = shiftDriver;
 		this.shiftDriverID = shiftDriver.getEmployeeID();
 	}
@@ -130,7 +131,7 @@ public class DrivingShift implements IDrivingShift{
 	
 	@Override
 	public String toString() {
-		return this.cargo + " " + this.client;
+		return "Shift id: " + this.shiftID + " " + this.cargo + " " + this.client;
 	}
 
 }

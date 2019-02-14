@@ -1,9 +1,10 @@
 package model;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.*;
+
 
 
 @Entity
@@ -20,9 +21,15 @@ public class Driver extends Employee implements IDriver{
 	
 	@Column(name="drivencargo")
 	private double drivenCargo;
+	
+	@JoinColumn(name="emp_id")
+	private int emp_id;
 
-	@OneToMany(mappedBy="driver")
-	private Set<DrivingShift> shifts;
+	@Column(name="shift")
+	private int shiftID;
+	
+	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+	private List<DrivingShift> shift;
 	
 	/**
 	 * Constructor of the driver
@@ -32,7 +39,8 @@ public class Driver extends Employee implements IDriver{
 	public Driver(String name, String driversLicense) {
 		super(name);
 		this.driversLicense = driversLicense; 
-		this.shifts = new HashSet<>();
+		//this.shifts = new HashSet<>();
+		this.shift = new ArrayList<>();
 	}
 	
 	/**
@@ -105,16 +113,20 @@ public class Driver extends Employee implements IDriver{
 
 	@Override
 	public String toString() {
-		return super.toString() + ", license: " + this.driversLicense;
+		return super.toString() + ", license: " + this.driversLicense + " shifts: " + this.getShift();
 	}
 
 	@Override
 	public void addDrivingShift(DrivingShift drivingShift) {
-		shifts.add(drivingShift);
+		//shifts.add(drivingShift);
+		this.shift.add(drivingShift);
+		System.out.println("added shift: " + drivingShift);
+		//this.shiftID = drivingShift.getShiftID();
 	}
 	
-	public Set<DrivingShift> getShifts() {
-		return this.shifts;
+	@Override
+	public List<DrivingShift> getShift() {
+		return this.shift;
 	}
 
 	

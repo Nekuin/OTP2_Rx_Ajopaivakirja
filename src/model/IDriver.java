@@ -1,6 +1,6 @@
 package model;
 
-import java.util.Set;
+import java.util.List;
 
 public interface IDriver extends IEmployee {
 	
@@ -61,6 +61,8 @@ public interface IDriver extends IEmployee {
 	
 	public void addDrivingShift(DrivingShift drivingShift);
 	
-	public Set<DrivingShift> getShifts();
+	//public Set<DrivingShift> getShifts();
+	
+	public List<DrivingShift> getShift();
 
 }

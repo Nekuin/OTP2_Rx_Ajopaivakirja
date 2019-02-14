@@ -1,6 +1,5 @@
 package model;
 
-import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -28,7 +27,7 @@ public class DriverAccessObject {
 			t.commit();
 			return true;
 		} catch (HibernateException e) {
-			if(t != null) t.rollback();
+			//if(t != null) t.rollback();
 			e.printStackTrace();
 		}
 		return false;
@@ -42,7 +41,7 @@ public class DriverAccessObject {
 			t.commit();
 			return true;
 		} catch (HibernateException e) {
-			if(t != null) t.rollback();
+			//if(t != null) t.rollback();
 			e.printStackTrace();
 		}
 		return false;
