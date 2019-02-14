@@ -17,6 +17,7 @@ public class HibernateUtil {
 			Configuration configuration = new Configuration();
 			configuration.configure("hibernate.cfg.xml");
 			configuration.addAnnotatedClass(model.Driver.class);
+			configuration.addAnnotatedClass(model.DrivingShift.class);
 			System.out.println("Configuration loaded");
 			
 			ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();

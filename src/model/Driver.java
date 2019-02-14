@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Set;
+
 import javax.persistence.*;
 
 @Entity
@@ -17,6 +19,8 @@ public class Driver extends Employee implements IDriver{
 	@Column(name="drivencargo")
 	private double drivenCargo;
 	
+	@OneToMany(mappedBy="driver")
+	private Set<DrivingShift> shifts;
 	
 	/**
 	 * Constructor of the driver

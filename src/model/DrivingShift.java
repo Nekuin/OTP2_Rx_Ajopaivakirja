@@ -47,6 +47,9 @@ public class DrivingShift {
 	
 	@Transient
 	private IClient client;
+	
+	@ManyToOne
+	private Driver driver;
 
 	/**
 	 * Constructor for driving shift

@@ -35,6 +35,7 @@ public class Main extends Application implements IView {
 			Collection<IDriver> asd = a.readDriver().stream().collect(Collectors.toList());
 			this.setDriverData(asd);
 			this.setShiftData(getTestShifts());
+			
 		}).start();
 		
 	}
@@ -101,9 +102,13 @@ public class Main extends Application implements IView {
 		Collection<DrivingShift> shifts = new ArrayList<>();
 		Collection<IDriver> drivers = getTestDrivers();
 		Iterator<IDriver> i = drivers.iterator();
+		ICargo cargo = new Cargo();
+		IClient client = new Client();
+		
 		while(i.hasNext()) {
-			shifts.add(new DrivingShift("06:00", "14:00", i.next()));
+			shifts.add(new DrivingShift(client, cargo));
 		}
+		
 		return shifts;
 	}
 
