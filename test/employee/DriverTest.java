@@ -44,8 +44,7 @@ public class DriverTest {
 	
 	@Test
 	@DisplayName("Drivers License")
-	void getDLicense() {
-		
+	void getDLicense() {		
 		assertEquals("AB", testdriver.getDriversLicense(), "Drivers license is not right!");
 		
 	}
