@@ -43,7 +43,7 @@ public interface IDrivingShift {
 	 * Returns the driver of the shift
 	 * @return
 	 */
-	public Driver getShiftDriver();
+	public IDriver getShiftDriver();
 	
 	/**
 	 * Returns if the shift is driven or not
