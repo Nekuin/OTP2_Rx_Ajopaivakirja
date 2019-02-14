@@ -3,9 +3,7 @@ package application;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Iterator;
-import java.util.List;
 import java.util.stream.Collectors;
 
 import javafx.application.Application;
@@ -117,6 +115,7 @@ public class Main extends Application implements IView {
 		this.dv.updateDrivers(drivers);
 	}
 	
+	@Override
 	public void setShiftData(Collection<DrivingShift> shifts) {
 		this.dv.updateShifts(shifts);
 	}

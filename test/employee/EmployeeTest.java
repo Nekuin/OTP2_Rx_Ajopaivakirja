@@ -32,13 +32,7 @@ public class EmployeeTest {
 	}
 	
 	@Test
-	@DisplayName("Test getEmployeeID")
-	void getEmployeeID() {	
-		assertEquals(2001, testEmployee.getEmployeeID(), "Employee ID not correct.");
-	}
-	
-	@Test
-	@DisplayName("Test setEmployeeID")
+	@DisplayName("Test employeeID")
 	void setEmployeeID() {	
 		testEmployee.setEmployeeID(2010);
 		assertEquals(2010, testEmployee.getEmployeeID(), "Employee ID not changed.");

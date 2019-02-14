@@ -19,13 +19,7 @@ public class ClientTest {
 	}
 	
 	@Test
-	@DisplayName("Test getClientID")
-	void getClientID() {	
-		assertEquals(800, testClient.getClientID(), "Client ID not correct.");
-	}
-	
-	@Test
-	@DisplayName("Test setClientID")
+	@DisplayName("Test clientID")
 	void setClientID() {
 		testClient.setClientID(999);
 		assertEquals(999, testClient.getClientID(), "Client ID not changed.");
