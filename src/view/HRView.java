@@ -1,5 +1,7 @@
 package view;
 
+import java.util.Collection;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
@@ -40,6 +42,12 @@ public class HRView implements IHRView {
 	@Override
 	public BorderPane getHRView() {
 		return this.bpane;
+	}
+
+	@Override
+	public void updateDrivers(Collection<IDriver> drivers) {
+		this.drivers.clear();
+		this.drivers.addAll(drivers);
 	}
 	
 }
