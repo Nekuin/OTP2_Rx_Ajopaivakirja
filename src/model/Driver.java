@@ -1,6 +1,12 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+
 import javax.persistence.*;
+
+import org.hibernate.mapping.Set;
 
 @Entity
 public class Driver extends Employee implements IDriver{
@@ -17,6 +23,10 @@ public class Driver extends Employee implements IDriver{
 	@Column(name="drivencargo")
 	private double drivenCargo;
 	
+	@OneToMany(cascade=CascadeType.ALL, targetEntity=DrivingShift.class)
+	@JoinColumn(name="shiftID")
+	private HashSet<DrivingShift> shifts = new HashSet<DrivingShift>();
+	
 	
 	/**
 	 * Constructor of the driver
@@ -25,7 +35,7 @@ public class Driver extends Employee implements IDriver{
 	 */
 	public Driver(String name, String driversLicense) {
 		super(name);
-		this.driversLicense = driversLicense;
+		this.driversLicense = driversLicense; 
 	}
 	
 	/**
@@ -101,7 +111,9 @@ public class Driver extends Employee implements IDriver{
 		return super.toString() + ", license: " + this.driversLicense;
 	}
 
-	
+	public void addDrivingShift(DrivingShift drivingShift) {
+		shifts.add(drivingShift);
+	}
 
 	
 	
