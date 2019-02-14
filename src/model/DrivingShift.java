@@ -19,7 +19,7 @@ public class DrivingShift {
 	private String finishTime;
 	
 	@Column(name="shiftdriver")
-	private String shiftDriverName;
+	private int shiftDriverID;
 	
 	@Column(name="cargoid")
 	private int cargoID;
@@ -32,6 +32,9 @@ public class DrivingShift {
 	
 	@Column(name="shiftdriven")
 	private boolean shiftDriven;
+	
+	@Column(name="shifttaken")
+	private boolean shiftTaken;
 	
 	@Transient
 	private IVehicle vehicle;
@@ -46,18 +49,17 @@ public class DrivingShift {
 	private IClient client;
 
 	/**
-	 * 
-	 * @param shiftID id for the shift
-	 * @param startTime starting time of the shift
-	 * @param finishTime time the shift is to be finished
-	 * @param shiftDriver driver of the shift
+	 * Constructor for driving shift
+	 * @param client client of the shift
+	 * @param cargo cargo of the shift
 	 */
-	public DrivingShift(String startTime, String finishTime, IDriver shiftDriver) {
-		this.startTime = startTime;
-		this.finishTime = finishTime;
-		this.shiftDriver = shiftDriver;
+	public DrivingShift(IClient client, ICargo cargo) {
+		this.cargo = cargo;
+		this.cargoID = cargo.getCargoID();
+		this.client = client;
+		this.clientID = client.getClientID();
+		this.shiftTaken = false;
 		this.shiftDriven = false;
-		this.shiftDriverName = shiftDriver.getName();
 	}
 	
 	/**
@@ -97,6 +99,7 @@ public class DrivingShift {
 
 	public void setShiftDriver(Driver shiftDriver) {
 		this.shiftDriver = shiftDriver;
+		this.shiftDriverID = shiftDriver.getEmployeeID();
 	}
 
 	public boolean isShiftDriven() {
@@ -124,7 +127,7 @@ public class DrivingShift {
 	
 	@Override
 	public String toString() {
-		return this.startTime + "-" + this.finishTime + ", driver: " + this.shiftDriverName;
+		return this.cargo + " " + this.client;
 	}
 
 }

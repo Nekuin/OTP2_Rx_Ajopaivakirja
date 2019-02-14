@@ -55,7 +55,10 @@ public class Client implements IClient {
 		this.clientID = clientID;
 	}
 	
-	
+	@Override
+	public String toString() {
+		return "Client ID: " + this.clientID + " Name: " + this.name;
+	}
 	
 	
 
