@@ -19,8 +19,9 @@ public class CargoTest {
 	}
 	
 	@Test
-	@DisplayName("Test getCargoID")
+	@DisplayName("Test cargoID")
 	void getCargoID() {	
+		testCargo.setCargoID(7001);
 		assertEquals(7001, testCargo.getCargoID(), "Cargo ID not correct.");
 	}
 	

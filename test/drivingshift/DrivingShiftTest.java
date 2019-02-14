@@ -28,7 +28,7 @@ public class DrivingShiftTest {
 	@Test
 	@DisplayName("Shift ID")
 	void shiftID() {
-		
+		testShift.setShiftID(1);
 		assertEquals(1, testShift.getShiftID(), "Shift Id is wrong!");
 	}
 	
