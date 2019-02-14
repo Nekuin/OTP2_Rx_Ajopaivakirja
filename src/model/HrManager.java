@@ -36,8 +36,8 @@ public class HrManager extends Employee {
 		
 	}
 	
-	public void removeDriver(int employeeID) {
-		a.deleteDriver(employeeID);
+	public boolean removeDriver(int employeeID) {
+		return a.deleteDriver(employeeID);
 	}
 	
 	public void addDrivingShift(int shiftID, String startTime, String finishTime, Driver shiftDriver) {
