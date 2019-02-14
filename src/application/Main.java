@@ -50,6 +50,9 @@ public class Main extends Application implements IView {
 			this.setDriverData(asd);
 			//set shifts to driverView
 			this.setShiftData(getTestShifts());
+			asd.forEach(e -> {
+				System.out.println(e + ", shift: " + e.getShifts() + ".");
+			});
 			
 		}).start();
 		

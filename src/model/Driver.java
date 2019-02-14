@@ -21,7 +21,7 @@ public class Driver extends Employee implements IDriver{
 	@Column(name="drivencargo")
 	private double drivenCargo;
 
-	@OneToMany(mappedBy="driver")
+	@OneToMany(mappedBy="shiftDriverID")
 	private Set<DrivingShift> shifts;
 	
 	/**
