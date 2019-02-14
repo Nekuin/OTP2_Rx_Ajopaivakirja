@@ -79,5 +79,10 @@ public class Cargo implements ICargo {
 	public void setCargoID(int cargoID) {
 		this.cargoID = cargoID;
 	}
+	
+	@Override
+	public String toString() {
+		return "Cargo ID: " + this.getCargoID() + " Weight: " + this.getWeight() + " Hazardous: " + this.isHazardous();
+	}
 
 }
