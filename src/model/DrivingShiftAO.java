@@ -52,7 +52,7 @@ public class DrivingShiftAO {
 	public IDrivingShift readDrivingShift(int ID) {
 		DrivingShift shift = new DrivingShift();
 		Transaction t = null;
-
+//j
 		try (Session session = sf.openSession()) {
 			t = session.beginTransaction();
 			session.load(shift, ID);
