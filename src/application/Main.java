@@ -6,6 +6,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import controller.Controller;
+import controller.IController;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
@@ -21,23 +23,27 @@ public class Main extends Application implements IView {
 	private BorderPane root;
 	private IDriverView dv;
 	private IHRView hr;
-	
-	private DriverAccessObject a;
-	private DrivingShiftAO shiftAO;
+	private IController controller;
 	
 	@Override
 	public void init() {
+		this.controller = new Controller(this);
 		new Thread(() -> {
+			/*
 			this.a = new DriverAccessObject();
 			this.shiftAO = new DrivingShiftAO();
+			*/
+			//get test drivers and shifts, and make a List copy of them
+			Collection<IDriver> drivers = getTestDrivers();
+			Collection<IDrivingShift> drivingShifts = getTestShifts();
+			List<IDriver> d = drivers.stream().collect(Collectors.toList());
+			List<IDrivingShift> s = drivingShifts.stream().collect(Collectors.toList());
 			
-			//get test driver and shift as a List
-			List<IDriver> d = getTestDrivers().stream().collect(Collectors.toList());
-			List<DrivingShift> s = getTestShifts().stream().collect(Collectors.toList());
-			
+			System.out.println("drivers and shifts---------------");
 			d.forEach(System.out::println);
 			s.forEach(System.out::println);
-			
+			System.out.println("------------");
+			/*
 			IDriver eka = d.get(0);
 			eka.addDrivingShift(s.get(0));
 			eka.addDrivingShift(s.get(1));
@@ -54,6 +60,9 @@ public class Main extends Application implements IView {
 			//prints Employee: Eka, id: 1, license: A shifts: [Shift id: 1 null null, Shift id: 2 null null] their shift: Shift id: 1 null null
 			//need to create ManyToOne stuff for client and cargo
 			System.out.println(driver + " their shift: " + shift);
+			*/
+			setDriverData(drivers);
+			setShiftData(drivingShifts);
 			
 		}).start();
 		
@@ -67,7 +76,7 @@ public class Main extends Application implements IView {
 			this.root = new BorderPane();
 			
 			//create and set driver view
-			this.dv = new DriverView();
+			this.dv = new DriverView(this.controller);
 			root.setCenter(dv.getDriverView());
 			
 			
@@ -115,7 +124,7 @@ public class Main extends Application implements IView {
 		drivers.add(d2);
 		drivers.add(d3);
 		drivers.forEach(e -> {
-			this.a.createDriver(e);
+			this.controller.createDriver(e);
 		});
 		System.out.println("finished creating drivers");
 		return drivers;
@@ -123,22 +132,24 @@ public class Main extends Application implements IView {
 	}
 	
 	
-	private Collection<DrivingShift> getTestShifts(){
-		Collection<DrivingShift> shifts = new ArrayList<>();
-		ICargo cargo = new Cargo();
-		IClient client = new Client();
-		
+	private Collection<IDrivingShift> getTestShifts(){
+		Collection<IDrivingShift> shifts = new ArrayList<>();
+		for(int i = 0; i < 4; i++) {
+			IDrivingShift shift = new DrivingShift(new Client("client"), new Cargo(i, false));
+			shifts.add(shift);
+		}
+		/*
 		DrivingShift eka = new DrivingShift(client, cargo);
 		DrivingShift toka = new DrivingShift(client, cargo);
 		DrivingShift kolmas = new DrivingShift(client, cargo);
 		shifts.add(eka);
 		shifts.add(toka);
 		shifts.add(kolmas);
-		/*
-		shifts.forEach(e -> {
-			this.shiftAO.createDrivingShift(e);
-		});
 		*/
+		shifts.forEach(e -> {
+			this.controller.createDrivingShift(e);
+		});
+		
 		System.out.println("finished creating shifts");
 
 		return shifts;
@@ -153,7 +164,7 @@ public class Main extends Application implements IView {
 	}
 	
 	@Override
-	public void setShiftData(Collection<DrivingShift> shifts) {
+	public void setShiftData(Collection<IDrivingShift> shifts) {
 		this.dv.updateShifts(shifts);
 	}
 

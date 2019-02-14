@@ -1,7 +1,10 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import javax.persistence.*;
-//kk
 
 @Entity
 @Table(name="Drivingshifts")
@@ -20,10 +23,10 @@ public class DrivingShift implements IDrivingShift{
 	
 	@Column(name="shiftdriver")
 	private int shiftDriverID;
-	
+	/*
 	@Column(name="cargoid")
 	private int cargoID;
-	
+	*/
 	@Column(name="clientid")
 	private int clientID;
 	
@@ -39,14 +42,13 @@ public class DrivingShift implements IDrivingShift{
 	@Transient
 	private IVehicle vehicle;
 	
-	@Transient
-	private IDriver shiftDriver;
+	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+	//order column prevents MultipleBagsException
+	@OrderColumn(name="ORDER_COL")
+	private List<Cargo> cargo;
 	
-	@Transient
-	private ICargo cargo;
-	
-	@Transient
-	private IClient client;
+	@OneToOne(cascade = CascadeType.ALL)
+	private Client client;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Driver driver;
@@ -58,9 +60,9 @@ public class DrivingShift implements IDrivingShift{
 	 * @param cargo cargo of the shift
 	 */
 	public DrivingShift(IClient client, ICargo cargo) {
-		this.cargo = cargo;
-		this.cargoID = cargo.getCargoID();
-		this.client = client;
+		this.cargo = new ArrayList<>();
+		this.cargo.add((Cargo)cargo);
+		this.client = (Client)client;
 		this.clientID = client.getClientID();
 		this.shiftTaken = false;
 		this.shiftDriven = false;
@@ -98,11 +100,11 @@ public class DrivingShift implements IDrivingShift{
 	}
 
 	public IDriver getShiftDriver() {
-		return shiftDriver;
+		return this.driver;
 	}
 
 	public void setShiftDriver(IDriver shiftDriver) {
-		this.shiftDriver = shiftDriver;
+		this.driver = (Driver)shiftDriver;
 		this.shiftDriverID = shiftDriver.getEmployeeID();
 	}
 
@@ -119,19 +121,37 @@ public class DrivingShift implements IDrivingShift{
 		this.vehicle = vehicle;
 	}
 	
-	public void setCargo(ICargo cargo) {
-		this.cargoID = cargo.getCargoID();
-		this.cargo = cargo;
+	public void addCargo(ICargo cargo) {
+		this.cargo.add((Cargo)cargo);
 	}
 	
 	public void setClient(IClient client) {
 		this.clientID = client.getClientID();
-		this.client = client;
+		this.client = (Client)client;
+	}
+	
+	public IClient getClient() {
+		return this.client;
+	}
+	
+	public List<ICargo> getCargo() {
+		List<ICargo> cargo = this.cargo.stream().collect(Collectors.toList());
+		return cargo;
 	}
 	
 	@Override
 	public String toString() {
 		return "Shift id: " + this.shiftID + " " + this.cargo + " " + this.client;
+	}
+
+	@Override
+	public void setShiftTaken(boolean bool) {
+		this.shiftTaken = bool;
+	}
+
+	@Override
+	public boolean getShiftTaken() {
+		return this.shiftTaken;
 	}
 
 }

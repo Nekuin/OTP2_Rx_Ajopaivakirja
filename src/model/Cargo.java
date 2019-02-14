@@ -17,6 +17,9 @@ public class Cargo implements ICargo {
 	@Column(name="hazardous")
 	private boolean hazardous;
 	
+	@ManyToOne
+	private DrivingShift drivingShift;
+	
 	/**
 	 * 
 	 * @param cargoID id of the cargo

@@ -5,9 +5,10 @@ import java.util.Collection;
 import javafx.scene.layout.BorderPane;
 import model.DrivingShift;
 import model.IDriver;
+import model.IDrivingShift;
 
 public interface IDriverView {
 	public void updateDrivers(Collection<IDriver> drivers);
 	public BorderPane getDriverView();
-	public void updateShifts(Collection<DrivingShift> shifts);
+	public void updateShifts(Collection<IDrivingShift> shifts);
 }

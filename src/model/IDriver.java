@@ -59,7 +59,7 @@ public interface IDriver extends IEmployee {
 	 */
 	public boolean driveShift(IDrivingShift shift);
 	
-	public void addDrivingShift(DrivingShift drivingShift);
+	public void addDrivingShift(IDrivingShift drivingShift);
 	
 	//public Set<DrivingShift> getShifts();
 	

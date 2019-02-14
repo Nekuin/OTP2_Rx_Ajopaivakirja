@@ -22,12 +22,6 @@ public class Driver extends Employee implements IDriver{
 	@Column(name="drivencargo")
 	private double drivenCargo;
 	
-	@JoinColumn(name="emp_id")
-	private int emp_id;
-
-	@Column(name="shift")
-	private int shiftID;
-	
 	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
 	private List<DrivingShift> shift;
 	
@@ -117,9 +111,9 @@ public class Driver extends Employee implements IDriver{
 	}
 
 	@Override
-	public void addDrivingShift(DrivingShift drivingShift) {
+	public void addDrivingShift(IDrivingShift drivingShift) {
 		//shifts.add(drivingShift);
-		this.shift.add(drivingShift);
+		this.shift.add((DrivingShift)drivingShift);
 		System.out.println("added shift: " + drivingShift);
 		//this.shiftID = drivingShift.getShiftID();
 	}
