@@ -5,7 +5,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="Drivingshifts")
-public class DrivingShift {
+public class DrivingShift implements IDrivingShift{
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)

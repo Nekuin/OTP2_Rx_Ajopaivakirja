@@ -127,6 +127,7 @@ public class Main extends Application implements IView {
 			shifts.add(new DrivingShift(client, cargo));
 		});
 		System.out.println("finished");
+
 		return shifts;
 	}
 
