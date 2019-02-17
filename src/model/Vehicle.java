@@ -38,6 +38,10 @@ public class Vehicle implements IVehicle {
 		this.brand = brand;
 		this.maintained = maintained;
 	}
+	//Parametriton konstruktori
+	public Vehicle() {
+		
+	}
 
 	@Override
 	public String getRegNr() {
