@@ -38,7 +38,7 @@ public class Vehicle implements IVehicle {
 		this.brand = brand;
 		this.maintained = maintained;
 	}
-	//Parametriton konstruktori
+	//Parametriton konstruktori!
 	public Vehicle() {
 		
 	}
