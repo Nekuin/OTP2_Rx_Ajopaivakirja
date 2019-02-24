@@ -27,6 +27,7 @@ public class Main extends Application implements IView {
 	
 	@Override
 	public void init() {
+		
 		this.controller = new Controller(this);
 		new Thread(() -> {
 			/*
