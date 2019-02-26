@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -72,7 +73,7 @@ public class Controller implements IController{
 	
 	public List<IDrivingShift> readGoodDrivingShifts(IDriver driver) {
 		List<IDrivingShift> shifts = this.drivingShiftAO.readDrivingShift().stream().collect(Collectors.toList());
-		List<IDrivingShift> goodShifts = null;
+		List<IDrivingShift> goodShifts = new ArrayList<IDrivingShift>();
 		boolean drivable;
 		
 		if(driver.getCanDriveHazardous() == false) {
@@ -85,9 +86,10 @@ public class Controller implements IController{
 					if(c .isHazardous() == true) {
 						drivable = false;
 					}
-					if(drivable == true) {
-						goodShifts.add(shift);
-					}
+				}
+				
+				if(drivable == true) {
+					goodShifts.add(shift);
 				}
 			}
 		}
