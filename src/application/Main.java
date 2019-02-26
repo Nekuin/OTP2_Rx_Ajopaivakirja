@@ -23,6 +23,7 @@ public class Main extends Application implements IView {
 	private BorderPane root;
 	private IDriverView dv;
 	private IHRView hr;
+	private ILandingView landing;
 	private IController controller;
 	
 	@Override
@@ -77,9 +78,11 @@ public class Main extends Application implements IView {
 			
 			//create and set driver view
 			this.dv = new DriverView(this.controller);
-			root.setCenter(dv.getDriverView());
+			//root.setCenter(dv.getDriverView());
 			
-			
+			//create and set landing view
+			this.landing = new LandingView(this.controller);
+			root.setCenter(landing.getLandingView());
 			
 			
 			//create and set Navigation bar
