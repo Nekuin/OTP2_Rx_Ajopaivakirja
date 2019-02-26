@@ -6,12 +6,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import model.IVehicle;
 import model.Vehicle;
 
 public class VehicleTest {
 
-	static IVehicle testCar;
+	static Vehicle testCar;
 	
 	@BeforeEach
 	void resetVehicle() {

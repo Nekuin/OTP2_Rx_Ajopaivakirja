@@ -7,11 +7,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import model.Employee;
-import model.IEmployee;
 
 public class EmployeeTest {
 	
-	static IEmployee testEmployee;
+	static Employee testEmployee;
 	
 	@BeforeEach
 	void resetEmployee() {

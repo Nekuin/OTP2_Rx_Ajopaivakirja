@@ -6,23 +6,13 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.*;
-import org.mockito.junit.jupiter.MockitoExtension;
-
-
-import static org.mockito.Mockito.*;
-
-import org.hibernate.SessionFactory;
 
 import model.*;
-import util.HibernateUtil;
 
-@ExtendWith(MockitoExtension.class)
 public class DriverTest {
 	
 	
-	static IDriver testdriver;
+	static Driver testdriver;
 
 	
 	@BeforeAll

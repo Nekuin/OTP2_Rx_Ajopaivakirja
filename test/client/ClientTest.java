@@ -7,11 +7,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import model.Client;
-import model.IClient;
 
 public class ClientTest {
 	
-	static IClient testClient;
+	static Client testClient;
 	
 	@BeforeEach
 	void resetClient() {

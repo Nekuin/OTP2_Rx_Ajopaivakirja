@@ -9,11 +9,10 @@ import org.junit.jupiter.api.Test;
 
 import model.Driver;
 import model.DrivingShift;
-import model.IDriver;
 
 public class DrivingShiftTest {
 	static DrivingShift testShift;
-	static IDriver testDriver;
+	static Driver testDriver;
 	
 	@BeforeAll
 	public static void setup() {
@@ -35,8 +34,7 @@ public class DrivingShiftTest {
 	@Test
 	@DisplayName("Shift finish time")
 	void shiftFinishTime(){
-		
-		
+		testShift.setFinishTime("16:00");
 		assertEquals("16:00", testShift.getFinishTime(), "Finishing time is wrong!");
 	}
 	
@@ -58,7 +56,7 @@ public class DrivingShiftTest {
 	@Test
 	@DisplayName("Shift driver")
 	void shiftDriver() {
-		
+		testShift.setShiftDriver(testDriver);
 		assertEquals(testDriver, testShift.getShiftDriver(), "Shift driver is not correct!");
 	}
 }

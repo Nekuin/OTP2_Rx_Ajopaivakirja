@@ -7,11 +7,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import model.Cargo;
-import model.ICargo;
 
 public class CargoTest {
 	
-	static ICargo testCargo;
+	static Cargo testCargo;
 	
 	@BeforeEach
 	void resetCargo() {
