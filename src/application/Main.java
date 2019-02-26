@@ -25,6 +25,7 @@ public class Main extends Application implements IView {
 	private IHRView hr;
 	private IController controller;
 	
+	
 	@Override
 	public void init() {
 		
@@ -68,6 +69,7 @@ public class Main extends Application implements IView {
 		}).start();
 		
 	}
+	
 	
 	@Override
 	public void start(Stage primaryStage) {

@@ -22,19 +22,37 @@ public class Driver extends Employee implements IDriver{
 	@Column(name="drivencargo")
 	private double drivenCargo;
 	
+	@Column(name="candrivehazardous")
+	private boolean canDriveHazardous;
+	
 	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
 	private List<DrivingShift> shift;
 	
 	/**
-	 * Constructor of the driver
-	 * @param name
-	 * @param driversLicense
+	 * Constructor for the driver
+	 * @param name name of the driver
+	 * @param driversLicense license of the driver
+	 * @param canDriveHazardous indicates whether can or can't drive hazardous cargo
+	 */
+	public Driver(String name, String driversLicense, boolean canDriveHazardous) {
+		super(name);
+		this.driversLicense = driversLicense; 
+		//this.shifts = new HashSet<>();
+		this.shift = new ArrayList<>();
+		this.canDriveHazardous = canDriveHazardous;
+	}
+	
+	/**
+	 * Constructor for driver where canDriveHazardous is set to false by default
+	 * @param name name of the driver
+	 * @param driversLicense license of the driver
 	 */
 	public Driver(String name, String driversLicense) {
 		super(name);
 		this.driversLicense = driversLicense; 
 		//this.shifts = new HashSet<>();
 		this.shift = new ArrayList<>();
+		this.canDriveHazardous = false;
 	}
 	
 	/**
@@ -44,6 +62,14 @@ public class Driver extends Employee implements IDriver{
 		super();
 	}
 
+	public boolean getCanDriveHazardous() {
+		return canDriveHazardous;
+	}
+	
+	public void setCanDriveHazardous(boolean canDriveHazardous) {
+		this.canDriveHazardous = canDriveHazardous;
+	}
+	
 	@Override
 	public String getDriversLicense() {
 		return driversLicense;
