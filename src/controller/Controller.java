@@ -7,6 +7,7 @@ import model.DriverAccessObject;
 import model.DrivingShiftAO;
 import model.IDriver;
 import model.IDrivingShift;
+import model.IHrManager;
 import view.IView;
 
 public class Controller implements IController{
@@ -66,6 +67,11 @@ public class Controller implements IController{
 	public List<IDrivingShift> readAllDrivingShifts() {
 		List<IDrivingShift> shifts = this.drivingShiftAO.readDrivingShift().stream().collect(Collectors.toList());
 		return shifts;
+	}
+
+	@Override
+	public void createHrManager(IHrManager manager) {
+		
 	}
 
 }
