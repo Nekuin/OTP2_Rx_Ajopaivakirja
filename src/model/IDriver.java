@@ -64,5 +64,8 @@ public interface IDriver extends IEmployee {
 	//public Set<DrivingShift> getShifts();
 	
 	public List<DrivingShift> getShift();
-
+	
+	public boolean getCanDriveHazardous();
+	
+	public void setCanDriveHazardous(boolean canDriveHazardous);
 }

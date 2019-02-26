@@ -1,5 +1,7 @@
 package model;
 
+import java.util.List;
+
 public interface IDrivingShift {
 	
 	/**
@@ -63,5 +65,5 @@ public interface IDrivingShift {
 	
 	public boolean getShiftTaken();
 	
-
+	public List<ICargo> getCargo();
 }
