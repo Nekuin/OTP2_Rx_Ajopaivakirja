@@ -18,7 +18,7 @@ public class Controller implements IController{
 	public Controller(IView view) {
 		this.view = view;
 		this.driverAccessObject = new DriverAccessObject();
-		//this.drivingShiftAO = new DrivingShiftAO();
+		this.drivingShiftAO = new DrivingShiftAO();
 		//this.hrAO = new HrAccessObject();
 		
 	}
@@ -45,7 +45,7 @@ public class Controller implements IController{
 
 	@Override
 	public void createDrivingShift(DrivingShift shift) {
-		this.drivingShiftAO.createDrivingShift(shift);
+		this.drivingShiftAO.create(shift);
 	}
 
 	@Override
@@ -60,7 +60,7 @@ public class Controller implements IController{
 
 	@Override
 	public List<Driver> readAllDrivers() {
-		List<Driver> drivers = this.driverAccessObject.getAll().stream().collect(Collectors.toList());
+		List<Driver> drivers = this.driverAccessObject.getAll();
 		return drivers;
 	}
 	
@@ -71,31 +71,21 @@ public class Controller implements IController{
 
 	@Override
 	public List<DrivingShift> readAllDrivingShifts() {
-		List<DrivingShift> shifts = this.drivingShiftAO.readDrivingShift().stream().collect(Collectors.toList());
+		List<DrivingShift> shifts = this.drivingShiftAO.readDrivingShift();
 		return shifts;
 	}
 	
 	public List<DrivingShift> readGoodDrivingShifts(Driver driver) {
-		List<DrivingShift> shifts = this.drivingShiftAO.readDrivingShift().stream().collect(Collectors.toList());
+		List<DrivingShift> shifts = this.drivingShiftAO.getAll();
+		System.out.println("shifts: " + shifts);
 		List<DrivingShift> goodShifts = new ArrayList<>();
-		boolean drivable;
 		
-		if(driver.getCanDriveHazardous() == false) {
+		if(!driver.getCanDriveHazardous()) {
+			goodShifts = shifts.stream().filter(cargoList -> cargoList.getCargo()
+					.stream().anyMatch(e -> e.isHazardous())).collect(Collectors.toList());
 			
-			for(DrivingShift shift : shifts) {
-				drivable = true;
-				
-				for(Cargo c : shift.getCargo()) {
-					
-					if(c .isHazardous() == true) {
-						drivable = false;
-					}
-				}
-				
-				if(drivable == true) {
-					goodShifts.add(shift);
-				}
-			}
+		} else {
+			return shifts;
 		}
 		
 		return goodShifts;
@@ -109,8 +99,13 @@ public class Controller implements IController{
 
 	@Override
 	public List<HrManager> readAllHrManagers() {
-		List<HrManager> managers = this.hrAO.readHrManager().stream().collect(Collectors.toList());
+		List<HrManager> managers = this.hrAO.readHrManager();
 		return managers;
+	}
+
+	@Override
+	public void deleteDriver(Driver driver) {
+		this.driverAccessObject.delete(driver);
 	}
 
 
