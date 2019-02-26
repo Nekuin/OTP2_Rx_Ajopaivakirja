@@ -12,88 +12,92 @@ import org.hibernate.Transaction;
 
 import util.HibernateUtil;
 
-public class DriverAccessObject {
+public class EmployeeAccessObject {
+
 	private SessionFactory sf;
 	
-	public DriverAccessObject() {
+	public EmployeeAccessObject() {
 		this.sf = HibernateUtil.getSessionFactory();
 	}
 	
-	public boolean createDriver(IDriver driver) {
+	public boolean createEmployee(IEmployee employee) {
 		Transaction t = null;
-		try(Session session = sf.openSession()) {
+		try (Session session = sf.openSession()){
 			t = session.beginTransaction();
-			session.saveOrUpdate(driver);
+			session.saveOrUpdate(employee);
 			t.commit();
 			return true;
-		} catch (HibernateException e) {
+		}
+		catch(HibernateException e){
 			if(t != null) t.rollback();
 			e.printStackTrace();
 		}
 		return false;
 	}
 	
-	public boolean updateDriver(IDriver driver) {
-		System.out.println("updating... driver id: " + driver.getEmployeeID());
+	public boolean updateEmployee(IEmployee employee) {
 		Transaction t = null;
-		try(Session session = sf.openSession()) {
+		try (Session session = sf.openSession()){
 			t = session.beginTransaction();
-			session.saveOrUpdate(driver);
+			session.saveOrUpdate(employee);
 			t.commit();
 			return true;
-		} catch (HibernateException e) {
+		}
+		catch(HibernateException e) {
 			if(t != null) t.rollback();
 			e.printStackTrace();
 		}
 		return false;
 	}
 	
-	public IDriver readDriver(int id) {
-		Driver driver = new Driver();
+	public IEmployee readEmployee (int id) {
+		Employee employee = new Employee();
 		Transaction t = null;
 		try(Session session = sf.openSession()){
 			t = session.beginTransaction();
-			session.load(driver, id);
+			session.load(employee, id);
 			t.commit();
-			return driver;
-		} catch (HibernateException e) {
+			return employee;
+		}
+		catch(HibernateException e) {
 			if(t != null) t.rollback();
 			e.printStackTrace();
 		}
 		return null;
 	}
 	
-	public List<Driver> readDriver(){
+	public List<Employee> readEmployee(){
+		List<Employee> employees = null;
 		Transaction t = null;
-		List<Driver> drivers = null;
 		try(Session session = sf.openSession()){
 			t = session.beginTransaction();
-			CriteriaBuilder builder = session.getCriteriaBuilder();
-			CriteriaQuery<Driver> criteria = builder.createQuery(model.Driver.class);
-			criteria.from(model.Driver.class);
-			drivers = session.createQuery(criteria).getResultList();
+			CriteriaBuilder build = session.getCriteriaBuilder();
+			CriteriaQuery<Employee> query = build.createQuery(model.Employee.class);
+			query.from(model.Employee.class);
+			employees = session.createQuery(query).getResultList();
 			t.commit();
-			return drivers;
-			
-		} catch(HibernateException e) {
+			return employees;
+		}
+		catch(HibernateException e) {
 			if(t != null) t.rollback();
 			e.printStackTrace();
 		}
 		return null;
 	}
 	
-	public boolean deleteDriver(int id) {
+	public boolean deleteEmployee(int id) {
 		Transaction t = null;
 		try(Session session = sf.openSession()){
 			t = session.beginTransaction();
-			Driver d = session.get(Driver.class, id);
-			session.delete(d);
-			t.commit();
+			Employee employee = session.get(Employee.class, id);
+			session.delete(employee);
 			return true;
-		} catch (HibernateException e) {
+		}
+		catch(HibernateException e) {
 			if(t != null) t.rollback();
 			e.printStackTrace();
 		}
 		return false;
 	}
+		
 }

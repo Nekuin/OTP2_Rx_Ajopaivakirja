@@ -57,5 +57,11 @@ public interface IDrivingShift {
 	 */
 	public void setShiftDriven(boolean shiftDriven);
 	
+	public void setShiftDriver(IDriver driver);
+	
+	public void setShiftTaken(boolean bool);
+	
+	public boolean getShiftTaken();
+	
 
 }

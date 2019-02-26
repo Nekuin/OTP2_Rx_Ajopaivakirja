@@ -2,27 +2,37 @@ package view;
 
 import java.util.Collection;
 
+import controller.IController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
-import model.DrivingShift;
 import model.IDriver;
+import model.IDrivingShift;
 
 public class DriverView implements IDriverView{
 	
+	
+	private IController controller;
 	private BorderPane bpane;
 	private ObservableList<IDriver> drivers;
-	private ObservableList<DrivingShift> shifts;
+	private ObservableList<IDrivingShift> shifts;
 	
-	public DriverView() {
+	private Text driverSelection;
+	private Text shiftSelection;
+	private ListView<IDrivingShift> shiftListView;
+	private ListView<IDriver> driverListView;
+	
+	
+	public DriverView(IController controller) {
+		this.controller = controller;
 		bpane = new BorderPane();
-
-		
 		bpane.setLeft(driverInfo());
 		bpane.setRight(shiftInfo());
+		bpane.setCenter(assignmentPanel());
 	}
 	
 
@@ -31,11 +41,22 @@ public class DriverView implements IDriverView{
 		Text title = new Text("Shift info");
 		
 		shifts = FXCollections.observableArrayList();
-		ListView<DrivingShift> lv = new ListView<>();
-		lv.setItems(shifts);
+		shiftListView = new ListView<>();
+		shiftListView.setItems(shifts);
+		
+		shiftListView.setOnMouseClicked(e -> {
+			IDrivingShift clicked = shiftListView.getSelectionModel().getSelectedItem();
+			//System.out.println("clicked on: " + clicked + ", reserved: " + clicked.getShiftTaken());
+			if(clicked.getShiftTaken()) {
+				this.shiftSelection.setText("shift: " + clicked.getShiftID() + " already taken");
+			} else {
+				this.shiftSelection.setText("shift: " + clicked.getShiftID());
+			}
+			
+		});
 		
 		grid.add(title, 0, 0);
-		grid.add(lv, 0, 1);
+		grid.add(shiftListView, 0, 1);
 		return grid;
 	}
 	
@@ -45,17 +66,43 @@ public class DriverView implements IDriverView{
 		grid.add(text, 0, 0);
 		drivers = FXCollections.observableArrayList();
 		
-		ListView<IDriver> lv = new ListView<>();
-		lv.setItems(drivers);
-		grid.add(lv, 0, 1);
+		driverListView = new ListView<>();
+		driverListView.setItems(drivers);
+		grid.add(driverListView, 0, 1);
 		
-		lv.setOnMouseClicked(e -> {
-			IDriver clicked = lv.getSelectionModel().getSelectedItem();
-			System.out.println("clicked on: " + clicked);
-			this.getShifts(clicked.getEmployeeID());
+		driverListView.setOnMouseClicked(e -> {
+			IDriver clicked = driverListView.getSelectionModel().getSelectedItem();
+			this.driverSelection.setText("Driver: " + clicked.getEmployeeID());
+			//System.out.println("clicked on: " + clicked);
+			//this.getShifts(clicked.getEmployeeID());
+			//this.updateShifts(clicked.getShift());
+			
 		});
 		return grid;
 		
+	}
+	
+	private GridPane assignmentPanel() {
+		GridPane pane = new GridPane();
+		driverSelection = new Text("");
+		Button assignmentButton = new Button("Reserve shift");
+		shiftSelection = new Text("");
+		
+		assignmentButton.setOnAction(e -> {
+			IDriver driver = this.driverListView.getSelectionModel().getSelectedItem();
+			IDrivingShift shift = this.shiftListView.getSelectionModel().getSelectedItem();
+			System.out.println("[PH] assigning driver " + driver.getEmployeeID() + " to shift " + shift.getShiftID());
+			this.driverSelection.setText("");
+			this.shiftSelection.setText("");
+			this.controller.assignShift(driver, shift);
+			
+		});
+		
+		pane.add(driverSelection, 0, 0);
+		pane.add(assignmentButton, 0, 1);
+		pane.add(shiftSelection, 0, 2);
+		
+		return pane;
 	}
 
 
@@ -66,7 +113,7 @@ public class DriverView implements IDriverView{
 	}
 	
 	@Override
-	public void updateShifts(Collection<DrivingShift> shifts) {
+	public void updateShifts(Collection<IDrivingShift> shifts) {
 		this.shifts.clear();
 		this.shifts.addAll(shifts);
 	}

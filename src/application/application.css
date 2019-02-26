@@ -7,6 +7,7 @@
 	-fx-background-color: #AAAAAA;
 	-fx-border-radius: 0;
 	-fx-background-radius: 0;
+	-fx-background-insets: 0;
 }
 
 .navButton:hover{
@@ -21,5 +22,5 @@
 }
 
 .navButton:selected{
-	-fx-background-insets: 0 0 0 0, 0, 0, 0;
+	-fx-background-insets: 0;
 }
