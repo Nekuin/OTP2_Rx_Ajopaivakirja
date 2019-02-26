@@ -85,9 +85,10 @@ public class Controller implements IController{
 					if(c .isHazardous() == true) {
 						drivable = false;
 					}
-					if(drivable == true) {
-						goodShifts.add(shift);
-					}
+				}
+				
+				if(drivable == true) {
+					goodShifts.add(shift);
 				}
 			}
 		}
