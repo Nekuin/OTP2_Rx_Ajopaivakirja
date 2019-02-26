@@ -49,7 +49,7 @@ public class DrivingShift implements IDrivingShift{
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	private Client client;
-	
+
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Driver driver;
 	

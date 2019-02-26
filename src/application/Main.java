@@ -65,7 +65,6 @@ public class Main extends Application implements IView {
 			*/
 			setDriverData(drivers);
 			setShiftData(drivingShifts);
-			
 		}).start();
 		
 	}
@@ -138,7 +137,9 @@ public class Main extends Application implements IView {
 	private Collection<IDrivingShift> getTestShifts(){
 		Collection<IDrivingShift> shifts = new ArrayList<>();
 		for(int i = 0; i < 4; i++) {
-			IDrivingShift shift = new DrivingShift(new Client("client"), new Cargo(i, false));
+			Cargo cargo = new Cargo(i, false);
+			IDrivingShift shift = new DrivingShift(new Client("client"), cargo);
+			cargo.setShift(shift);
 			shifts.add(shift);
 		}
 		/*
