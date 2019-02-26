@@ -16,4 +16,6 @@ public interface IController {
 	public void createHrManager(HrManager manager);
 	public List<HrManager> readAllHrManagers();
 	public Driver readDriver(int id);
+	public void deleteDriver(Driver driver);
+	
 }

@@ -2,68 +2,63 @@ package model;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-
 import util.HibernateUtil;
 
-public class HrAccessObject {
+public class HrAccessObject implements IDao<HrManager>{
 	
-	private SessionFactory sf;
 	
 	public HrAccessObject() {
-		this.sf = HibernateUtil.getSessionFactory();
 	}
-	
-	public boolean createHrManager(HrManager manager) {
-		Transaction t = null;
-		try(Session session = sf.openSession()){
-			t = session.beginTransaction();
-			session.saveOrUpdate(manager);
-			t.commit();
-			return true;
-		} catch (HibernateException e) {
-			//if(t != null) t.rollback();
-			e.printStackTrace();
-		}
-		return false;
+
+
+	@Override
+	public HrManager get(int id) {
+		EntityManager em = HibernateUtil.getEntityManager();
+		em.getTransaction().begin();
+		HrManager m = em.find(model.HrManager.class, id);
+		em.getTransaction().commit();
+		return m;
 	}
-	
-	public HrManager readHrManager(int id) {
-		HrManager manager = new HrManager();
-		Transaction t = null;
-		try(Session session = sf.openSession()){
-			t = session.beginTransaction();
-			session.load(manager, id);
-			t.commit();
-			return manager;
-		} catch (HibernateException e) {
-			if(t != null) t.rollback();
-			e.printStackTrace();
-		}
-		return null;
+
+	@Override
+	public List<HrManager> getAll() {
+		EntityManager em = HibernateUtil.getEntityManager();
+		em.getTransaction().begin();
+		CriteriaBuilder builder = em.getCriteriaBuilder();
+		CriteriaQuery<HrManager> criteria = builder.createQuery(model.HrManager.class);
+		criteria.from(model.HrManager.class);
+		List<HrManager> managers = em.createQuery(criteria).getResultList();
+		em.getTransaction().commit();
+		return managers;
 	}
-	
-	public List<HrManager> readHrManager(){
-		Transaction t = null;
-		List<HrManager> managers = null;
-		try(Session session = sf.openSession()) {
-			t = session.beginTransaction();
-			CriteriaBuilder builder = session.getCriteriaBuilder();
-			CriteriaQuery<HrManager> criteria = builder.createQuery(model.HrManager.class);
-			criteria.from(model.HrManager.class);
-			managers = session.createQuery(criteria).getResultList();
-			t.commit();
-			return managers;
-		} catch(HibernateException e) {
-			if(t != null) t.rollback();
-			e.printStackTrace();
-		}
-		return null;
+
+	@Override
+	public void create(HrManager t) {
+		EntityManager em = HibernateUtil.getEntityManager();
+		em.getTransaction().begin();
+		em.persist(t);
+		em.getTransaction().commit();
+	}
+
+	@Override
+	public void update(HrManager t) {
+		EntityManager em = HibernateUtil.getEntityManager();
+		em.getTransaction().begin();
+		em.merge(t);
+		em.getTransaction().commit();
+	}
+
+	@Override
+	public void delete(HrManager t) {
+		EntityManager em = HibernateUtil.getEntityManager();
+		em.getTransaction().begin();
+		HrManager manager = get(t.getEmployeeID());
+		em.getTransaction().begin();
+		em.remove(manager);
+		em.getTransaction().commit();
 	}
 }

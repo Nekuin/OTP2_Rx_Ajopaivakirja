@@ -94,12 +94,12 @@ public class Controller implements IController{
 
 	@Override
 	public void createHrManager(HrManager manager) {
-		this.hrAO.createHrManager(manager);
+		this.hrAO.create(manager);
 	}
 
 	@Override
 	public List<HrManager> readAllHrManagers() {
-		List<HrManager> managers = this.hrAO.readHrManager();
+		List<HrManager> managers = this.hrAO.getAll();
 		return managers;
 	}
 

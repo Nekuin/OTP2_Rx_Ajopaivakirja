@@ -41,6 +41,7 @@ public class Main extends Application implements IView {
 		
 		
 		Collection<Driver> ds = this.getTestDrivers();
+		getTestShifts();
 		
 		List<Driver> drivers = this.controller.readAllDrivers();
 		System.out.println("queried drivers: ------");
@@ -53,8 +54,12 @@ public class Main extends Application implements IView {
 		});
 		
 		
+		
+		
 		Driver d1 = this.controller.readDriver(1);
+		d1.setCanDriveHazardous(false);
 		System.out.println("driver 1: " + d1);
+		System.out.println("shifts d1 can drive: " + ((Controller) controller).readGoodDrivingShifts(d1));
 		
 	}
 	
@@ -147,16 +152,11 @@ public class Main extends Application implements IView {
 			Cargo cargo = new Cargo(i, false);
 			DrivingShift shift = new DrivingShift(new Client("client"), cargo);
 			cargo.setShift(shift);
+			if(i == 1) {
+				cargo.setHazardous(true);
+			}
 			shifts.add(shift);
 		}
-		/*
-		DrivingShift eka = new DrivingShift(client, cargo);
-		DrivingShift toka = new DrivingShift(client, cargo);
-		DrivingShift kolmas = new DrivingShift(client, cargo);
-		shifts.add(eka);
-		shifts.add(toka);
-		shifts.add(kolmas);
-		*/
 		shifts.forEach(e -> {
 			this.controller.createDrivingShift(e);
 		});

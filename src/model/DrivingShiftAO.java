@@ -2,6 +2,7 @@ package model;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 
@@ -9,12 +10,12 @@ import org.hibernate.*;
 
 import util.HibernateUtil;
 
-public class DrivingShiftAO {
+public class DrivingShiftAO implements IDao<DrivingShift>{
 
 	private org.hibernate.SessionFactory sf;
 
 	public DrivingShiftAO() {
-		this.sf = HibernateUtil.getSessionFactory();
+		//this.sf = HibernateUtil.getSessionFactory();
 	}
 
 	public boolean createDrivingShift(DrivingShift dShift) {
@@ -99,6 +100,43 @@ public class DrivingShiftAO {
 			e.printStackTrace();
 		}
 		return false;
+	}
+
+	@Override
+	public DrivingShift get(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<DrivingShift> getAll() {
+		EntityManager em = HibernateUtil.getEntityManager();
+		em.getTransaction().begin();
+		CriteriaBuilder builder = em.getCriteriaBuilder();
+		CriteriaQuery<DrivingShift> criteria = builder.createQuery(model.DrivingShift.class);
+		criteria.from(model.DrivingShift.class);
+		List<DrivingShift> shifts = em.createQuery(criteria).getResultList();
+		return shifts;
+	}
+
+	@Override
+	public void create(DrivingShift t) {
+		EntityManager em = HibernateUtil.getEntityManager();
+		em.getTransaction().begin();
+		em.persist(t);
+		em.getTransaction().commit();
+	}
+
+	@Override
+	public void update(DrivingShift t) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void delete(DrivingShift t) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
