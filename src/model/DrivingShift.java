@@ -134,6 +134,7 @@ public class DrivingShift implements IDrivingShift{
 		return this.client;
 	}
 	
+	@Override
 	public List<ICargo> getCargo() {
 		List<ICargo> cargo = this.cargo.stream().collect(Collectors.toList());
 		return cargo;

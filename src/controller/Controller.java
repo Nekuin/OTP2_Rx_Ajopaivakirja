@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import model.DriverAccessObject;
 import model.DrivingShiftAO;
+import model.ICargo;
 import model.IDriver;
 import model.IDrivingShift;
 import view.IView;
@@ -67,5 +68,31 @@ public class Controller implements IController{
 		List<IDrivingShift> shifts = this.drivingShiftAO.readDrivingShift().stream().collect(Collectors.toList());
 		return shifts;
 	}
+	
+	public List<IDrivingShift> readGoodDrivingShifts(IDriver driver) {
+		List<IDrivingShift> shifts = this.drivingShiftAO.readDrivingShift().stream().collect(Collectors.toList());
+		List<IDrivingShift> goodShifts = null;
+		boolean drivable;
+		
+		if(driver.getCanDriveHazardous() == false) {
+			
+			for(IDrivingShift shift : shifts) {
+				drivable = true;
+				
+				for(ICargo c : shift.getCargo()) {
+					
+					if(c .isHazardous() == true) {
+						drivable = false;
+					}
+					if(drivable == true) {
+						goodShifts.add(shift);
+					}
+				}
+			}
+		}
+		
+		return goodShifts;
+	}
+	
 
 }

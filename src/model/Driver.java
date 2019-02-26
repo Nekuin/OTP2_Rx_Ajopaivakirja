@@ -62,10 +62,12 @@ public class Driver extends Employee implements IDriver{
 		super();
 	}
 
+	@Override
 	public boolean getCanDriveHazardous() {
 		return canDriveHazardous;
 	}
 	
+	@Override
 	public void setCanDriveHazardous(boolean canDriveHazardous) {
 		this.canDriveHazardous = canDriveHazardous;
 	}
