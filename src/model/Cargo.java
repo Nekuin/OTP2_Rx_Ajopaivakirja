@@ -22,7 +22,6 @@ public class Cargo implements ICargo {
 	
 	/**
 	 * 
-	 * @param cargoID id of the cargo
 	 * @param weight weight of the cargo
 	 * @param hazardous is the cargo hazardous
 	 */
@@ -33,12 +32,10 @@ public class Cargo implements ICargo {
 	
 	
 	/**
-	 * Default constructor, hazardous is set to false
-	 * @param cargoID id of the cargo
+	 * Default constructor, hazardous is defaulted to false
 	 * @param weight  weight of the cargo
 	 */
-	public Cargo(int cargoID, double weight) {
-		this.cargoID = cargoID;
+	public Cargo(double weight) {
 		this.weight = weight;
 		this.hazardous = false;
 	}
