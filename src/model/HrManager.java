@@ -1,7 +1,12 @@
 package model;
 
-public class HrManager extends Employee {
+import javax.persistence.Entity;
+import javax.persistence.Transient;
 
+@Entity
+public class HrManager extends Employee implements IHrManager{
+	
+	@Transient
 	private DriverAccessObject a;
 	/**
 	 * Constructor for the hr manager
@@ -17,7 +22,7 @@ public class HrManager extends Employee {
 	 * Empty constructor for HrManager
 	 */
 	public HrManager() {
-		
+		super();
 	}
 	
 	public void setAjoAccessObject(DriverAccessObject a) {

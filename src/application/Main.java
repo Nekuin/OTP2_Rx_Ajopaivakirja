@@ -6,6 +6,11 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.PersistenceContext;
+
 import controller.Controller;
 import controller.IController;
 import javafx.application.Application;
@@ -26,48 +31,18 @@ public class Main extends Application implements IView {
 	private ILandingView landing;
 	private IController controller;
 	
+	@PersistenceContext
+	EntityManager entityManager;
+	
 	
 	@Override
 	public void init() {
-		
-		this.controller = new Controller(this);
-		new Thread(() -> {
-			/*
-			this.a = new DriverAccessObject();
-			this.shiftAO = new DrivingShiftAO();
-			*/
-			//get test drivers and shifts, and make a List copy of them
-			Collection<IDriver> drivers = getTestDrivers();
-			Collection<IDrivingShift> drivingShifts = getTestShifts();
-			List<IDriver> d = drivers.stream().collect(Collectors.toList());
-			List<IDrivingShift> s = drivingShifts.stream().collect(Collectors.toList());
-			
-			System.out.println("drivers and shifts---------------");
-			d.forEach(System.out::println);
-			s.forEach(System.out::println);
-			System.out.println("------------");
-			/*
-			IDriver eka = d.get(0);
-			eka.addDrivingShift(s.get(0));
-			eka.addDrivingShift(s.get(1));
-			IDriver toka = d.get(1);
-			toka.addDrivingShift(s.get(2));
-			this.a.updateDriver(eka);
-			this.a.updateDriver(toka);
-			System.out.println("with shifts:");
-			d.forEach(System.out::println);
-			
-			//read and print drivers from database
-			IDriver driver = this.a.readDriver(1);
-			IDrivingShift shift = this.shiftAO.readDrivingShift(driver.getShift().get(0).getShiftID());
-			//prints Employee: Eka, id: 1, license: A shifts: [Shift id: 1 null null, Shift id: 2 null null] their shift: Shift id: 1 null null
-			//need to create ManyToOne stuff for client and cargo
-			System.out.println(driver + " their shift: " + shift);
-			*/
-			setDriverData(drivers);
-			setShiftData(drivingShifts);
-		}).start();
-		
+		System.out.println("entity manager ----------");
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("otp1");
+		System.out.println("create manager");
+		this.entityManager = emf.createEntityManager();
+		System.out.println("finished creating manager");
+		this.getTestDrivers();
 	}
 	
 	
@@ -128,12 +103,26 @@ public class Main extends Application implements IView {
 		drivers.add(d1);
 		drivers.add(d2);
 		drivers.add(d3);
+		this.entityManager.getTransaction().begin();
 		drivers.forEach(e -> {
-			this.controller.createDriver(e);
+			//this.controller.createDriver(e);
+			this.entityManager.persist(e);
 		});
+		this.entityManager.getTransaction().commit();
 		System.out.println("finished creating drivers");
 		return drivers;
 		
+	}
+	
+	private Collection<IHrManager> getTestHRManagers(){
+		Collection<IHrManager> managers = new ArrayList<>();
+		IHrManager m1 = new HrManager("Manageeri");
+		managers.add(m1);
+		managers.forEach(e -> {
+			this.controller.createHrManager(e);
+		});
+		System.out.println("finished creating managers");
+		return managers;
 	}
 	
 	

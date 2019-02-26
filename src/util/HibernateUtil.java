@@ -20,6 +20,7 @@ public class HibernateUtil {
 			configuration.addAnnotatedClass(model.DrivingShift.class);
 			configuration.addAnnotatedClass(model.Client.class);
 			configuration.addAnnotatedClass(model.Cargo.class);
+			configuration.addAnnotatedClass(model.HrManager.class);
 			System.out.println("Configuration loaded");
 			
 			ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();

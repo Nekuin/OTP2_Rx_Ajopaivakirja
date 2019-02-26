@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 
 import model.DriverAccessObject;
 import model.DrivingShiftAO;
+import model.HrAccessObject;
+import model.HrManager;
 import model.ICargo;
 import model.IDriver;
 import model.IDrivingShift;
@@ -17,11 +19,13 @@ public class Controller implements IController{
 	private IView view;
 	private DriverAccessObject driverAccessObject;
 	private DrivingShiftAO drivingShiftAO;
+	private HrAccessObject hrAO;
 	
 	public Controller(IView view) {
 		this.view = view;
 		this.driverAccessObject = new DriverAccessObject();
 		this.drivingShiftAO = new DrivingShiftAO();
+		this.hrAO = new HrAccessObject();
 	}
 	
 	@Override
@@ -100,7 +104,13 @@ public class Controller implements IController{
 
 	@Override
 	public void createHrManager(IHrManager manager) {
-		
+		this.hrAO.createHrManager(manager);
+	}
+
+	@Override
+	public List<IHrManager> readAllHrManagers() {
+		List<IHrManager> managers = this.hrAO.readHrManager().stream().collect(Collectors.toList());
+		return managers;
 	}
 
 }

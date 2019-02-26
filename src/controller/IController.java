@@ -5,6 +5,7 @@ import java.util.List;
 import model.DrivingShift;
 import model.IDriver;
 import model.IDrivingShift;
+import model.IHrManager;
 
 public interface IController {
 
@@ -15,4 +16,6 @@ public interface IController {
 	public void updateDrivingShift(IDrivingShift shift);
 	public List<IDriver> readAllDrivers();
 	public List<IDrivingShift> readAllDrivingShifts();
+	public void createHrManager(IHrManager manager);
+	public List<IHrManager> readAllHrManagers();
 }
