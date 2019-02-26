@@ -36,7 +36,7 @@ public class DrivingShift implements IDrivingShift{
 	@Column(name="shiftdriven")
 	private boolean shiftDriven;
 	
-	@Column(name="shifttaken")
+	@Column(name="shifttaken", nullable = false)
 	private boolean shiftTaken;
 	
 	@Transient
