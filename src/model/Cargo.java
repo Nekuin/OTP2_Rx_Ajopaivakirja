@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="Cargo")
-public class Cargo implements ICargo {
+public class Cargo {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -48,52 +48,41 @@ public class Cargo implements ICargo {
 		
 	}
 	
-	
-	
-	@Override
 	public boolean isHazardous() {
 		return hazardous;
 	}
 
-	@Override
 	public double getWeight() {
 		return weight;
 	}
 
-	@Override
 	public int getCargoID() {
 		return cargoID;
 	}
 	
-	@Override
 	public void setWeight(double weight) {
 		this.weight = weight;
 	}
 
-	@Override
 	public void setHazardous(boolean hazardous) {
 		this.hazardous = hazardous;
 	}
 	
-	@Override
 	public void setCargoID(int cargoID) {
 		this.cargoID = cargoID;
 	}
 	
-	@Override
 	public String toString() {
 		return "Cargo ID: " + this.getCargoID() + " Weight: " + this.getWeight() + " Hazardous: " + this.isHazardous();
 	}
 
 
-	@Override
-	public void setShift(IDrivingShift shift) {
-		this.drivingShift = (DrivingShift)shift;
+	public void setShift(DrivingShift shift) {
+		this.drivingShift = shift;
 	}
 
 
-	@Override
-	public IDrivingShift getShift() {
+	public DrivingShift getShift() {
 		return this.drivingShift;
 	}
 

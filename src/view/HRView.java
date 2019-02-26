@@ -8,12 +8,12 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
-import model.IDriver;
+import model.Driver;
 
 public class HRView implements IHRView {
 	
 	private BorderPane bpane;
-	private ObservableList<IDriver> drivers;
+	private ObservableList<Driver> drivers;
 	
 	public HRView() {
 		this.bpane = new BorderPane();
@@ -26,12 +26,12 @@ public class HRView implements IHRView {
 		grid.add(title, 0, 0);
 		
 		drivers = FXCollections.observableArrayList();
-		ListView<IDriver> lv = new ListView<>();
+		ListView<Driver> lv = new ListView<>();
 		lv.setItems(drivers);
 		grid.add(lv, 0, 1);
 		
 		lv.setOnMouseClicked(e -> {
-			IDriver clicked = lv.getSelectionModel().getSelectedItem();
+			Driver clicked = lv.getSelectionModel().getSelectedItem();
 			
 		});
 		
@@ -45,7 +45,7 @@ public class HRView implements IHRView {
 	}
 
 	@Override
-	public void updateDrivers(Collection<IDriver> drivers) {
+	public void updateDrivers(Collection<Driver> drivers) {
 		this.drivers.clear();
 		this.drivers.addAll(drivers);
 	}

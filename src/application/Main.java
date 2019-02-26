@@ -4,13 +4,8 @@ package application;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.PersistenceContext;
-
 import controller.Controller;
 import controller.IController;
 import javafx.application.Application;
@@ -19,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import model.*;
+import util.HibernateUtil;
 import view.*;
 
 
@@ -30,27 +26,36 @@ public class Main extends Application implements IView {
 	private IHRView hr;
 	private ILandingView landing;
 	private IController controller;
+	private EntityManager entityManager;
 	
-	@PersistenceContext
-	EntityManager entityManager;
-	
-	public static EntityManagerFactory emf;
 	
 	
 	@Override
 	public void init() {
-		this.controller = new Controller(this);
 		System.out.println("entity manager ----------");
-		emf = Persistence.createEntityManagerFactory("otp1");
-		System.out.println("create manager");
-		entityManager = emf.createEntityManager();
-		System.out.println("finished creating manager");
-		this.getTestDrivers();
-		entityManager.close();
-		List<IDriver> drivers = this.controller.queryDrivers();
+		entityManager = HibernateUtil.getEntityManager();
+		System.out.println("active? " + entityManager.getTransaction().isActive());
+		System.out.println("finished creating entity manager");
+		
+		this.controller = new Controller(this);
+		
+		
+		Collection<Driver> ds = this.getTestDrivers();
+		
+		List<Driver> drivers = this.controller.readAllDrivers();
 		System.out.println("queried drivers: ------");
 		drivers.forEach(System.out::println);
 		System.out.println("---------");
+		
+		ds.forEach(e -> {
+			e.addDrivenCargo(50);
+			this.controller.updateDriver(e);
+		});
+		
+		
+		Driver d1 = this.controller.readDriver(1);
+		System.out.println("driver 1: " + d1);
+		
 	}
 	
 	
@@ -103,28 +108,30 @@ public class Main extends Application implements IView {
 	
 	
 	
-	private Collection<IDriver> getTestDrivers(){
-		Collection<IDriver> drivers = new ArrayList<>();
-		IDriver d1 = new Driver("Eka", "A");
-		IDriver d2 = new Driver("Toka", "B");
-		IDriver d3 = new Driver("Kolmas", "AB");
+	private Collection<Driver> getTestDrivers(){
+		Collection<Driver> drivers = new ArrayList<>();
+		Driver d1 = new Driver("Eka", "A");
+		Driver d2 = new Driver("Toka", "B");
+		Driver d3 = new Driver("Kolmas", "AB");
 		drivers.add(d1);
 		drivers.add(d2);
 		drivers.add(d3);
-		entityManager.getTransaction().begin();
+		if(entityManager == null) {
+			System.out.println("uh oh");
+			System.exit(-1);
+		}
 		drivers.forEach(e -> {
-			//this.controller.createDriver(e);
-			entityManager.persist(e);
+			this.controller.createDriver(e);
+			//entityManager.persist(e);
 		});
-		entityManager.getTransaction().commit();
 		System.out.println("finished creating drivers");
 		return drivers;
 		
 	}
 	
-	private Collection<IHrManager> getTestHRManagers(){
-		Collection<IHrManager> managers = new ArrayList<>();
-		IHrManager m1 = new HrManager("Manageeri");
+	private Collection<HrManager> getTestHRManagers(){
+		Collection<HrManager> managers = new ArrayList<>();
+		HrManager m1 = new HrManager("Manageeri");
 		managers.add(m1);
 		managers.forEach(e -> {
 			this.controller.createHrManager(e);
@@ -134,11 +141,11 @@ public class Main extends Application implements IView {
 	}
 	
 	
-	private Collection<IDrivingShift> getTestShifts(){
-		Collection<IDrivingShift> shifts = new ArrayList<>();
+	private Collection<DrivingShift> getTestShifts(){
+		Collection<DrivingShift> shifts = new ArrayList<>();
 		for(int i = 0; i < 4; i++) {
 			Cargo cargo = new Cargo(i, false);
-			IDrivingShift shift = new DrivingShift(new Client("client"), cargo);
+			DrivingShift shift = new DrivingShift(new Client("client"), cargo);
 			cargo.setShift(shift);
 			shifts.add(shift);
 		}
@@ -163,12 +170,12 @@ public class Main extends Application implements IView {
 	 * Update user interface with a Collection of new drivers
 	 */
 	@Override
-	public void setDriverData(Collection<IDriver> drivers) {
+	public void setDriverData(Collection<Driver> drivers) {
 		this.dv.updateDrivers(drivers);
 	}
 	
 	@Override
-	public void setShiftData(Collection<IDrivingShift> shifts) {
+	public void setShiftData(Collection<DrivingShift> shifts) {
 		this.dv.updateShifts(shifts);
 	}
 

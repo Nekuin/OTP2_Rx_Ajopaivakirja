@@ -1,99 +1,62 @@
 package model;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
+import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-
 import util.HibernateUtil;
 
-public class DriverAccessObject {
-	private SessionFactory sf;
+public class DriverAccessObject implements IDao<Driver>{
 	
-	public DriverAccessObject() {
-		this.sf = HibernateUtil.getSessionFactory();
+
+	@Override
+	public Driver get(int id) {
+		EntityManager em = HibernateUtil.getEntityManager();
+		em.getTransaction().begin();
+		Driver d = em.find(model.Driver.class, id);
+		em.getTransaction().commit();
+		return d;
 	}
-	
-	public boolean createDriver(IDriver driver) {
-		Transaction t = null;
-		try(Session session = sf.openSession()) {
-			t = session.beginTransaction();
-			session.saveOrUpdate(driver);
-			t.commit();
-			return true;
-		} catch (HibernateException e) {
-			if(t != null) t.rollback();
-			e.printStackTrace();
-		}
-		return false;
+
+	@Override
+	public List<Driver> getAll() {
+		EntityManager em = HibernateUtil.getEntityManager();
+		em.getTransaction().begin();
+		CriteriaBuilder builder = em.getCriteriaBuilder();
+		CriteriaQuery<Driver> criteria = builder.createQuery(model.Driver.class);
+		criteria.from(model.Driver.class);
+		List<Driver> drivers = em.createQuery(criteria).getResultList();
+		em.getTransaction().commit();
+		return drivers;
 	}
-	
-	public boolean updateDriver(IDriver driver) {
-		System.out.println("updating... driver id: " + driver.getEmployeeID());
-		Transaction t = null;
-		try(Session session = sf.openSession()) {
-			t = session.beginTransaction();
-			session.saveOrUpdate(driver);
-			t.commit();
-			return true;
-		} catch (HibernateException e) {
-			if(t != null) t.rollback();
-			e.printStackTrace();
-		}
-		return false;
+
+	@Override
+	public void create(Driver driver) {
+		EntityManager em = HibernateUtil.getEntityManager();
+		em.getTransaction().begin();
+		em.persist(driver);
+		em.getTransaction().commit();
 	}
-	
-	public IDriver readDriver(int id) {
-		Driver driver = new Driver();
-		Transaction t = null;
-		try(Session session = sf.openSession()){
-			t = session.beginTransaction();
-			session.load(driver, id);
-			t.commit();
-			return driver;
-		} catch (HibernateException e) {
-			if(t != null) t.rollback();
-			e.printStackTrace();
-		}
-		return null;
+
+	@Override
+	public void update(Driver driver) {
+		EntityManager em = HibernateUtil.getEntityManager();
+		em.getTransaction().begin();
+		em.merge(driver);
+		em.getTransaction().commit();
 	}
-	
-	public List<Driver> readDriver(){
-		Transaction t = null;
-		List<Driver> drivers = null;
-		try(Session session = sf.openSession()){
-			t = session.beginTransaction();
-			CriteriaBuilder builder = session.getCriteriaBuilder();
-			CriteriaQuery<Driver> criteria = builder.createQuery(model.Driver.class);
-			criteria.from(model.Driver.class);
-			drivers = session.createQuery(criteria).getResultList();
-			t.commit();
-			return drivers;
-			
-		} catch(HibernateException e) {
-			if(t != null) t.rollback();
-			e.printStackTrace();
-		}
-		return null;
+
+	@Override
+	public void delete(Driver driver) {
+		EntityManager em = HibernateUtil.getEntityManager();
+		Driver d = get(driver.getEmployeeID());
+		em.getTransaction().begin();
+		em.remove(d);
+		em.getTransaction().commit();
 	}
-	
-	public boolean deleteDriver(int id) {
-		Transaction t = null;
-		try(Session session = sf.openSession()){
-			t = session.beginTransaction();
-			Driver d = session.get(Driver.class, id);
-			session.delete(d);
-			t.commit();
-			return true;
-		} catch (HibernateException e) {
-			if(t != null) t.rollback();
-			e.printStackTrace();
-		}
-		return false;
-	}
+
+
 }

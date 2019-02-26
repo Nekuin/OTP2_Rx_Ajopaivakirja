@@ -20,7 +20,7 @@ public class HrAccessObject {
 		this.sf = HibernateUtil.getSessionFactory();
 	}
 	
-	public boolean createHrManager(IHrManager manager) {
+	public boolean createHrManager(HrManager manager) {
 		Transaction t = null;
 		try(Session session = sf.openSession()){
 			t = session.beginTransaction();
@@ -34,7 +34,7 @@ public class HrAccessObject {
 		return false;
 	}
 	
-	public IHrManager readHrManager(int id) {
+	public HrManager readHrManager(int id) {
 		HrManager manager = new HrManager();
 		Transaction t = null;
 		try(Session session = sf.openSession()){

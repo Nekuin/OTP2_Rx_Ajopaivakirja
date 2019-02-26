@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="Client")
-public class Client implements IClient {
+public class Client {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "clientid")
@@ -35,27 +35,22 @@ public class Client implements IClient {
 		
 	}
 
-	@Override
 	public String getName() {
 		return name;
 	}
 
-	@Override
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	@Override
 	public int getClientID() {
 		return clientID;
 	}
 
-	@Override
 	public void setClientID(int clientID) {
 		this.clientID = clientID;
 	}
 	
-	@Override
 	public String toString() {
 		return "Client ID: " + this.clientID + " Name: " + this.name;
 	}

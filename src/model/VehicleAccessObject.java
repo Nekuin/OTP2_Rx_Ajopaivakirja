@@ -20,7 +20,7 @@ public class VehicleAccessObject {
 		this.sf = HibernateUtil.getSessionFactory();
 	}
 	
-	public boolean createVehicle(IVehicle vehicle) {
+	public boolean createVehicle(Vehicle vehicle) {
 		
 		Transaction t = null;
 		try(Session session = sf.openSession()){
@@ -36,7 +36,7 @@ public class VehicleAccessObject {
 		return false;
 	}
 	
-	public boolean updateVehicle(IVehicle vehicle) {
+	public boolean updateVehicle(Vehicle vehicle) {
 		
 		Transaction t = null;
 		try(Session session = sf.openSession()){
@@ -52,7 +52,7 @@ public class VehicleAccessObject {
 		return false;
 	}
 	
-	public IVehicle readVehicle(int id) {
+	public Vehicle readVehicle(int id) {
 		Vehicle vehicle = new Vehicle();
 		Transaction t = null;
 		try(Session session = sf.openSession()) {

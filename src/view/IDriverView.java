@@ -3,12 +3,11 @@ package view;
 import java.util.Collection;
 
 import javafx.scene.layout.BorderPane;
+import model.Driver;
 import model.DrivingShift;
-import model.IDriver;
-import model.IDrivingShift;
 
 public interface IDriverView {
-	public void updateDrivers(Collection<IDriver> drivers);
+	public void updateDrivers(Collection<Driver> drivers);
 	public BorderPane getDriverView();
-	public void updateShifts(Collection<IDrivingShift> shifts);
+	public void updateShifts(Collection<DrivingShift> shifts);
 }

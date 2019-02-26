@@ -20,7 +20,7 @@ public class EmployeeAccessObject {
 		this.sf = HibernateUtil.getSessionFactory();
 	}
 	
-	public boolean createEmployee(IEmployee employee) {
+	public boolean createEmployee(Employee employee) {
 		Transaction t = null;
 		try (Session session = sf.openSession()){
 			t = session.beginTransaction();
@@ -35,7 +35,7 @@ public class EmployeeAccessObject {
 		return false;
 	}
 	
-	public boolean updateEmployee(IEmployee employee) {
+	public boolean updateEmployee(Employee employee) {
 		Transaction t = null;
 		try (Session session = sf.openSession()){
 			t = session.beginTransaction();
@@ -50,7 +50,7 @@ public class EmployeeAccessObject {
 		return false;
 	}
 	
-	public IEmployee readEmployee (int id) {
+	public Employee readEmployee (int id) {
 		Employee employee = new Employee();
 		Transaction t = null;
 		try(Session session = sf.openSession()){

@@ -4,40 +4,27 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-
-import application.Main;
-import model.Driver;
-import model.DriverAccessObject;
-import model.DrivingShiftAO;
-import model.HrAccessObject;
-import model.HrManager;
-import model.ICargo;
-import model.IDriver;
-import model.IDrivingShift;
-import model.IHrManager;
+import model.*;
+import util.HibernateUtil;
 import view.IView;
 
 public class Controller implements IController{
 	
 	private IView view;
-	private DriverAccessObject driverAccessObject;
 	private DrivingShiftAO drivingShiftAO;
 	private HrAccessObject hrAO;
+	private IDao<Driver> driverAccessObject;
 	
 	public Controller(IView view) {
 		this.view = view;
-		/*
 		this.driverAccessObject = new DriverAccessObject();
-		this.drivingShiftAO = new DrivingShiftAO();
-		this.hrAO = new HrAccessObject();
-		*/
+		//this.drivingShiftAO = new DrivingShiftAO();
+		//this.hrAO = new HrAccessObject();
+		
 	}
 	
 	@Override
-	public void assignShift(IDriver driver, IDrivingShift shift) {
+	public void assignShift(Driver driver, DrivingShift shift) {
 		if(shift.getShiftTaken()) {
 			System.out.println("shift " + shift.getShiftID() + " was taken");
 			return;
@@ -45,55 +32,60 @@ public class Controller implements IController{
 		driver.addDrivingShift(shift);
 		shift.setShiftDriver(driver);
 		shift.setShiftTaken(true);
-		this.driverAccessObject.updateDriver(driver);
+		this.driverAccessObject.update(driver);
 		this.drivingShiftAO.updateDrivingShift(shift);
 		this.view.setDriverData(this.readAllDrivers());
 		this.view.setShiftData(this.readAllDrivingShifts());
 	}
 
 	@Override
-	public void createDriver(IDriver driver) {
-		this.driverAccessObject.createDriver(driver);
+	public void createDriver(Driver driver) {
+		this.driverAccessObject.create(driver);
 	}
 
 	@Override
-	public void createDrivingShift(IDrivingShift shift) {
+	public void createDrivingShift(DrivingShift shift) {
 		this.drivingShiftAO.createDrivingShift(shift);
 	}
 
 	@Override
-	public void updateDriver(IDriver driver) {
-		this.driverAccessObject.updateDriver(driver);
+	public void updateDriver(Driver driver) {
+		this.driverAccessObject.update(driver);
 	}
 
 	@Override
-	public void updateDrivingShift(IDrivingShift shift) {
+	public void updateDrivingShift(DrivingShift shift) {
 		this.drivingShiftAO.updateDrivingShift(shift);
 	}
 
 	@Override
-	public List<IDriver> readAllDrivers() {
-		List<IDriver> drivers = this.driverAccessObject.readDriver().stream().collect(Collectors.toList());
+	public List<Driver> readAllDrivers() {
+		List<Driver> drivers = this.driverAccessObject.getAll().stream().collect(Collectors.toList());
 		return drivers;
+	}
+	
+	@Override
+	public Driver readDriver(int id) {
+		return this.driverAccessObject.get(id);
 	}
 
 	@Override
-	public List<IDrivingShift> readAllDrivingShifts() {
-		List<IDrivingShift> shifts = this.drivingShiftAO.readDrivingShift().stream().collect(Collectors.toList());
+	public List<DrivingShift> readAllDrivingShifts() {
+		List<DrivingShift> shifts = this.drivingShiftAO.readDrivingShift().stream().collect(Collectors.toList());
 		return shifts;
 	}
 	
-	public List<IDrivingShift> readGoodDrivingShifts(IDriver driver) {
-		List<IDrivingShift> shifts = this.drivingShiftAO.readDrivingShift().stream().collect(Collectors.toList());
-		List<IDrivingShift> goodShifts = new ArrayList<IDrivingShift>();
+	public List<DrivingShift> readGoodDrivingShifts(Driver driver) {
+		List<DrivingShift> shifts = this.drivingShiftAO.readDrivingShift().stream().collect(Collectors.toList());
+		List<DrivingShift> goodShifts = new ArrayList<>();
 		boolean drivable;
 		
 		if(driver.getCanDriveHazardous() == false) {
 			
-			for(IDrivingShift shift : shifts) {
+			for(DrivingShift shift : shifts) {
 				drivable = true;
 				
-				for(ICargo c : shift.getCargo()) {
+				for(Cargo c : shift.getCargo()) {
 					
 					if(c .isHazardous() == true) {
 						drivable = false;
@@ -111,25 +103,15 @@ public class Controller implements IController{
 	
 
 	@Override
-	public void createHrManager(IHrManager manager) {
+	public void createHrManager(HrManager manager) {
 		this.hrAO.createHrManager(manager);
 	}
 
 	@Override
-	public List<IHrManager> readAllHrManagers() {
-		List<IHrManager> managers = this.hrAO.readHrManager().stream().collect(Collectors.toList());
+	public List<HrManager> readAllHrManagers() {
+		List<HrManager> managers = this.hrAO.readHrManager().stream().collect(Collectors.toList());
 		return managers;
 	}
 
-	@Override
-	public List<IDriver> queryDrivers() {
-		EntityManager em = Main.emf.createEntityManager();
-		em.getTransaction().begin();
-		CriteriaBuilder builder = em.getCriteriaBuilder();
-		CriteriaQuery<Driver> criteria = builder.createQuery(model.Driver.class);
-		criteria.from(model.Driver.class);
-		List<Driver> drivers = em.createQuery(criteria).getResultList();
-		return drivers.stream().collect(Collectors.toList());
-	}
 
 }

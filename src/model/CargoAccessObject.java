@@ -20,7 +20,7 @@ public class CargoAccessObject {
 		this.sf = HibernateUtil.getSessionFactory();
 	}
 	
-	public boolean createCargo(ICargo cargo) {
+	public boolean createCargo(Cargo cargo) {
 		Transaction t = null;
 		try(Session session = sf.openSession()){
 			t = session.beginTransaction();
@@ -35,7 +35,7 @@ public class CargoAccessObject {
 		return false;
 	}
 	
-	public boolean updateCargo(ICargo cargo) {
+	public boolean updateCargo(Cargo cargo) {
 		Transaction t = null;
 		try(Session session = sf.openSession()){
 			t = session.beginTransaction();
@@ -50,7 +50,7 @@ public class CargoAccessObject {
 		return false;
 	}
 	
-	public ICargo readCargo(int id) {
+	public Cargo readCargo(int id) {
 		Cargo cargo = new Cargo();
 		Transaction t = null;
 		try(Session session = sf.openSession()) {

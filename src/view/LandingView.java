@@ -5,9 +5,8 @@ import java.util.List;
 import controller.IController;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import model.Driver;
 import model.HrManager;
-import model.IDriver;
-import model.IHrManager;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -51,8 +50,8 @@ public class LandingView implements ILandingView{
 	
 	private void login(int id) {
 		System.out.println("[ph] logging in as id: " + id);
-		List<IDriver> drivers = this.controller.readAllDrivers();
-		List<IHrManager> managers = this.controller.readAllHrManagers();
+		List<Driver> drivers = this.controller.readAllDrivers();
+		List<HrManager> managers = this.controller.readAllHrManagers();
 		drivers.forEach(e -> {
 			if(e.getEmployeeID() == id) {
 				System.out.println("logged in as a driver");

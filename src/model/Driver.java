@@ -8,7 +8,7 @@ import javax.persistence.*;
 
 
 @Entity
-public class Driver extends Employee implements IDriver{
+public class Driver extends Employee {
 
 	@Column(name="driverslicense")
 	private String driversLicense;
@@ -62,32 +62,26 @@ public class Driver extends Employee implements IDriver{
 		super();
 	}
 
-	@Override
 	public boolean getCanDriveHazardous() {
 		return canDriveHazardous;
 	}
 	
-	@Override
 	public void setCanDriveHazardous(boolean canDriveHazardous) {
 		this.canDriveHazardous = canDriveHazardous;
 	}
 	
-	@Override
 	public String getDriversLicense() {
 		return driversLicense;
 	}
 
-	@Override
 	public void setDriversLicense(String driversLicense) {
 		this.driversLicense = driversLicense;
 	}
 
-	@Override
 	public double getDrivenHours() {
 		return drivenHours;
 	}
-	
-	@Override
+
 	public void addDrivenHours(double drivenHours) {
 		this.drivenHours += drivenHours;
 		
@@ -97,12 +91,10 @@ public class Driver extends Employee implements IDriver{
 		this.drivenHours = drivenHours;
 	}
 
-	@Override
 	public double getDrivenDistance() {
 		return drivenDistance;
 	}
-	
-	@Override
+
 	public void addDrivenDistance(double drivenDistance) {
 		this.drivenDistance += drivenDistance;
 		
@@ -112,12 +104,10 @@ public class Driver extends Employee implements IDriver{
 		this.drivenDistance = drivenDistance;
 	}
 
-	@Override
 	public double getDrivenCargo() {
 		return drivenCargo;
 	}
-	
-	@Override
+
 	public void addDrivenCargo(double drivenCargo) {
 		this.drivenCargo += drivenCargo;
 		
@@ -126,27 +116,23 @@ public class Driver extends Employee implements IDriver{
 	public void setDrivenCargo(double drivenCargo) {
 		this.drivenCargo = drivenCargo;
 	}
-	
-	@Override
-	public boolean driveShift(IDrivingShift shift) {
+
+	public boolean driveShift(DrivingShift shift) {
 		shift.setShiftDriven(true);
 		return shift.isShiftDriven();
 	}
 
-	@Override
 	public String toString() {
 		return super.toString() + ", license: " + this.driversLicense + " shifts: " + this.getShift();
 	}
 
-	@Override
-	public void addDrivingShift(IDrivingShift drivingShift) {
+	public void addDrivingShift(DrivingShift drivingShift) {
 		//shifts.add(drivingShift);
-		this.shift.add((DrivingShift)drivingShift);
+		this.shift.add(drivingShift);
 		System.out.println("added shift: " + drivingShift);
 		//this.shiftID = drivingShift.getShiftID();
 	}
-	
-	@Override
+
 	public List<DrivingShift> getShift() {
 		return this.shift;
 	}

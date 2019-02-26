@@ -10,21 +10,21 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
-import model.IDriver;
-import model.IDrivingShift;
+import model.Driver;
+import model.DrivingShift;
 
 public class DriverView implements IDriverView{
 	
 	
 	private IController controller;
 	private BorderPane bpane;
-	private ObservableList<IDriver> drivers;
-	private ObservableList<IDrivingShift> shifts;
+	private ObservableList<Driver> drivers;
+	private ObservableList<DrivingShift> shifts;
 	
 	private Text driverSelection;
 	private Text shiftSelection;
-	private ListView<IDrivingShift> shiftListView;
-	private ListView<IDriver> driverListView;
+	private ListView<DrivingShift> shiftListView;
+	private ListView<Driver> driverListView;
 	
 	
 	public DriverView(IController controller) {
@@ -45,7 +45,7 @@ public class DriverView implements IDriverView{
 		shiftListView.setItems(shifts);
 		
 		shiftListView.setOnMouseClicked(e -> {
-			IDrivingShift clicked = shiftListView.getSelectionModel().getSelectedItem();
+			DrivingShift clicked = shiftListView.getSelectionModel().getSelectedItem();
 			//System.out.println("clicked on: " + clicked + ", reserved: " + clicked.getShiftTaken());
 			if(clicked.getShiftTaken()) {
 				this.shiftSelection.setText("shift: " + clicked.getShiftID() + " already taken");
@@ -71,7 +71,7 @@ public class DriverView implements IDriverView{
 		grid.add(driverListView, 0, 1);
 		
 		driverListView.setOnMouseClicked(e -> {
-			IDriver clicked = driverListView.getSelectionModel().getSelectedItem();
+			Driver clicked = driverListView.getSelectionModel().getSelectedItem();
 			this.driverSelection.setText("Driver: " + clicked.getEmployeeID());
 			//System.out.println("clicked on: " + clicked);
 			//this.getShifts(clicked.getEmployeeID());
@@ -89,8 +89,8 @@ public class DriverView implements IDriverView{
 		shiftSelection = new Text("");
 		
 		assignmentButton.setOnAction(e -> {
-			IDriver driver = this.driverListView.getSelectionModel().getSelectedItem();
-			IDrivingShift shift = this.shiftListView.getSelectionModel().getSelectedItem();
+			Driver driver = this.driverListView.getSelectionModel().getSelectedItem();
+			DrivingShift shift = this.shiftListView.getSelectionModel().getSelectedItem();
 			System.out.println("[PH] assigning driver " + driver.getEmployeeID() + " to shift " + shift.getShiftID());
 			this.driverSelection.setText("");
 			this.shiftSelection.setText("");
@@ -107,13 +107,13 @@ public class DriverView implements IDriverView{
 
 
 	@Override
-	public void updateDrivers(Collection<IDriver> drivers) {
+	public void updateDrivers(Collection<Driver> drivers) {
 		this.drivers.clear();
 		this.drivers.addAll(drivers);
 	}
 	
 	@Override
-	public void updateShifts(Collection<IDrivingShift> shifts) {
+	public void updateShifts(Collection<DrivingShift> shifts) {
 		this.shifts.clear();
 		this.shifts.addAll(shifts);
 	}

@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Employee implements IEmployee{
+public class Employee {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -29,22 +29,18 @@ public class Employee implements IEmployee{
 	}
 
 
-	@Override
 	public String getName() {
 		return name;
 	}
-	
-	@Override
+
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	@Override
+
 	public int getEmployeeID() {
 		return employeeID;
 	}
-	
-	@Override
+
 	public void setEmployeeID(int employeeID) {
 		this.employeeID = employeeID;
 	}

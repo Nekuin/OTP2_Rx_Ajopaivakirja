@@ -2,21 +2,18 @@ package controller;
 
 import java.util.List;
 
-import model.DrivingShift;
-import model.IDriver;
-import model.IDrivingShift;
-import model.IHrManager;
+import model.*;
 
 public interface IController {
 
-	public void assignShift(IDriver driver, IDrivingShift shift);
-	public void createDriver(IDriver driver);
-	public void createDrivingShift(IDrivingShift shift);
-	public void updateDriver(IDriver driver);
-	public void updateDrivingShift(IDrivingShift shift);
-	public List<IDriver> readAllDrivers();
-	public List<IDrivingShift> readAllDrivingShifts();
-	public void createHrManager(IHrManager manager);
-	public List<IHrManager> readAllHrManagers();
-	public List<IDriver> queryDrivers();
+	public void assignShift(Driver driver, DrivingShift shift);
+	public void createDriver(Driver driver);
+	public void createDrivingShift(DrivingShift shift);
+	public void updateDriver(Driver driver);
+	public void updateDrivingShift(DrivingShift shift);
+	public List<Driver> readAllDrivers();
+	public List<DrivingShift> readAllDrivingShifts();
+	public void createHrManager(HrManager manager);
+	public List<HrManager> readAllHrManagers();
+	public Driver readDriver(int id);
 }

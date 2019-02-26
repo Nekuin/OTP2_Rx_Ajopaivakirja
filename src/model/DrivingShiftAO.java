@@ -17,7 +17,7 @@ public class DrivingShiftAO {
 		this.sf = HibernateUtil.getSessionFactory();
 	}
 
-	public boolean createDrivingShift(IDrivingShift dShift) {
+	public boolean createDrivingShift(DrivingShift dShift) {
 		Transaction t = null;
 
 		try (Session session = sf.openSession()) {
@@ -33,7 +33,7 @@ public class DrivingShiftAO {
 		return false;
 	}
 
-	public boolean updateDrivingShift(IDrivingShift dShift) {
+	public boolean updateDrivingShift(DrivingShift dShift) {
 		Transaction t = null;
 
 		try (Session session = sf.openSession()) {
@@ -49,7 +49,7 @@ public class DrivingShiftAO {
 		return false;
 	}
 
-	public IDrivingShift readDrivingShift(int ID) {
+	public DrivingShift readDrivingShift(int ID) {
 		DrivingShift shift = new DrivingShift();
 		Transaction t = null;
 //j
