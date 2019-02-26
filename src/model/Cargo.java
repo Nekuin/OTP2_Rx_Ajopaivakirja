@@ -88,4 +88,16 @@ public class Cargo implements ICargo {
 		return "Cargo ID: " + this.getCargoID() + " Weight: " + this.getWeight() + " Hazardous: " + this.isHazardous();
 	}
 
+
+	@Override
+	public void setShift(IDrivingShift shift) {
+		this.drivingShift = (DrivingShift)shift;
+	}
+
+
+	@Override
+	public IDrivingShift getShift() {
+		return this.drivingShift;
+	}
+
 }

@@ -36,5 +36,9 @@ public interface ICargo {
 	 */
 	public void setCargoID(int cargoID);
 	
+	public void setShift(IDrivingShift shift);
+	
+	public IDrivingShift getShift();
+	
 
 }
