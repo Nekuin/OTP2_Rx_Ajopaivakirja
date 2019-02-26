@@ -4,6 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+
+import application.Main;
+import model.Driver;
 import model.DriverAccessObject;
 import model.DrivingShiftAO;
 import model.HrAccessObject;
@@ -23,9 +29,11 @@ public class Controller implements IController{
 	
 	public Controller(IView view) {
 		this.view = view;
+		/*
 		this.driverAccessObject = new DriverAccessObject();
 		this.drivingShiftAO = new DrivingShiftAO();
 		this.hrAO = new HrAccessObject();
+		*/
 	}
 	
 	@Override
@@ -111,6 +119,17 @@ public class Controller implements IController{
 	public List<IHrManager> readAllHrManagers() {
 		List<IHrManager> managers = this.hrAO.readHrManager().stream().collect(Collectors.toList());
 		return managers;
+	}
+
+	@Override
+	public List<IDriver> queryDrivers() {
+		EntityManager em = Main.emf.createEntityManager();
+		em.getTransaction().begin();
+		CriteriaBuilder builder = em.getCriteriaBuilder();
+		CriteriaQuery<Driver> criteria = builder.createQuery(model.Driver.class);
+		criteria.from(model.Driver.class);
+		List<Driver> drivers = em.createQuery(criteria).getResultList();
+		return drivers.stream().collect(Collectors.toList());
 	}
 
 }

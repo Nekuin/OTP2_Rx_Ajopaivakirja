@@ -17,7 +17,7 @@
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
         <property name="hibernate.dialect" value="org.hibernate.dialect.MariaDBDialect"/>
-        <property name="hibernate.hbm2ddl.auto" value="validate"/>
+        <property name="hibernate.hbm2ddl.auto" value="create"/>
         <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
         <property name="javax.persistence.jdbc.url" value="jdbc:mysql://10.114.34.91:3306/ajopaivakirja"/>
         <property name="javax.persistence.jdbc.user" value="root"/>

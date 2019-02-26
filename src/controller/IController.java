@@ -18,4 +18,5 @@ public interface IController {
 	public List<IDrivingShift> readAllDrivingShifts();
 	public void createHrManager(IHrManager manager);
 	public List<IHrManager> readAllHrManagers();
+	public List<IDriver> queryDrivers();
 }

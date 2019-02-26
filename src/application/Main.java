@@ -34,15 +34,23 @@ public class Main extends Application implements IView {
 	@PersistenceContext
 	EntityManager entityManager;
 	
+	public static EntityManagerFactory emf;
+	
 	
 	@Override
 	public void init() {
+		this.controller = new Controller(this);
 		System.out.println("entity manager ----------");
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("otp1");
+		emf = Persistence.createEntityManagerFactory("otp1");
 		System.out.println("create manager");
-		this.entityManager = emf.createEntityManager();
+		entityManager = emf.createEntityManager();
 		System.out.println("finished creating manager");
 		this.getTestDrivers();
+		entityManager.close();
+		List<IDriver> drivers = this.controller.queryDrivers();
+		System.out.println("queried drivers: ------");
+		drivers.forEach(System.out::println);
+		System.out.println("---------");
 	}
 	
 	
@@ -103,12 +111,12 @@ public class Main extends Application implements IView {
 		drivers.add(d1);
 		drivers.add(d2);
 		drivers.add(d3);
-		this.entityManager.getTransaction().begin();
+		entityManager.getTransaction().begin();
 		drivers.forEach(e -> {
 			//this.controller.createDriver(e);
-			this.entityManager.persist(e);
+			entityManager.persist(e);
 		});
-		this.entityManager.getTransaction().commit();
+		entityManager.getTransaction().commit();
 		System.out.println("finished creating drivers");
 		return drivers;
 		
