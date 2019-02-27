@@ -12,7 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 
-public class LandingView implements ILandingView{
+public class LandingView {
 	
 	private IController controller;
 	private BorderPane bpane;
@@ -73,9 +73,6 @@ public class LandingView implements ILandingView{
 		
 	}
 	
-
-
-	@Override
 	public BorderPane getLandingView() {
 		return this.bpane;
 	}

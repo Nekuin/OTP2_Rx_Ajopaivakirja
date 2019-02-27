@@ -16,7 +16,7 @@ import javafx.scene.text.Text;
 import model.Driver;
 import model.DrivingShift;
 
-public class DriverView implements IDriverView{
+public class DriverView {
 	
 	
 	private IController controller;
@@ -96,27 +96,23 @@ public class DriverView implements IDriverView{
 		return pane;
 	}
 	
-	@Override
 	public void updateShifts(Collection<DrivingShift> shifts) {
 		this.shifts.clear();
 		this.shifts.addAll(shifts);
 	}
 
 
-	@Override
 	public BorderPane getDriverView() {
 		return this.bpane;
 	}
 
 
-	@Override
 	public void setEmployee(Driver driver) {
 		this.driver = driver;
 		this.bpane.setLeft(this.driverInfo(driver));
 	}
 
 
-	@Override
 	public void updateDriver(Driver driver) {
 		this.driverInfo.setText("Driver info: " + driver);
 	}

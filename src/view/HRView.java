@@ -10,7 +10,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import model.Driver;
 
-public class HRView implements IHRView {
+public class HRView {
 	
 	private BorderPane bpane;
 	private ObservableList<Driver> drivers;
@@ -39,12 +39,11 @@ public class HRView implements IHRView {
 	}
 	
 
-	@Override
 	public BorderPane getHRView() {
 		return this.bpane;
 	}
 
-	@Override
+
 	public void updateDrivers(Collection<Driver> drivers) {
 		this.drivers.clear();
 		this.drivers.addAll(drivers);

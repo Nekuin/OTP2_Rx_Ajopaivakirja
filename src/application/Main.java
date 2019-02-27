@@ -24,9 +24,9 @@ public class Main extends Application implements IView {
 	
 	public static int DRIVER_VIEW = 1, HR_VIEW = 2;
 	private BorderPane root;
-	private IDriverView dv;
-	private IHRView hr;
-	private ILandingView landing;
+	private DriverView dv;
+	private HRView hr;
+	private LandingView landing;
 	private IController controller;
 	private EntityManager entityManager;
 	
