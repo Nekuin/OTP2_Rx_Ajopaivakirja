@@ -2,16 +2,14 @@ package view;
 
 import java.util.Collection;
 
+import application.Main;
 import controller.IController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import model.Driver;
 import model.DrivingShift;
@@ -21,21 +19,19 @@ public class DriverView {
 	
 	private IController controller;
 	private BorderPane bpane;
-	private ObservableList<Driver> drivers;
 	private ObservableList<DrivingShift> shifts;
 	private Driver driver;
 	
 	private Text driverSelection;
 	private Text shiftSelection;
 	private ListView<DrivingShift> shiftListView;
-	private ListView<Driver> driverListView;
 	private Text driverInfo;
 	
 	
 	public DriverView(IController controller) {
 		this.controller = controller;
 		bpane = new BorderPane();
-		//bpane.setLeft(driverInfo());
+		bpane.setLeft(driverInfo());
 		bpane.setRight(shiftInfo());
 		bpane.setCenter(assignmentPanel());
 	}
@@ -65,9 +61,15 @@ public class DriverView {
 		return grid;
 	}
 	
-	private GridPane driverInfo(Driver driver) {
+	private GridPane driverInfo() {
 		GridPane grid = new GridPane();
-		this.driverInfo = new Text("Driver info: " + driver);
+		this.driverInfo = new Text("");
+		if(driver != null) {
+			this.driverInfo.setText("Driver info: " + driver);
+		} else {
+			this.driverInfo.setText("not logged in");
+		}
+		
 		grid.add(driverInfo, 0, 0);
 		return grid;
 		
@@ -107,14 +109,9 @@ public class DriverView {
 	}
 
 
-	public void setEmployee(Driver driver) {
-		this.driver = driver;
-		this.bpane.setLeft(this.driverInfo(driver));
-	}
-
-
-	public void updateDriver(Driver driver) {
-		this.driverInfo.setText("Driver info: " + driver);
+	public void updateDriver() {
+		this.driver = this.controller.readDriver(Main.LOGGED_IN_ID);
+		this.driverInfo.setText("Driver info: " + this.driver);
 	}
 
 	

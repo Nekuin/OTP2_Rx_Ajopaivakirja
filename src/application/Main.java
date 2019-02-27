@@ -23,6 +23,7 @@ import view.*;
 public class Main extends Application implements IView {
 	
 	public static int DRIVER_VIEW = 1, HR_VIEW = 2;
+	public static int LOGGED_IN_ID = 0;
 	private BorderPane root;
 	private DriverView dv;
 	private HRView hr;
@@ -183,20 +184,14 @@ public class Main extends Application implements IView {
 	public void setShiftData(Collection<DrivingShift> shifts) {
 		this.dv.updateShifts(shifts);
 	}
-	
-	public void updateDriver(Driver driver) {
-		this.dv.updateDriver(driver);
-	}
 
 	/**
 	 * Change between Driver view and HR View
 	 */
 	@Override
-	public void changeView(int view, Object employee) {
+	public void changeView(int view) {
 		if(view == Main.DRIVER_VIEW) {
-			if(employee != null) {
-				this.dv.setEmployee((Driver)employee);
-			}
+			this.dv.updateDriver();
 			this.root.setCenter(this.dv.getDriverView());
 		} else if(view == Main.HR_VIEW) {
 			this.root.setCenter(this.hr.getHRView());

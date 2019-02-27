@@ -8,7 +8,6 @@ import model.DrivingShift;
 
 public interface IView {
 	public void setDriverData(Collection<Driver> drivers);
-	public void changeView(int view, Object employee);
+	public void changeView(int view);
 	public void setShiftData(Collection<DrivingShift> shifts);
-	public void updateDriver(Driver driver);
 }

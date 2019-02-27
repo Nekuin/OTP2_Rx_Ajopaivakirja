@@ -37,7 +37,6 @@ public class Controller implements IController{
 		this.driverAccessObject.update(driver);
 		this.drivingShiftAO.update(shift);
 		this.view.setShiftData(this.readAllDrivingShifts());
-		this.view.updateDriver(this.readDriver(driver.getEmployeeID()));
 	}
 
 	@Override
@@ -111,8 +110,8 @@ public class Controller implements IController{
 	}
 
 	@Override
-	public void changeView(int i, Object employee) {
-		this.view.changeView(i, employee);
+	public void changeView(int i) {
+		this.view.changeView(i);
 	}
 
 

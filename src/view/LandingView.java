@@ -56,7 +56,8 @@ public class LandingView {
 		drivers.forEach(e -> {
 			if(e.getEmployeeID() == id) {
 				System.out.println("logged in as a driver");
-				this.controller.changeView(Main.DRIVER_VIEW, e);
+				Main.LOGGED_IN_ID = id;
+				this.controller.changeView(Main.DRIVER_VIEW);
 				return;
 			}
 		});
@@ -66,7 +67,8 @@ public class LandingView {
 		managers.forEach(e -> {
 			if(e.getEmployeeID() == id) {
 				System.out.println("logged in as a manager");
-				this.controller.changeView(Main.HR_VIEW, e);
+				Main.LOGGED_IN_ID = id;
+				this.controller.changeView(Main.HR_VIEW);
 				return;
 			}
 		});
