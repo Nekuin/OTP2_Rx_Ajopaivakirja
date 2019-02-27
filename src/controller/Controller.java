@@ -11,16 +11,18 @@ import view.IView;
 public class Controller implements IController{
 	
 	private IView view;
-	private DrivingShiftAO drivingShiftAO;
-	private HrAccessObject hrAO;
-	private IDao<Driver> driverAccessObject;
+	private Dao<DrivingShift> drivingShiftAO;
+	private Dao<HrManager> hrAO;
+	private Dao<Driver> driverAccessObject;
+	private Dao<Cargo> cargoAO;
+	private Dao<Vehicle> vehicleAO;
+	private Dao<Client> clientAO;
 	
 	public Controller(IView view) {
 		this.view = view;
-		this.driverAccessObject = new DriverAccessObject();
-		this.drivingShiftAO = new DrivingShiftAO();
-		//this.hrAO = new HrAccessObject();
-		
+		this.drivingShiftAO = new Dao<>(model.DrivingShift.class);
+		this.hrAO = new Dao<>(model.HrManager.class);
+		this.driverAccessObject = new Dao<>(model.Driver.class);
 	}
 	
 	@Override
@@ -33,9 +35,9 @@ public class Controller implements IController{
 		shift.setShiftDriver(driver);
 		shift.setShiftTaken(true);
 		this.driverAccessObject.update(driver);
-		this.drivingShiftAO.updateDrivingShift(shift);
-		this.view.setDriverData(this.readAllDrivers());
+		this.drivingShiftAO.update(shift);
 		this.view.setShiftData(this.readAllDrivingShifts());
+		this.view.updateDriver(this.readDriver(driver.getEmployeeID()));
 	}
 
 	@Override
@@ -55,7 +57,7 @@ public class Controller implements IController{
 
 	@Override
 	public void updateDrivingShift(DrivingShift shift) {
-		this.drivingShiftAO.updateDrivingShift(shift);
+		this.drivingShiftAO.update(shift);
 	}
 
 	@Override
@@ -71,7 +73,7 @@ public class Controller implements IController{
 
 	@Override
 	public List<DrivingShift> readAllDrivingShifts() {
-		List<DrivingShift> shifts = this.drivingShiftAO.readDrivingShift();
+		List<DrivingShift> shifts = this.drivingShiftAO.getAll();
 		return shifts;
 	}
 	
@@ -106,6 +108,11 @@ public class Controller implements IController{
 	@Override
 	public void deleteDriver(Driver driver) {
 		this.driverAccessObject.delete(driver);
+	}
+
+	@Override
+	public void changeView(int i, Object employee) {
+		this.view.changeView(i, employee);
 	}
 
 

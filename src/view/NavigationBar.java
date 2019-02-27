@@ -24,11 +24,11 @@ public class NavigationBar {
 		Button hrViewButton = new Button("HR view");
 		
 		driverViewButton.setOnAction(e -> {
-			this.view.changeView(Main.DRIVER_VIEW);
+			this.view.changeView(Main.DRIVER_VIEW, null);
 		});
 		
 		hrViewButton.setOnAction(e -> {
-			this.view.changeView(Main.HR_VIEW);
+			this.view.changeView(Main.HR_VIEW, null);
 		});
 		
 		driverViewButton.getStyleClass().add("navButton");

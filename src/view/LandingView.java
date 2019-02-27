@@ -2,6 +2,7 @@ package view;
 
 import java.util.List;
 
+import application.Main;
 import controller.IController;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -50,18 +51,26 @@ public class LandingView implements ILandingView{
 	
 	private void login(int id) {
 		System.out.println("[ph] logging in as id: " + id);
+		//check if the id belongs to a driver
 		List<Driver> drivers = this.controller.readAllDrivers();
-		List<HrManager> managers = this.controller.readAllHrManagers();
 		drivers.forEach(e -> {
 			if(e.getEmployeeID() == id) {
 				System.out.println("logged in as a driver");
+				this.controller.changeView(Main.DRIVER_VIEW, e);
+				return;
 			}
 		});
+		
+		//check if the id belongs to a HrManager
+		List<HrManager> managers = this.controller.readAllHrManagers();
 		managers.forEach(e -> {
 			if(e.getEmployeeID() == id) {
 				System.out.println("logged in as a manager");
+				this.controller.changeView(Main.HR_VIEW, e);
+				return;
 			}
 		});
+		
 	}
 	
 

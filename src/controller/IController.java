@@ -17,5 +17,6 @@ public interface IController {
 	public List<HrManager> readAllHrManagers();
 	public Driver readDriver(int id);
 	public void deleteDriver(Driver driver);
+	public void changeView(int i, Object employee);
 	
 }

@@ -4,12 +4,14 @@ package application;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
 import controller.Controller;
 import controller.IController;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -40,8 +42,8 @@ public class Main extends Application implements IView {
 		this.controller = new Controller(this);
 		
 		
-		Collection<Driver> ds = this.getTestDrivers();
-		getTestShifts();
+		Collection<Driver> ds = this.createTestDrivers();
+		Collection<DrivingShift> shifts = createTestShifts();
 		
 		List<Driver> drivers = this.controller.readAllDrivers();
 		System.out.println("queried drivers: ------");
@@ -59,7 +61,7 @@ public class Main extends Application implements IView {
 		Driver d1 = this.controller.readDriver(1);
 		d1.setCanDriveHazardous(false);
 		System.out.println("driver 1: " + d1);
-		System.out.println("shifts d1 can drive: " + ((Controller) controller).readGoodDrivingShifts(d1));
+		//System.out.println("shifts d1 can drive: " + ((Controller) controller).readGoodDrivingShifts(d1));
 		
 	}
 	
@@ -70,6 +72,7 @@ public class Main extends Application implements IView {
 			
 			//create root BorderPane
 			this.root = new BorderPane();
+			
 			
 			//create and set driver view
 			this.dv = new DriverView(this.controller);
@@ -92,6 +95,8 @@ public class Main extends Application implements IView {
 			//this.setDriverData(getTestDrivers());
 			
 			
+			this.setShiftData(this.controller.readAllDrivingShifts());
+			
 			Scene scene = new Scene(root,720,600);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			
@@ -113,7 +118,7 @@ public class Main extends Application implements IView {
 	
 	
 	
-	private Collection<Driver> getTestDrivers(){
+	private Collection<Driver> createTestDrivers(){
 		Collection<Driver> drivers = new ArrayList<>();
 		Driver d1 = new Driver("Eka", "A");
 		Driver d2 = new Driver("Toka", "B");
@@ -134,7 +139,7 @@ public class Main extends Application implements IView {
 		
 	}
 	
-	private Collection<HrManager> getTestHRManagers(){
+	private Collection<HrManager> createTestHRManagers(){
 		Collection<HrManager> managers = new ArrayList<>();
 		HrManager m1 = new HrManager("Manageeri");
 		managers.add(m1);
@@ -146,7 +151,7 @@ public class Main extends Application implements IView {
 	}
 	
 	
-	private Collection<DrivingShift> getTestShifts(){
+	private Collection<DrivingShift> createTestShifts(){
 		Collection<DrivingShift> shifts = new ArrayList<>();
 		for(int i = 0; i < 4; i++) {
 			Cargo cargo = new Cargo(i, false);
@@ -171,20 +176,27 @@ public class Main extends Application implements IView {
 	 */
 	@Override
 	public void setDriverData(Collection<Driver> drivers) {
-		this.dv.updateDrivers(drivers);
+		//this.dv.updateDrivers(drivers);
 	}
 	
 	@Override
 	public void setShiftData(Collection<DrivingShift> shifts) {
 		this.dv.updateShifts(shifts);
 	}
+	
+	public void updateDriver(Driver driver) {
+		this.dv.updateDriver(driver);
+	}
 
 	/**
 	 * Change between Driver view and HR View
 	 */
 	@Override
-	public void changeView(int view) {
+	public void changeView(int view, Object employee) {
 		if(view == Main.DRIVER_VIEW) {
+			if(employee != null) {
+				this.dv.setEmployee((Driver)employee);
+			}
 			this.root.setCenter(this.dv.getDriverView());
 		} else if(view == Main.HR_VIEW) {
 			this.root.setCenter(this.hr.getHRView());

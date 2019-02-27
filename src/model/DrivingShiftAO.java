@@ -116,6 +116,7 @@ public class DrivingShiftAO implements IDao<DrivingShift>{
 		CriteriaQuery<DrivingShift> criteria = builder.createQuery(model.DrivingShift.class);
 		criteria.from(model.DrivingShift.class);
 		List<DrivingShift> shifts = em.createQuery(criteria).getResultList();
+		em.getTransaction().commit();
 		return shifts;
 	}
 
