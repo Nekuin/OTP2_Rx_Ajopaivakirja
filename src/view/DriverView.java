@@ -6,13 +6,17 @@ import application.Main;
 import controller.IController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import model.Driver;
 import model.DrivingShift;
+import javafx.scene.Node;
 
 public class DriverView {
 	
@@ -79,7 +83,19 @@ public class DriverView {
 		GridPane pane = new GridPane();
 		driverSelection = new Text("");
 		Button assignmentButton = new Button("Reserve shift");
+		Button reportDrivingShiftButton = new Button("Report the shift");
 		shiftSelection = new Text("");
+		
+		reportDrivingShiftButton.setOnAction(e ->{
+			Stage stage = new Stage();
+		  
+		    stage.setScene(new Scene(new BorderPane()));
+		    stage.setTitle("Report scene");
+		    stage.initModality(Modality.APPLICATION_MODAL);
+		    stage.initOwner(
+		        ((Node)e.getSource()).getScene().getWindow() );
+		    stage.show();
+		});
 		
 		assignmentButton.setOnAction(e -> {
 			Driver driver = this.driver;
@@ -94,6 +110,7 @@ public class DriverView {
 		pane.add(driverSelection, 0, 0);
 		pane.add(assignmentButton, 0, 1);
 		pane.add(shiftSelection, 0, 2);
+		pane.add(reportDrivingShiftButton, 0, 3);
 		
 		return pane;
 	}
