@@ -130,6 +130,10 @@ public class DriverView {
 		this.driver = this.controller.readDriver(Main.LOGGED_IN_ID);
 		this.driverInfo.setText("Driver info: " + this.driver);
 	}
+	
+	public void setNavBar(NavBar nav) {
+		this.bpane.setTop(nav.getNavBar());
+	}
 
 	
 }

@@ -18,5 +18,5 @@ public interface IController {
 	public Driver readDriver(int id);
 	public void deleteDriver(Driver driver);
 	public void changeView(int i);
-	
+	public List<DrivingShift> readGoodDrivingShifts(Driver driver);
 }

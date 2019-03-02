@@ -13,6 +13,7 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import model.*;
@@ -28,6 +29,7 @@ public class Main extends Application implements IView {
 	private DriverView dv;
 	private HRView hr;
 	private LandingView landing;
+	private DriverReserveView driverRes;
 	private IController controller;
 	private EntityManager entityManager;
 	
@@ -83,20 +85,45 @@ public class Main extends Application implements IView {
 			this.landing = new LandingView(this.controller);
 			root.setCenter(landing.getLandingView());
 			
-			
+			/*
 			//create and set Navigation bar
 			NavigationBar navbar = new NavigationBar(this);
 			root.setTop(navbar.getNavigationBar());
+			*/
+			
 			
 			//create hr view
 			this.hr = new HRView();
 			
 			
 			//for testing
+			
+			driverRes = new DriverReserveView(this.controller);
+			
+			
 			//this.setDriverData(getTestDrivers());
+			Button driverResButton = new Button("Driver res");
+			Button driverViewButton = new Button("Driver view");
+			driverResButton.getStyleClass().add("navButton");
+			driverViewButton.getStyleClass().add("navButton");
+			
+			NavBar nav = new NavBar(this, new Button[]{driverResButton, driverViewButton});
+			driverResButton.setOnAction(e -> {
+				root.setCenter(driverRes.getDriverReserveView());
+				driverRes.setNavBar(nav);
+			});
+			driverViewButton.setOnAction(e -> {
+				root.setCenter(this.dv.getDriverView());
+				dv.setNavBar(nav);
+			});
 			
 			
-			this.setShiftData(this.controller.readAllDrivingShifts());
+			driverRes.setNavBar(nav);
+			
+			
+			
+			
+			//this.setShiftData(this.controller.readAllDrivingShifts());
 			
 			Scene scene = new Scene(root,720,600);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
@@ -182,7 +209,7 @@ public class Main extends Application implements IView {
 	
 	@Override
 	public void setShiftData(Collection<DrivingShift> shifts) {
-		this.dv.updateShifts(shifts);
+		this.driverRes.updateShiftList(shifts);
 	}
 
 	/**
@@ -192,7 +219,8 @@ public class Main extends Application implements IView {
 	public void changeView(int view) {
 		if(view == Main.DRIVER_VIEW) {
 			this.dv.updateDriver();
-			this.root.setCenter(this.dv.getDriverView());
+			this.driverRes.updateShiftList(this.controller.readGoodDrivingShifts(this.controller.readDriver(Main.LOGGED_IN_ID)));
+			this.root.setCenter(this.driverRes.getDriverReserveView());
 		} else if(view == Main.HR_VIEW) {
 			this.root.setCenter(this.hr.getHRView());
 		}
