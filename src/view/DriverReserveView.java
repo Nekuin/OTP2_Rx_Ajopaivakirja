@@ -15,6 +15,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import model.Driver;
 import model.DrivingShift;
 
 public class DriverReserveView {
@@ -48,8 +49,9 @@ public class DriverReserveView {
 		
 		Button reserveButton = new Button("Reserve");
 		reserveButton.setOnAction(e -> {
-			this.controller.assignShift(this.controller.readDriver(Main.LOGGED_IN_ID), shiftListView.getSelectionModel().getSelectedItem());
-			this.updateShiftList(this.controller.readGoodDrivingShifts(this.controller.readDriver(Main.LOGGED_IN_ID)));
+			Driver driver = this.controller.readDriver(Main.LOGGED_IN_ID);
+			this.controller.assignShift(driver, shiftListView.getSelectionModel().getSelectedItem());
+			this.updateShiftList(this.controller.readGoodDrivingShifts(driver));
 		});
 		
 		vbox.getChildren().add(reserveButton);
