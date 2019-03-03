@@ -30,6 +30,7 @@ public class DriverView {
 	private Text shiftSelection;
 	private ListView<DrivingShift> shiftListView;
 	private Text driverInfo;
+	private DrivingShift clicked;
 	
 	
 	public DriverView(IController controller) {
@@ -50,7 +51,7 @@ public class DriverView {
 		shiftListView.setItems(shifts);
 		
 		shiftListView.setOnMouseClicked(e -> {
-			DrivingShift clicked = shiftListView.getSelectionModel().getSelectedItem();
+			clicked = shiftListView.getSelectionModel().getSelectedItem();
 			//System.out.println("clicked on: " + clicked + ", reserved: " + clicked.getShiftTaken());
 			if(clicked.getShiftTaken()) {
 				this.shiftSelection.setText("shift: " + clicked.getShiftID() + " already taken");
@@ -89,8 +90,8 @@ public class DriverView {
 		reportDrivingShiftButton.setOnAction(e ->{
 			Stage stage = new Stage();
 		  
-		    stage.setScene(new Scene(new BorderPane()));
-		    stage.setTitle("Report scene");
+		    stage.setScene(new Scene(new ReportingView(controller, clicked).getReportingView()));
+		    stage.setTitle("Report your shift");
 		    stage.initModality(Modality.APPLICATION_MODAL);
 		    stage.initOwner(
 		        ((Node)e.getSource()).getScene().getWindow() );
