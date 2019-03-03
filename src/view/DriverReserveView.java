@@ -69,7 +69,8 @@ public class DriverReserveView {
 		
 		shiftListView.setOnMouseClicked(e -> {
 			DrivingShift selected = shiftListView.getSelectionModel().getSelectedItem();
-			this.updateShiftDetailText(new String[] {selected.getClient().toString(), "" + selected.getShiftID(), "" + selected.getTotalCargoWeight(), "time"});
+			//this.updateShiftDetailText(new String[] {selected.getClient().toString(), "" + selected.getShiftID(), "" + selected.getTotalCargoWeight(), "time"});
+			this.updateShiftDetailText(selected.getClient().toString(), "" + selected.getShiftID(), "" + selected.getTotalCargoWeight(), "time");
 		});
 		
 		vbox.getChildren().add(shiftListView);
@@ -102,11 +103,12 @@ public class DriverReserveView {
 		return grid;
 	}
 	
-	public void updateShiftDetailText(String[] strings) {
+	public void updateShiftDetailText(String... strings) {
 		for(int i = 0; i < shiftDetailTexts.length; i++) {
 			shiftDetailTexts[i].setText(strings[i]);
 		}
 	}
+	
 	
 	public void updateShiftList(Collection<DrivingShift> shifts) {
 		this.shifts.clear();
