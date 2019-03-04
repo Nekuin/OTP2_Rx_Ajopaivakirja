@@ -1,5 +1,7 @@
 package view;
 
+import java.time.LocalDate;
+
 import controller.IController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,6 +12,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -86,9 +89,12 @@ public class ReportingView {
 		VBox timeInfoVbox = new VBox();
 		timeInfoVbox.setSpacing(20);
 		timeInfoVbox.setPadding(new Insets(0, 20, 20, 20));
+		Text dateText = new Text("Select the date below:");
+		DatePicker datePicker = new DatePicker();
+		LocalDate value = datePicker.getValue();
 		Text startTime = new Text("Start time: String/Date");
 		Text finishTime = new Text("Finish time: String/Date");
-		timeInfoVbox.getChildren().addAll(startTime, finishTime);
+		timeInfoVbox.getChildren().addAll(dateText, datePicker, startTime, finishTime);
 
 		VBox additionalInfoVBox = new VBox();
 		additionalInfoVBox.setSpacing(10);
