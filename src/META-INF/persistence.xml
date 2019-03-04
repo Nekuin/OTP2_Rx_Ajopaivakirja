@@ -13,7 +13,8 @@
     <class>model.Client</class>
     <class>model.Cargo</class>
     <class>model.HrManager</class>
-    
+    <class>model.Vehicle</class>
+
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
         <property name="hibernate.dialect" value="org.hibernate.dialect.MariaDBDialect"/>

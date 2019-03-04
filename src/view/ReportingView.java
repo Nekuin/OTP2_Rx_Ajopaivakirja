@@ -5,6 +5,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -22,6 +24,7 @@ public class ReportingView {
 	private IController controller;
 	private DrivingShift drivingShift;
 	private Text[] shiftDetails;
+	private CheckBox confirmBox;
 
 	public ReportingView(IController controller, DrivingShift drivingShift) {
 		this.controller = controller;
@@ -34,7 +37,7 @@ public class ReportingView {
 		VBox viewVBox = new VBox();
 		viewVBox.setPadding(new Insets(30, 30, 30, 30));
 		viewVBox.getChildren().addAll(getShiftDetails(drivingShift), getFillableInfo(), addButtons());
-		viewVBox.setAlignment(Pos.CENTER);
+		viewVBox.setAlignment(Pos.TOP_CENTER);
 		this.bpane.setCenter(viewVBox);
 	}
 
@@ -47,10 +50,14 @@ public class ReportingView {
 
 		Text title = new Text("You are now reporting:");
 		title.setStyle("-fx-font: 24 arial;");
-		Text client = new Text("Client: AASIAKAS");
-		Text shift = new Text("Shift id: 9999");
-		Text cargo = new Text("Cargo: NULL");
-
+		/*Text client = new Text("Client: " + drivingShift.getClient());
+		Text shift = new Text("Shift id: " + drivingShift.getShiftID());
+		Text cargo = new Text("Cargo: " + drivingShift.getCargo());
+*/
+		Text client = new Text("Client: ");
+		Text shift = new Text("Shift id: ");
+		Text cargo = new Text("Cargo: ");
+		
 		shiftInfoVBox.getChildren().addAll(title, client, shift, cargo);
 		grid.add(shiftInfoVBox, 0, 0);
 
@@ -70,7 +77,7 @@ public class ReportingView {
 		HBox carHBox = new HBox();
 		carHBox.setSpacing(20);
 		carHBox.setPadding(new Insets(0, 20, 10, 20));
-		ObservableList<String> carList = FXCollections.observableArrayList("Mese", "Toyota", "Foordi");
+		ObservableList<String> carList = FXCollections.observableArrayList("Mese", "Toyota", "Foordi"); //tänne pitää tuoda autot
 		ComboBox<String> carDropDown = new ComboBox(carList);
 		carDropDown.setPrefWidth(200);
 		Text carSelectText = new Text("Which car did you use?");
@@ -95,7 +102,7 @@ public class ReportingView {
 		HBox checkBeforeSubmitHBox = new HBox();
 		checkBeforeSubmitHBox.setSpacing(20);
 		checkBeforeSubmitHBox.setPadding(new Insets(0, 20, 20, 20));
-		CheckBox confirmBox = new CheckBox();
+		confirmBox = new CheckBox();
 		Text confirmText = new Text("Check the box before submitting the report");
 		checkBeforeSubmitHBox.getChildren().addAll(confirmText, confirmBox);
 
@@ -112,7 +119,22 @@ public class ReportingView {
 		GridPane buttonPane = new GridPane();
 
 		Button submitButton = new Button("Submit");
+		submitButton.setOnAction( e -> {
+			if(!confirmBox.isSelected()) {
+				Alert alert = new Alert(AlertType.WARNING);
+				alert.setTitle("Check the confirmation box");
+				alert.setHeaderText("Please check the box before submitting.");
+				alert.setContentText("Thank you!");
+				alert.showAndWait();
+			}else {
+				//controller.updateDrivingShift(drivingShift);
+			}
+		});
+		
 		Button closeButton = new Button("Cancel");
+		closeButton.setOnAction(e ->{		
+                    //how to close the modal
+        });
 
 		HBox buttonHBox = new HBox();
 		buttonHBox.setPadding(new Insets(0, 20, 20, 20));
