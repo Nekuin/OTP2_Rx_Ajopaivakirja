@@ -25,6 +25,11 @@ public class HrManager extends Employee{
 		super();
 	}
 	
+	
+	/**
+	 * Sets the access object that is used with database
+	 * @param a driver access object
+	 */
 	public void setAjoAccessObject(DriverAccessObject a) {
 		this.a = a;
 	}
@@ -36,20 +41,24 @@ public class HrManager extends Employee{
 	 */
 	public void addDriver(String name, String driversLicense) {
 		Driver driver = new Driver(name,driversLicense);
-		//TODO: implement
-		
+		a.create(driver);	
 	}
 	
-	public void removeDriver(int employeeID) {
-		//TODO: implement
+	/**
+	 * Removes driver from the database
+	 * @param driver driver that is about to be removed
+	 */
+	public void removeDriver(Driver driver) {
+		a.delete(driver);
 	}
 	
-	public void addDrivingShift(int shiftID, String startTime, String finishTime, Driver shiftDriver) {
-		//DrivingShift shift = new DrivingShift(startTime, finishTime, shiftDriver);
+	public void addDrivingShift(Client client, Cargo cargo) {
+		DrivingShift shift = new DrivingShift(client, cargo);
+		//TODO
 	}
 	
-	public void removeDrivingShift(int shiftID) {
-		
+	public void removeDrivingShift(DrivingShift shift) {
+		//TODO
 	}
 
 }

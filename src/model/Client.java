@@ -35,22 +35,41 @@ public class Client {
 		
 	}
 
+	/**
+	 * Method that returns the name of the client
+	 * @return
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * Method for setting the name of the client
+	 * @param name name of the client
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	/**
+	 * Method for getting the client's id
+	 * @return
+	 */
 	public int getClientID() {
 		return clientID;
 	}
 
+	/**
+	 * Method fo setting the client's id
+	 * @param clientID client's id
+	 */
 	public void setClientID(int clientID) {
 		this.clientID = clientID;
 	}
 	
+	/**
+	 * Method for getting information about the client in string format
+	 */
 	public String toString() {
 		return "Client ID: " + this.clientID + " Name: " + this.name;
 	}
