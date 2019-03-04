@@ -1,13 +1,12 @@
 package view;
 
 import java.time.LocalDate;
-import java.util.stream.Collectors;
-
 import controller.IController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -60,14 +59,15 @@ public class ReportingView {
 
 		Text title = new Text("You are now reporting:");
 		title.setStyle("-fx-font: 24 arial;");
-		/*Text client = new Text("Client: " + drivingShift.getClient());
-		Text shift = new Text("Shift id: " + drivingShift.getShiftID());
-		Text cargo = new Text("Cargo: " + drivingShift.getCargo());
-*/
+		/*
+		  Text client = new Text("Client: " + drivingShift.getClient().getName()); 
+		  Text shift = new Text("Shift id: " + drivingShift.getShiftID()); 
+		  Text cargo = new Text("Cargo: " + drivingShift.getCargo());
+		 */
 		Text client = new Text("Client: ");
 		Text shift = new Text("Shift id: ");
 		Text cargo = new Text("Cargo: ");
-		
+
 		shiftInfoVBox.getChildren().addAll(title, client, shift, cargo);
 		grid.add(shiftInfoVBox, 0, 0);
 
@@ -99,28 +99,30 @@ public class ReportingView {
 		VBox timeInfoVbox = new VBox();
 		timeInfoVbox.setSpacing(20);
 		timeInfoVbox.setPadding(new Insets(0, 20, 20, 20));
-		
+
 		HBox dateHBox = new HBox();
 		dateHBox.setSpacing(20);
-		dateHBox.setPadding(new Insets(20,20,0,0));
+		dateHBox.setPadding(new Insets(20, 20, 0, 0));
 		Text dateText = new Text("* Select the date:");
 		DatePicker datePicker = new DatePicker();
 		datePicker.showWeekNumbersProperty();
-		localDate = datePicker.getValue();
+		datePicker.setOnAction(action -> {
+			localDate = datePicker.getValue();
+		});
 		dateHBox.getChildren().addAll(dateText, datePicker);
-		
+
 		HBox startHBox = new HBox();
 		startHBox.setSpacing(20);
-		Text startTimeText = new Text("* Start time:  ");
+		Text startTimeText = new Text("* Start time (hh:mm):  ");
 		startTimeTextF = new TextField();
 		startHBox.getChildren().addAll(startTimeText, startTimeTextF);
-		
+
 		HBox finishHBox = new HBox();
 		finishHBox.setSpacing(20);
-		Text finishTimeText = new Text("* Finish time:");
+		Text finishTimeText = new Text("* Finish time (hh:mm):");
 		finishTimeTextF = new TextField();
 		finishHBox.getChildren().addAll(finishTimeText, finishTimeTextF);
-		
+
 		timeInfoVbox.getChildren().addAll(dateHBox, startHBox, finishHBox);
 
 		VBox additionalInfoVBox = new VBox();
@@ -143,7 +145,7 @@ public class ReportingView {
 		grid.add(carHBox, 0, 1);
 		grid.add(timeInfoVbox, 0, 2);
 		grid.add(additionalInfoVBox, 0, 3);
-		grid.add(checkBeforeSubmitHBox, 0, 4);		
+		grid.add(checkBeforeSubmitHBox, 0, 4);
 
 		return grid;
 	}
@@ -152,25 +154,38 @@ public class ReportingView {
 		GridPane buttonPane = new GridPane();
 
 		Button submitButton = new Button("Submit");
-		submitButton.setOnAction( e -> {
-			if(!checkInput()) {
-				System.out.println("Missing info from report");
+		submitButton.setOnAction(e -> {
+
+			if (checkInput()) {
+				if (!confirmBox.isSelected()) {
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Check the confirmation box");
+					alert.setHeaderText(null);
+					alert.setContentText("Please check the box before submitting.");
+					alert.showAndWait();
+				} else {
+					drivingShift.setShiftDriven(true);
+					drivingShift.setVehicle(carDropDown.getValue());
+					drivingShift.setStartTime(startTimeTextF.getText());
+					drivingShift.setFinishTime(finishTimeTextF.getText());
+					controller.updateDrivingShift(drivingShift);
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Successfully reported");
+					alert.setContentText("You have successfully reported shift:" + drivingShift.getShiftID());
+					alert.showAndWait();
+					((Node) e.getSource()).getScene().getWindow().hide();
+				}
+
+			} else {
+				System.out.println("missing info");
 			}
-			else if(!confirmBox.isSelected()) {
-				Alert alert = new Alert(AlertType.WARNING);
-				alert.setTitle("Check the confirmation box");
-				alert.setHeaderText("Please check the box before submitting.");
-				alert.setContentText("Thank you!");
-				alert.showAndWait();
-			}else{
-				//controller.updateDrivingShift(drivingShift);
-			}
+
 		});
-		
+
 		Button closeButton = new Button("Cancel");
-		closeButton.setOnAction(e ->{		
-                    //how to close the modal
-        });
+		closeButton.setOnAction(e -> {
+			((Node) e.getSource()).getScene().getWindow().hide();
+		});
 
 		HBox buttonHBox = new HBox();
 		buttonHBox.setPadding(new Insets(0, 20, 20, 20));
@@ -179,21 +194,50 @@ public class ReportingView {
 		buttonPane.add(buttonHBox, 0, 0);
 		return buttonPane;
 	}
-	
+
 	public boolean checkInput() {
-		
-		if(carDropDown.getSelectionModel().isEmpty()) { // nää uupuu startTimeTextF.getText() != null && !finishTimeTextF.getText().isEmpty()) + localdate
-			Alert alert = new Alert(AlertType.WARNING);
+
+		final String timeRegex = "(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]";
+
+		if (carDropDown.getSelectionModel().isEmpty()) {
+			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Choose a car");
-			alert.setHeaderText("Please choose the used car from the dropdown menu.");
-			alert.setContentText("Thank you!");
+			alert.setHeaderText(null);
+			alert.setContentText("Please choose the used car from the dropdown menu.");
 			alert.showAndWait();
+			return false;
 		}
-		
-		if(!carDropDown.getSelectionModel().isEmpty()) { //tähän kaikki testit
-			return true;
+
+		if (localDate == null) {
+
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setTitle("Enter the date");
+			alert.setHeaderText(null);
+			alert.setContentText("Please enter the date you drove the shift.");
+			alert.showAndWait();
+			return false;
 		}
-		return false;
+
+		if (startTimeTextF.getText() == null || !startTimeTextF.getText().matches(timeRegex)) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Enter start time");
+			alert.setHeaderText(null);
+			alert.setContentText("Please enter the time (hh:mm) you started the shift.");
+			alert.showAndWait();
+			return false;
+		}
+
+		if (finishTimeTextF.getText() == null || !finishTimeTextF.getText().matches(timeRegex)) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Enter finish time");
+			alert.setHeaderText(null);
+			alert.setContentText("Please enter the time (hh:mm) you finished the shift.");
+			alert.showAndWait();
+			return false;
+		}
+
+		return true;
+
 	}
 
 	public BorderPane getReportingView() {
