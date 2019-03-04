@@ -184,4 +184,8 @@ public class Vehicle {
 	public void setMaintained(boolean maintained) {
 		this.maintained = maintained;
 	}
+	
+	public String toString() {
+		return this.brand + " " + this.model + " "  + this.regNr; 
+	}
 }

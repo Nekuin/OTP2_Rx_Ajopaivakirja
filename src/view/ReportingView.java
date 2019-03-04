@@ -1,6 +1,7 @@
 package view;
 
 import java.time.LocalDate;
+import java.util.stream.Collectors;
 
 import controller.IController;
 import javafx.collections.FXCollections;
@@ -14,20 +15,26 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import model.DrivingShift;
+import model.Vehicle;
 
 public class ReportingView {
 
 	private BorderPane bpane;
 	private IController controller;
 	private DrivingShift drivingShift;
-	private Text[] shiftDetails;
 	private CheckBox confirmBox;
+	private ComboBox<Vehicle> carDropDown;
+	private ObservableList<Vehicle> carList;
+	private LocalDate localDate;
+	private TextField startTimeTextF;
+	private TextField finishTimeTextF;
 
 	public ReportingView(IController controller, DrivingShift drivingShift) {
 		this.controller = controller;
@@ -75,26 +82,46 @@ public class ReportingView {
 		labelVBox.setPadding(new Insets(0, 20, 20, 20));
 		Text label = new Text("Fill in the information below:");
 		label.setStyle("-fx-font: 20 arial;");
-		labelVBox.getChildren().add(label);
+		Text mandatoryText = new Text("Fields with * are mandatory");
+		mandatoryText.setStyle("-fx-font: 17 arial;");
+		labelVBox.getChildren().addAll(label, mandatoryText);
 
 		HBox carHBox = new HBox();
 		carHBox.setSpacing(20);
-		carHBox.setPadding(new Insets(0, 20, 10, 20));
-		ObservableList<String> carList = FXCollections.observableArrayList("Mese", "Toyota", "Foordi"); //tänne pitää tuoda autot
-		ComboBox<String> carDropDown = new ComboBox(carList);
+		carHBox.setPadding(new Insets(0, 20, 0, 20));
+		this.carList = FXCollections.observableArrayList();
+		this.carList.addAll(controller.readAllVehicles());
+		carDropDown = new ComboBox<>(carList);
 		carDropDown.setPrefWidth(200);
-		Text carSelectText = new Text("Which car did you use?");
+		Text carSelectText = new Text("* Which car did you use?");
 		carHBox.getChildren().addAll(carSelectText, carDropDown);
 
 		VBox timeInfoVbox = new VBox();
 		timeInfoVbox.setSpacing(20);
 		timeInfoVbox.setPadding(new Insets(0, 20, 20, 20));
-		Text dateText = new Text("Select the date below:");
+		
+		HBox dateHBox = new HBox();
+		dateHBox.setSpacing(20);
+		dateHBox.setPadding(new Insets(20,20,0,0));
+		Text dateText = new Text("* Select the date:");
 		DatePicker datePicker = new DatePicker();
-		LocalDate value = datePicker.getValue();
-		Text startTime = new Text("Start time: String/Date");
-		Text finishTime = new Text("Finish time: String/Date");
-		timeInfoVbox.getChildren().addAll(dateText, datePicker, startTime, finishTime);
+		datePicker.showWeekNumbersProperty();
+		localDate = datePicker.getValue();
+		dateHBox.getChildren().addAll(dateText, datePicker);
+		
+		HBox startHBox = new HBox();
+		startHBox.setSpacing(20);
+		Text startTimeText = new Text("* Start time:  ");
+		startTimeTextF = new TextField();
+		startHBox.getChildren().addAll(startTimeText, startTimeTextF);
+		
+		HBox finishHBox = new HBox();
+		finishHBox.setSpacing(20);
+		Text finishTimeText = new Text("* Finish time:");
+		finishTimeTextF = new TextField();
+		finishHBox.getChildren().addAll(finishTimeText, finishTimeTextF);
+		
+		timeInfoVbox.getChildren().addAll(dateHBox, startHBox, finishHBox);
 
 		VBox additionalInfoVBox = new VBox();
 		additionalInfoVBox.setSpacing(10);
@@ -109,14 +136,14 @@ public class ReportingView {
 		checkBeforeSubmitHBox.setSpacing(20);
 		checkBeforeSubmitHBox.setPadding(new Insets(0, 20, 20, 20));
 		confirmBox = new CheckBox();
-		Text confirmText = new Text("Check the box before submitting the report");
+		Text confirmText = new Text("I have filled in the all information needed");
 		checkBeforeSubmitHBox.getChildren().addAll(confirmText, confirmBox);
 
 		grid.add(labelVBox, 0, 0);
 		grid.add(carHBox, 0, 1);
 		grid.add(timeInfoVbox, 0, 2);
 		grid.add(additionalInfoVBox, 0, 3);
-		grid.add(checkBeforeSubmitHBox, 0, 4);
+		grid.add(checkBeforeSubmitHBox, 0, 4);		
 
 		return grid;
 	}
@@ -126,13 +153,16 @@ public class ReportingView {
 
 		Button submitButton = new Button("Submit");
 		submitButton.setOnAction( e -> {
-			if(!confirmBox.isSelected()) {
+			if(!checkInput()) {
+				System.out.println("Missing info from report");
+			}
+			else if(!confirmBox.isSelected()) {
 				Alert alert = new Alert(AlertType.WARNING);
 				alert.setTitle("Check the confirmation box");
 				alert.setHeaderText("Please check the box before submitting.");
 				alert.setContentText("Thank you!");
 				alert.showAndWait();
-			}else {
+			}else{
 				//controller.updateDrivingShift(drivingShift);
 			}
 		});
@@ -148,6 +178,22 @@ public class ReportingView {
 		buttonHBox.getChildren().addAll(closeButton, submitButton);
 		buttonPane.add(buttonHBox, 0, 0);
 		return buttonPane;
+	}
+	
+	public boolean checkInput() {
+		
+		if(carDropDown.getSelectionModel().isEmpty()) { // nää uupuu startTimeTextF.getText() != null && !finishTimeTextF.getText().isEmpty()) + localdate
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setTitle("Choose a car");
+			alert.setHeaderText("Please choose the used car from the dropdown menu.");
+			alert.setContentText("Thank you!");
+			alert.showAndWait();
+		}
+		
+		if(!carDropDown.getSelectionModel().isEmpty()) { //tähän kaikki testit
+			return true;
+		}
+		return false;
 	}
 
 	public BorderPane getReportingView() {

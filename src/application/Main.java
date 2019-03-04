@@ -47,6 +47,7 @@ public class Main extends Application implements IView {
 		
 		Collection<Driver> ds = this.createTestDrivers();
 		Collection<DrivingShift> shifts = createTestShifts();
+		Collection<Vehicle> vehicles = createTestVehicles();
 		
 		List<Driver> drivers = this.controller.readAllDrivers();
 		System.out.println("queried drivers: ------");
@@ -144,16 +145,38 @@ public class Main extends Application implements IView {
 		launch(args);
 	}
 	
-	
+	private Collection<Vehicle> createTestVehicles(){
+		Collection<Vehicle> vehicles = new ArrayList<>();
+		
+		Vehicle testCar1 = new Vehicle("ROK-666", 1500, 10, "Sprintteri", "Mersu", false);
+		Vehicle testCar2 = new Vehicle("TIS-517", 1600, 100, "Pantteri", "Mersu", false);
+		
+		vehicles.add(testCar1);
+		vehicles.add(testCar2);
+		
+		if(entityManager == null) {
+			System.out.println("voi mätä");
+			System.exit(-1);
+		}
+		vehicles.forEach(e -> {
+			this.controller.createVehicle(e);
+		});
+		System.out.println("All the vehicles onboard");
+		return vehicles;
+	}
 	
 	private Collection<Driver> createTestDrivers(){
 		Collection<Driver> drivers = new ArrayList<>();
+		
 		Driver d1 = new Driver("Eka", "A");
 		Driver d2 = new Driver("Toka", "B");
 		Driver d3 = new Driver("Kolmas", "AB");
+		
 		drivers.add(d1);
 		drivers.add(d2);
 		drivers.add(d3);
+		
+		
 		if(entityManager == null) {
 			System.out.println("uh oh");
 			System.exit(-1);

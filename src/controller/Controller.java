@@ -23,6 +23,7 @@ public class Controller implements IController{
 		this.drivingShiftAO = new Dao<>(model.DrivingShift.class);
 		this.hrAO = new Dao<>(model.HrManager.class);
 		this.driverAccessObject = new Dao<>(model.Driver.class);
+		this.vehicleAO = new Dao<>(model.Vehicle.class);
 	}
 	
 	@Override
@@ -57,6 +58,17 @@ public class Controller implements IController{
 	@Override
 	public void updateDrivingShift(DrivingShift shift) {
 		this.drivingShiftAO.update(shift);
+	}
+	
+	@Override
+	public void createVehicle(Vehicle vehicle) {
+		this.vehicleAO.create(vehicle);;
+	}
+	
+	@Override
+	public List<Vehicle> readAllVehicles(){
+		List<Vehicle> vehicles = this.vehicleAO.getAll();
+		return vehicles;
 	}
 
 	@Override
