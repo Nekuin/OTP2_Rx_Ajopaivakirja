@@ -48,11 +48,16 @@ public class Main extends Application implements IView {
 		Collection<Driver> ds = this.createTestDrivers();
 		Collection<DrivingShift> shifts = createTestShifts();
 		Collection<Vehicle> vehicles = createTestVehicles();
+		Collection<HrManager> mg = createTestHRManagers();
 		
 		List<Driver> drivers = this.controller.readAllDrivers();
 		System.out.println("queried drivers: ------");
 		drivers.forEach(System.out::println);
 		System.out.println("---------");
+		List<HrManager> managers = this.controller.readAllHrManagers();
+		System.out.println("queried hr managers: ---------");
+		managers.forEach(System.out::println);
+		System.out.println("----------");
 		
 		ds.forEach(e -> {
 			e.addDrivenCargo(50);
@@ -94,7 +99,7 @@ public class Main extends Application implements IView {
 			
 			
 			//create hr view
-			this.hr = new HRView();
+			this.hr = new HRView(this.controller);
 			
 			
 			//for testing
@@ -245,6 +250,7 @@ public class Main extends Application implements IView {
 			this.driverRes.updateShiftList(this.controller.readGoodDrivingShifts(this.controller.readDriver(Main.LOGGED_IN_ID)));
 			this.root.setCenter(this.driverRes.getDriverReserveView());
 		} else if(view == Main.HR_VIEW) {
+			this.hr.updateDrivers(this.controller.readAllDrivers());
 			this.root.setCenter(this.hr.getHRView());
 		}
 	}

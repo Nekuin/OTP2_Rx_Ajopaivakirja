@@ -18,6 +18,11 @@ public class Controller implements IController{
 	private Dao<Vehicle> vehicleAO;
 	private Dao<Client> clientAO;
 	
+	
+	/**
+	 * Contructor for the controller
+	 * @param view view that the controller is going to use
+	 */
 	public Controller(IView view) {
 		this.view = view;
 		this.drivingShiftAO = new Dao<>(model.DrivingShift.class);
@@ -88,6 +93,7 @@ public class Controller implements IController{
 		return shifts;
 	}
 	
+	@Override
 	public List<DrivingShift> readGoodDrivingShifts(Driver driver) {
 		List<DrivingShift> shifts = this.drivingShiftAO.getAll();
 		System.out.println("shifts: " + shifts);
