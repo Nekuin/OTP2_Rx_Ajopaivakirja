@@ -23,6 +23,11 @@ import javafx.scene.text.Text;
 import model.DrivingShift;
 import model.Vehicle;
 
+/**
+ * 
+ * @author tuoma
+ * View class for reporting
+ */
 public class ReportingView {
 
 	private BorderPane bpane;
@@ -35,6 +40,11 @@ public class ReportingView {
 	private TextField startTimeTextF;
 	private TextField finishTimeTextF;
 
+	/**
+	 * Constructor for reporting view
+	 * @param controller controller of reporting view
+	 * @param drivingShift drivingShift for reporting view
+	 */
 	public ReportingView(IController controller, DrivingShift drivingShift) {
 		this.controller = controller;
 		this.drivingShift = drivingShift;
@@ -42,6 +52,9 @@ public class ReportingView {
 		setup();
 	}
 
+	/**
+	 * Sets up the reporting modal
+	 */
 	private void setup() {
 		VBox viewVBox = new VBox();
 		viewVBox.setPadding(new Insets(30, 30, 30, 30));
@@ -49,7 +62,12 @@ public class ReportingView {
 		viewVBox.setAlignment(Pos.TOP_CENTER);
 		this.bpane.setCenter(viewVBox);
 	}
-
+	
+	/**
+	 * Gets the driving shift information and returns it as a grid pane
+	 * @param drivingShift driving shift that has been chosen from previous view
+	 * @return GridPane
+	 */
 	private GridPane getShiftDetails(DrivingShift drivingShift) {
 
 		GridPane grid = new GridPane();
@@ -73,7 +91,11 @@ public class ReportingView {
 
 		return grid;
 	}
-
+	
+	/**
+	 * Creates the fillable fields into the modal
+	 * @return GridPane
+	 */
 	private GridPane getFillableInfo() {
 		GridPane grid = new GridPane();
 
@@ -149,7 +171,12 @@ public class ReportingView {
 
 		return grid;
 	}
-
+	
+	
+	/**
+	 * Adds buttons and their functions into the grid pane
+	 * @return GridPane
+	 */
 	private GridPane addButtons() {
 		GridPane buttonPane = new GridPane();
 
@@ -194,7 +221,11 @@ public class ReportingView {
 		buttonPane.add(buttonHBox, 0, 0);
 		return buttonPane;
 	}
-
+	
+	/**
+	 * Checks the user inputs
+	 * @return boolean
+	 */
 	public boolean checkInput() {
 
 		final String timeRegex = "(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]";
@@ -239,7 +270,11 @@ public class ReportingView {
 		return true;
 
 	}
-
+	
+	/**
+	 * returns the whole modal 
+	 * @return BorderPane
+	 */
 	public BorderPane getReportingView() {
 		return this.bpane;
 	}

@@ -6,10 +6,14 @@ import java.util.List;
 import javax.persistence.*;
 
 
-
+/**
+ * 
+ * @author tuoma
+ *	Driver ORM
+ */
 @Entity
 public class Driver extends Employee {
-
+	
 	@Column(name="driverslicense")
 	private String driversLicense;
 	
