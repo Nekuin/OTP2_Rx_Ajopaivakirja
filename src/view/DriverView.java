@@ -88,6 +88,7 @@ public class DriverView {
 			this.driverSelection.setText("");
 			this.shiftSelection.setText("");
 			this.controller.assignShift(driver, shift);
+			this.updateDriver();
 			
 		});
 

@@ -45,6 +45,7 @@ public class Main extends Application implements IView {
 		
 		Collection<Driver> ds = this.createTestDrivers();
 		Collection<DrivingShift> shifts = createTestShifts();
+		createTestHRManagers();
 		
 		List<Driver> drivers = this.controller.readAllDrivers();
 		System.out.println("queried drivers: ------");
