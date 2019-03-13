@@ -2,7 +2,11 @@ package model;
 
 import javax.persistence.Entity;
 import javax.persistence.Transient;
-
+/**
+ * Class for the HrManager
+ * @author Nekuin
+ *
+ */
 @Entity
 public class HrManager extends Employee{
 	
@@ -13,7 +17,7 @@ public class HrManager extends Employee{
 	private DrivingShiftAO ao;
 	
 	/**
-	 * Constructor for the hr manager
+	 * Constructor for the hr manager which takes the name of the HrManager as parameter
 	 * @param name name of the hr manager
 	 */
 	public HrManager(String name) {
