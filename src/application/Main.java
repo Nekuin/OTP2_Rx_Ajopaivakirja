@@ -13,6 +13,7 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import model.*;
@@ -28,6 +29,7 @@ public class Main extends Application implements IView {
 	private DriverView dv;
 	private HRView hr;
 	private LandingView landing;
+	private DriverReserveView driverRes;
 	private IController controller;
 	private EntityManager entityManager;
 	
@@ -45,12 +47,18 @@ public class Main extends Application implements IView {
 		
 		Collection<Driver> ds = this.createTestDrivers();
 		Collection<DrivingShift> shifts = createTestShifts();
-		createTestHRManagers();
+
+		Collection<Vehicle> vehicles = createTestVehicles();
+		Collection<HrManager> mg = createTestHRManagers();
 		
 		List<Driver> drivers = this.controller.readAllDrivers();
 		System.out.println("queried drivers: ------");
 		drivers.forEach(System.out::println);
 		System.out.println("---------");
+		List<HrManager> managers = this.controller.readAllHrManagers();
+		System.out.println("queried hr managers: ---------");
+		managers.forEach(System.out::println);
+		System.out.println("----------");
 		
 		ds.forEach(e -> {
 			e.addDrivenCargo(50);
@@ -84,20 +92,45 @@ public class Main extends Application implements IView {
 			this.landing = new LandingView(this.controller);
 			root.setCenter(landing.getLandingView());
 			
-			
+			/*
 			//create and set Navigation bar
 			NavigationBar navbar = new NavigationBar(this);
 			root.setTop(navbar.getNavigationBar());
+			*/
+			
 			
 			//create hr view
-			this.hr = new HRView();
+			this.hr = new HRView(this.controller);
 			
 			
 			//for testing
+			
+			driverRes = new DriverReserveView(this.controller);
+			
+			
 			//this.setDriverData(getTestDrivers());
+			Button driverResButton = new Button("Driver res");
+			Button driverViewButton = new Button("Driver view");
+			driverResButton.getStyleClass().add("navButton");
+			driverViewButton.getStyleClass().add("navButton");
+			
+			NavBar nav = new NavBar(this, new Button[]{driverResButton, driverViewButton});
+			driverResButton.setOnAction(e -> {
+				root.setCenter(driverRes.getDriverReserveView());
+				driverRes.setNavBar(nav);
+			});
+			driverViewButton.setOnAction(e -> {
+				root.setCenter(this.dv.getDriverView());
+				dv.setNavBar(nav);
+			});
 			
 			
-			this.setShiftData(this.controller.readAllDrivingShifts());
+			driverRes.setNavBar(nav);
+			
+			
+			
+			
+			//this.setShiftData(this.controller.readAllDrivingShifts());
 			
 			Scene scene = new Scene(root,720,600);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
@@ -118,16 +151,38 @@ public class Main extends Application implements IView {
 		launch(args);
 	}
 	
-	
+	private Collection<Vehicle> createTestVehicles(){
+		Collection<Vehicle> vehicles = new ArrayList<>();
+		
+		Vehicle testCar1 = new Vehicle("ROK-666", 1500, 10, "Sprintteri", "Mersu", false);
+		Vehicle testCar2 = new Vehicle("TIS-517", 1600, 100, "Pantteri", "Mersu", false);
+		
+		vehicles.add(testCar1);
+		vehicles.add(testCar2);
+		
+		if(entityManager == null) {
+			System.out.println("voi mätä");
+			System.exit(-1);
+		}
+		vehicles.forEach(e -> {
+			this.controller.createVehicle(e);
+		});
+		System.out.println("All the vehicles onboard");
+		return vehicles;
+	}
 	
 	private Collection<Driver> createTestDrivers(){
 		Collection<Driver> drivers = new ArrayList<>();
+		
 		Driver d1 = new Driver("Eka", "A");
 		Driver d2 = new Driver("Toka", "B");
 		Driver d3 = new Driver("Kolmas", "AB");
+		
 		drivers.add(d1);
 		drivers.add(d2);
 		drivers.add(d3);
+		
+		
 		if(entityManager == null) {
 			System.out.println("uh oh");
 			System.exit(-1);
@@ -183,7 +238,7 @@ public class Main extends Application implements IView {
 	
 	@Override
 	public void setShiftData(Collection<DrivingShift> shifts) {
-		this.dv.updateShifts(shifts);
+		this.driverRes.updateShiftList(shifts);
 	}
 
 	/**
@@ -193,8 +248,10 @@ public class Main extends Application implements IView {
 	public void changeView(int view) {
 		if(view == Main.DRIVER_VIEW) {
 			this.dv.updateDriver();
-			this.root.setCenter(this.dv.getDriverView());
+			this.driverRes.updateShiftList(this.controller.readGoodDrivingShifts(this.controller.readDriver(Main.LOGGED_IN_ID)));
+			this.root.setCenter(this.driverRes.getDriverReserveView());
 		} else if(view == Main.HR_VIEW) {
+			this.hr.updateDrivers(this.controller.readAllDrivers());
 			this.root.setCenter(this.hr.getHRView());
 		}
 	}

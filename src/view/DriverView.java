@@ -6,13 +6,17 @@ import application.Main;
 import controller.IController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import model.Driver;
 import model.DrivingShift;
+import javafx.scene.Node;
 
 public class DriverView {
 	
@@ -26,6 +30,7 @@ public class DriverView {
 	private Text shiftSelection;
 	private ListView<DrivingShift> shiftListView;
 	private Text driverInfo;
+	private DrivingShift clicked;
 	
 	
 	public DriverView(IController controller) {
@@ -46,7 +51,7 @@ public class DriverView {
 		shiftListView.setItems(shifts);
 		
 		shiftListView.setOnMouseClicked(e -> {
-			DrivingShift clicked = shiftListView.getSelectionModel().getSelectedItem();
+			clicked = shiftListView.getSelectionModel().getSelectedItem();
 			//System.out.println("clicked on: " + clicked + ", reserved: " + clicked.getShiftTaken());
 			if(clicked.getShiftTaken()) {
 				this.shiftSelection.setText("shift: " + clicked.getShiftID() + " already taken");
@@ -79,7 +84,19 @@ public class DriverView {
 		GridPane pane = new GridPane();
 		driverSelection = new Text("");
 		Button assignmentButton = new Button("Reserve shift");
+		Button reportDrivingShiftButton = new Button("Report the shift");
 		shiftSelection = new Text("");
+		
+		reportDrivingShiftButton.setOnAction(e ->{
+			Stage stage = new Stage();
+		  
+		    stage.setScene(new Scene(new ReportingView(controller, clicked).getReportingView()));
+		    stage.setTitle("Report your shift");
+		    stage.initModality(Modality.APPLICATION_MODAL);
+		    stage.initOwner(
+		        ((Node)e.getSource()).getScene().getWindow() );
+		    stage.show();
+		});
 		
 		assignmentButton.setOnAction(e -> {
 			Driver driver = this.driver;
@@ -95,6 +112,7 @@ public class DriverView {
 		pane.add(driverSelection, 0, 0);
 		pane.add(assignmentButton, 0, 1);
 		pane.add(shiftSelection, 0, 2);
+		pane.add(reportDrivingShiftButton, 0, 3);
 		
 		return pane;
 	}
@@ -113,6 +131,10 @@ public class DriverView {
 	public void updateDriver() {
 		this.driver = this.controller.readDriver(Main.LOGGED_IN_ID);
 		this.driverInfo.setText("Driver info: " + this.driver);
+	}
+	
+	public void setNavBar(NavBar nav) {
+		this.bpane.setTop(nav.getNavBar());
 	}
 
 	

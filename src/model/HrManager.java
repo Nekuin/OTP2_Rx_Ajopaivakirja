@@ -9,6 +9,9 @@ public class HrManager extends Employee{
 	@Transient
 	private DriverAccessObject a;
 	
+	@Transient
+	private DrivingShiftAO ao;
+	
 	/**
 	 * Constructor for the hr manager
 	 * @param name name of the hr manager
@@ -25,8 +28,22 @@ public class HrManager extends Employee{
 		super();
 	}
 	
+	
+	/**
+	 * Sets the access object for driver objects
+	 * @param a driver access object
+	 */
 	public void setAjoAccessObject(DriverAccessObject a) {
 		this.a = a;
+	}
+	
+	
+	/**
+	 * Sets the access object for driving shift objects
+	 * @param ao driving shift access object
+	 */
+	public void setDrivingShiftAO(DrivingShiftAO ao) {
+		this.ao = ao;
 	}
 	
 	/**
@@ -36,20 +53,35 @@ public class HrManager extends Employee{
 	 */
 	public void addDriver(String name, String driversLicense) {
 		Driver driver = new Driver(name,driversLicense);
-		//TODO: implement
-		
+		a.create(driver);	
 	}
 	
-	public void removeDriver(int employeeID) {
-		//TODO: implement
+	/**
+	 * Removes driver from the database
+	 * @param driver driver that is about to be removed
+	 */
+	public void removeDriver(Driver driver) {
+		a.delete(driver);
 	}
 	
-	public void addDrivingShift(int shiftID, String startTime, String finishTime, Driver shiftDriver) {
-		//DrivingShift shift = new DrivingShift(startTime, finishTime, shiftDriver);
+	
+	/**
+	 * Adds driving shift to the database
+	 * @param client client of the driving shift
+	 * @param cargo cargo of the driving shift
+	 */
+	public void addDrivingShift(Client client, Cargo cargo) {
+		DrivingShift shift = new DrivingShift(client, cargo);
+		ao.createDrivingShift(shift);
 	}
 	
-	public void removeDrivingShift(int shiftID) {
-		
+	
+	/**
+	 * Removes driving shift from the database
+	 * @param shift shift that is about to be removed
+	 */
+	public void removeDrivingShift(DrivingShift shift) {
+		ao.delete(shift);
 	}
 
 }

@@ -139,7 +139,8 @@ public class DrivingShift {
 	}
 	
 	public String toString() {
-		return "Shift id: " + this.shiftID + " " + this.cargo + " " + this.client;
+		//return "Shift id: " + this.shiftID + " " + this.cargo + " " + this.client;
+		return "Shift id:  " + this.shiftID;
 	}
 
 	public void setShiftTaken(boolean bool) {
@@ -148,6 +149,10 @@ public class DrivingShift {
 
 	public boolean getShiftTaken() {
 		return this.shiftTaken;
+	}
+	
+	public double getTotalCargoWeight() {
+		return this.cargo.stream().mapToDouble(cargo -> cargo.getWeight()).sum();
 	}
 
 }
