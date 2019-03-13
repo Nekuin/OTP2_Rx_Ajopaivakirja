@@ -8,6 +8,12 @@ import javax.persistence.criteria.CriteriaQuery;
 
 import util.HibernateUtil;
 
+/**
+ * 
+ * @author tuoma
+ * Class for DAO
+ * @param <T> Type of the object
+ */
 public class Dao<T> {
 	
 	private final Class<T> cl;

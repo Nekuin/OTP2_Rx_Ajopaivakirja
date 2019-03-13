@@ -4,6 +4,11 @@ import java.util.List;
 
 import model.*;
 
+/**
+ * 
+ * @author tuoma
+ * Interface for the controller
+ */
 public interface IController {
 
 	/**

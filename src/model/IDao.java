@@ -2,6 +2,12 @@ package model;
 
 import java.util.List;
 
+/**
+ * 
+ * @author tuoma
+ * Interface for DAO
+ * @param <T> Type of the object
+ */
 public interface IDao<T> {
 	
 	/**

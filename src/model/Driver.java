@@ -9,7 +9,7 @@ import javax.persistence.*;
 /**
  * 
  * @author tuoma
- *	Driver ORM
+ *	Class for drivers
  */
 @Entity
 public class Driver extends Employee {
