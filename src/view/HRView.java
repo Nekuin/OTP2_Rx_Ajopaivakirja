@@ -15,6 +15,11 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import model.Driver;
 
+/**
+ * View module for the HR managers
+ * @author Nekuin
+ *
+ */
 public class HRView {
 
 	private IController controller;
@@ -23,12 +28,20 @@ public class HRView {
 
 	private ListView<Driver> lv;
 
+	/**
+	 * Constructor which takes a controller as parameter
+	 * @param controller instance of Controller
+	 */
 	public HRView(IController controller) {
 		this.controller = controller;
 		this.bpane = new BorderPane();
 		this.bpane.setLeft(driverInfo());
 	}
 
+	/**
+	 * A module which displays info about the Drivers
+	 * @return GridPane
+	 */
 	public GridPane driverInfo() {
 		GridPane grid = new GridPane();
 		Text title = new Text("Drivers:");
@@ -73,11 +86,18 @@ public class HRView {
 	}
 	
 	
-
+	/**
+	 * Get the whole HRView module
+	 * @return BorderPane
+	 */
 	public BorderPane getHRView() {
 		return this.bpane;
 	}
 
+	/**
+	 * Update the driver list with a Collection of Drivers
+	 * @param drivers collection of Drivers
+	 */
 	public void updateDrivers(Collection<Driver> drivers) {
 		this.drivers.clear();
 		this.drivers.addAll(drivers);
