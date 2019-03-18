@@ -1,12 +1,26 @@
 package application;
 	
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
 import controller.Controller;
 import controller.IController;
 import javafx.application.Application;
@@ -67,7 +81,9 @@ public class Main extends Application implements IView {
 			this.controller.updateDriver(e);
 		});
 		
-		
+		Locale.setDefault(new Locale("en", "US"));
+		ResourceBundle b = ResourceBundle.getBundle("test");
+		System.out.println("teksti: " + b.getString("joku"));
 		
 		
 		Driver d1 = this.controller.readDriver(1);
