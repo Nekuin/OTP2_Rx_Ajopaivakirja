@@ -6,40 +6,52 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-
-import static org.mockito.Mockito.*;
 
 import model.*;
 
-@ExtendWith(MockitoExtension.class)
 public class HRManagerTest {
 	
 	static HrManager testHR;
-	@Mock
-	static AjoAccessObject a;
-	
+	static Driver kuski; 
+
 	@BeforeAll
 	static void setup() {
-		System.out.println("testing");
-		a = new AjoAccessObject();
+		System.out.println("testing HR manager");
+		//a = new DriverAccessObject();
+		
 	}
 
 	@BeforeEach
 	void resetHR() {
-		testHR = new HrManager("HR Heikki", 400);
-		testHR.setAjoAccessObject(a);
+		testHR = new HrManager("HR Heikki");
+		kuski = new Driver("Asko Kuski", "B1");
 	}
 	
 	@Test
-	@DisplayName("Test addDriver")
-	void addDriver() {
-		IDriver driver = new Driver("Kalle Kaahaaja", 1001, "C1");
-		when(a.createDriver(driver)).thenReturn(true);
-		//when(testHR.addDriver("Kalle Kaahaaja", 1001, "C1")).thenReturn(true);
-		boolean test = testHR.addDriver("Kalle Kaahaaja", 1001, "C1");
-		assertEquals(true, test, "Creating the driver failed!");
+	@DisplayName("HR name")
+	void testName() {
+		assertEquals("HR Heikki", testHR.getName(), "Name is not correct");
 	}
+	
+	@Test
+	@DisplayName("Test removeDriver")
+	void removeDriver() {			
+		//TODO: implement
+	}
+	
+	@Test
+	@DisplayName("Test addDrivingShift")
+	void addDrivingShift() {			
+	//	boolean test = testHR.addDrivingShift(101, "12:00", "16:00", arska);
+		//assertEquals(true, test, "Adding a driver failed!");
+	}
+		
+	@Test
+	@DisplayName("Test removeDrivingShift")
+	void removeDrivingShift() {			
+	//	boolean test = testHR.removeDrivingShift(101, "12:00", "16:00", arska);
+		//assertEquals(true, test, "Removing the driver failed!");
+	}
+	
+
 }

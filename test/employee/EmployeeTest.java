@@ -7,15 +7,14 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import model.Employee;
-import model.IEmployee;
 
 public class EmployeeTest {
 	
-	static IEmployee testEmployee;
+	static Employee testEmployee;
 	
 	@BeforeEach
 	void resetEmployee() {
-		testEmployee = new Employee("Röi Ukko", 2001);
+		testEmployee = new Employee("Röi Ukko");
 	}
 	
 	@Test
@@ -32,13 +31,7 @@ public class EmployeeTest {
 	}
 	
 	@Test
-	@DisplayName("Test getEmployeeID")
-	void getEmployeeID() {	
-		assertEquals(2001, testEmployee.getEmployeeID(), "Employee ID not correct.");
-	}
-	
-	@Test
-	@DisplayName("Test setEmployeeID")
+	@DisplayName("Test employeeID")
 	void setEmployeeID() {	
 		testEmployee.setEmployeeID(2010);
 		assertEquals(2010, testEmployee.getEmployeeID(), "Employee ID not changed.");

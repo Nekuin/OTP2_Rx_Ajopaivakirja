@@ -7,20 +7,20 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import model.Cargo;
-import model.ICargo;
 
 public class CargoTest {
 	
-	static ICargo testCargo;
+	static Cargo testCargo;
 	
 	@BeforeEach
 	void resetCargo() {
-		testCargo = new Cargo(7001, 2300, false);
+		testCargo = new Cargo(2300, false);
 	}
 	
 	@Test
-	@DisplayName("Test getCargoID")
+	@DisplayName("Test cargoID")
 	void getCargoID() {	
+		testCargo.setCargoID(7001);
 		assertEquals(7001, testCargo.getCargoID(), "Cargo ID not correct.");
 	}
 	

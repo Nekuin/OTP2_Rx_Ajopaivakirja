@@ -7,25 +7,18 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import model.Client;
-import model.IClient;
 
 public class ClientTest {
 	
-	static IClient testClient;
+	static Client testClient;
 	
 	@BeforeEach
 	void resetClient() {
-		testClient = new Client("Hookoo", 800);
+		testClient = new Client("Hookoo");
 	}
 	
 	@Test
-	@DisplayName("Test getClientID")
-	void getClientID() {	
-		assertEquals(800, testClient.getClientID(), "Client ID not correct.");
-	}
-	
-	@Test
-	@DisplayName("Test setClientID")
+	@DisplayName("Test clientID")
 	void setClientID() {
 		testClient.setClientID(999);
 		assertEquals(999, testClient.getClientID(), "Client ID not changed.");

@@ -1,15 +1,27 @@
 package model;
 
-public class HrManager extends Employee {
-
-	private AjoAccessObject a;
+import javax.persistence.Entity;
+import javax.persistence.Transient;
+/**
+ * Class for the HrManager
+ * @author Nekuin
+ *
+ */
+@Entity
+public class HrManager extends Employee{
+	
+	@Transient
+	private DriverAccessObject a;
+	
+	@Transient
+	private DrivingShiftAO ao;
+	
 	/**
-	 * Constructor for then hr manager
+	 * Constructor for the hr manager which takes the name of the HrManager as parameter
 	 * @param name name of the hr manager
-	 * @param employeeID id of the hr manager
 	 */
-	public HrManager(String name, int employeeID) {
-		super(name, employeeID);
+	public HrManager(String name) {
+		super(name);
 	}
 	
 	
@@ -17,35 +29,63 @@ public class HrManager extends Employee {
 	 * Empty constructor for HrManager
 	 */
 	public HrManager() {
-		
+		super();
 	}
 	
-	public void setAjoAccessObject(AjoAccessObject a) {
+	
+	/**
+	 * Sets the access object for driver objects
+	 * @param a driver access object
+	 */
+	public void setAjoAccessObject(DriverAccessObject a) {
 		this.a = a;
+	}
+	
+	
+	/**
+	 * Sets the access object for driving shift objects
+	 * @param ao driving shift access object
+	 */
+	public void setDrivingShiftAO(DrivingShiftAO ao) {
+		this.ao = ao;
 	}
 	
 	/**
 	 * Add driver to the database
 	 * @param name name of the driver
-	 * @param employeeID id of the driver
 	 * @param driversLicense drivers license of the driver
 	 */
-	public boolean addDriver(String name, int employeeID, String driversLicense) {
-		IDriver driver = new Driver(name, employeeID, driversLicense);
-		return a.createDriver(driver);
-		
+	public void addDriver(String name, String driversLicense) {
+		Driver driver = new Driver(name,driversLicense);
+		a.create(driver);	
 	}
 	
-	public void removeDriver(int employeeID) {
-		a.deleteDriver(employeeID);
+	/**
+	 * Removes driver from the database
+	 * @param driver driver that is about to be removed
+	 */
+	public void removeDriver(Driver driver) {
+		a.delete(driver);
 	}
 	
-	public void addDrivingShift(int shiftID, String startTime, String finishTime, Driver shiftDriver) {
-		DrivingShift shift = new DrivingShift(shiftID, startTime, finishTime, shiftDriver);
+	
+	/**
+	 * Adds driving shift to the database
+	 * @param client client of the driving shift
+	 * @param cargo cargo of the driving shift
+	 */
+	public void addDrivingShift(Client client, Cargo cargo) {
+		DrivingShift shift = new DrivingShift(client, cargo);
+		ao.createDrivingShift(shift);
 	}
 	
-	public void removeDrivingShift(int shiftID) {
-		
+	
+	/**
+	 * Removes driving shift from the database
+	 * @param shift shift that is about to be removed
+	 */
+	public void removeDrivingShift(DrivingShift shift) {
+		ao.delete(shift);
 	}
 
 }

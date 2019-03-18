@@ -1,0 +1,30 @@
+
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+             http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+             version="2.1">
+    <persistence-unit name="otp1">
+    <description>Hibernate EntityManager</description>
+    
+    <class>model.Employee</class>
+    <class>model.Driver</class>
+    <class>model.DrivingShift</class>
+    <class>model.Client</class>
+    <class>model.Cargo</class>
+    <class>model.HrManager</class>
+    <class>model.Vehicle</class>
+    <class>model.Superior</class>
+
+    <exclude-unlisted-classes>true</exclude-unlisted-classes>
+    <properties>
+        <property name="hibernate.dialect" value="org.hibernate.dialect.MariaDBDialect"/>
+        <property name="hibernate.hbm2ddl.auto" value="create"/>
+        <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+        <property name="javax.persistence.jdbc.url" value="jdbc:mysql://10.114.34.91:3306/ajopaivakirja"/>
+        <property name="javax.persistence.jdbc.user" value="root"/>
+        <property name="javax.persistence.jdbc.password" value="otp1-r6"/>
+        <property name="hibernate.show_sql" value="true"/>
+    </properties>
+</persistence-unit>
+</persistence>

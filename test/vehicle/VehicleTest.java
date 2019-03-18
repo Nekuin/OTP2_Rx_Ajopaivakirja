@@ -6,16 +6,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import model.IVehicle;
 import model.Vehicle;
 
 public class VehicleTest {
 
-	static IVehicle testCar;
+	static Vehicle testCar;
 	
 	@BeforeEach
 	void resetVehicle() {
-		testCar = new Vehicle("YKS-111", 0.0, 1000, "Sprinter", "Mercedes-Benz", 1001, true); 
+		testCar = new Vehicle("YKS-111", 0.0, 1000, "Sprinter", "Mercedes-Benz", true); 
 	}
 	
 	@Test
@@ -97,13 +96,7 @@ public class VehicleTest {
 	}
 	
 	@Test
-	@DisplayName("Test getCarID")
-	void getCarID() {
-		assertEquals(1001, testCar.getCarID(), "Car ID not correct.");
-	}
-	
-	@Test
-	@DisplayName("Test setCarID")
+	@DisplayName("Test carID")
 	void setCarID() {
 		testCar.setCarID(2002);
 		assertEquals(2002, testCar.getCarID(), "Car ID not changed.");
