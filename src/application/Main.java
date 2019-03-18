@@ -31,6 +31,7 @@ public class Main extends Application implements IView {
 	private LandingView landing;
 	private DriverReserveView driverRes;
 	private SuperiorView supView;
+	private SuperiorEmployeeView supEmpView;
 	private IController controller;
 	private EntityManager entityManager;
 	
@@ -110,10 +111,8 @@ public class Main extends Application implements IView {
 			//this.setDriverData(getTestDrivers());
 			Button driverResButton = new Button("Driver res");
 			Button driverViewButton = new Button("Driver view");
-			driverResButton.getStyleClass().add("navButton");
-			driverViewButton.getStyleClass().add("navButton");
 			
-			NavBar nav = new NavBar(this, new Button[]{driverResButton, driverViewButton});
+			NavBar nav = new NavBar(this, driverResButton, driverViewButton);
 			driverResButton.setOnAction(e -> {
 				root.setCenter(driverRes.getDriverReserveView());
 				driverRes.setNavBar(nav);
@@ -138,7 +137,27 @@ public class Main extends Application implements IView {
 			//create SuperiorView
 			this.supView = new SuperiorView(this.controller);
 			
-			//this.setShiftData(this.controller.readAllDrivingShifts());
+			//create SuperiorEmployeeView
+			this.supEmpView = new SuperiorEmployeeView(this.controller);
+			
+			//create Buttons for Superior navBar
+			Button supViewButton = new Button("Superior Vehicle");
+			Button supEmpViewButton = new Button("Superior Employees");
+			
+			//create navBar for Superior
+			NavBar supNav = new NavBar(this, supViewButton, supEmpViewButton);
+			supEmpViewButton.setOnAction(e -> {
+				root.setCenter(supEmpView.getView());
+				supEmpView.setNavBar(supNav);
+			});
+			
+			supViewButton.setOnAction(e -> {
+				root.setCenter(supView.getSuperiorView());
+				supView.setNavBar(supNav);
+			});
+			
+			//set navBar for SuperiorView
+			supView.setNavBar(supNav);
 			
 			Scene scene = new Scene(root,720,600);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
