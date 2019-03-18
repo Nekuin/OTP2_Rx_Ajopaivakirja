@@ -96,7 +96,6 @@ public class HRView {
 			Driver clicked = lv.getSelectionModel().getSelectedItem();
 			clicked.setName(name.getText());
 			clicked.setDriversLicense(driversLicense.getText());
-			clicked.setEmployeeID(Integer.parseInt(driverID.getText()));
 			this.controller.updateDriver(clicked);
 			updateDrivers(this.controller.readAllDrivers());
 		});
