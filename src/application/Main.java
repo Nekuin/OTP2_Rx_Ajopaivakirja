@@ -30,7 +30,7 @@ public class Main extends Application implements IView {
 	private HRView hr;
 	private LandingView landing;
 	private DriverReserveView driverRes;
-	//private SuperiorView supView;
+	private SuperiorView supView;
 	private IController controller;
 	private EntityManager entityManager;
 	
@@ -134,6 +134,9 @@ public class Main extends Application implements IView {
 			});
 			this.root.setBottom(logout);
 			
+			
+			//create SuperiorView
+			this.supView = new SuperiorView(this.controller);
 			
 			//this.setShiftData(this.controller.readAllDrivingShifts());
 			
@@ -267,6 +270,8 @@ public class Main extends Application implements IView {
 		} else if(view == Main.HR_VIEW) {
 			this.hr.updateDrivers(this.controller.readAllDrivers());
 			this.root.setCenter(this.hr.getHRView());
+		} else if(view == Main.SUPERIOR_VIEW) {
+			this.root.setCenter(this.supView.getSuperiorView());
 		}
 	}
 }

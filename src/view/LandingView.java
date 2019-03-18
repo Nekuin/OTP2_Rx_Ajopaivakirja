@@ -8,6 +8,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import model.Driver;
 import model.HrManager;
+import model.Superior;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -90,6 +91,17 @@ public class LandingView {
 				System.out.println("logged in as a manager");
 				Main.LOGGED_IN_ID = id;
 				this.controller.changeView(Main.HR_VIEW);
+				return;
+			}
+		});
+		
+		//check if the id belongs to a Superior
+		List<Superior> superiors = this.controller.readAllSuperiors();
+		superiors.forEach(e -> {
+			if(e.getEmployeeID() == id) {
+				System.out.println("logged in as a superior");
+				Main.LOGGED_IN_ID = id;
+				this.controller.changeView(Main.SUPERIOR_VIEW);
 				return;
 			}
 		});
