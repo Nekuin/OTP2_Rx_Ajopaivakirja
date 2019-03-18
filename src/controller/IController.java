@@ -121,4 +121,10 @@ public interface IController {
 	 * @return List of Superiors
 	 */
 	public List<Superior> readAllSuperiors();
+
+	/**
+	 * Update vehicle information
+	 * @param vehicle
+	 */
+	public void updateVehicle(Vehicle vehicle);
 }
