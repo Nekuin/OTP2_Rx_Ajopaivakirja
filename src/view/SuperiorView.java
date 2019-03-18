@@ -18,7 +18,6 @@ public class SuperiorView {
 	private IController controller;
 	private BorderPane borderPane;
 	private ListView<Vehicle> lv;
-	private NavBar navBar;
 	
 	public SuperiorView(IController controller) {
 		this.controller = controller;
@@ -27,7 +26,6 @@ public class SuperiorView {
 	}
 	
 	public void setup() {
-		
 		VBox viewBox = new VBox();
 		viewBox.setPadding(new Insets(30, 30, 30, 30));
 		viewBox.getChildren().addAll(addButtons());
@@ -36,7 +34,7 @@ public class SuperiorView {
 	}
 	
 	public void setNavBar(NavBar navBar) {
-		this.navBar = navBar;
+		this.borderPane.setTop(navBar.getNavBar());
 	}
 	
 	private ListView getCarList() {
