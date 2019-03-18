@@ -74,6 +74,8 @@ public class HRView {
 		addDriverBtn.setOnAction(e -> {
 			Driver d = new Driver(driverNameTextF.getText(), driversLicenseTextF.getText());
 			this.controller.createDriver(d);
+			driverNameTextF.setText("");
+			driversLicenseTextF.setText("");
 			updateDrivers(this.controller.readAllDrivers());
 		});
 		
