@@ -103,4 +103,10 @@ public interface IController {
 	 * @param vehicle
 	 */
 	public void createVehicle(Vehicle vehicle);
+
+	/**
+	 * Deletes a vehicle from database
+	 * @param vehicle
+	 */
+	public void deleteVehicle(Vehicle vehicle);
 }

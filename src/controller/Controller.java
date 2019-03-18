@@ -67,7 +67,12 @@ public class Controller implements IController{
 	
 	@Override
 	public void createVehicle(Vehicle vehicle) {
-		this.vehicleAO.create(vehicle);;
+		this.vehicleAO.create(vehicle);
+	}
+	
+	@Override
+	public void deleteVehicle(Vehicle vehicle) {
+		this.vehicleAO.delete(vehicle);
 	}
 	
 	@Override
