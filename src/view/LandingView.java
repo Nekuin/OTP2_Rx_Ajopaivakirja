@@ -8,6 +8,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import model.Driver;
 import model.HrManager;
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -29,6 +30,7 @@ public class LandingView {
 	public LandingView(IController controller) {
 		this.controller = controller;
 		this.bpane = new BorderPane();
+		
 		this.bpane.setCenter(loginPane());
 	}
 	
@@ -38,6 +40,7 @@ public class LandingView {
 	 */
 	private GridPane loginPane() {
 		GridPane pane = new GridPane();
+		pane.setPadding(new Insets(30, 0, 0, 30));
 		
 		TextField idField = new TextField();
 		idField.setPromptText("Your Employee ID");
