@@ -71,6 +71,11 @@ public class Controller implements IController{
 	}
 	
 	@Override
+	public void updateVehicle(Vehicle vehicle) {
+		this.vehicleAO.update(vehicle);
+	}
+	
+	@Override
 	public void deleteVehicle(Vehicle vehicle) {
 		this.vehicleAO.delete(vehicle);
 	}

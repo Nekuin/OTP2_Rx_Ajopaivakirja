@@ -22,15 +22,17 @@ public class SuperiorView {
 	}
 	
 	public void setup() {
-		
+		addButtons();
 	}
 	
 	private GridPane addButtons() {
 		
 		GridPane buttonPane = new GridPane();
 
-		Button addCarBtn = new Button("Add a new car");
+		Button addCarBtn = new Button("Add new car");
 		addCarBtn.setOnAction(e -> {
+				
+					
 					//Tarkistus ja onnistumisen jäläkeen alert
 					Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setTitle("The new car successfully added");
@@ -38,10 +40,13 @@ public class SuperiorView {
 					alert.showAndWait();
 					((Node) e.getSource()).getScene().getWindow().hide();
 		});
+		
+		Button deleteCarBtn = new Button("Delete car");
+		Button updateCarBtn = new Button("Update car");
 
 		HBox buttonHBox = new HBox();
 		buttonHBox.setPadding(new Insets(0, 20, 20, 20));
-		buttonHBox.getChildren().addAll(addCarBtn);
+		buttonHBox.getChildren().addAll(addCarBtn, deleteCarBtn, updateCarBtn);
 		buttonPane.add(buttonHBox, 0, 0);
 		return buttonPane;
 		
