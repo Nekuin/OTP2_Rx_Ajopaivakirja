@@ -49,12 +49,14 @@ public class LandingView {
 		Button loginButton = new Button("Login");
 		loginButton.setOnAction(e -> {
 			int id = Integer.parseInt(idField.getText());
+			idField.setText("");
 			login(id);
 		});
 		
 		idField.setOnKeyPressed(e -> {
 			if(e.getCode() == KeyCode.ENTER) {
 				this.login(Integer.parseInt(idField.getText()));
+				idField.setText("");
 			}
 		});
 		

@@ -23,13 +23,14 @@ import view.*;
 
 public class Main extends Application implements IView {
 	
-	public static int DRIVER_VIEW = 1, HR_VIEW = 2;
+	public static int DRIVER_VIEW = 1, HR_VIEW = 2, SUPERIOR_VIEW = 3;
 	public static int LOGGED_IN_ID = 0;
 	private BorderPane root;
 	private DriverView dv;
 	private HRView hr;
 	private LandingView landing;
 	private DriverReserveView driverRes;
+	//private SuperiorView supView;
 	private IController controller;
 	private EntityManager entityManager;
 	
@@ -125,7 +126,13 @@ public class Main extends Application implements IView {
 			
 			driverRes.setNavBar(nav);
 			
-			
+			//logout button
+			Button logout = new Button("Logout");
+			logout.setOnAction(e -> {
+				this.root.setCenter(landing.getLandingView());
+				Main.LOGGED_IN_ID = 0;
+			});
+			this.root.setBottom(logout);
 			
 			
 			//this.setShiftData(this.controller.readAllDrivingShifts());
