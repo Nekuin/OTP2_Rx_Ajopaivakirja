@@ -2,10 +2,14 @@ package model;
 
 import javax.persistence.*;
 
+/**
+ * 
+ * @author tuoma
+ *	Class for cargo
+ */
 @Entity
 @Table(name="Cargo")
 public class Cargo {
-	
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)

@@ -2,14 +2,17 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.persistence.*;
 
 
-
+/**
+ * 
+ * @author tuoma
+ *	Class for drivers
+ */
 @Entity
 public class Driver extends Employee {
-
+	
 	@Column(name="driverslicense")
 	private String driversLicense;
 	

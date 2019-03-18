@@ -26,6 +26,7 @@ public class HibernateUtil {
 			configuration.addAnnotatedClass(model.DrivingShift.class);
 			configuration.addAnnotatedClass(model.Client.class);
 			configuration.addAnnotatedClass(model.Cargo.class);
+			configuration.addAnnotatedClass(model.Superior.class);
 			configuration.addAnnotatedClass(model.HrManager.class);
 			System.out.println("Configuration loaded");
 			

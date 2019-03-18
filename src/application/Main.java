@@ -49,6 +49,7 @@ public class Main extends Application implements IView {
 		Collection<DrivingShift> shifts = createTestShifts();
 		Collection<Vehicle> vehicles = createTestVehicles();
 		Collection<HrManager> mg = createTestHRManagers();
+		Collection<Superior> superiors = createSuperiors();
 		
 		List<Driver> drivers = this.controller.readAllDrivers();
 		System.out.println("queried drivers: ------");
@@ -70,8 +71,6 @@ public class Main extends Application implements IView {
 		Driver d1 = this.controller.readDriver(1);
 		d1.setCanDriveHazardous(false);
 		System.out.println("driver 1: " + d1);
-		//System.out.println("shifts d1 can drive: " + ((Controller) controller).readGoodDrivingShifts(d1));
-		
 	}
 	
 	
@@ -154,7 +153,7 @@ public class Main extends Application implements IView {
 		Collection<Vehicle> vehicles = new ArrayList<>();
 		
 		Vehicle testCar1 = new Vehicle("ROK-666", 1500, 10, "Sprintteri", "Mersu", false);
-		Vehicle testCar2 = new Vehicle("TIS-517", 1600, 100, "Pantteri", "Mersu", false);
+		Vehicle testCar2 = new Vehicle("TTT-777", 1600, 100, "Pantteri", "Mersu", false);
 		
 		vehicles.add(testCar1);
 		vehicles.add(testCar2);
@@ -197,7 +196,7 @@ public class Main extends Application implements IView {
 	
 	private Collection<HrManager> createTestHRManagers(){
 		Collection<HrManager> managers = new ArrayList<>();
-		HrManager m1 = new HrManager("Manageeri");
+		HrManager m1 = new HrManager("Masa Manageeri");
 		managers.add(m1);
 		managers.forEach(e -> {
 			this.controller.createHrManager(e);
@@ -206,7 +205,16 @@ public class Main extends Application implements IView {
 		return managers;
 	}
 	
-	
+	private Collection<Superior> createSuperiors(){
+		Collection<Superior> superiors = new ArrayList<>();
+		Superior s1 = new Superior("Esimees");
+		superiors.add(s1);
+		superiors.forEach(s -> {
+			this.controller.createSuperior(s);
+		});
+		System.out.println("finished creating superiors");
+		return superiors;
+	}
 	private Collection<DrivingShift> createTestShifts(){
 		Collection<DrivingShift> shifts = new ArrayList<>();
 		for(int i = 0; i < 4; i++) {

@@ -1,7 +1,11 @@
 package model;
 
 import javax.persistence.*;
-
+/**
+ * Class for Employee
+ * @author Nekuin
+ *
+ */
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Employee {
@@ -31,7 +35,7 @@ public class Employee {
 
 	/**
 	 * Returns name of the employee
-	 * @return
+	 * @return the name of the Employee
 	 */
 	public String getName() {
 		return name;
@@ -49,7 +53,7 @@ public class Employee {
 	
 	/**
 	 * Returns id of the employee
-	 * @return
+	 * @return the ID of the Employee
 	 */
 	public int getEmployeeID() {
 		return employeeID;
@@ -66,7 +70,7 @@ public class Employee {
 
 
 	/**
-	 * Returns information of the employee in string format
+	 * Returns a String representation of the Employee
 	 */
 	@Override
 	public String toString() {

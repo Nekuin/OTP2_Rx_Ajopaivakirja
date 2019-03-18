@@ -2,6 +2,11 @@ package model;
 
 import javax.persistence.*;
 
+/**
+ * Class for the Vehicle
+ * @author Nekuin
+ *
+ */
 @Entity
 @Table(name="Vehicles")
 public class Vehicle {
@@ -58,7 +63,7 @@ public class Vehicle {
 	
 	/**
 	 * Returns the register number of the vehicle
-	 * @return
+	 * @return RegNr as String
 	 */
 	public String getRegNr() {
 		return regNr;
@@ -74,7 +79,7 @@ public class Vehicle {
 
 	/**
 	 * Returns driven distance of the vehicle
-	 * @return
+	 * @return Double driven distance
 	 */
 	public double getDrivenDistance() {
 		return drivenDistance;
@@ -82,7 +87,7 @@ public class Vehicle {
 
 	/**
 	 * Sets driven distance of the vehicle
-	 * @param drivenDistance
+	 * @param drivenDistance Double driven distance
 	 */
 	public void setDrivenDistance(double drivenDistance) {
 		this.drivenDistance = drivenDistance;
@@ -91,7 +96,7 @@ public class Vehicle {
 	
 	/**
 	 * Increases driven distance of the vehicle
-	 * @param driven
+	 * @param driven Double driven distance
 	 */
 	public void addDrivenDistance(double driven) {
 		this.drivenDistance += driven;
@@ -100,7 +105,7 @@ public class Vehicle {
 	
 	/**
 	 * Returns maximum load of the vehicle
-	 * @return
+	 * @return Int max cargo load
 	 */
 	public int getMaxCargoLoad() {
 		return maxCargoLoad;
@@ -116,7 +121,7 @@ public class Vehicle {
 
 	/**
 	 * Returns model of the vehicle
-	 * @return
+	 * @return Model as String
 	 */
 	public String getModel() {
 		return model;
@@ -134,7 +139,7 @@ public class Vehicle {
 	
 	/**
 	 * Returns brand of the vehicle
-	 * @return
+	 * @return Brand as String
 	 */
 	public String getBrand() {
 		return brand;
@@ -152,7 +157,7 @@ public class Vehicle {
 	
 	/**
 	 * Returns id of the vehicle
-	 * @return
+	 * @return ID as int
 	 */
 	public int getCarID() {
 		return carID;
@@ -170,7 +175,7 @@ public class Vehicle {
 	
 	/**
 	 * Returns whether the vehicle is maintained or not
-	 * @return
+	 * @return boolean
 	 */
 	public boolean getMaintained() {
 		return maintained;
@@ -185,6 +190,10 @@ public class Vehicle {
 		this.maintained = maintained;
 	}
 	
+	/**
+	 * Returns a String representation of the Vehicle
+	 */
+	@Override
 	public String toString() {
 		return this.brand + " " + this.model + " "  + this.regNr; 
 	}

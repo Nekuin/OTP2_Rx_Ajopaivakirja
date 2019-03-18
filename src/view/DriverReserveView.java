@@ -17,7 +17,11 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import model.Driver;
 import model.DrivingShift;
-
+/**
+ * View module where the Driver can reserve shifts
+ * @author Nekuin
+ *
+ */
 public class DriverReserveView {
 	
 	private BorderPane bpane;
@@ -27,6 +31,11 @@ public class DriverReserveView {
 	
 	private IController controller;
 	
+	/**
+	 * Constructor which takes the controller and navbar as arguments
+	 * @param controller instance of Controller
+	 * @param navBar instance of NavBar
+	 */
 	public DriverReserveView(IController controller, NavBar navBar) {
 		this.controller = controller;
 		this.bpane = new BorderPane();
@@ -34,12 +43,19 @@ public class DriverReserveView {
 		setup();
 	}
 	
+	/**
+	 * Constructor which takes the controller as argument
+	 * @param controller instance of Controller
+	 */
 	public DriverReserveView(IController controller) {
 		this.controller = controller;
 		this.bpane = new BorderPane();
 		setup();
 	}
 	
+	/**
+	 * Setup the looks of this module
+	 */
 	private void setup() {
 		this.shiftDetailTexts = new Text[4];
 		SplitPane split = new SplitPane();
@@ -60,6 +76,10 @@ public class DriverReserveView {
 		this.bpane.setCenter(split);
 	}
 	
+	/**
+	 * A panel where you can see a list of DrivingShifts
+	 * @return VBox 
+	 */
 	private VBox shiftPanel() {
 		VBox vbox = new VBox();
 		shiftListView = new ListView<>();
@@ -77,6 +97,10 @@ public class DriverReserveView {
 		return vbox;
 	}
 	
+	/**
+	 * A panel where you can see details about a selected shift
+	 * @return GridPane
+	 */
 	private GridPane shiftDetailsPanel() {
 		GridPane grid = new GridPane();
 		Text title = new Text("Shift details: ");
@@ -103,22 +127,37 @@ public class DriverReserveView {
 		return grid;
 	}
 	
+	/**
+	 * Update shift details texts
+	 * @param strings details of the shift, pass arguments in this order: client, shift id, total cargo weight and time
+	 */
 	public void updateShiftDetailText(String... strings) {
 		for(int i = 0; i < shiftDetailTexts.length; i++) {
 			shiftDetailTexts[i].setText(strings[i]);
 		}
 	}
 	
-	
+	/**
+	 * Update the list of DrivingShifts with a collection of DrivingShifts
+	 * @param shifts
+	 */
 	public void updateShiftList(Collection<DrivingShift> shifts) {
 		this.shifts.clear();
 		this.shifts.addAll(shifts.stream().filter(shift -> !shift.getShiftTaken()).collect(Collectors.toList()));
 	}
 	
+	/**
+	 * Set the instance of NavBar
+	 * @param navBar instance of NavBar
+	 */
 	public void setNavBar(NavBar navBar) {
 		this.bpane.setTop(navBar.getNavBar());
 	}
 	
+	/**
+	 * Get the whole module
+	 * @return BorderPane
+	 */
 	public BorderPane getDriverReserveView() {
 		return this.bpane;
 	}

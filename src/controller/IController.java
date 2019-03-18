@@ -4,6 +4,11 @@ import java.util.List;
 
 import model.*;
 
+/**
+ * 
+ * @author tuoma
+ * Interface for the controller
+ */
 public interface IController {
 
 	/**
@@ -98,4 +103,22 @@ public interface IController {
 	 * @param vehicle
 	 */
 	public void createVehicle(Vehicle vehicle);
+
+	/**
+	 * Deletes a vehicle from database
+	 * @param vehicle
+	 */
+	public void deleteVehicle(Vehicle vehicle);
+	
+	/**
+	 * Creates superior
+	 * @param superior
+	 */
+	public void createSuperior(Superior superior);
+
+	/**
+	 * Read all the superiors and make a list of them
+	 * @return List of Superiors
+	 */
+	public List<Superior> readAllSuperiors();
 }

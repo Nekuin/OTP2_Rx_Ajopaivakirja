@@ -12,18 +12,30 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 
+/**
+ * A module which has the "login" functions
+ * @author Nekuin
+ *
+ */
 public class LandingView {
 	
 	private IController controller;
 	private BorderPane bpane;
 	
-	
+	/**
+	 * Constructor which takes a Controller as a parameter
+	 * @param controller instance of Controller
+	 */
 	public LandingView(IController controller) {
 		this.controller = controller;
 		this.bpane = new BorderPane();
 		this.bpane.setCenter(loginPane());
 	}
 	
+	/**
+	 * A module which has fields for employee ID input and a button for logging in
+	 * @return GridPane
+	 */
 	private GridPane loginPane() {
 		GridPane pane = new GridPane();
 		
@@ -49,6 +61,10 @@ public class LandingView {
 		return pane;
 	}
 	
+	/**
+	 * Log the user in with the employeeID given as argument
+	 * @param id Employee ID
+	 */
 	private void login(int id) {
 		System.out.println("[ph] logging in as id: " + id);
 		//check if the id belongs to a driver
@@ -75,6 +91,10 @@ public class LandingView {
 		
 	}
 	
+	/**
+	 * Get the whole LandingView module
+	 * @return
+	 */
 	public BorderPane getLandingView() {
 		return this.bpane;
 	}
