@@ -54,6 +54,9 @@ public class HRView {
 		VBox driverBox = new VBox();
 		driverBox.setPadding(new Insets(20));
 		
+		HBox driverBoxButtons = new HBox();
+		driverBoxButtons.setPadding(new Insets(20));
+		
 		VBox addDriverBox = new VBox();
 		addDriverBox.setPadding(new Insets(20));
 		
@@ -77,9 +80,9 @@ public class HRView {
 		addDriverBox.getChildren().addAll(driverNameBox, driversLicenseBox, addDriverBtn);
 		
 		Text driverInfo = new Text("Driver Info: ");
-		Text name = new Text("");
-		Text driversLicense = new Text("");;
-		Text driverID = new Text("");;
+		TextField name = new TextField("");
+		TextField driversLicense = new TextField("");;
+		TextField driverID = new TextField("");;
 		
 		
 		Button deleteDriver = new Button("Remove");
@@ -88,12 +91,24 @@ public class HRView {
 			updateDrivers(this.controller.readAllDrivers());
 		});
 		
+		Button updateDriver = new Button("Update");
+		updateDriver.setOnAction(e -> {
+			Driver clicked = lv.getSelectionModel().getSelectedItem();
+			clicked.setName(name.getText());
+			clicked.setDriversLicense(driversLicense.getText());
+			clicked.setEmployeeID(Integer.parseInt(driverID.getText()));
+			this.controller.updateDriver(clicked);
+			updateDrivers(this.controller.readAllDrivers());
+		});
 		
 		
-		driverBox.getChildren().addAll(driverInfo, name, driverID, driversLicense, deleteDriver);
+		driverBoxButtons.getChildren().addAll(updateDriver, deleteDriver);
+		
+		driverBox.getChildren().addAll(driverInfo, name, driverID, driversLicense, driverBoxButtons);
 
 		drivers = FXCollections.observableArrayList();
 		lv = new ListView<>();
+		lv.setMinWidth(300);
 		lv.setItems(drivers);
 
 		lv.setOnMouseClicked(e -> {
@@ -109,7 +124,7 @@ public class HRView {
 		grid.add(title, 0, 0);
 		grid.add(lv, 0, 1);
 		grid.add(driverBox, 1, 1);
-		grid.add(addDriverBox, 2, 1);
+		grid.add(addDriverBox, 1, 3);
 
 		return grid;
 	}
