@@ -200,7 +200,6 @@ public class ReportingView {
 					alert.setTitle("Successfully reported");
 					alert.setContentText("You have successfully reported shift:" + drivingShift.getShiftID());
 					alert.showAndWait();
-					((Node) e.getSource()).getScene().getWindow().hide();
 				}
 
 			} else {
