@@ -109,4 +109,16 @@ public interface IController {
 	 * @param vehicle
 	 */
 	public void deleteVehicle(Vehicle vehicle);
+	
+	/**
+	 * Creates superior
+	 * @param superior
+	 */
+	public void createSuperior(Superior superior);
+
+	/**
+	 * Read all the superiors and make a list of them
+	 * @return List of Superiors
+	 */
+	public List<Superior> readAllSuperiors();
 }

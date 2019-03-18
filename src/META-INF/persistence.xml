@@ -14,6 +14,7 @@
     <class>model.Cargo</class>
     <class>model.HrManager</class>
     <class>model.Vehicle</class>
+    <class>model.Superior</class>
 
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>

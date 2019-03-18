@@ -3,9 +3,7 @@ package controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import model.*;
-import util.HibernateUtil;
 import view.IView;
 
 public class Controller implements IController{
@@ -17,6 +15,7 @@ public class Controller implements IController{
 	private Dao<Cargo> cargoAO;
 	private Dao<Vehicle> vehicleAO;
 	private Dao<Client> clientAO;
+	private Dao<Superior> superiorAO;
 	
 	
 	/**
@@ -29,6 +28,7 @@ public class Controller implements IController{
 		this.hrAO = new Dao<>(model.HrManager.class);
 		this.driverAccessObject = new Dao<>(model.Driver.class);
 		this.vehicleAO = new Dao<>(model.Vehicle.class);
+		this.superiorAO = new Dao<>(model.Superior.class);
 	}
 	
 	@Override
@@ -126,7 +126,18 @@ public class Controller implements IController{
 		List<HrManager> managers = this.hrAO.getAll();
 		return managers;
 	}
-
+	
+	@Override
+	public void createSuperior(Superior superior) {
+		this.superiorAO.create(superior);
+	}
+	
+	@Override
+	public List<Superior> readAllSuperiors(){
+		List<Superior> superiors = this.superiorAO.getAll();
+		return superiors;
+	}
+	
 	@Override
 	public void deleteDriver(Driver driver) {
 		this.driverAccessObject.delete(driver);
