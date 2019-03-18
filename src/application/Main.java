@@ -71,8 +71,6 @@ public class Main extends Application implements IView {
 		Driver d1 = this.controller.readDriver(1);
 		d1.setCanDriveHazardous(false);
 		System.out.println("driver 1: " + d1);
-		//System.out.println("shifts d1 can drive: " + ((Controller) controller).readGoodDrivingShifts(d1));
-		
 	}
 	
 	
