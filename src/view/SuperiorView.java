@@ -75,7 +75,6 @@ public class SuperiorView {
 	private GridPane addButtons() {
 
 		GridPane buttonPane = new GridPane();
-		
 
 		Button addCarBtn = new Button("Add new car");
 		addCarBtn.setOnAction(e -> {
@@ -88,31 +87,30 @@ public class SuperiorView {
 		});
 
 		Button deleteCarBtn = new Button("Delete car");
-		deleteCarBtn.setOnMouseClicked( e -> {
-	            clicked = vehicleList.getSelectionModel().getSelectedItem();
-	            
-	            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-	            alert.setDialogPane(new FixedOrderButtonDialog());
-	            alert.getButtonTypes().setAll(ButtonType.CANCEL, ButtonType.YES);
-	            alert.setTitle("Are you sure?");
-	            alert.setHeaderText(null);
-	            alert.setContentText("Are you sure you want to delete this car:\n\nBrand & Model: " +
-	            	clicked.getBrand() + " " + clicked.getModel() + "\nRegister number: " + clicked.getRegNr() + "?\n\n");
-	            System.out.println(clicked);
-	            Optional<ButtonType> option = alert.showAndWait();
-	            if (option.get() == ButtonType.YES) {
-            		controller.deleteVehicle(clicked);
-            		updateCarList();
-	             } else {
-	                alert.close();
-	             }	                  
-	            });
-	    
+		deleteCarBtn.setOnMouseClicked(e -> {
+			clicked = vehicleList.getSelectionModel().getSelectedItem();
+
+			Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+			alert.setDialogPane(new FixedOrderButtonDialog());
+			alert.getButtonTypes().setAll(ButtonType.CANCEL, ButtonType.YES);
+			alert.setTitle("Are you sure?");
+			alert.setHeaderText(null);
+			alert.setContentText("Are you sure you want to delete this car:\n\nBrand & Model: " + clicked.getBrand()
+					+ " " + clicked.getModel() + "\nRegister number: " + clicked.getRegNr() + "?\n\n");
+			System.out.println(clicked);
+			Optional<ButtonType> option = alert.showAndWait();
+			if (option.get() == ButtonType.YES) {
+				controller.deleteVehicle(clicked);
+				updateCarList();
+			} else {
+				alert.close();
+			}
+		});
 
 		Button updateCarBtn = new Button("Update car");
 		updateCarBtn.setOnAction(e -> {
 			clicked = vehicleList.getSelectionModel().getSelectedItem();
-			
+
 			Stage stage = new Stage();
 			stage.setScene(new Scene(handleUpdateCarModal(clicked)));
 			stage.setTitle("Update car information");
@@ -129,11 +127,11 @@ public class SuperiorView {
 		return buttonPane;
 
 	}
-	
+
 	public BorderPane handleUpdateCarModal(Vehicle clicked) {
-		
+
 		BorderPane modalPane = new BorderPane();
-		
+
 		VBox labelVBox = new VBox();
 		labelVBox.setSpacing(30);
 		labelVBox.setPadding(new Insets(30, 20, 20, 20));
@@ -193,7 +191,7 @@ public class SuperiorView {
 		maintainedBox.setPadding(new Insets(20, 20, 20, 20));
 		Text maintainedText = new Text("Is this a new/maintained car: ");
 		CheckBox maintainedCheckBox = new CheckBox();
-		if(clicked.getMaintained()) {
+		if (clicked.getMaintained()) {
 			maintainedCheckBox.setSelected(true);
 		}
 		maintainedBox.getChildren().addAll(maintainedText, maintainedCheckBox);
@@ -203,35 +201,52 @@ public class SuperiorView {
 		buttonBox.setSpacing(30);
 		buttonBox.setPadding(new Insets(30, 30, 30, 30));
 		Button submitButton = new Button("Submit the changes");
+
 		submitButton.setOnAction(e -> {
-			
-			clicked.setBrand(brandInput.getText());
-			clicked.setModel(modelInput.getText());
-			clicked.setRegNr(regNumInput.getText());
-			boolean everythingOK = true;
+			boolean textfieldsOK = false;
+			System.out.println("binput = " + brandInput.getText());
+
+			if (brandInput.getText().isEmpty() || modelInput.getText().isEmpty() || regNumInput.getText().isEmpty()) {
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Empty textfields");
+				alert.setHeaderText(null);
+				alert.setContentText("Please make sure you have inputs in Brand, Model, and Register number fields.");
+				alert.showAndWait();
+
+			} else {
+				clicked.setBrand(brandInput.getText());
+				clicked.setModel(modelInput.getText());
+				clicked.setRegNr(regNumInput.getText());
+				textfieldsOK = true;
+			}
+
+			boolean doubleOK = false;
+
 			try {
 				Double.parseDouble(dDistInput.getText());
+				clicked.setDrivenDistance(Double.parseDouble(dDistInput.getText()));
+				doubleOK = true;
 			} catch (Exception e2) {
 				Alert alert = new Alert(AlertType.INFORMATION);
 				alert.setTitle("Check the driven distance field");
 				alert.setHeaderText(null);
 				alert.setContentText("Please enter only numbers in driven distance field.");
 				alert.showAndWait();
-				everythingOK = false;
 			}
-			clicked.setDrivenDistance(Double.parseDouble(dDistInput.getText()));
+
+			boolean intOK = false;
 
 			try {
 				Integer.parseInt(cargoInput.getText());
+				clicked.setMaxCargoLoad(Integer.parseInt(cargoInput.getText()));
+				intOK = true;
 			} catch (Exception e2) {
 				Alert alert = new Alert(AlertType.INFORMATION);
 				alert.setTitle("Check the cargo load field");
 				alert.setHeaderText(null);
 				alert.setContentText("Please enter only numbers in max cargo load field.");
 				alert.showAndWait();
-				everythingOK = false;
 			}
-			clicked.setMaxCargoLoad(Integer.parseInt(cargoInput.getText()));
 
 			if (maintainedCheckBox.isSelected()) {
 				clicked.setMaintained(true);
@@ -239,14 +254,14 @@ public class SuperiorView {
 				clicked.setMaintained(false);
 			}
 
-			if (everythingOK) {
+			if (textfieldsOK && doubleOK && intOK) {
 				controller.updateVehicle(clicked);
 				Alert confirmationMessage = new Alert(AlertType.INFORMATION);
 				confirmationMessage.setTitle("The car successfully updated");
 				confirmationMessage.setHeaderText(null);
-				confirmationMessage.setContentText("You have successfully the following car's information: \n\n" + "Brand & Model: "
-						+ clicked.getBrand() + " " + clicked.getModel() + "\nRegister number: " + clicked.getRegNr()
-						+ "\nDriven distance: " + clicked.getDrivenDistance() + " km");
+				confirmationMessage.setContentText("You have successfully the following car's information: \n\n"
+						+ "Brand & Model: " + clicked.getBrand() + " " + clicked.getModel() + "\nRegister number: "
+						+ clicked.getRegNr() + "\nDriven distance: " + clicked.getDrivenDistance() + " km");
 				confirmationMessage.showAndWait();
 				((Node) e.getSource()).getScene().getWindow().hide();
 				updateCarList();
@@ -269,7 +284,7 @@ public class SuperiorView {
 		pane.add(maintainedBox, 0, 6);
 		pane.add(buttonBox, 0, 7);
 		modalPane.setBottom(pane);
-		
+
 		return modalPane;
 	}
 
@@ -342,34 +357,51 @@ public class SuperiorView {
 		buttonBox.setPadding(new Insets(30, 30, 30, 30));
 		Button submitButton = new Button("Submit the car");
 		submitButton.setOnAction(e -> {
+
+			boolean textfieldsOK = false;
 			Vehicle vehicle = new Vehicle();
-			vehicle.setBrand(brandInput.getText());
-			vehicle.setModel(modelInput.getText());
-			vehicle.setRegNr(regNumInput.getText());
-			boolean everythingOK = true;
+
+			if (brandInput.getText().isEmpty() || modelInput.getText().isEmpty() || regNumInput.getText().isEmpty()) {
+				textfieldsOK = false;
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Empty textfields");
+				alert.setHeaderText(null);
+				alert.setContentText("Please make sure you have inputs in Brand, Model, and Register number fields.");
+				alert.showAndWait();
+			} else {
+				textfieldsOK = true;
+				vehicle.setBrand(brandInput.getText());
+				vehicle.setModel(modelInput.getText());
+				vehicle.setRegNr(regNumInput.getText());
+			}
+
+			boolean doubleOK = false;
+
 			try {
 				Double.parseDouble(dDistInput.getText());
+				vehicle.setDrivenDistance(Double.parseDouble(dDistInput.getText()));
+				doubleOK = true;
 			} catch (Exception e2) {
 				Alert alert = new Alert(AlertType.INFORMATION);
 				alert.setTitle("Check the driven distance field");
 				alert.setHeaderText(null);
 				alert.setContentText("Please enter only numbers in driven distance field.");
 				alert.showAndWait();
-				everythingOK = false;
 			}
-			vehicle.setDrivenDistance(Double.parseDouble(dDistInput.getText()));
+
+			boolean intOK = false;
 
 			try {
 				Integer.parseInt(cargoInput.getText());
+				vehicle.setMaxCargoLoad(Integer.parseInt(cargoInput.getText()));
+				intOK = true;
 			} catch (Exception e2) {
 				Alert alert = new Alert(AlertType.INFORMATION);
 				alert.setTitle("Check the cargo load field");
 				alert.setHeaderText(null);
 				alert.setContentText("Please enter only numbers in max cargo load field.");
 				alert.showAndWait();
-				everythingOK = false;
 			}
-			vehicle.setMaxCargoLoad(Integer.parseInt(cargoInput.getText()));
 
 			if (maintainedCheckBox.isSelected()) {
 				vehicle.setMaintained(true);
@@ -377,7 +409,7 @@ public class SuperiorView {
 				vehicle.setMaintained(false);
 			}
 
-			if (everythingOK) {
+			if (textfieldsOK && doubleOK && intOK) {
 				controller.createVehicle(vehicle);
 				Alert confirmationMessage = new Alert(AlertType.INFORMATION);
 				confirmationMessage.setTitle("New car successfully added");
@@ -414,15 +446,13 @@ public class SuperiorView {
 	public BorderPane getSuperiorView() {
 		return this.borderPane;
 	}
-	
+
 	private static class FixedOrderButtonDialog extends DialogPane {
-	    @Override
-	    protected Node createButtonBar() {
-	        ButtonBar node = (ButtonBar) super.createButtonBar();
-	        node.setButtonOrder(ButtonBar.BUTTON_ORDER_NONE);
-	        return node;
-	    }
+		@Override
+		protected Node createButtonBar() {
+			ButtonBar node = (ButtonBar) super.createButtonBar();
+			node.setButtonOrder(ButtonBar.BUTTON_ORDER_NONE);
+			return node;
+		}
 	}
 }
-
-
