@@ -17,6 +17,7 @@ import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.*;
 import util.HibernateUtil;
@@ -74,6 +75,9 @@ public class Main extends Application implements IView {
 		System.out.println("teksti: " + b.getString("joku"));
 		
 		
+		
+		
+		
 		Driver d1 = this.controller.readDriver(1);
 		d1.setCanDriveHazardous(false);
 		System.out.println("driver 1: " + d1);
@@ -128,15 +132,36 @@ public class Main extends Application implements IView {
 			
 			
 			driverRes.setNavBar(nav);
-			
+			ResourceBundle b = ResourceBundle.getBundle("test");
 			//logout button
-			Button logout = new Button("Logout");
+			Button logout = new Button(b.getString("logout_text"));
 			logout.setOnAction(e -> {
 				this.root.setCenter(landing.getLandingView());
 				Main.LOGGED_IN_ID = 0;
 			});
-			this.root.setBottom(logout);
+			//this.root.setBottom(logout);
 			
+			Button l1 = new Button("fi");
+			l1.setOnAction(e -> {
+				Locale.setDefault(new Locale("fi", "FI"));
+				System.out.println(Locale.getDefault());
+				String txt = b.getString("logout_text");
+				System.out.println("txt: " + txt);
+				logout.setText(b.getString("logout_text"));
+			});
+			
+			Button l2 = new Button("us");
+			l2.setOnAction(e -> {
+				Locale.setDefault(new Locale("en", "US"));
+				System.out.println(Locale.getDefault());
+				String txt = b.getString("logout_text");
+				System.out.println("txt: " + txt);
+				logout.setText(b.getString("logout_text"));
+			});
+			
+			VBox vbox = new VBox();
+			vbox.getChildren().addAll(l1, l2, logout);
+			this.root.setBottom(vbox);
 			
 			//create SuperiorView
 			this.supView = new SuperiorView(this.controller);
