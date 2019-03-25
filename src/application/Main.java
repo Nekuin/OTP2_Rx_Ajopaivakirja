@@ -29,9 +29,9 @@ public class Main extends Application implements IView {
 	private DriverView dv;
 	private HRView hr;
 	private ViewModule landing;
-	private DriverReserveView driverRes;
-	private SuperiorView supView;
-	private SuperiorEmployeeView supEmpView;
+	private ViewModule driverRes;
+	private ViewModule supView;
+	private ViewModule supEmpView;
 	private IController controller;
 	private EntityManager entityManager;
 	private boolean startUpFinish = false;
@@ -119,7 +119,7 @@ public class Main extends Application implements IView {
 		
 		NavBar nav = new NavBar(this, driverResButton, driverViewButton);
 		driverResButton.setOnAction(e -> {
-			root.setCenter(driverRes.getDriverReserveView());
+			root.setCenter(driverRes.getView());
 			driverRes.setNavBar(nav);
 		});
 		driverViewButton.setOnAction(e -> {
@@ -180,7 +180,7 @@ public class Main extends Application implements IView {
 		});
 		
 		supViewButton.setOnAction(e -> {
-			root.setCenter(supView.getSuperiorView());
+			root.setCenter(supView.getView());
 			supView.setNavBar(supNav);
 		});
 		
@@ -289,7 +289,7 @@ public class Main extends Application implements IView {
 	
 	@Override
 	public void setShiftData(Collection<DrivingShift> shifts) {
-		this.driverRes.updateShiftList(shifts);
+		((DriverReserveView)driverRes).updateShiftList(shifts);
 	}
 
 	/**
@@ -299,13 +299,13 @@ public class Main extends Application implements IView {
 	public void changeView(int view) {
 		if(view == Main.DRIVER_VIEW) {
 			this.dv.updateDriver();
-			this.driverRes.updateShiftList(this.controller.readGoodDrivingShifts(this.controller.readDriver(Main.LOGGED_IN_ID)));
-			this.root.setCenter(this.driverRes.getDriverReserveView());
+			((DriverReserveView)this.driverRes).updateShiftList(this.controller.readGoodDrivingShifts(this.controller.readDriver(Main.LOGGED_IN_ID)));
+			this.root.setCenter(this.driverRes.getView());
 		} else if(view == Main.HR_VIEW) {
 			this.hr.updateDrivers(this.controller.readAllDrivers());
-			this.root.setCenter(this.hr.getHRView());
+			this.root.setCenter(this.hr.getView());
 		} else if(view == Main.SUPERIOR_VIEW) {
-			this.root.setCenter(this.supView.getSuperiorView());
+			this.root.setCenter(this.supView.getView());
 		}
 	}
 }

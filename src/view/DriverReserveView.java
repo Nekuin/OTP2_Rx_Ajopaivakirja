@@ -22,7 +22,7 @@ import model.DrivingShift;
  * @author Nekuin
  *
  */
-public class DriverReserveView {
+public class DriverReserveView implements ViewModule{
 	
 	private BorderPane bpane;
 	private ObservableList<DrivingShift> shifts;
@@ -153,12 +153,13 @@ public class DriverReserveView {
 	public void setNavBar(NavBar navBar) {
 		this.bpane.setTop(navBar.getNavBar());
 	}
-	
+
 	/**
 	 * Get the whole module
 	 * @return BorderPane
 	 */
-	public BorderPane getDriverReserveView() {
+	@Override
+	public BorderPane getView() {
 		return this.bpane;
 	}
 	

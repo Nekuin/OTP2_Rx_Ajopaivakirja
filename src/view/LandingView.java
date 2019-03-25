@@ -108,19 +108,15 @@ public class LandingView implements ViewModule {
 		
 	}
 	
+
+	@Override
+	public void setNavBar(NavBar navBar) {
+	}
+
 	/**
 	 * Get the whole LandingView module
 	 * @return
 	 */
-	public BorderPane getLandingView() {
-		return this.bpane;
-	}
-
-	@Override
-	public void setNavBar(NavBar navBar) {
-
-	}
-
 	@Override
 	public BorderPane getView() {
 		return this.bpane;
