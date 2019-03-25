@@ -114,8 +114,8 @@ public class Main extends Application implements IView {
 		
 		
 		//navigation for Driver
-		Button driverResButton = new Button("Driver res");
-		Button driverViewButton = new Button("Driver view");
+		Button driverResButton = new Button(Main.b.getString("driver_reserve_nav_text"));
+		Button driverViewButton = new Button(Main.b.getString("driver_report_nav_text"));
 		
 		NavBar nav = new NavBar(this, driverResButton, driverViewButton);
 		driverResButton.setOnAction(e -> {
@@ -144,6 +144,7 @@ public class Main extends Application implements IView {
 			Main.LOGGED_IN_ID = 0;
 		});
 		
+		//create a button to change the language to Finnish
 		Button fi = new Button("FI");
 		fi.setOnAction(e -> {
 			Locale.setDefault(new Locale("fi", "FI"));
@@ -151,6 +152,7 @@ public class Main extends Application implements IView {
 			createViews();
 		});
 		
+		//create a button to change the language to English
 		Button us = new Button("US");
 		us.setOnAction(e -> {
 			Locale.setDefault(new Locale("en", "US"));
