@@ -218,9 +218,9 @@ public class Main extends Application implements IView {
 	private Collection<Driver> createTestDrivers(){
 		Collection<Driver> drivers = new ArrayList<>();
 		
-		Driver d1 = new Driver("Eka", "A");
-		Driver d2 = new Driver("Toka", "B");
-		Driver d3 = new Driver("Kolmas", "AB");
+		Driver d1 = new Driver("Kerkko Kuski", "A");
+		Driver d2 = new Driver("Reiska Rekkamies", "B");
+		Driver d3 = new Driver("Kari Kaahari", "AB");
 		
 		drivers.add(d1);
 		drivers.add(d2);
@@ -253,7 +253,7 @@ public class Main extends Application implements IView {
 	
 	private Collection<Superior> createSuperiors(){
 		Collection<Superior> superiors = new ArrayList<>();
-		Superior s1 = new Superior("Esimees");
+		Superior s1 = new Superior("Esa Esimees");
 		superiors.add(s1);
 		superiors.forEach(s -> {
 			this.controller.createSuperior(s);

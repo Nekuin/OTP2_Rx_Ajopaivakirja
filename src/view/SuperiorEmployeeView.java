@@ -25,6 +25,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import model.Driver;
 import model.Employee;
 import model.HrManager;
 import model.Superior;
@@ -44,6 +45,7 @@ public class SuperiorEmployeeView implements ViewModule {
 	private String[] role;
 	private ObservableList<String> roles;
 	private ComboBox<String> roleDropDown;
+	private int chosenRole;
 
 	public SuperiorEmployeeView(IController controller) {
 		this.controller = controller;
@@ -74,7 +76,7 @@ public class SuperiorEmployeeView implements ViewModule {
 		this.employees = FXCollections.observableArrayList();
 		this.employees.addAll(controller.readAllEmployees());
 		this.employeeList = new ListView<>();
-		this.employeeList.setMinSize(300, 300);
+		this.employeeList.setMinSize(400, 300);
 		this.employeeList.setItems(employees);
 		return this.employeeList;
 	}
@@ -150,7 +152,7 @@ public class SuperiorEmployeeView implements ViewModule {
 		labelVBox.setPadding(new Insets(30, 20, 20, 20));
 		Text label = new Text("Fill in the information below:");
 		label.setStyle("-fx-font: 20 arial;");
-		Text mandatoryText = new Text("All the fields are mandatory");
+		Text mandatoryText = new Text("All the fields with * are mandatory");
 		mandatoryText.setStyle("-fx-font: 17 arial;");
 		Text infoText = new Text("Change the necessary fields below and save the changes");
 		infoText.setStyle("-fx-font: 16 arial;");
@@ -160,26 +162,36 @@ public class SuperiorEmployeeView implements ViewModule {
 		HBox nameBox = new HBox();
 		nameBox.setSpacing(20);
 		nameBox.setPadding(new Insets(20, 20, 20, 20));
-		Text askNameText = new Text("Name: ");
+		Text askNameText = new Text("* Name: ");
 		TextField nameInput = new TextField(clicked.getName());
 		nameBox.getChildren().addAll(askNameText, nameInput);
 
 	
 		// Employee id hbox
 		HBox empiIDBox = new HBox();
-		empiIDBox.setSpacing(20);
+		empiIDBox.setSpacing(5);
 		empiIDBox.setPadding(new Insets(20, 20, 20, 20));
 		Text empIDText = new Text("Employee ID: ");
-		TextField empIDInput = new TextField(Integer.toString(clicked.getEmployeeID()));
-		empiIDBox.getChildren().addAll(empIDText, empIDInput);
+		Text empID = new Text(Integer.toString(clicked.getEmployeeID()));
+		empiIDBox.getChildren().addAll(empIDText, empID);
 		
 		// Employee role hbox
 		HBox roleBox = new HBox();
-		roleBox.setSpacing(20);
+		roleBox.setSpacing(5);
 		roleBox.setPadding(new Insets(20, 20, 20, 20));
-		Text askRoleText = new Text("Role: ");
-		roleBox.getChildren().addAll(askRoleText, getRoleComboBox());
-
+		Text askRoleText = new Text("Employee role: ");
+		this.role = clicked.getClass().getName().split("[.]");
+		Text roleText = new Text(this.role[1]);
+		roleBox.getChildren().addAll(askRoleText, roleText);
+		
+		// Driverlicense hbox
+		HBox licenceBox = new HBox();
+		licenceBox.setSpacing(20);
+		licenceBox.setPadding(new Insets(20, 20, 20, 20));
+		Text askLicenceText = new Text("Licence: ");
+		TextField licenceInput = new TextField(clicked.toString()); // KORJAA TÄÄ NÄYTTÄMÄÄN AJOKORTTI
+		licenceBox.getChildren().addAll(askLicenceText, licenceInput);
+		
 		// Buttons
 		HBox buttonBox = new HBox();
 		buttonBox.setSpacing(30);
@@ -200,37 +212,8 @@ public class SuperiorEmployeeView implements ViewModule {
 				clicked.setName(nameInput.getText());
 				textfieldsOK = true;
 			}
-			
-			
-			int chosenRole = roleDropDown.getSelectionModel().getSelectedIndex();
-			
-			boolean roleOK = false;
-			if(chosenRole <0) {
-				Alert alert = new Alert(AlertType.INFORMATION);
-				alert.setTitle("No role selected");
-				alert.setHeaderText(null);
-				alert.setContentText("Please make sure you have selected a role for the new employee.");
-				alert.showAndWait();
-			}else {
-				roleOK = true;
-			}
 
-			boolean intOK = false;
-
-			try {
-				Integer.parseInt(empIDInput.getText());
-				clicked.setEmployeeID(Integer.parseInt(empIDInput.getText()));
-				intOK = true;
-			} catch (Exception e2) {
-				Alert alert = new Alert(AlertType.INFORMATION);
-				alert.setTitle("Check the employee ID field");
-				alert.setHeaderText(null);
-				alert.setContentText("Please enter only numbers in employee ID field.");
-				alert.showAndWait();
-			}
-
-
-			if (textfieldsOK && roleOK && intOK) {
+			if (textfieldsOK) {
 				controller.updateEmployee(clicked);
 				Alert confirmationMessage = new Alert(AlertType.INFORMATION);
 				confirmationMessage.setTitle("The employee successfully updated");
@@ -255,9 +238,15 @@ public class SuperiorEmployeeView implements ViewModule {
 		pane.add(nameBox, 0, 1);
 		pane.add(empiIDBox, 0, 2);
 		pane.add(roleBox, 0, 3);
-		pane.add(buttonBox, 0, 4);
+		pane.add(licenceBox, 0, 4);
+		pane.add(buttonBox, 0, 5);
 		modalPane.setBottom(pane);
 
+		if(!clicked.getClass().getName().contains("Driver")){
+			System.out.println(clicked.getClass().getName());
+			licenceBox.setVisible(false);
+		}
+		
 		return modalPane;
 	}
 
@@ -270,7 +259,7 @@ public class SuperiorEmployeeView implements ViewModule {
 		labelVBox.setPadding(new Insets(30, 20, 20, 20));
 		Text label = new Text("Fill in the information below:");
 		label.setStyle("-fx-font: 20 arial;");
-		Text mandatoryText = new Text("All the fields are mandatory");
+		Text mandatoryText = new Text("Fields marked with * are mandatory");
 		mandatoryText.setStyle("-fx-font: 17 arial;");
 		labelVBox.getChildren().addAll(label, mandatoryText);
 
@@ -278,7 +267,7 @@ public class SuperiorEmployeeView implements ViewModule {
 		HBox nameBox = new HBox();
 		nameBox.setSpacing(20);
 		nameBox.setPadding(new Insets(20, 20, 20, 20));
-		Text askNameText = new Text("Name: ");
+		Text askNameText = new Text("* Name: ");
 		TextField nameInput = new TextField();
 		nameBox.getChildren().addAll(askNameText, nameInput);
 
@@ -286,8 +275,16 @@ public class SuperiorEmployeeView implements ViewModule {
 		HBox roleBox = new HBox();
 		roleBox.setSpacing(20);
 		roleBox.setPadding(new Insets(20, 20, 20, 20));
-		Text askRoleText = new Text("Role: ");
+		Text askRoleText = new Text("* Role: ");
 		roleBox.getChildren().addAll(askRoleText, getRoleComboBox());
+		
+		// Driverlicense hbox
+		HBox licenceBox = new HBox();
+		licenceBox.setSpacing(20);
+		licenceBox.setPadding(new Insets(20, 20, 20, 20));
+		Text askLicenceText = new Text("Licence: ");
+		TextField licenceInput = new TextField();
+		licenceBox.getChildren().addAll(askLicenceText, licenceInput); // TEE TÄNNE ACTION LISTENER MÄÄRITTELEMÄÄN NÄKYYKÖ KENTTÄ VAI EI 
 
 		// Buttons
 		HBox buttonBox = new HBox();
@@ -307,10 +304,7 @@ public class SuperiorEmployeeView implements ViewModule {
 			} else {
 				textfieldOK = true;		
 			}
-			
-			
-			int chosenRole = roleDropDown.getSelectionModel().getSelectedIndex();
-			System.out.println("Chosen role" + chosenRole);
+				
 			boolean roleOK = false;
 			if(chosenRole <0) {
 				Alert alert = new Alert(AlertType.INFORMATION);
@@ -329,9 +323,9 @@ public class SuperiorEmployeeView implements ViewModule {
 					controller.createHrManager(employee);
 				}
 				if(chosenRole == 1)
-				{
-					//Driver driver = new Driver();
-					//controller.createDriver(driver);
+				{	
+					Driver driver = new Driver(nameInput.getText(), licenceInput.getText());
+					controller.createDriver(driver);
 				}
 				if(chosenRole == 2)
 				{
@@ -357,11 +351,12 @@ public class SuperiorEmployeeView implements ViewModule {
 
 		GridPane pane = new GridPane();
 		pane.add(labelVBox, 0, 0);
-		pane.add(nameBox, 0, 1);
-		pane.add(roleBox, 0, 2);
-		pane.add(buttonBox, 0, 3);
+		pane.add(roleBox, 0, 1);
+		pane.add(nameBox, 0, 2);	
+		pane.add(licenceBox, 0, 3);
+		pane.add(buttonBox, 0, 4);
 		modalPane.setBottom(pane);
-
+		
 		return modalPane;
 	}
 
