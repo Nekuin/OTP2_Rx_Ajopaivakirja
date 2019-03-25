@@ -7,6 +7,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
@@ -86,6 +87,11 @@ public class HRView {
 		TextField driversLicense = new TextField("");;
 		TextField driverID = new TextField("");;
 		
+		HBox hazardousBox = new HBox();
+		Text hazardousText = new Text("Can drive hazardous: ");
+		CheckBox hazardousCheck = new CheckBox();
+		hazardousBox.getChildren().addAll(hazardousText, hazardousCheck);
+		
 		
 		Button deleteDriver = new Button("Remove");
 		deleteDriver.setOnAction(e -> {
@@ -98,6 +104,13 @@ public class HRView {
 			Driver clicked = lv.getSelectionModel().getSelectedItem();
 			clicked.setName(name.getText());
 			clicked.setDriversLicense(driversLicense.getText());
+			
+			if(hazardousCheck.isSelected()) {
+				clicked.setCanDriveHazardous(true);
+			} else {
+				clicked.setCanDriveHazardous(false);
+			}
+			
 			this.controller.updateDriver(clicked);
 			updateDrivers(this.controller.readAllDrivers());
 		});
@@ -105,7 +118,7 @@ public class HRView {
 		
 		driverBoxButtons.getChildren().addAll(updateDriver, deleteDriver);
 		
-		driverBox.getChildren().addAll(driverInfo, name, driverID, driversLicense, driverBoxButtons);
+		driverBox.getChildren().addAll(driverInfo, name, driverID, driversLicense, hazardousBox, driverBoxButtons);
 
 		drivers = FXCollections.observableArrayList();
 		lv = new ListView<>();
@@ -117,6 +130,7 @@ public class HRView {
 			name.setText(clicked.getName());
 			driversLicense.setText(clicked.getDriversLicense());
 			driverID.setText(Integer.toString(clicked.getEmployeeID()));
+			hazardousCheck.setSelected(clicked.getCanDriveHazardous());
 
 		});
 		
