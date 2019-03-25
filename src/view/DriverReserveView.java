@@ -103,13 +103,13 @@ public class DriverReserveView implements ViewModule{
 	 */
 	private GridPane shiftDetailsPanel() {
 		GridPane grid = new GridPane();
-		Text title = new Text("Shift details: ");
+		Text title = new Text(Main.b.getString("shift_details_text") + ": ");
 		grid.add(title, 0, 0);
 		
-		Text client = new Text("Client: ");
-		Text shift = new Text("Shift id: ");
-		Text cargo = new Text("Cargo: ");
-		Text time = new Text("Time: ");
+		Text client = new Text(Main.b.getString("client_text") + ": ");
+		Text shift = new Text(Main.b.getString("shift_text") + " id: ");
+		Text cargo = new Text(Main.b.getString("cargo_text") + ": ");
+		Text time = new Text(Main.b.getString("time_text") + ": ");
 		
 		for(int i = 0; i < shiftDetailTexts.length; i++) {
 			this.shiftDetailTexts[i] = new Text("");
