@@ -189,7 +189,7 @@ public class SuperiorEmployeeView implements ViewModule {
 		licenceBox.setSpacing(20);
 		licenceBox.setPadding(new Insets(20, 20, 20, 20));
 		Text askLicenceText = new Text("Licence: ");
-		TextField licenceInput = new TextField(clicked.toString()); // KORJAA TÄÄ NÄYTTÄMÄÄN AJOKORTTI
+		TextField licenceInput = new TextField(((Driver)clicked).getDriversLicense());
 		licenceBox.getChildren().addAll(askLicenceText, licenceInput);
 		
 		// Buttons
@@ -211,6 +211,10 @@ public class SuperiorEmployeeView implements ViewModule {
 			} else {
 				clicked.setName(nameInput.getText());
 				textfieldsOK = true;
+			}
+			
+			if(licenceInput != null) {
+				((Driver)clicked).setDriversLicense(licenceInput.getText());
 			}
 
 			if (textfieldsOK) {
