@@ -3,18 +3,18 @@ package application;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.persistence.EntityManager;
 import controller.Controller;
 import controller.IController;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import model.*;
 import util.HibernateUtil;
@@ -28,51 +28,34 @@ public class Main extends Application implements IView {
 	private BorderPane root;
 	private DriverView dv;
 	private HRView hr;
-	private LandingView landing;
+	private ViewModule landing;
 	private DriverReserveView driverRes;
 	private SuperiorView supView;
 	private SuperiorEmployeeView supEmpView;
 	private IController controller;
 	private EntityManager entityManager;
-	
-	
+	private boolean startUpFinish = false;
+	public static ResourceBundle b;
 	
 	@Override
 	public void init() {
-		System.out.println("entity manager ----------");
-		entityManager = HibernateUtil.getEntityManager();
-		System.out.println("active? " + entityManager.getTransaction().isActive());
-		System.out.println("finished creating entity manager");
 		
-		this.controller = new Controller(this);
-		
-		
-		Collection<Driver> ds = this.createTestDrivers();
-		Collection<DrivingShift> shifts = createTestShifts();
-		Collection<Vehicle> vehicles = createTestVehicles();
-		Collection<HrManager> mg = createTestHRManagers();
-		Collection<Superior> superiors = createSuperiors();
-		
-		List<Driver> drivers = this.controller.readAllDrivers();
-		System.out.println("queried drivers: ------");
-		drivers.forEach(System.out::println);
-		System.out.println("---------");
-		List<HrManager> managers = this.controller.readAllHrManagers();
-		System.out.println("queried hr managers: ---------");
-		managers.forEach(System.out::println);
-		System.out.println("----------");
-		
-		ds.forEach(e -> {
-			e.addDrivenCargo(50);
-			this.controller.updateDriver(e);
-		});
-		
-		
-		
-		
-		Driver d1 = this.controller.readDriver(1);
-		d1.setCanDriveHazardous(false);
-		System.out.println("driver 1: " + d1);
+		new Thread(() -> {
+			System.out.println("entity manager ----------");
+			entityManager = HibernateUtil.getEntityManager();
+			System.out.println("active? " + entityManager.getTransaction().isActive());
+			System.out.println("finished creating entity manager");
+			
+			this.controller = new Controller(this);
+			
+			
+			Collection<Driver> ds = this.createTestDrivers();
+			Collection<DrivingShift> shifts = createTestShifts();
+			Collection<Vehicle> vehicles = createTestVehicles();
+			Collection<HrManager> mg = createTestHRManagers();
+			Collection<Superior> superiors = createSuperiors();
+			startUpFinish = true;
+		}).start();
 	}
 	
 	
@@ -80,84 +63,13 @@ public class Main extends Application implements IView {
 	public void start(Stage primaryStage) {
 		try {
 			
+			//set default language as finnish
+			Locale.setDefault(new Locale("fi", "FI"));
+			//load resources
+			Main.b = ResourceBundle.getBundle("Strings");
+			
 			//create root BorderPane
 			this.root = new BorderPane();
-			
-			
-			//create and set driver view
-			this.dv = new DriverView(this.controller);
-			//root.setCenter(dv.getDriverView());
-			
-			//create and set landing view
-			this.landing = new LandingView(this.controller);
-			root.setCenter(landing.getLandingView());
-			
-			/*
-			//create and set Navigation bar
-			NavigationBar navbar = new NavigationBar(this);
-			root.setTop(navbar.getNavigationBar());
-			*/
-			
-			
-			//create hr view
-			this.hr = new HRView(this.controller);
-			
-			
-			//for testing
-			
-			driverRes = new DriverReserveView(this.controller);
-			
-			
-			//this.setDriverData(getTestDrivers());
-			Button driverResButton = new Button("Driver res");
-			Button driverViewButton = new Button("Driver view");
-			
-			NavBar nav = new NavBar(this, driverResButton, driverViewButton);
-			driverResButton.setOnAction(e -> {
-				root.setCenter(driverRes.getDriverReserveView());
-				driverRes.setNavBar(nav);
-			});
-			driverViewButton.setOnAction(e -> {
-				root.setCenter(this.dv.getDriverView());
-				dv.setNavBar(nav);
-			});
-			
-			
-			driverRes.setNavBar(nav);
-			
-			//logout button
-			Button logout = new Button("Logout");
-			logout.setOnAction(e -> {
-				this.root.setCenter(landing.getLandingView());
-				Main.LOGGED_IN_ID = 0;
-			});
-			this.root.setBottom(logout);
-			
-			
-			//create SuperiorView
-			this.supView = new SuperiorView(this.controller);
-			
-			//create SuperiorEmployeeView
-			this.supEmpView = new SuperiorEmployeeView(this.controller);
-			
-			//create Buttons for Superior navBar
-			Button supViewButton = new Button("Superior Vehicle");
-			Button supEmpViewButton = new Button("Superior Employees");
-			
-			//create navBar for Superior
-			NavBar supNav = new NavBar(this, supViewButton, supEmpViewButton);
-			supEmpViewButton.setOnAction(e -> {
-				root.setCenter(supEmpView.getView());
-				supEmpView.setNavBar(supNav);
-			});
-			
-			supViewButton.setOnAction(e -> {
-				root.setCenter(supView.getSuperiorView());
-				supView.setNavBar(supNav);
-			});
-			
-			//set navBar for SuperiorView
-			supView.setNavBar(supNav);
 			
 			Scene scene = new Scene(root,720,600);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
@@ -169,9 +81,112 @@ public class Main extends Application implements IView {
 			
 			primaryStage.setScene(scene);
 			primaryStage.show();
+			
+			new Thread(() -> {
+				//wait for Hibernate to start up
+				while(!startUpFinish)
+					try {
+						Thread.sleep(100);
+					} catch (InterruptedException e1) {
+						e1.printStackTrace();
+					}
+				
+				//createViews must be called on UI thread!!
+				Platform.runLater(() -> {
+					createViews();
+				});
+				
+			}).start();
+			
+			
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private void createViews() {
+		
+		//create and set driver view
+		this.dv = new DriverView(this.controller);
+		
+		//create DriverReserveView
+		driverRes = new DriverReserveView(this.controller);
+		
+		
+		//navigation for Driver
+		Button driverResButton = new Button("Driver res");
+		Button driverViewButton = new Button("Driver view");
+		
+		NavBar nav = new NavBar(this, driverResButton, driverViewButton);
+		driverResButton.setOnAction(e -> {
+			root.setCenter(driverRes.getDriverReserveView());
+			driverRes.setNavBar(nav);
+		});
+		driverViewButton.setOnAction(e -> {
+			root.setCenter(this.dv.getDriverView());
+			dv.setNavBar(nav);
+		});
+		
+		
+		driverRes.setNavBar(nav);
+		
+		//create and set landing view
+		this.landing = new LandingView(this.controller);
+		root.setCenter(landing.getView());
+		
+		//create hr view
+		this.hr = new HRView(this.controller);
+		
+		//logout button
+		Button logout = new Button(Main.b.getString("logout_text"));
+		logout.setOnAction(e -> {
+			this.root.setCenter(landing.getView());
+			Main.LOGGED_IN_ID = 0;
+		});
+		
+		Button fi = new Button("FI");
+		fi.setOnAction(e -> {
+			Locale.setDefault(new Locale("fi", "FI"));
+			Main.b = ResourceBundle.getBundle("Strings");
+			createViews();
+		});
+		
+		Button us = new Button("US");
+		us.setOnAction(e -> {
+			Locale.setDefault(new Locale("en", "US"));
+			Main.b = ResourceBundle.getBundle("Strings");
+			createViews();
+		});
+		
+		HBox hbox = new HBox();
+		hbox.getChildren().addAll(logout, fi, us);
+		this.root.setBottom(hbox);
+		
+		//create SuperiorView
+		this.supView = new SuperiorView(this.controller);
+		
+		//create SuperiorEmployeeView
+		this.supEmpView = new SuperiorEmployeeView(this.controller);
+		
+		//create Buttons for Superior navBar
+		Button supViewButton = new Button("Superior Vehicle");
+		Button supEmpViewButton = new Button("Superior Employees");
+		
+		//create navBar for Superior
+		NavBar supNav = new NavBar(this, supViewButton, supEmpViewButton);
+		supEmpViewButton.setOnAction(e -> {
+			root.setCenter(supEmpView.getView());
+			supEmpView.setNavBar(supNav);
+		});
+		
+		supViewButton.setOnAction(e -> {
+			root.setCenter(supView.getSuperiorView());
+			supView.setNavBar(supNav);
+		});
+		
+		//set navBar for SuperiorView
+		supView.setNavBar(supNav);
+		
 	}
 	
 	public static void main(String[] args) {
