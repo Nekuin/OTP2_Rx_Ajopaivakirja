@@ -99,6 +99,7 @@ public class SuperiorEmployeeView implements ViewModule {
 			stage.initOwner(((Node) e.getSource()).getScene().getWindow());
 			stage.show();
 		});
+		addEmpBtn.setId("add-employee");
 
 		Button deleteEmpBtn = new Button("Delete employee");
 		deleteEmpBtn.setOnMouseClicked(e -> {

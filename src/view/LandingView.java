@@ -49,6 +49,7 @@ public class LandingView implements ViewModule {
 		
 		TextField idField = new TextField();
 		idField.setPromptText("Your Employee ID");
+		idField.setId("id-field");
 		
 		
 		Button loginButton = new Button(Main.b.getString("login_text"));
