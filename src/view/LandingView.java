@@ -1,6 +1,8 @@
 package view;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import application.Main;
 import controller.IController;
@@ -32,7 +34,9 @@ public class LandingView implements ViewModule {
 		this.controller = controller;
 		this.bpane = new BorderPane();
 		
-		this.bpane.setCenter(loginPane());
+		GridPane pane = loginPane();
+		pane.setId("loginPane");
+		this.bpane.setCenter(pane);
 	}
 	
 	/**
@@ -53,6 +57,7 @@ public class LandingView implements ViewModule {
 			idField.setText("");
 			login(id);
 		});
+		loginButton.setId("login-button");
 		
 		idField.setOnKeyPressed(e -> {
 			if(e.getCode() == KeyCode.ENTER) {

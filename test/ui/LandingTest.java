@@ -6,40 +6,53 @@ import org.testfx.api.FxRobot;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
 
+import application.Main;
+import controller.Controller;
+import controller.IController;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import view.LandingView;
+import view.ViewModule;
 
 import static org.testfx.api.FxAssert.verifyThat;
 import static org.testfx.matcher.control.LabeledMatchers.hasText;
+
+import java.util.Locale;
+import java.util.ResourceBundle;
+
+import org.assertj.core.api.Assertions;
+
 
 @ExtendWith(ApplicationExtension.class)
 public class LandingTest {
 
 	private Button button;
+	private ViewModule landing;
 	
 	@Start
 	private void start(Stage stage) {
-		button = new Button("nappi");
-		button.setId("nappi");
-		button.setOnAction(e -> {
-			button.setText("clicked");
-		});
-		stage.setScene(new Scene(new StackPane(button), 100, 100));
+		BorderPane root = new BorderPane();
+		Locale.setDefault(new Locale("fi", "FI"));
+		Main.b = ResourceBundle.getBundle("Strings");
+		landing = new LandingView(null);
+		
+		root.setCenter(landing.getView());
+		Scene scene = new Scene(root, 400, 400);
+		stage.setScene(scene);
 		stage.show();
 	}
 	
 	@Test
-	void should_contain_button() {
-		verifyThat(".button", hasText("nappi"));
+	void should_contain_button(FxRobot robot) {
+		Assertions.assertThat(robot.lookup("#login-button").queryAs(Button.class));
+		//Assertions.assertThat(robot.lookup("#landing").queryAs(BorderPane.class));
+		//verifyThat(".login-button", hasText("Kirjaudu sis‰‰n"));
 	}
 	
-	@Test
-	void shoud_click_on_button(FxRobot robot) {
-		robot.clickOn(".button");
-		
-		verifyThat(".button", hasText("clicked"));
-	}
+
 	
 }
