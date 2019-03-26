@@ -32,7 +32,7 @@ import model.Vehicle;
  * @author tuoma
  *
  */
-public class SuperiorView {
+public class SuperiorView implements ViewModule {
 
 	private IController controller;
 	private BorderPane borderPane;
@@ -54,6 +54,7 @@ public class SuperiorView {
 		this.borderPane.setCenter(viewBox);
 	}
 
+	@Override
 	public void setNavBar(NavBar navBar) {
 		this.borderPane.setTop(navBar.getNavBar());
 	}
@@ -454,5 +455,10 @@ public class SuperiorView {
 			node.setButtonOrder(ButtonBar.BUTTON_ORDER_NONE);
 			return node;
 		}
+	}
+
+	@Override
+	public BorderPane getView() {
+		return this.borderPane;
 	}
 }

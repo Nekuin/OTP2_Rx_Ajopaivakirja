@@ -198,7 +198,7 @@ public class Driver extends Employee {
 	 * Method that returns information about the driver in string format
 	 */
 	public String toString() {
-		return super.toString() + ", license: " + this.driversLicense + " shifts: " + this.getShift();
+		return super.toString() + ", License: " + this.driversLicense + ", Shifts: " + this.getShift();
 	}
 
 	

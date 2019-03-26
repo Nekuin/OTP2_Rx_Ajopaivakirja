@@ -127,4 +127,10 @@ public interface IController {
 	 * @param vehicle
 	 */
 	public void updateVehicle(Vehicle vehicle);
+	
+	public void updateEmployee(Employee employee);
+	
+	public List<Employee> readAllEmployees();
+	
+	public void deleteEmployee(Employee employee);
 }

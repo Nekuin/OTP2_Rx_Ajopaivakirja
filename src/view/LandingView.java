@@ -19,7 +19,7 @@ import javafx.scene.input.KeyCode;
  * @author Nekuin
  *
  */
-public class LandingView {
+public class LandingView implements ViewModule {
 	
 	private IController controller;
 	private BorderPane bpane;
@@ -47,7 +47,7 @@ public class LandingView {
 		idField.setPromptText("Your Employee ID");
 		
 		
-		Button loginButton = new Button("Login");
+		Button loginButton = new Button(Main.b.getString("login_text"));
 		loginButton.setOnAction(e -> {
 			int id = Integer.parseInt(idField.getText());
 			idField.setText("");
@@ -108,11 +108,17 @@ public class LandingView {
 		
 	}
 	
+
+	@Override
+	public void setNavBar(NavBar navBar) {
+	}
+
 	/**
 	 * Get the whole LandingView module
 	 * @return
 	 */
-	public BorderPane getLandingView() {
+	@Override
+	public BorderPane getView() {
 		return this.bpane;
 	}
 	

@@ -22,7 +22,7 @@ import model.Driver;
  * @author Nekuin
  *
  */
-public class HRView {
+public class HRView implements ViewModule {
 
 	private IController controller;
 	private BorderPane bpane;
@@ -145,13 +145,6 @@ public class HRView {
 	}
 	
 	
-	/**
-	 * Get the whole HRView module
-	 * @return BorderPane
-	 */
-	public BorderPane getHRView() {
-		return this.bpane;
-	}
 
 	/**
 	 * Update the driver list with a Collection of Drivers
@@ -160,6 +153,19 @@ public class HRView {
 	public void updateDrivers(Collection<Driver> drivers) {
 		this.drivers.clear();
 		this.drivers.addAll(drivers);
+	}
+
+	@Override
+	public void setNavBar(NavBar navBar) {
+	}
+
+	/**
+	 * Get the whole HRView module
+	 * @return BorderPane
+	 */
+	@Override
+	public BorderPane getView() {
+		return this.bpane;
 	}
 
 }
