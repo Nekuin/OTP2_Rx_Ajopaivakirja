@@ -375,6 +375,7 @@ public class SuperiorEmployeeView implements ViewModule {
 		roles.addAll("Hr Manager", "Driver", "Superior");
 		roleDropDown = new ComboBox<>(roles);
 		roleDropDown.setPrefWidth(175);
+		roleDropDown.setId("role-dropdown");
 		return roleDropDown;
 	}
 
