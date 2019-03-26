@@ -298,6 +298,8 @@ public class SuperiorEmployeeView implements ViewModule {
 		buttonBox.setSpacing(30);
 		buttonBox.setPadding(new Insets(30, 30, 30, 30));
 		Button submitButton = new Button("Submit");
+		//id for tests
+		submitButton.setId("submit-button");
 		submitButton.setOnAction(e -> {
 
 			boolean textfieldOK = false;
