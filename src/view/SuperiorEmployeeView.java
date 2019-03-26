@@ -165,6 +165,7 @@ public class SuperiorEmployeeView implements ViewModule {
 		nameBox.setPadding(new Insets(20, 20, 20, 20));
 		Text askNameText = new Text("* Name: ");
 		TextField nameInput = new TextField(clicked.getName());
+		nameInput.setId("name-field");
 		nameBox.getChildren().addAll(askNameText, nameInput);
 
 	
@@ -198,6 +199,7 @@ public class SuperiorEmployeeView implements ViewModule {
 		buttonBox.setSpacing(30);
 		buttonBox.setPadding(new Insets(30, 30, 30, 30));
 		Button submitButton = new Button("Submit the changes");
+		submitButton.setId("submit-button");
 
 		submitButton.setOnAction(e -> {
 			boolean textfieldsOK = false;
