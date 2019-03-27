@@ -1,10 +1,15 @@
 package ui;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -60,6 +65,7 @@ public class SuperiorTest {
 		//choose second item from the list (Driver)
 		robot.type(KeyCode.DOWN);
 		robot.type(KeyCode.DOWN);
+		robot.type(KeyCode.DOWN);
 		robot.type(KeyCode.ENTER);
 
 		//tab into the name field
@@ -77,5 +83,20 @@ public class SuperiorTest {
 		//count all employees(expected 1 since we haven't created any test drivers yet!)
 		int n = controller.readAllEmployees().size();
 		assertEquals(1, n, "Employee was not created, expected 1 only counted 0!");
+	}
+	
+	@Test
+	public void checkDriver() {
+		Collection<Driver> drivers = controller.readAllDrivers();
+		Optional<Driver> driver = drivers.stream().filter(d -> d.getName().equals("Timo Soini")).findFirst();
+		String name = "Timo Soini";
+		if(driver.isPresent()) {
+			System.out.println("soini found");
+			System.out.println(driver.get());
+			assertEquals(name, driver.get().getName());
+		} else {
+			assertTrue(false, "Timo was not found");
+		}
+		
 	}
 }
