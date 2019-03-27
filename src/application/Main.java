@@ -15,6 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.*;
 import util.HibernateUtil;
@@ -70,6 +71,8 @@ public class Main extends Application implements IView {
 			
 			//create root BorderPane
 			this.root = new BorderPane();
+			
+			root.setCenter(new Text("Loading..."));
 			
 			Scene scene = new Scene(root,720,600);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
