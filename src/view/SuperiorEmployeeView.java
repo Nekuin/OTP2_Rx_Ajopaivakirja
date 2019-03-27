@@ -46,6 +46,7 @@ public class SuperiorEmployeeView implements ViewModule {
 	private ObservableList<String> roles;
 	private ComboBox<String> roleDropDown;
 	private int chosenRole;
+	private HBox licenceBox;
 
 	public SuperiorEmployeeView(IController controller) {
 		this.controller = controller;
@@ -126,13 +127,21 @@ public class SuperiorEmployeeView implements ViewModule {
 		Button updateEmpBtn = new Button("Update employee");
 		updateEmpBtn.setOnAction(e -> {
 			clicked = employeeList.getSelectionModel().getSelectedItem();
-
+			if(!clicked.getClass().getName().contains("Driver")) {
 			Stage stage = new Stage();
 			stage.setScene(new Scene(handleUpdateEmployeeModal(clicked)));
 			stage.setTitle("Update employee information");
 			stage.initModality(Modality.APPLICATION_MODAL);
 			stage.initOwner(((Node) e.getSource()).getScene().getWindow());
-			stage.show();
+			stage.show();}
+			else {
+				Stage stage = new Stage();
+				stage.setScene(new Scene(handleUpdateDriverModal(clicked)));
+				stage.setTitle("Update driver information");
+				stage.initModality(Modality.APPLICATION_MODAL);
+				stage.initOwner(((Node) e.getSource()).getScene().getWindow());
+				stage.show();
+			}
 		});
 
 		VBox buttonBox = new VBox();
@@ -186,7 +195,101 @@ public class SuperiorEmployeeView implements ViewModule {
 		Text roleText = new Text(this.role[1]);
 		roleBox.getChildren().addAll(askRoleText, roleText);
 		
-		// Driverlicense hbox
+		// Buttons
+		HBox buttonBox = new HBox();
+		buttonBox.setSpacing(30);
+		buttonBox.setPadding(new Insets(30, 30, 30, 30));
+		Button submitButton = new Button("Submit the changes");
+
+		submitButton.setOnAction(e -> {
+			boolean textfieldsOK = false;
+
+			if (nameInput.getText().isEmpty()) {
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Empty textfield");
+				alert.setHeaderText(null);
+				alert.setContentText("Please make sure you have input in name field.");
+				alert.showAndWait();
+
+			} else {
+				clicked.setName(nameInput.getText());
+				textfieldsOK = true;
+			}
+			
+			if (textfieldsOK) {
+				controller.updateEmployee(clicked);
+				Alert confirmationMessage = new Alert(AlertType.INFORMATION);
+				confirmationMessage.setTitle("The employee successfully updated");
+				confirmationMessage.setHeaderText(null);
+				confirmationMessage.setContentText("You have successfully the following employee's information: \n\n"
+						+ "Name: " + clicked.getName() + "\nEmployee ID: "
+						+ clicked.getEmployeeID() + "\nRole: " + this.role[1]);
+				confirmationMessage.showAndWait();
+				((Node) e.getSource()).getScene().getWindow().hide();
+				updateEmployeeList();
+			}
+		});
+
+		Button cancelButton = new Button("Cancel");
+		cancelButton.setOnAction(e1 -> {
+			((Node) e1.getSource()).getScene().getWindow().hide();
+		});
+		buttonBox.getChildren().addAll(cancelButton, submitButton);
+
+		GridPane pane = new GridPane();
+		pane.add(labelVBox, 0, 0);
+		pane.add(nameBox, 0, 1);
+		pane.add(empiIDBox, 0, 2);
+		pane.add(roleBox, 0, 3);
+		pane.add(buttonBox, 0, 4);
+		modalPane.setBottom(pane);
+
+		return modalPane;
+	}
+
+	
+	public BorderPane handleUpdateDriverModal(Employee clicked) {
+
+		BorderPane modalPane = new BorderPane();
+
+		VBox labelVBox = new VBox();
+		labelVBox.setSpacing(30);
+		labelVBox.setPadding(new Insets(30, 20, 20, 20));
+		Text label = new Text("Fill in the information below:");
+		label.setStyle("-fx-font: 20 arial;");
+		Text mandatoryText = new Text("All the fields with * are mandatory");
+		mandatoryText.setStyle("-fx-font: 17 arial;");
+		Text infoText = new Text("Change the necessary fields below and save the changes");
+		infoText.setStyle("-fx-font: 16 arial;");
+		labelVBox.getChildren().addAll(label, mandatoryText, infoText);
+
+		// Employee name hbox
+		HBox nameBox = new HBox();
+		nameBox.setSpacing(20);
+		nameBox.setPadding(new Insets(20, 20, 20, 20));
+		Text askNameText = new Text("* Name: ");
+		TextField nameInput = new TextField(clicked.getName());
+		nameBox.getChildren().addAll(askNameText, nameInput);
+
+	
+		// Employee id hbox
+		HBox empiIDBox = new HBox();
+		empiIDBox.setSpacing(5);
+		empiIDBox.setPadding(new Insets(20, 20, 20, 20));
+		Text empIDText = new Text("Employee ID: ");
+		Text empID = new Text(Integer.toString(clicked.getEmployeeID()));
+		empiIDBox.getChildren().addAll(empIDText, empID);
+		
+		// Employee role hbox
+		HBox roleBox = new HBox();
+		roleBox.setSpacing(5);
+		roleBox.setPadding(new Insets(20, 20, 20, 20));
+		Text askRoleText = new Text("Employee role: ");
+		this.role = clicked.getClass().getName().split("[.]");
+		Text roleText = new Text(this.role[1]);
+		roleBox.getChildren().addAll(askRoleText, roleText);	
+
+		// Licence Hbox
 		HBox licenceBox = new HBox();
 		licenceBox.setSpacing(20);
 		licenceBox.setPadding(new Insets(20, 20, 20, 20));
@@ -219,15 +322,16 @@ public class SuperiorEmployeeView implements ViewModule {
 			if(licenceInput != null) {
 				((Driver)clicked).setDriversLicense(licenceInput.getText());
 			}
-
+			
+			
 			if (textfieldsOK) {
 				controller.updateEmployee(clicked);
 				Alert confirmationMessage = new Alert(AlertType.INFORMATION);
-				confirmationMessage.setTitle("The employee successfully updated");
+				confirmationMessage.setTitle("The driver successfully updated");
 				confirmationMessage.setHeaderText(null);
-				confirmationMessage.setContentText("You have successfully the following employee's information: \n\n"
+				confirmationMessage.setContentText("You have successfully the following driver's information: \n\n"
 						+ "Name: " + clicked.getName() + "\nEmployee ID: "
-						+ clicked.getEmployeeID() + "\nRole: " + this.role[1]);
+						+ clicked.getEmployeeID() + "\nRole: " + this.role[1] + "\nLicence: " + ((Driver)clicked).getDriversLicense());
 				confirmationMessage.showAndWait();
 				((Node) e.getSource()).getScene().getWindow().hide();
 				updateEmployeeList();
@@ -249,11 +353,6 @@ public class SuperiorEmployeeView implements ViewModule {
 		pane.add(buttonBox, 0, 5);
 		modalPane.setBottom(pane);
 
-		if(!clicked.getClass().getName().contains("Driver")){
-			System.out.println(clicked.getClass().getName());
-			licenceBox.setVisible(false);
-		}
-		
 		return modalPane;
 	}
 
@@ -286,12 +385,13 @@ public class SuperiorEmployeeView implements ViewModule {
 		roleBox.getChildren().addAll(askRoleText, getRoleComboBox());
 		
 		// Driverlicense hbox
-		HBox licenceBox = new HBox();
+		licenceBox = new HBox();
 		licenceBox.setSpacing(20);
 		licenceBox.setPadding(new Insets(20, 20, 20, 20));
 		Text askLicenceText = new Text("Licence: ");
 		TextField licenceInput = new TextField();
-		licenceBox.getChildren().addAll(askLicenceText, licenceInput); // TEE TÄNNE ACTION LISTENER MÄÄRITTELEMÄÄN NÄKYYKÖ KENTTÄ VAI EI 
+		licenceBox.getChildren().addAll(askLicenceText, licenceInput);
+		licenceBox.setVisible(false);
 
 		// Buttons
 		HBox buttonBox = new HBox();
@@ -313,7 +413,7 @@ public class SuperiorEmployeeView implements ViewModule {
 			} else {
 				textfieldOK = true;		
 			}
-				
+			
 			boolean roleOK = false;
 			if(chosenRole <0) {
 				Alert alert = new Alert(AlertType.INFORMATION);
@@ -327,28 +427,48 @@ public class SuperiorEmployeeView implements ViewModule {
 			
 			if (textfieldOK && roleOK) {
 				
-				if(chosenRole == 0) {
-					HrManager employee = new HrManager(nameInput.getText());
-					controller.createHrManager(employee);
-				}
-				if(chosenRole == 1)
-				{	
-					Driver driver = new Driver(nameInput.getText(), licenceInput.getText());
-					controller.createDriver(driver);
-				}
-				if(chosenRole == 2)
+				if(chosenRole == 0)
 				{
 					Superior employee = new Superior(nameInput.getText());
 					controller.createSuperior(employee);
+					Alert confirmationMessage = new Alert(AlertType.INFORMATION);
+					confirmationMessage.setTitle("New superior successfully added");
+					confirmationMessage.setHeaderText(null);
+					confirmationMessage.setContentText("You have successfully added a new superior with following information:\n\n" +
+					"Name: " + employee.getName() + "\nEmployee ID: " + employee.getEmployeeID());
+					confirmationMessage.showAndWait();
+					((Node) e.getSource()).getScene().getWindow().hide();
+					updateEmployeeList();
 				}
 				
-				Alert confirmationMessage = new Alert(AlertType.INFORMATION);
-				confirmationMessage.setTitle("New employee successfully added");
-				confirmationMessage.setHeaderText(null);
-				confirmationMessage.setContentText("You have successfully added a new employee!");
-				confirmationMessage.showAndWait();
-				((Node) e.getSource()).getScene().getWindow().hide();
-				updateEmployeeList();
+				if(chosenRole == 1) {
+					HrManager employee = new HrManager(nameInput.getText());
+					controller.createHrManager(employee);
+					Alert confirmationMessage = new Alert(AlertType.INFORMATION);
+					confirmationMessage.setTitle("New hr-manager successfully added");
+					confirmationMessage.setHeaderText(null);
+					confirmationMessage.setContentText("You have successfully added a new hr-manager with following information:\n\n" +
+					"Name: " + employee.getName() + "\nEmployee ID: " + employee.getEmployeeID());
+					confirmationMessage.showAndWait();
+					((Node) e.getSource()).getScene().getWindow().hide();
+					updateEmployeeList();
+				}
+					
+				if(chosenRole == 2)
+				{	
+					Driver driver = new Driver(nameInput.getText(), licenceInput.getText());
+					controller.createDriver(driver);
+					Alert confirmationMessage = new Alert(AlertType.INFORMATION);
+					confirmationMessage.setTitle("New driver successfully added");
+					confirmationMessage.setHeaderText(null);
+					confirmationMessage.setContentText("You have successfully added a new driver with following information:\n\n" +
+					"Name: " + driver.getName() + "\nEmployee ID: " + driver.getEmployeeID()  + "\nLicence: " + driver.getDriversLicense());
+					confirmationMessage.showAndWait();
+					((Node) e.getSource()).getScene().getWindow().hide();
+					updateEmployeeList();
+				}
+				
+			
 			}
 		});
 
@@ -376,10 +496,21 @@ public class SuperiorEmployeeView implements ViewModule {
 	private ComboBox<String> getRoleComboBox(){
 	
 		roles = FXCollections.observableArrayList();
-		roles.addAll("Hr Manager", "Driver", "Superior");
+		roles.addAll("Superior", "Hr Manager", "Driver");
 		roleDropDown = new ComboBox<>(roles);
 		roleDropDown.setPrefWidth(175);
+<<<<<<< Upstream, based on branch 'Development' of https://github.com/Nekuin/OTP2_Rx_Ajopaivakirja.git
 		roleDropDown.setId("role-dropdown");
+=======
+		roleDropDown.setOnAction(d -> {
+			chosenRole = roleDropDown.getSelectionModel().getSelectedIndex();
+			if(chosenRole == 2) {
+				licenceBox.setVisible(true);
+			}else {
+				licenceBox.setVisible(false);
+			}
+		});
+>>>>>>> 8a59d8c Superior employee view works differently on drivers and other employees when it comes to adding and updating
 		return roleDropDown;
 	}
 
