@@ -63,7 +63,7 @@ public class DriverReserveView implements ViewModule{
 		VBox vbox = new VBox();
 		vbox.getChildren().add(shiftDetailsPanel());
 		
-		Button reserveButton = new Button("Reserve");
+		Button reserveButton = new Button(Main.b.getString("driver_reserve_text"));
 		reserveButton.setOnAction(e -> {
 			Driver driver = this.controller.readDriver(Main.LOGGED_IN_ID);
 			this.controller.assignShift(driver, shiftListView.getSelectionModel().getSelectedItem());
