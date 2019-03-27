@@ -499,9 +499,7 @@ public class SuperiorEmployeeView implements ViewModule {
 		roles.addAll("Superior", "Hr Manager", "Driver");
 		roleDropDown = new ComboBox<>(roles);
 		roleDropDown.setPrefWidth(175);
-<<<<<<< Upstream, based on branch 'Development' of https://github.com/Nekuin/OTP2_Rx_Ajopaivakirja.git
 		roleDropDown.setId("role-dropdown");
-=======
 		roleDropDown.setOnAction(d -> {
 			chosenRole = roleDropDown.getSelectionModel().getSelectedIndex();
 			if(chosenRole == 2) {
@@ -510,7 +508,6 @@ public class SuperiorEmployeeView implements ViewModule {
 				licenceBox.setVisible(false);
 			}
 		});
->>>>>>> 8a59d8c Superior employee view works differently on drivers and other employees when it comes to adding and updating
 		return roleDropDown;
 	}
 
