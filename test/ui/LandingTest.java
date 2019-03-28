@@ -16,9 +16,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import model.Driver;
 import view.LandingView;
 import view.ViewModule;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.testfx.api.FxAssert.verifyThat;
 import static org.testfx.matcher.control.LabeledMatchers.hasText;
 

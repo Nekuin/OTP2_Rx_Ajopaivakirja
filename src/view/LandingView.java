@@ -25,6 +25,7 @@ public class LandingView implements ViewModule {
 	
 	private IController controller;
 	private BorderPane bpane;
+	private int logged_in_id;
 	
 	/**
 	 * Constructor which takes a Controller as a parameter
@@ -85,6 +86,7 @@ public class LandingView implements ViewModule {
 			if(e.getEmployeeID() == id) {
 				System.out.println("logged in as a driver");
 				Main.LOGGED_IN_ID = id;
+				this.logged_in_id = id;
 				this.controller.changeView(Main.DRIVER_VIEW);
 				return;
 			}
@@ -96,6 +98,7 @@ public class LandingView implements ViewModule {
 			if(e.getEmployeeID() == id) {
 				System.out.println("logged in as a manager");
 				Main.LOGGED_IN_ID = id;
+				this.logged_in_id = id;
 				this.controller.changeView(Main.HR_VIEW);
 				return;
 			}
@@ -107,6 +110,7 @@ public class LandingView implements ViewModule {
 			if(e.getEmployeeID() == id) {
 				System.out.println("logged in as a superior");
 				Main.LOGGED_IN_ID = id;
+				this.logged_in_id = id;
 				this.controller.changeView(Main.SUPERIOR_VIEW);
 				return;
 			}
@@ -126,6 +130,10 @@ public class LandingView implements ViewModule {
 	@Override
 	public BorderPane getView() {
 		return this.bpane;
+	}
+	
+	public int getLoggedInid() {
+		return logged_in_id;
 	}
 	
 }

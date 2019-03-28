@@ -11,6 +11,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,11 +25,13 @@ import controller.IController;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import model.Driver;
+import model.Employee;
 import view.SuperiorEmployeeView;
 import view.ViewModule;
 
@@ -36,7 +39,14 @@ import view.ViewModule;
 public class SuperiorTest {
 	
 	private ViewModule sup;
-	private IController controller;
+	private static IController controller;
+	
+	
+	@BeforeAll
+	public static void beforeAll() {
+		controller = new Controller(null);
+		controller.createDriver(new Driver("Soini2", "A"));
+	}
 	
 	@Start
 	public void start(Stage stage) {
@@ -45,13 +55,15 @@ public class SuperiorTest {
 		
 		BorderPane root = new BorderPane();
 		
-		controller = new Controller(null);
+		
+		
 		sup = new SuperiorEmployeeView(controller);
 		
 		root.setCenter(sup.getView());
 		Scene scene = new Scene(root, 400, 400);
 		stage.setScene(scene);
 		stage.show();
+		
 	}
 	
 	@Test
@@ -80,9 +92,27 @@ public class SuperiorTest {
 		Button submitButton = robot.lookup("#submit-button").queryAs(Button.class);
 		robot.clickOn(submitButton);
 		
+		//click on ok
+		robot.type(KeyCode.ENTER);
+		
 		//count all employees(expected 1 since we haven't created any test drivers yet!)
 		int n = controller.readAllEmployees().size();
+		System.out.println("n: " + n);
+		
 		assertEquals(1, n, "Employee was not created, expected 1 only counted 0!");
+	}
+	
+	@Test
+	public void removeDriver(FxRobot robot) {
+		
+		ListView<Employee> listView = robot.lookup("#emp-list").queryAs(ListView.class);
+		listView.getSelectionModel().select(0);
+		Button remEmpBtn = robot.lookup("#delete-employee").queryAs(Button.class);
+		robot.clickOn(remEmpBtn);
+		robot.type(KeyCode.TAB);
+		robot.type(KeyCode.ENTER);
+		int n = controller.readAllEmployees().size();
+		System.out.println("remove n: " + n);
 	}
 	
 	@Test
@@ -99,4 +129,6 @@ public class SuperiorTest {
 		}
 		
 	}
+	
+	
 }

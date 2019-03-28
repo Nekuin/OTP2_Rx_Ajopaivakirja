@@ -77,15 +77,15 @@ public class ReportingView {
 
 		Text title = new Text("You are now reporting:");
 		title.setStyle("-fx-font: 24 arial;");
-		/*
-		  Text client = new Text("Client: " + drivingShift.getClient().getName()); 
-		  Text shift = new Text("Shift id: " + drivingShift.getShiftID()); 
-		  Text cargo = new Text("Cargo: " + drivingShift.getCargo());
-		 */
+		
+		  Text client = new Text("Client: " + "Asiakas"); 
+		  Text shift = new Text("Shift id: " + "1"); 
+		  Text cargo = new Text("Cargo: " + "50kg");
+		 /*
 		Text client = new Text("Client: ");
 		Text shift = new Text("Shift id: ");
 		Text cargo = new Text("Cargo: ");
-
+*/
 		shiftInfoVBox.getChildren().addAll(title, client, shift, cargo);
 		grid.add(shiftInfoVBox, 0, 0);
 

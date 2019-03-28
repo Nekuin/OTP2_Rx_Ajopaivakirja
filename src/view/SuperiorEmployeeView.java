@@ -79,6 +79,7 @@ public class SuperiorEmployeeView implements ViewModule {
 		this.employeeList = new ListView<>();
 		this.employeeList.setMinSize(400, 300);
 		this.employeeList.setItems(employees);
+		this.employeeList.setId("emp-list");
 		return this.employeeList;
 	}
 
@@ -123,6 +124,7 @@ public class SuperiorEmployeeView implements ViewModule {
 				alert.close();
 			}
 		});
+		deleteEmpBtn.setId("delete-employee");
 
 		Button updateEmpBtn = new Button("Update employee");
 		updateEmpBtn.setOnAction(e -> {
