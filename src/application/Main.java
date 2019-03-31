@@ -3,6 +3,7 @@ package application;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -308,7 +309,8 @@ public class Main extends Application implements IView {
 	public void changeView(int view) {
 		if(view == Main.DRIVER_VIEW) {
 			this.dv.updateDriver();
-			((DriverReserveView)this.driverRes).updateShiftList(this.controller.readGoodDrivingShifts(this.controller.readDriver(Main.LOGGED_IN_ID)));
+			List<DrivingShift> shifts = this.controller.readGoodDrivingShifts(this.controller.readDriver(Main.LOGGED_IN_ID));
+			((DriverReserveView)this.driverRes).updateShiftList(shifts);
 			this.root.setCenter(this.driverRes.getView());
 		} else if(view == Main.HR_VIEW) {
 			this.hr.updateDrivers(this.controller.readAllDrivers());
