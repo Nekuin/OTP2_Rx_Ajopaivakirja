@@ -42,8 +42,10 @@ public class PersonalShiftView implements ViewModule{
 	private GridPane assignmentPanel() {
 		
 		GridPane grid = new GridPane();
-		Button assignButton = new Button("Assignt shift");
-		assignButton.setTooltip(new Tooltip("This is for your shift assignment"));
+		Button assignButton = new Button("Unassign");
+		assignButton.setTooltip(new Tooltip("Unassign/release the selected shift"));
+		Button reportButton = new Button("Report Shift");
+		reportButton.setTooltip(new Tooltip("Report you current Shift/Log"));
 		shiftSelection = new Text("");
 		
 		assignButton.setOnAction(e->{
@@ -59,6 +61,7 @@ public class PersonalShiftView implements ViewModule{
 		
 		grid.add(shiftSelection, 0, 0);
 		grid.add(assignButton, 0, 1);
+		grid.add(reportButton, 0, 2);
 		
 		return grid;
 	}
@@ -68,7 +71,6 @@ public class PersonalShiftView implements ViewModule{
 	public GridPane shiftInfo() {
 		GridPane grid = new GridPane();
 		Text title = new Text("Shifts: ");
-		grid.add(title, 0, 0);
 		
 		shifts = FXCollections.observableArrayList();
 		shiftListView = new ListView<>();
@@ -84,27 +86,21 @@ public class PersonalShiftView implements ViewModule{
 			
 		});
 		
-		//grid.add(title, 0, 0);
+		grid.add(title, 0, 0);
 		grid.add(shiftListView, 0, 1);
 		
 		return grid;
 	}
 
-	
-	/**public BorderPane getPersonalShiftView() {
-		return this.bpane;
-	}**/
 
 	
 	public void updateShifts(Collection<model.DrivingShift> shifts) {
-		// TODO Auto-generated method stub
 		this.shifts.clear();
 		this.shifts.addAll(shifts);
 	}
 	
 	public void updateDriver() {
 		this.driver = this.controller.readDriver(Main.LOGGED_IN_ID);
-		//this.driverInfo.setText("Driver info: " + this.driver);
 	}
 	
 	@Override
@@ -116,7 +112,6 @@ public class PersonalShiftView implements ViewModule{
 
 	@Override
 	public BorderPane getView() {
-		// TODO Auto-generated method stub
 		return this.bpane;
 	}
 
