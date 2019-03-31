@@ -68,6 +68,8 @@ public class DriverReserveView implements ViewModule{
 			Driver driver = this.controller.readDriver(Main.LOGGED_IN_ID);
 			this.controller.assignShift(driver, shiftListView.getSelectionModel().getSelectedItem());
 			this.updateShiftList(this.controller.readGoodDrivingShifts(driver));
+			//clear details text
+			this.updateShiftDetailText("", "", "", "");
 		});
 		
 		vbox.getChildren().add(reserveButton);
@@ -89,6 +91,11 @@ public class DriverReserveView implements ViewModule{
 		
 		shiftListView.setOnMouseClicked(e -> {
 			DrivingShift selected = shiftListView.getSelectionModel().getSelectedItem();
+			if(selected == null) {
+				//clear details text
+				this.updateShiftDetailText("", "", "", "");
+				return;
+			}
 			//this.updateShiftDetailText(new String[] {selected.getClient().toString(), "" + selected.getShiftID(), "" + selected.getTotalCargoWeight(), "time"});
 			this.updateShiftDetailText(selected.getClient().toString(), "" + selected.getShiftID(), "" + selected.getTotalCargoWeight(), "time");
 		});
