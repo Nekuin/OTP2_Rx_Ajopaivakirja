@@ -312,6 +312,8 @@ public class Main extends Application implements IView {
 			List<DrivingShift> shifts = this.controller.readGoodDrivingShifts(this.controller.readDriver(Main.LOGGED_IN_ID));
 			((DriverReserveView)this.driverRes).updateShiftList(shifts);
 			this.root.setCenter(this.driverRes.getView());
+			((PersonalShiftView)this.personalShift).updateShifts(shifts);
+			this.root.setCenter(this.personalShift.getView());
 		} else if(view == Main.HR_VIEW) {
 			this.hr.updateDrivers(this.controller.readAllDrivers());
 			this.root.setCenter(this.hr.getView());
