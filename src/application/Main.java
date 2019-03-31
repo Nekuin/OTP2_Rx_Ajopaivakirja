@@ -31,6 +31,7 @@ public class Main extends Application implements IView {
 	private HRView hr;
 	private ViewModule landing;
 	private ViewModule driverRes;
+	private ViewModule personalShift;
 	private ViewModule supView;
 	private ViewModule supEmpView;
 	private IController controller;
@@ -115,6 +116,9 @@ public class Main extends Application implements IView {
 		//create DriverReserveView
 		driverRes = new DriverReserveView(this.controller);
 		
+		//create PersonalShiftView
+		personalShift = new PersonalShiftView(this.controller);
+		
 		
 		//navigation for Driver
 		Button driverResButton = new Button(Main.b.getString("driver_reserve_nav_text"));
@@ -126,8 +130,8 @@ public class Main extends Application implements IView {
 			driverRes.setNavBar(nav);
 		});
 		driverViewButton.setOnAction(e -> {
-			root.setCenter(this.dv.getDriverView());
-			dv.setNavBar(nav);
+			root.setCenter(this.personalShift.getView());
+			personalShift.setNavBar(nav);
 		});
 		
 		
