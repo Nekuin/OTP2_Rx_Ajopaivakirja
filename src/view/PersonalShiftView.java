@@ -1,5 +1,6 @@
 package view;
 
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import java.util.Collection;
 
@@ -12,6 +13,7 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import model.Driver;
 import model.DrivingShift;
 
@@ -57,6 +59,13 @@ public class PersonalShiftView implements ViewModule{
 			this.shiftSelection.setText("");
 			this.controller.assignShift(driver, shift);
 			this.updateDriver();
+		});
+		
+		reportButton.setOnAction(e->{
+			
+			Stage stage = new Stage();
+			stage.setScene(new Scene(reportHandlingView()));
+			stage.setTitle("Reporting target shift: ");
 		});
 		
 		grid.add(shiftSelection, 0, 0);
