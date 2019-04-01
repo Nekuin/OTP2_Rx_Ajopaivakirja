@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import javax.persistence.EntityManager;
 import controller.Controller;
@@ -17,10 +16,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.*;
 import util.HibernateUtil;
+import util.Strings;
 import view.*;
 
 
@@ -39,7 +38,7 @@ public class Main extends Application implements IView {
 	private IController controller;
 	private EntityManager entityManager;
 	private boolean startUpFinish = false;
-	public static ResourceBundle b;
+	private Strings strings;
 	
 	@Override
 	public void init() {
@@ -53,11 +52,12 @@ public class Main extends Application implements IView {
 			this.controller = new Controller(this);
 			
 			
-			Collection<Driver> ds = this.createTestDrivers();
-			Collection<DrivingShift> shifts = createTestShifts();
-			Collection<Vehicle> vehicles = createTestVehicles();
-			Collection<HrManager> mg = createTestHRManagers();
-			Collection<Superior> superiors = createSuperiors();
+			createTestDrivers();
+			createTestShifts();
+			createTestVehicles();
+			createTestHRManagers();
+			createSuperiors();
+			
 			startUpFinish = true;
 		}).start();
 	}
@@ -67,10 +67,10 @@ public class Main extends Application implements IView {
 	public void start(Stage primaryStage) {
 		try {
 			
+			//get an instance of Strings
+			this.strings = Strings.getInstance();
 			//set default language as finnish
-			Locale.setDefault(new Locale("fi", "FI"));
-			//load resources
-			Main.b = ResourceBundle.getBundle("Strings");
+			strings.changeBundle(new Locale("fi", "FI"));
 			
 			//create root BorderPane
 			this.root = new BorderPane();
@@ -128,8 +128,8 @@ public class Main extends Application implements IView {
 		
 		
 		//navigation for Driver
-		Button driverResButton = new Button(Main.b.getString("driver_reserve_nav_text"));
-		Button driverViewButton = new Button(Main.b.getString("driver_report_nav_text"));
+		Button driverResButton = new Button(strings.getString("driver_reserve_nav_text"));
+		Button driverViewButton = new Button(strings.getString("driver_report_nav_text"));
 		
 		NavBar nav = new NavBar(this, driverResButton, driverViewButton);
 		driverResButton.setOnAction(e -> {
@@ -142,7 +142,7 @@ public class Main extends Application implements IView {
 		});
 		
 		
-		driverRes.setNavBar(nav);
+		personalShift.setNavBar(nav);
 		
 		//create and set landing view
 		this.landing = new LandingView(this.controller);
@@ -152,7 +152,7 @@ public class Main extends Application implements IView {
 		this.hr = new HRView(this.controller);
 		
 		//logout button
-		Button logout = new Button(Main.b.getString("logout_text"));
+		Button logout = new Button(strings.getString("logout_text"));
 		logout.setOnAction(e -> {
 			this.root.setCenter(landing.getView());
 			Main.LOGGED_IN_ID = 0;
@@ -161,16 +161,14 @@ public class Main extends Application implements IView {
 		//create a button to change the language to Finnish
 		Button fi = new Button("FI");
 		fi.setOnAction(e -> {
-			Locale.setDefault(new Locale("fi", "FI"));
-			Main.b = ResourceBundle.getBundle("Strings");
+			strings.changeBundle(new Locale("fi", "FI"));
 			createViews();
 		});
 		
 		//create a button to change the language to English
 		Button us = new Button("US");
 		us.setOnAction(e -> {
-			Locale.setDefault(new Locale("en", "US"));
-			Main.b = ResourceBundle.getBundle("Strings");
+			strings.changeBundle(new Locale("en", "US"));
 			createViews();
 		});
 		

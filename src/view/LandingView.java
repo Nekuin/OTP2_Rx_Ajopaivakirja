@@ -11,6 +11,7 @@ import javafx.scene.layout.GridPane;
 import model.Driver;
 import model.HrManager;
 import model.Superior;
+import util.Strings;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -26,12 +27,14 @@ public class LandingView implements ViewModule {
 	private IController controller;
 	private BorderPane bpane;
 	private int logged_in_id;
+	private Strings strings;
 	
 	/**
 	 * Constructor which takes a Controller as a parameter
 	 * @param controller instance of Controller
 	 */
 	public LandingView(IController controller) {
+		strings = Strings.getInstance();
 		this.controller = controller;
 		this.bpane = new BorderPane();
 		
@@ -53,7 +56,7 @@ public class LandingView implements ViewModule {
 		idField.setId("id-field");
 		
 		
-		Button loginButton = new Button(Main.b.getString("login_text"));
+		Button loginButton = new Button(strings.getString("login_text"));
 		loginButton.setOnAction(e -> {
 			int id = Integer.parseInt(idField.getText());
 			idField.setText("");
