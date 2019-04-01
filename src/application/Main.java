@@ -14,6 +14,7 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
@@ -74,7 +75,12 @@ public class Main extends Application implements IView {
 			//create root BorderPane
 			this.root = new BorderPane();
 			
-			root.setCenter(new Text("Loading..."));
+			//create a "loading spinner"
+			ProgressIndicator p = new ProgressIndicator();
+			p.setProgress(-1);
+			p.setVisible(true);
+			p.setMaxSize(50, 50);
+			root.setCenter(p);
 			
 			Scene scene = new Scene(root,720,600);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
