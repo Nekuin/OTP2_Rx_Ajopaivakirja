@@ -64,7 +64,7 @@ public class PersonalShiftView implements ViewModule{
 		reportButton.setOnAction(e->{
 			
 			Stage stage = new Stage();
-			stage.setScene(new Scene(reportHandlingView()));
+		//	stage.setScene(new Scene(reportHandlingView()));
 			stage.setTitle("Reporting target shift: ");
 		});
 		
