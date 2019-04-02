@@ -1,6 +1,8 @@
 package view;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import application.Main;
 import controller.IController;
@@ -8,6 +10,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import model.Driver;
 import model.HrManager;
+import model.Superior;
+import util.Strings;
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -17,19 +22,25 @@ import javafx.scene.input.KeyCode;
  * @author Nekuin
  *
  */
-public class LandingView {
+public class LandingView implements ViewModule {
 	
 	private IController controller;
 	private BorderPane bpane;
+	private int logged_in_id;
+	private Strings strings;
 	
 	/**
 	 * Constructor which takes a Controller as a parameter
 	 * @param controller instance of Controller
 	 */
 	public LandingView(IController controller) {
+		strings = Strings.getInstance();
 		this.controller = controller;
 		this.bpane = new BorderPane();
-		this.bpane.setCenter(loginPane());
+		
+		GridPane pane = loginPane();
+		pane.setId("loginPane");
+		this.bpane.setCenter(pane);
 	}
 	
 	/**
@@ -38,20 +49,25 @@ public class LandingView {
 	 */
 	private GridPane loginPane() {
 		GridPane pane = new GridPane();
+		pane.setPadding(new Insets(30, 0, 0, 30));
 		
 		TextField idField = new TextField();
 		idField.setPromptText("Your Employee ID");
+		idField.setId("id-field");
 		
 		
-		Button loginButton = new Button("Login");
+		Button loginButton = new Button(strings.getString("login_text"));
 		loginButton.setOnAction(e -> {
 			int id = Integer.parseInt(idField.getText());
+			idField.setText("");
 			login(id);
 		});
+		loginButton.setId("login-button");
 		
 		idField.setOnKeyPressed(e -> {
 			if(e.getCode() == KeyCode.ENTER) {
 				this.login(Integer.parseInt(idField.getText()));
+				idField.setText("");
 			}
 		});
 		
@@ -73,6 +89,7 @@ public class LandingView {
 			if(e.getEmployeeID() == id) {
 				System.out.println("logged in as a driver");
 				Main.LOGGED_IN_ID = id;
+				this.logged_in_id = id;
 				this.controller.changeView(Main.DRIVER_VIEW);
 				return;
 			}
@@ -84,19 +101,42 @@ public class LandingView {
 			if(e.getEmployeeID() == id) {
 				System.out.println("logged in as a manager");
 				Main.LOGGED_IN_ID = id;
+				this.logged_in_id = id;
 				this.controller.changeView(Main.HR_VIEW);
+				return;
+			}
+		});
+		
+		//check if the id belongs to a Superior
+		List<Superior> superiors = this.controller.readAllSuperiors();
+		superiors.forEach(e -> {
+			if(e.getEmployeeID() == id) {
+				System.out.println("logged in as a superior");
+				Main.LOGGED_IN_ID = id;
+				this.logged_in_id = id;
+				this.controller.changeView(Main.SUPERIOR_VIEW);
 				return;
 			}
 		});
 		
 	}
 	
+
+	@Override
+	public void setNavBar(NavBar navBar) {
+	}
+
 	/**
 	 * Get the whole LandingView module
 	 * @return
 	 */
-	public BorderPane getLandingView() {
+	@Override
+	public BorderPane getView() {
 		return this.bpane;
+	}
+	
+	public int getLoggedInid() {
+		return logged_in_id;
 	}
 	
 }

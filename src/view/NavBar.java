@@ -25,12 +25,13 @@ public class NavBar {
 	/**
 	 * Constructor which takes a view and an Array of Buttons as parameters
 	 * @param view instance of View
-	 * @param buttons Array of Buttons
+	 * @param buttons "Array" of Buttons
 	 */
-	public NavBar(IView view, Button[] buttons) {
+	public NavBar(IView view, Button... buttons) {
 		this.view = view;
 		this.hbox = new HBox();
 		for(Button b : buttons) {
+			b.getStyleClass().add("navButton");
 			this.hbox.getChildren().add(b);
 		}
 	}
@@ -40,6 +41,7 @@ public class NavBar {
 	 * @param button Button
 	 */
 	public void addNavButton(Button button) {
+		button.getStyleClass().add("navButton");
 		this.hbox.getChildren().add(button);
 	}
 	

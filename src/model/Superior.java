@@ -52,6 +52,14 @@ public class Superior extends Employee{
 	}
 	
 	/**
+	 * Method for updating car specs
+	 * @param vehicle
+	 */
+	public void updateVehicle(Vehicle vehicle) {
+		vao.updateVehicle(vehicle);
+	}
+	
+	/**
 	 * Method for deleting a vehicle
 	 * @param vehicle
 	 */

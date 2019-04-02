@@ -16,6 +16,7 @@ public class Controller implements IController{
 	private Dao<Vehicle> vehicleAO;
 	private Dao<Client> clientAO;
 	private Dao<Superior> superiorAO;
+	private Dao<Employee> empAo;
 	
 	
 	/**
@@ -29,6 +30,7 @@ public class Controller implements IController{
 		this.driverAccessObject = new Dao<>(model.Driver.class);
 		this.vehicleAO = new Dao<>(model.Vehicle.class);
 		this.superiorAO = new Dao<>(model.Superior.class);
+		this.empAo = new Dao<>(model.Employee.class);
 	}
 	
 	@Override
@@ -68,6 +70,11 @@ public class Controller implements IController{
 	@Override
 	public void createVehicle(Vehicle vehicle) {
 		this.vehicleAO.create(vehicle);
+	}
+	
+	@Override
+	public void updateVehicle(Vehicle vehicle) {
+		this.vehicleAO.update(vehicle);
 	}
 	
 	@Override
@@ -146,6 +153,22 @@ public class Controller implements IController{
 	@Override
 	public void changeView(int i) {
 		this.view.changeView(i);
+	}
+
+	@Override
+	public void updateEmployee(Employee employee) {
+		this.empAo.update(employee);	
+	}
+
+	@Override
+	public List<Employee> readAllEmployees() {
+		List<Employee> employees = this.empAo.getAll();
+		return employees;
+	}
+
+	@Override
+	public void deleteEmployee(Employee employee) {
+		this.empAo.delete(employee);
 	}
 
 

@@ -57,6 +57,17 @@
             <version>${junit-platform.version}</version>
             <scope>compile</scope>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.testfx/testfx-junit -->
+		<dependency>
+		    <groupId>org.testfx</groupId>
+		    <artifactId>testfx-junit5</artifactId>
+		    <version>4.0.15-alpha</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.testfx</groupId>
+		    <artifactId>testfx-core</artifactId>
+		    <version>4.0.15-alpha</version>
+		</dependency>
 
   </dependencies>
 </project>

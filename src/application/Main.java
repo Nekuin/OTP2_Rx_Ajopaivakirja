@@ -4,73 +4,62 @@ package application;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Locale;
 
 import javax.persistence.EntityManager;
 import controller.Controller;
 import controller.IController;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import model.*;
 import util.HibernateUtil;
+import util.Strings;
 import view.*;
 
 
 public class Main extends Application implements IView {
 	
-	public static int DRIVER_VIEW = 1, HR_VIEW = 2;
+	public static int DRIVER_VIEW = 1, HR_VIEW = 2, SUPERIOR_VIEW = 3;
 	public static int LOGGED_IN_ID = 0;
 	private BorderPane root;
 	private DriverView dv;
 	private HRView hr;
-	private LandingView landing;
-	private DriverReserveView driverRes;
+	private ViewModule landing;
+	private ViewModule driverRes;
+	private ViewModule personalShift;
+	private ViewModule supView;
+	private ViewModule supEmpView;
 	private IController controller;
 	private EntityManager entityManager;
-	
-	
+	private boolean startUpFinish = false;
+	private Strings strings;
 	
 	@Override
 	public void init() {
-		System.out.println("entity manager ----------");
-		entityManager = HibernateUtil.getEntityManager();
-		System.out.println("active? " + entityManager.getTransaction().isActive());
-		System.out.println("finished creating entity manager");
 		
-		this.controller = new Controller(this);
-		
-		
-		Collection<Driver> ds = this.createTestDrivers();
-		Collection<DrivingShift> shifts = createTestShifts();
-		Collection<Vehicle> vehicles = createTestVehicles();
-		Collection<HrManager> mg = createTestHRManagers();
-		Collection<Superior> superiors = createSuperiors();
-		
-		List<Driver> drivers = this.controller.readAllDrivers();
-		System.out.println("queried drivers: ------");
-		drivers.forEach(System.out::println);
-		System.out.println("---------");
-		List<HrManager> managers = this.controller.readAllHrManagers();
-		System.out.println("queried hr managers: ---------");
-		managers.forEach(System.out::println);
-		System.out.println("----------");
-		
-		ds.forEach(e -> {
-			e.addDrivenCargo(50);
-			this.controller.updateDriver(e);
-		});
-		
-		
-		
-		
-		Driver d1 = this.controller.readDriver(1);
-		d1.setCanDriveHazardous(false);
-		System.out.println("driver 1: " + d1);
+		new Thread(() -> {
+			System.out.println("entity manager ----------");
+			entityManager = HibernateUtil.getEntityManager();
+			System.out.println("active? " + entityManager.getTransaction().isActive());
+			System.out.println("finished creating entity manager");
+			
+			this.controller = new Controller(this);
+			
+			
+			createTestDrivers();
+			createTestShifts();
+			createTestVehicles();
+			createTestHRManagers();
+			createSuperiors();
+			
+			startUpFinish = true;
+		}).start();
 	}
 	
 	
@@ -78,57 +67,20 @@ public class Main extends Application implements IView {
 	public void start(Stage primaryStage) {
 		try {
 			
+			//get an instance of Strings
+			this.strings = Strings.getInstance();
+			//set default language as finnish
+			strings.changeBundle(new Locale("fi", "FI"));
+			
 			//create root BorderPane
 			this.root = new BorderPane();
 			
-			
-			//create and set driver view
-			this.dv = new DriverView(this.controller);
-			//root.setCenter(dv.getDriverView());
-			
-			//create and set landing view
-			this.landing = new LandingView(this.controller);
-			root.setCenter(landing.getLandingView());
-			
-			/*
-			//create and set Navigation bar
-			NavigationBar navbar = new NavigationBar(this);
-			root.setTop(navbar.getNavigationBar());
-			*/
-			
-			
-			//create hr view
-			this.hr = new HRView(this.controller);
-			
-			
-			//for testing
-			
-			driverRes = new DriverReserveView(this.controller);
-			
-			
-			//this.setDriverData(getTestDrivers());
-			Button driverResButton = new Button("Driver res");
-			Button driverViewButton = new Button("Driver view");
-			driverResButton.getStyleClass().add("navButton");
-			driverViewButton.getStyleClass().add("navButton");
-			
-			NavBar nav = new NavBar(this, new Button[]{driverResButton, driverViewButton});
-			driverResButton.setOnAction(e -> {
-				root.setCenter(driverRes.getDriverReserveView());
-				driverRes.setNavBar(nav);
-			});
-			driverViewButton.setOnAction(e -> {
-				root.setCenter(this.dv.getDriverView());
-				dv.setNavBar(nav);
-			});
-			
-			
-			driverRes.setNavBar(nav);
-			
-			
-			
-			
-			//this.setShiftData(this.controller.readAllDrivingShifts());
+			//create a "loading spinner"
+			ProgressIndicator p = new ProgressIndicator();
+			p.setProgress(-1);
+			p.setVisible(true);
+			p.setMaxSize(50, 50);
+			root.setCenter(p);
 			
 			Scene scene = new Scene(root,720,600);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
@@ -140,9 +92,115 @@ public class Main extends Application implements IView {
 			
 			primaryStage.setScene(scene);
 			primaryStage.show();
+			
+			new Thread(() -> {
+				//wait for Hibernate to start up
+				while(!startUpFinish)
+					try {
+						Thread.sleep(100);
+					} catch (InterruptedException e1) {
+						e1.printStackTrace();
+					}
+				
+				//createViews must be called on UI thread!!
+				Platform.runLater(() -> {
+					createViews();
+				});
+				
+			}).start();
+			
+			
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private void createViews() {
+		
+		//create and set driver view
+		this.dv = new DriverView(this.controller);
+		
+		//create DriverReserveView
+		driverRes = new DriverReserveView(this.controller);
+		
+		//create PersonalShiftView
+		personalShift = new PersonalShiftView(this.controller);
+		
+		
+		//navigation for Driver
+		Button driverResButton = new Button(strings.getString("driver_reserve_nav_text"));
+		Button driverViewButton = new Button(strings.getString("driver_report_nav_text"));
+		
+		NavBar nav = new NavBar(this, driverResButton, driverViewButton);
+		driverResButton.setOnAction(e -> {
+			root.setCenter(driverRes.getView());
+			driverRes.setNavBar(nav);
+		});
+		driverViewButton.setOnAction(e -> {
+			root.setCenter(this.personalShift.getView());
+			personalShift.setNavBar(nav);
+		});
+		
+		
+		personalShift.setNavBar(nav);
+		
+		//create and set landing view
+		this.landing = new LandingView(this.controller);
+		root.setCenter(landing.getView());
+		
+		//create hr view
+		this.hr = new HRView(this.controller);
+		
+		//logout button
+		Button logout = new Button(strings.getString("logout_text"));
+		logout.setOnAction(e -> {
+			this.root.setCenter(landing.getView());
+			Main.LOGGED_IN_ID = 0;
+		});
+		
+		//create a button to change the language to Finnish
+		Button fi = new Button("FI");
+		fi.setOnAction(e -> {
+			strings.changeBundle(new Locale("fi", "FI"));
+			createViews();
+		});
+		
+		//create a button to change the language to English
+		Button us = new Button("US");
+		us.setOnAction(e -> {
+			strings.changeBundle(new Locale("en", "US"));
+			createViews();
+		});
+		
+		HBox hbox = new HBox();
+		hbox.getChildren().addAll(logout, fi, us);
+		this.root.setBottom(hbox);
+		
+		//create SuperiorView
+		this.supView = new SuperiorView(this.controller);
+		
+		//create SuperiorEmployeeView
+		this.supEmpView = new SuperiorEmployeeView(this.controller);
+		
+		//create Buttons for Superior navBar
+		Button supViewButton = new Button("Superior Vehicle");
+		Button supEmpViewButton = new Button("Superior Employees");
+		
+		//create navBar for Superior
+		NavBar supNav = new NavBar(this, supViewButton, supEmpViewButton);
+		supEmpViewButton.setOnAction(e -> {
+			root.setCenter(supEmpView.getView());
+			supEmpView.setNavBar(supNav);
+		});
+		
+		supViewButton.setOnAction(e -> {
+			root.setCenter(supView.getView());
+			supView.setNavBar(supNav);
+		});
+		
+		//set navBar for SuperiorView
+		supView.setNavBar(supNav);
+		
 	}
 	
 	public static void main(String[] args) {
@@ -172,9 +230,9 @@ public class Main extends Application implements IView {
 	private Collection<Driver> createTestDrivers(){
 		Collection<Driver> drivers = new ArrayList<>();
 		
-		Driver d1 = new Driver("Eka", "A");
-		Driver d2 = new Driver("Toka", "B");
-		Driver d3 = new Driver("Kolmas", "AB");
+		Driver d1 = new Driver("Kerkko Kuski", "A");
+		Driver d2 = new Driver("Reiska Rekkamies", "B");
+		Driver d3 = new Driver("Kari Kaahari", "AB");
 		
 		drivers.add(d1);
 		drivers.add(d2);
@@ -207,7 +265,7 @@ public class Main extends Application implements IView {
 	
 	private Collection<Superior> createSuperiors(){
 		Collection<Superior> superiors = new ArrayList<>();
-		Superior s1 = new Superior("Esimees");
+		Superior s1 = new Superior("Esa Esimees");
 		superiors.add(s1);
 		superiors.forEach(s -> {
 			this.controller.createSuperior(s);
@@ -245,7 +303,7 @@ public class Main extends Application implements IView {
 	
 	@Override
 	public void setShiftData(Collection<DrivingShift> shifts) {
-		this.driverRes.updateShiftList(shifts);
+		((DriverReserveView)driverRes).updateShiftList(shifts);
 	}
 
 	/**
@@ -255,11 +313,16 @@ public class Main extends Application implements IView {
 	public void changeView(int view) {
 		if(view == Main.DRIVER_VIEW) {
 			this.dv.updateDriver();
-			this.driverRes.updateShiftList(this.controller.readGoodDrivingShifts(this.controller.readDriver(Main.LOGGED_IN_ID)));
-			this.root.setCenter(this.driverRes.getDriverReserveView());
+			List<DrivingShift> shifts = this.controller.readGoodDrivingShifts(this.controller.readDriver(Main.LOGGED_IN_ID));
+			((DriverReserveView)this.driverRes).updateShiftList(shifts);
+			this.root.setCenter(this.driverRes.getView());
+			((PersonalShiftView)this.personalShift).updateShifts(shifts);
+			this.root.setCenter(this.personalShift.getView());
 		} else if(view == Main.HR_VIEW) {
 			this.hr.updateDrivers(this.controller.readAllDrivers());
-			this.root.setCenter(this.hr.getHRView());
+			this.root.setCenter(this.hr.getView());
+		} else if(view == Main.SUPERIOR_VIEW) {
+			this.root.setCenter(this.supView.getView());
 		}
 	}
 }

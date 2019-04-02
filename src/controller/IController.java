@@ -121,4 +121,16 @@ public interface IController {
 	 * @return List of Superiors
 	 */
 	public List<Superior> readAllSuperiors();
+
+	/**
+	 * Update vehicle information
+	 * @param vehicle
+	 */
+	public void updateVehicle(Vehicle vehicle);
+	
+	public void updateEmployee(Employee employee);
+	
+	public List<Employee> readAllEmployees();
+	
+	public void deleteEmployee(Employee employee);
 }
