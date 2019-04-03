@@ -1,5 +1,6 @@
 package view;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -12,6 +13,8 @@ import model.Driver;
 import model.HrManager;
 import model.Superior;
 import util.Strings;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -29,6 +32,12 @@ public class LandingView implements ViewModule {
 	private int logged_in_id;
 	private Strings strings;
 	
+	@FXML
+	private Button login_button;
+	
+	@FXML
+	private TextField login_field;
+	
 	/**
 	 * Constructor which takes a Controller as a parameter
 	 * @param controller instance of Controller
@@ -36,11 +45,40 @@ public class LandingView implements ViewModule {
 	public LandingView(IController controller) {
 		strings = Strings.getInstance();
 		this.controller = controller;
-		this.bpane = new BorderPane();
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("landing_page_xml.fxml"), strings.getBundle());
+		loader.setController(this);
+		try {
+			loader.load();
+			bpane = loader.getRoot();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * initialize is called after @FXML tagged fields are injected
+	 */
+	@FXML
+	private void initialize() {
+		login_button.setOnAction(e -> {
+			login(getLoginID());
+			login_field.setText("");
+		});
 		
-		GridPane pane = loginPane();
-		pane.setId("loginPane");
-		this.bpane.setCenter(pane);
+		login_field.setOnKeyPressed(e -> {
+			if(e.getCode() == KeyCode.ENTER) {
+				login(getLoginID());
+				login_field.setText("");
+			}
+		});
+	}
+	
+	private int getLoginID() {
+		String fieldText = login_field.getText();
+		if(fieldText.equals("")) {
+			return -1;
+		}
+		return Integer.parseInt(fieldText);
 	}
 	
 	/**
@@ -82,6 +120,9 @@ public class LandingView implements ViewModule {
 	 * @param id Employee ID
 	 */
 	private void login(int id) {
+		if(id < 0) {
+			return;
+		}
 		System.out.println("[ph] logging in as id: " + id);
 		//check if the id belongs to a driver
 		List<Driver> drivers = this.controller.readAllDrivers();
