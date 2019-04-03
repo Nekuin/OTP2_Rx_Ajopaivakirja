@@ -183,12 +183,16 @@ public class Main extends Application implements IView {
 		//create SuperiorEmployeeView
 		this.supEmpView = new SuperiorEmployeeView(this.controller);
 		
+		//create SuperiorShiftView
+		ViewModule supShiftView = new SuperiorShiftView(this.controller);
+		
 		//create Buttons for Superior navBar
 		Button supViewButton = new Button("Superior Vehicle");
 		Button supEmpViewButton = new Button("Superior Employees");
+		Button supShiftViewButton = new Button("Superior Shifts");
 		
 		//create navBar for Superior
-		NavBar supNav = new NavBar(this, supViewButton, supEmpViewButton);
+		NavBar supNav = new NavBar(this, supViewButton, supEmpViewButton, supShiftViewButton);
 		supEmpViewButton.setOnAction(e -> {
 			root.setCenter(supEmpView.getView());
 			supEmpView.setNavBar(supNav);
@@ -197,6 +201,11 @@ public class Main extends Application implements IView {
 		supViewButton.setOnAction(e -> {
 			root.setCenter(supView.getView());
 			supView.setNavBar(supNav);
+		});
+		
+		supShiftViewButton.setOnAction(e -> {
+			root.setCenter(supShiftView.getView());
+			supShiftView.setNavBar(supNav);
 		});
 		
 		//set navBar for SuperiorView
