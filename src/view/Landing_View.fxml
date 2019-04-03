@@ -8,36 +8,38 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <AnchorPane maxHeight="-1.0" maxWidth="-1.0">
+            <AnchorPane layoutX="-4.0" layoutY="-6.0" maxHeight="-1.0" maxWidth="-1.0" prefHeight="506.0" prefWidth="811.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-4.0" AnchorPane.rightAnchor="-7.0" AnchorPane.topAnchor="-6.0">
                <children>
-                  <HBox alignment="CENTER" layoutX="112.0" layoutY="218.0" spacing="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                  <HBox alignment="CENTER" layoutX="112.0" layoutY="218.0" prefHeight="51.0" prefWidth="822.0" spacing="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-22.0">
                      <children>
-                        <Label prefHeight="51.0" prefWidth="112.0" text="Työntekijänumerosi:" />
-                        <TextField fx:id="login_field" prefHeight="39.0" prefWidth="170.0" promptText="Your employee ID" />
-                        <Button fx:id="login_button" mnemonicParsing="false" prefHeight="39.0" prefWidth="112.0" text="%login_text" />
+                        <Label fx:id="emp_ID_text" prefHeight="51.0" prefWidth="128.0" text="%your_emp_ID_label">
+                           <font>
+                              <Font size="14.0" />
+                           </font></Label>
+                        <TextField fx:id="login_field" prefHeight="39.0" prefWidth="170.0" promptText="%emp_ID_placeholder" />
+                        <Button fx:id="login_button" mnemonicParsing="false" prefHeight="39.0" prefWidth="164.0" text="%login_text" wrapText="true" />
                      </children>
                   </HBox>
-                  <Button alignment="CENTER" layoutX="27.0" layoutY="348.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="132.0" text="Sulje ohjelma" AnchorPane.leftAnchor="27.0" AnchorPane.rightAnchor="481.0" />
-                  <Label layoutX="452.0" layoutY="321.0" text="Change language:" AnchorPane.leftAnchor="452.0" />
-                  <Label alignment="CENTER" layoutY="84.0" text="Tervetuloa Ajopäiväkirjaan" wrapText="true" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                  <Button fx:id="shutdown_button" alignment="CENTER" layoutX="136.0" layoutY="348.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="154.0" text="%shutdown_text" AnchorPane.leftAnchor="136.0" AnchorPane.rightAnchor="505.0" />
+                  <Label fx:id="Change_lang_label" layoutX="452.0" layoutY="321.0" text="%change_language_text" AnchorPane.leftAnchor="452.0" />
+                  <Label fx:id="Welcome_text" alignment="CENTER" layoutY="84.0" text="%welcome_message" wrapText="true" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                      <font>
                         <Font name="System Bold" size="32.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER" layoutX="93.0" layoutY="141.0" prefHeight="58.0" prefWidth="455.0" text="Kirjaudu sisään syöttämällä alapuolella olevaan tekstikenttään työnteijänumerosi ja klikkaamalla Kirjaudu-painiketta." textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="93.0" AnchorPane.rightAnchor="92.0">
+                  <Label fx:id="Instructions_text" alignment="CENTER" layoutX="93.0" layoutY="141.0" prefHeight="58.0" prefWidth="455.0" text="%login_info" textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="93.0" AnchorPane.rightAnchor="92.0">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </Label>
                   <HBox alignment="CENTER" layoutX="424.0" layoutY="348.0" prefHeight="39.0" prefWidth="216.0" spacing="20.0">
                      <children>
-                        <Button mnemonicParsing="false" prefHeight="39.0" prefWidth="76.0" text="Suomi" />
-                        <Button mnemonicParsing="false" prefHeight="39.0" prefWidth="76.0" text="English" />
+                        <Button fx:id="FI_button" mnemonicParsing="false" prefHeight="39.0" prefWidth="76.0" text="Suomi" />
+                        <Button fx:id="EN_button" mnemonicParsing="false" prefHeight="39.0" prefWidth="76.0" text="English" />
                      </children>
                   </HBox>
                </children>
