@@ -45,7 +45,7 @@ public class LandingView implements ViewModule {
 	public LandingView(IController controller) {
 		strings = Strings.getInstance();
 		this.controller = controller;
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("landing_page_xml.fxml"), strings.getBundle());
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("Landing_View.fxml"), strings.getBundle());
 		loader.setController(this);
 		try {
 			loader.load();
