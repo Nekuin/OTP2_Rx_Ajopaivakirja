@@ -2,6 +2,7 @@ package controller;
 
 import java.util.List;
 
+import javafx.scene.layout.BorderPane;
 import model.*;
 
 /**
@@ -133,4 +134,12 @@ public interface IController {
 	public List<Employee> readAllEmployees();
 	
 	public void deleteEmployee(Employee employee);
+	
+	public void setUndoMessage(BorderPane root);
+	
+	public void resetRootBottom();
+	
+	public void createEmployee(Employee e);
+	
+	public void deleteShift(DrivingShift shift);
 }

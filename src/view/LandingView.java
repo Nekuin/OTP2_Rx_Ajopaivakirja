@@ -179,5 +179,11 @@ public class LandingView implements ViewModule {
 	public int getLoggedInid() {
 		return logged_in_id;
 	}
+
+	@Override
+	public void notifyUndo() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

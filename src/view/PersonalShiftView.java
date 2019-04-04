@@ -124,6 +124,14 @@ public class PersonalShiftView implements ViewModule{
 		return this.bpane;
 	}
 
+
+
+	@Override
+	public void notifyUndo() {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 
 }

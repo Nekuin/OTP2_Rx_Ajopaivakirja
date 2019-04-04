@@ -461,4 +461,10 @@ public class SuperiorView implements ViewModule {
 	public BorderPane getView() {
 		return this.borderPane;
 	}
+
+	@Override
+	public void notifyUndo() {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -522,4 +522,10 @@ public class SuperiorEmployeeView implements ViewModule {
 		}
 	}
 
+	@Override
+	public void notifyUndo() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

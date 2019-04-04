@@ -17,4 +17,9 @@ public interface ViewModule {
 	 * @return BorderPane borderpane
 	 */
 	public BorderPane getView();
+	
+	/**
+	 * UndoPopup can notify this ViewModule that the user has undone an action.
+	 */
+	public void notifyUndo();
 }

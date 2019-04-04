@@ -173,5 +173,11 @@ public class DriverReserveView implements ViewModule{
 	public BorderPane getView() {
 		return this.bpane;
 	}
+
+	@Override
+	public void notifyUndo() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

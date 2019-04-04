@@ -3,6 +3,8 @@ package controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import javafx.scene.layout.BorderPane;
 import model.*;
 import view.IView;
 
@@ -170,6 +172,28 @@ public class Controller implements IController{
 	public void deleteEmployee(Employee employee) {
 		this.empAo.delete(employee);
 	}
+
+	@Override
+	public void setUndoMessage(BorderPane root) {
+		this.view.setUndoMessage(root);
+	}
+
+	@Override
+	public void resetRootBottom() {
+		view.resetRootBottom();
+	}
+
+	@Override
+	public void createEmployee(Employee e) {
+		this.empAo.create(e);
+	}
+
+	@Override
+	public void deleteShift(DrivingShift shift) {
+		this.drivingShiftAO.delete(shift);
+	}
+	
+	
 
 
 }
