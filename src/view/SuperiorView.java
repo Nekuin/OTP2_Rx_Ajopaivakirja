@@ -54,11 +54,6 @@ public class SuperiorView implements ViewModule {
 		this.borderPane.setCenter(viewBox);
 	}
 
-	@Override
-	public void setNavBar(NavBar navBar) {
-		this.borderPane.setTop(navBar.getNavBar());
-	}
-
 	private ListView<Vehicle> getCarList() {
 		this.vehicles = FXCollections.observableArrayList();
 		this.vehicles.addAll(controller.readAllVehicles());
@@ -462,9 +457,4 @@ public class SuperiorView implements ViewModule {
 		return this.borderPane;
 	}
 
-	@Override
-	public void notifyUndo() {
-		// TODO Auto-generated method stub
-		
-	}
 }

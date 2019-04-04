@@ -25,13 +25,13 @@ public class UndoPopup {
     
     private boolean userDismissed;
     private Object o;
-    private ViewModule caller;
+    private UndoObserver observer;
 	
-	public UndoPopup(IController controller, Object o, ViewModule caller) {
+	public UndoPopup(IController controller, Object o, UndoObserver caller) {
 		this.controller = controller;
 		userDismissed = false;
 		this.o = o;
-		this.caller = caller;
+		observer = caller;
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("undo_msg.fxml"));
 		loader.setController(this);
 		try {
@@ -59,7 +59,7 @@ public class UndoPopup {
 				//thats why you call update and not create
 				controller.updateDrivingShift((DrivingShift)o);
 			}
-			caller.notifyUndo();
+			observer.notifyUndo();
 		});
 		
 		undo_button.getStyleClass().add("undoButton");

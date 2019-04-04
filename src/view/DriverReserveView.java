@@ -23,7 +23,7 @@ import util.Strings;
  * @author Nekuin
  *
  */
-public class DriverReserveView implements ViewModule{
+public class DriverReserveView implements ViewModule, UndoObserver{
 	
 	private BorderPane bpane;
 	private ObservableList<DrivingShift> shifts;
@@ -32,19 +32,6 @@ public class DriverReserveView implements ViewModule{
 	private Strings strings;
 	
 	private IController controller;
-	
-	/**
-	 * Constructor which takes the controller and navbar as arguments
-	 * @param controller instance of Controller
-	 * @param navBar instance of NavBar
-	 */
-	public DriverReserveView(IController controller, NavBar navBar) {
-		strings = Strings.getInstance();
-		this.controller = controller;
-		this.bpane = new BorderPane();
-		this.setNavBar(navBar);
-		setup();
-	}
 	
 	/**
 	 * Constructor which takes the controller as argument
@@ -155,14 +142,6 @@ public class DriverReserveView implements ViewModule{
 	public void updateShiftList(Collection<DrivingShift> shifts) {
 		this.shifts.clear();
 		this.shifts.addAll(shifts.stream().filter(shift -> !shift.getShiftTaken()).collect(Collectors.toList()));
-	}
-	
-	/**
-	 * Set the instance of NavBar
-	 * @param navBar instance of NavBar
-	 */
-	public void setNavBar(NavBar navBar) {
-		this.bpane.setTop(navBar.getNavBar());
 	}
 
 	/**

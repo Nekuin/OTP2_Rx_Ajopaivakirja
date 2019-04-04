@@ -17,7 +17,7 @@ import javafx.stage.Stage;
 import model.Driver;
 import model.DrivingShift;
 
-public class PersonalShiftView implements ViewModule{
+public class PersonalShiftView implements ViewModule {
 	
 	private BorderPane bpane;
 	private IController controller;
@@ -111,27 +111,11 @@ public class PersonalShiftView implements ViewModule{
 	public void updateDriver() {
 		this.driver = this.controller.readDriver(Main.LOGGED_IN_ID);
 	}
-	
-	@Override
-	public void setNavBar(NavBar nav) {
-		this.bpane.setTop(nav.getNavBar());
-	}
-
 
 
 	@Override
 	public BorderPane getView() {
 		return this.bpane;
 	}
-
-
-
-	@Override
-	public void notifyUndo() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	
 
 }

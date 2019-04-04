@@ -14,7 +14,7 @@ import javafx.scene.layout.VBox;
 import model.DrivingShift;
 import util.Strings;
 
-public class SuperiorShiftView implements ViewModule {
+public class SuperiorShiftView implements ViewModule, UndoObserver {
 	
 	private BorderPane bpane;
 	private IController controller;
@@ -79,11 +79,6 @@ public class SuperiorShiftView implements ViewModule {
 	private void updateShiftList() {
 		shifts.clear();
 		shifts.addAll(controller.readAllDrivingShifts());
-	}
-
-	@Override
-	public void setNavBar(NavBar navBar) {
-		bpane.setTop(navBar.getNavBar());
 	}
 
 	@Override
