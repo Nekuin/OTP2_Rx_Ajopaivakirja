@@ -174,7 +174,7 @@ public class Controller implements IController{
 	}
 
 	@Override
-	public void setUndoMessage(BorderPane root) {
+	public void showUndoMessage(BorderPane root) {
 		this.view.setUndoMessage(root);
 	}
 

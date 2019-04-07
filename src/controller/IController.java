@@ -129,17 +129,44 @@ public interface IController {
 	 */
 	public void updateVehicle(Vehicle vehicle);
 	
+	/**
+	 * Update an Employee in the database
+	 * @param employee instance of Employee
+	 */
 	public void updateEmployee(Employee employee);
 	
+	/**
+	 * Returns a list of all Employees in the database
+	 * @return List of Employee objects
+	 */
 	public List<Employee> readAllEmployees();
 	
+	/**
+	 * Delete an Employee from the database
+	 * @param employee instance of Employee
+	 */
 	public void deleteEmployee(Employee employee);
 	
-	public void setUndoMessage(BorderPane root);
+	/**
+	 * Show undo option to the user after i.e. deleting a Driving shift
+	 * @param root Root of the UndoPopup object
+	 */
+	public void showUndoMessage(BorderPane root);
 	
+	/**
+	 * Set Logout and language buttons back to the bottom of the root found in Main
+	 */
 	public void resetRootBottom();
 	
+	/**
+	 * Create an Employee
+	 * @param e instance of Employee
+	 */
 	public void createEmployee(Employee e);
 	
+	/**
+	 * Delete a DrivingShift from the database
+	 * @param shift instance of DrivingShift
+	 */
 	public void deleteShift(DrivingShift shift);
 }
