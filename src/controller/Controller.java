@@ -111,19 +111,13 @@ public class Controller implements IController{
 	
 	@Override
 	public List<DrivingShift> readGoodDrivingShifts(Driver driver) {
-		List<DrivingShift> shifts = this.drivingShiftAO.getAll();
-		System.out.println("shifts: " + shifts);
-		List<DrivingShift> goodShifts = new ArrayList<>();
-		
 		if(!driver.getCanDriveHazardous()) {
-			goodShifts = shifts.stream().filter(cargoList -> cargoList.getCargo()
-					.stream().anyMatch(e -> e.isHazardous())).collect(Collectors.toList());
-			
+			return readAllDrivingShifts().stream()
+					.filter(cargoList -> cargoList.getCargo()
+					.stream().anyMatch(Cargo::isHazardous)).collect(Collectors.toList());
 		} else {
-			return shifts;
+			return readAllDrivingShifts();
 		}
-		
-		return goodShifts;
 	}
 	
 
