@@ -77,7 +77,7 @@ public class DrivingShift {
 	 * empty constructor for the driving shift
 	 */
 	public DrivingShift() {
-		
+		this.cargo = new ArrayList<>();
 	}
 	
 	/**

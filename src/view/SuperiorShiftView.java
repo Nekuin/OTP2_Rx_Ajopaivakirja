@@ -6,12 +6,17 @@ import java.util.stream.Collectors;
 import controller.IController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import model.DrivingShift;
 import util.Strings;
 
@@ -55,6 +60,7 @@ public class SuperiorShiftView implements ViewModule, UndoObserver {
 	private void initialize() {
 		add_shift_button.setOnAction(e -> {
 			System.out.println("add shift");
+			showAddShiftStage(e);
 		});
 		
 		delete_shift_button.setOnAction(e -> {
@@ -70,6 +76,15 @@ public class SuperiorShiftView implements ViewModule, UndoObserver {
 			updateShiftList();
 			
 		});
+	}
+	
+	private void showAddShiftStage(ActionEvent e) {
+		Stage stage = new Stage();
+		stage.setScene(new Scene(new AddShiftView(controller).getView()));
+		stage.setTitle("Add new Driving shift");
+		stage.initModality(Modality.APPLICATION_MODAL);
+		stage.initOwner(((Node) e.getSource()).getScene().getWindow());
+		stage.show();
 	}
 	
 	private void setup() {

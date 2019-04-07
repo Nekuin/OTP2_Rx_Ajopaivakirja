@@ -169,4 +169,27 @@ public interface IController {
 	 * @param shift instance of DrivingShift
 	 */
 	public void deleteShift(DrivingShift shift);
+	
+	/**
+	 * Returns a list of all Cargo in the database
+	 * @return List of Cargo objects
+	 */
+	public List<Cargo> readAllCargo();
+	
+	/**
+	 * Returns a list of all Clients in the database
+	 * @return List of Client objects
+	 */
+	public List<Client> readAllClients();
+	
+	/**
+	 * Create a Cargo
+	 * @param cargo instance of Cargo
+	 */
+	public void createCargo(Cargo cargo);
+	
+	/**
+	 * Returns a list of all Cargo where shift is null
+	 */
+	public List<Cargo> readAllUnassignedCargo();
 }

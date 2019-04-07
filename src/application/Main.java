@@ -61,6 +61,7 @@ public class Main extends Application implements IView {
 			createTestVehicles();
 			createTestHRManagers();
 			createSuperiors();
+			createTestCargo();
 			
 			startUpFinish = true;
 		}).start();
@@ -294,6 +295,15 @@ public class Main extends Application implements IView {
 		System.out.println("finished creating shifts");
 
 		return shifts;
+	}
+	
+	private Collection<Cargo> createTestCargo(){
+		Collection<Cargo> cargo = new ArrayList<>();
+		for(int i = 0; i < 2; i++) {
+			cargo.add(new Cargo(i+3));
+		}
+		cargo.forEach(controller::createCargo);
+		return cargo;
 	}
 
 	/**

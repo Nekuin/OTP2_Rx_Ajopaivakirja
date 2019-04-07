@@ -33,6 +33,8 @@ public class Controller implements IController{
 		this.vehicleAO = new Dao<>(model.Vehicle.class);
 		this.superiorAO = new Dao<>(model.Superior.class);
 		this.empAo = new Dao<>(model.Employee.class);
+		this.cargoAO = new Dao<>(model.Cargo.class);
+		this.clientAO = new Dao<>(model.Client.class);
 	}
 	
 	@Override
@@ -191,6 +193,28 @@ public class Controller implements IController{
 	@Override
 	public void deleteShift(DrivingShift shift) {
 		this.drivingShiftAO.delete(shift);
+	}
+
+	@Override
+	public List<Cargo> readAllCargo() {
+		return this.cargoAO.getAll();
+	}
+
+	@Override
+	public List<Client> readAllClients() {
+		return this.clientAO.getAll();
+	}
+
+	@Override
+	public void createCargo(Cargo cargo) {
+		this.cargoAO.create(cargo);
+	}
+
+	@Override
+	public List<Cargo> readAllUnassignedCargo() {
+		return this.cargoAO.getAll().stream()
+				.filter(cargo -> cargo.getShift() == null)
+				.collect(Collectors.toList());
 	}
 	
 	
