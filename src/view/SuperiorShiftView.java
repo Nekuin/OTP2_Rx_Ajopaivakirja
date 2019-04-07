@@ -1,6 +1,7 @@
 package view;
 
 import java.io.IOException;
+import java.util.stream.Collectors;
 
 import controller.IController;
 import javafx.collections.FXCollections;
@@ -61,9 +62,13 @@ public class SuperiorShiftView implements ViewModule, UndoObserver {
 			if(shift != null) {
 				UndoPopup p = new UndoPopup(controller, shift, this);
 				controller.showUndoMessage(p.getView());
-				controller.deleteShift(shift);
+				shifts.remove(shift);
 			}
+		});
+		
+		update_shift_button.setOnAction(e -> {
 			updateShiftList();
+			
 		});
 	}
 	

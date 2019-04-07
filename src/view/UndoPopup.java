@@ -59,13 +59,20 @@ public class UndoPopup {
 				//thats why you call update and not create
 				controller.updateDrivingShift((DrivingShift)o);
 			}
+			//clicking undo counts as "dismissing" the message
+			userDismissed = true;
 			observer.notifyUndo();
+			//run on UI thread
+			Platform.runLater(() -> {
+				controller.resetRootBottom();
+			});
 		});
 		
 		undo_button.getStyleClass().add("undoButton");
 		
 		dismiss_button.setOnAction(e -> {
 			userDismissed = true;
+			removeFromDatabase();
 		});
 		
 		dismiss_button.getStyleClass().add("dismissButton");
@@ -78,12 +85,25 @@ public class UndoPopup {
 			while((startTime+10000) > System.currentTimeMillis() && !userDismissed) {
 				Thread.yield();
 			}
-			
+			//permanently remove the object if the user didn't undo the action
+			if(!userDismissed) {
+				System.out.println("user didnt undo");
+				removeFromDatabase();
+			}
 			//run on UI thread
 			Platform.runLater(() -> {
 				controller.resetRootBottom();
 			});
 		}).start();
+	}
+	
+	private void removeFromDatabase() {
+		//determine type of the object
+		if(o instanceof Employee) {
+			controller.deleteEmployee((Employee)o);
+		} else if(o instanceof DrivingShift) {
+			controller.deleteShift((DrivingShift)o);
+		}
 	}
 	
 	private void setup(String message) {
