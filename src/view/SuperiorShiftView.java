@@ -74,7 +74,6 @@ public class SuperiorShiftView implements ViewModule, UndoObserver {
 		
 		update_shift_button.setOnAction(e -> {
 			updateShiftList();
-			
 		});
 	}
 	

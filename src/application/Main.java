@@ -17,7 +17,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.*;
 import util.HibernateUtil;
@@ -38,6 +37,7 @@ public class Main extends Application implements IView {
 	private ViewModule supView;
 	private ViewModule supEmpView;
 	private IController controller;
+	private ViewModule supShiftView;
 	private NavBar supNav;
 	private NavBar driverNav;
 	private HBox bottomBox;
@@ -55,7 +55,6 @@ public class Main extends Application implements IView {
 			System.out.println("finished creating entity manager");
 			
 			this.controller = new Controller(this);
-			
 			
 			createTestDrivers();
 			createTestShifts();
@@ -82,11 +81,7 @@ public class Main extends Application implements IView {
 			this.root = new BorderPane();
 			
 			//create a "loading spinner"
-			ProgressIndicator p = new ProgressIndicator();
-			p.setProgress(-1);
-			p.setVisible(true);
-			p.setMaxSize(50, 50);
-			root.setCenter(p);
+			root.setCenter(createLoadingSpinner());
 			
 			Scene scene = new Scene(root,1024,768);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
@@ -121,6 +116,14 @@ public class Main extends Application implements IView {
 		}
 	}
 	
+	private ProgressIndicator createLoadingSpinner() {
+		ProgressIndicator p = new ProgressIndicator();
+		p.setProgress(-1);
+		p.setVisible(true);
+		p.setMaxSize(50, 50);
+		return p;
+	}
+	
 	@Override
 	public void createViews() {
 		
@@ -133,18 +136,8 @@ public class Main extends Application implements IView {
 		//create PersonalShiftView
 		personalShift = new PersonalShiftView(this.controller);
 		
-		
 		//navigation for Driver
-		Button driverResButton = new Button(strings.getString("driver_reserve_nav_text"));
-		Button driverViewButton = new Button(strings.getString("driver_report_nav_text"));
-		
-		driverNav = new NavBar(this, driverResButton, driverViewButton);
-		driverResButton.setOnAction(e -> {
-			root.setCenter(driverRes.getView());
-		});
-		driverViewButton.setOnAction(e -> {
-			root.setCenter(this.personalShift.getView());
-		});
+		createDriverNavBar();
 		
 		//create and set landing view
 		this.landing = new LandingView(this.controller, this);
@@ -154,13 +147,7 @@ public class Main extends Application implements IView {
 		this.hr = new HRView(this.controller);
 		
 		//logout button
-		Button logout = new Button(strings.getString("logout_text"));
-		logout.setOnAction(e -> {
-			this.root.setCenter(landing.getView());
-			Main.LOGGED_IN_ID = 0;
-			this.root.setTop(null);
-		});
-				
+		Button logout = createLogoutButton();	
 		bottomBox = new HBox();
 		bottomBox.setPadding(new Insets(0, 50, 50, 50));
 		bottomBox.getChildren().addAll(logout);
@@ -173,9 +160,37 @@ public class Main extends Application implements IView {
 		this.supEmpView = new SuperiorEmployeeView(this.controller);
 		
 		//create SuperiorShiftView
-		ViewModule supShiftView = new SuperiorShiftView(this.controller);
+		this.supShiftView = new SuperiorShiftView(this.controller);
 		
 		//create Buttons for Superior navBar
+		createSuperiorNavBar();
+		
+	}
+	
+	private void createDriverNavBar() {
+		Button driverResButton = new Button(strings.getString("driver_reserve_nav_text"));
+		Button driverViewButton = new Button(strings.getString("driver_report_nav_text"));
+		
+		driverNav = new NavBar(this, driverResButton, driverViewButton);
+		driverResButton.setOnAction(e -> {
+			root.setCenter(driverRes.getView());
+		});
+		driverViewButton.setOnAction(e -> {
+			root.setCenter(this.personalShift.getView());
+		});
+	}
+	
+	private Button createLogoutButton() {
+		Button logout = new Button(strings.getString("logout_text"));
+		logout.setOnAction(e -> {
+			this.root.setCenter(landing.getView());
+			Main.LOGGED_IN_ID = 0;
+			this.root.setTop(null);
+		});
+		return logout;
+	}
+	
+	private void createSuperiorNavBar() {
 		Button supViewButton = new Button("Superior Vehicle");
 		Button supEmpViewButton = new Button("Superior Employees");
 		Button supShiftViewButton = new Button("Superior Shifts");
@@ -193,7 +208,6 @@ public class Main extends Application implements IView {
 		supShiftViewButton.setOnAction(e -> {
 			root.setCenter(supShiftView.getView());
 		});
-		
 	}
 	
 	public static void main(String[] args) {
@@ -231,14 +245,12 @@ public class Main extends Application implements IView {
 		drivers.add(d2);
 		drivers.add(d3);
 		
-		
 		if(entityManager == null) {
 			System.out.println("uh oh");
 			System.exit(-1);
 		}
 		drivers.forEach(e -> {
 			this.controller.createDriver(e);
-			//entityManager.persist(e);
 		});
 		System.out.println("finished creating drivers");
 		return drivers;
