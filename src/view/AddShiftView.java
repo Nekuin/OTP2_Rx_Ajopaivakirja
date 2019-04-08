@@ -16,6 +16,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import model.Cargo;
 import model.Client;
 import model.DrivingShift;
@@ -40,6 +41,9 @@ public class AddShiftView implements ViewModule {
 
     @FXML
     private Button cancel_button;
+    
+    @FXML
+    private VBox listItem_remove_box;
     
     private BorderPane root;
     private ObservableList<Cargo> selectedCargoList;
@@ -88,9 +92,27 @@ public class AddShiftView implements ViewModule {
 				}
 				Platform.runLater(() -> {
 					cargo_combobox.getSelectionModel().clearSelection();
+					createRemoveButton(selected);
 				});
 			}
 		});
+	}
+	
+	private void createRemoveButton(Cargo cargo) {
+		Button button = new Button("X");
+		//mimic cell height
+		button.setMaxHeight(23);
+		button.setPrefHeight(23);
+		button.setMinHeight(23);
+		//create onAction listener
+		button.setOnAction(e -> {
+			//remove self
+			listItem_remove_box.getChildren().remove(button);
+			//remove cargo from list
+			selectedCargoList.remove(cargo);
+		});
+		//add button next to the item on the list
+		listItem_remove_box.getChildren().add(button);
 	}
 	
 	private void populateClientBox() {

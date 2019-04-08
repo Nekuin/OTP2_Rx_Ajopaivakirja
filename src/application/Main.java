@@ -300,7 +300,7 @@ public class Main extends Application implements IView {
 	
 	private Collection<Cargo> createTestCargo(){
 		Collection<Cargo> cargo = new ArrayList<>();
-		for(int i = 0; i < 2; i++) {
+		for(int i = 0; i < 7; i++) {
 			cargo.add(new Cargo(i+1500, true));
 		}
 		cargo.forEach(controller::createCargo);

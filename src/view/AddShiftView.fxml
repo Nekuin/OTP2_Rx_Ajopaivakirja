@@ -11,7 +11,6 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/10" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <VBox alignment="CENTER" BorderPane.alignment="CENTER">
@@ -24,17 +23,18 @@
                   <Insets bottom="20.0" />
                </VBox.margin>
             </Text>
-            <HBox alignment="CENTER" prefHeight="100.0">
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <VBox prefWidth="200.0">
+                  <ComboBox fx:id="cargo_combobox" prefWidth="200.0" promptText="Cargo" />
+                  <HBox alignment="CENTER" prefHeight="200.0">
                      <children>
-                        <ComboBox fx:id="cargo_combobox" prefWidth="200.0" promptText="Cargo" />
-                        <ListView fx:id="cargo_listView" opacity="0.0" prefHeight="200.0" prefWidth="200.0" />
+                        <ListView fx:id="cargo_listView" opacity="0.0" prefWidth="200.0" />
+                        <VBox fx:id="listItem_remove_box" prefWidth="25.0" />
                      </children>
-                  </VBox>
+                  </HBox>
+                  <ComboBox fx:id="client_combobox" prefWidth="200.0" promptText="Client" />
                </children>
-            </HBox>
-            <ComboBox fx:id="client_combobox" prefWidth="200.0" promptText="Client" />
+            </VBox>
             <AnchorPane prefHeight="50.0" prefWidth="200.0">
                <children>
                   <Button fx:id="confirm_button" layoutX="112.0" layoutY="13.0" mnemonicParsing="false" text="Confirm" />
