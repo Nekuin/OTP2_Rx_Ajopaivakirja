@@ -52,7 +52,7 @@ public class LandingView implements ViewModule {
 	 * Constructor which takes a Controller as a parameter
 	 * @param controller instance of Controller
 	 */
-	public LandingView(IController controller, Main main) {
+	public LandingView(IController controller, IView main) {
 		this.main = main;
 		strings = Strings.getInstance();
 		this.controller = controller;

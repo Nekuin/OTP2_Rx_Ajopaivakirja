@@ -120,6 +120,7 @@ public class Main extends Application implements IView {
 		}
 	}
 	
+	@Override
 	public void createViews() {
 		
 		//create and set driver view
