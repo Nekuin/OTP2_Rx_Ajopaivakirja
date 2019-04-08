@@ -301,7 +301,7 @@ public class Main extends Application implements IView {
 	private Collection<Cargo> createTestCargo(){
 		Collection<Cargo> cargo = new ArrayList<>();
 		for(int i = 0; i < 2; i++) {
-			cargo.add(new Cargo(i+3));
+			cargo.add(new Cargo(i+1500, true));
 		}
 		cargo.forEach(controller::createCargo);
 		return cargo;
