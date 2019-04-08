@@ -105,8 +105,12 @@ public class UpdateShiftView implements ViewModule {
 		cargo_combobox.setOnAction(e -> {
 			Cargo selected = cargo_combobox.getSelectionModel().getSelectedItem();
 			if(selected != null) {
+				//add cargo to the ListView
 				selectedCargoList.add(selected);
+				//add cargo to the shift object
 				shift.addCargo(selected);
+				//set shift to the cargo object
+				selected.setShift(shift);
 				if(cargo_listView.getOpacity() < 1) {
 					cargo_listView.setOpacity(1);
 				}
@@ -116,6 +120,11 @@ public class UpdateShiftView implements ViewModule {
 				});
 			}
 		});
+	}
+	
+	private void updateAvailableCargo() {
+		cargo_combobox.getItems().clear();
+		cargo_combobox.getItems().addAll(controller.readAllUnassignedCargo());
 	}
 	
 	private void createRemoveButton(Cargo cargo) {
@@ -132,6 +141,12 @@ public class UpdateShiftView implements ViewModule {
 			selectedCargoList.remove(cargo);
 			//remove cargo from shift object
 			shift.getCargo().remove(cargo);
+			//remove shift from cargo object
+			cargo.setShift(null);
+			//update cargo in the database
+			controller.updateCargo(cargo);
+			//update combobox list
+			updateAvailableCargo();
 		});
 		//add button next to the item on the list
 		listItem_remove_box.getChildren().add(button);

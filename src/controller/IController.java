@@ -192,4 +192,10 @@ public interface IController {
 	 * Returns a list of all Cargo where shift is null
 	 */
 	public List<Cargo> readAllUnassignedCargo();
+	
+	/**
+	 * Update cargo in the database
+	 * @param cargo
+	 */
+	public void updateCargo(Cargo cargo);
 }

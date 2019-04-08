@@ -214,6 +214,11 @@ public class Controller implements IController{
 				.filter(cargo -> cargo.getShift() == null)
 				.collect(Collectors.toList());
 	}
+
+	@Override
+	public void updateCargo(Cargo cargo) {
+		cargoAO.update(cargo);
+	}
 	
 	
 
