@@ -88,13 +88,17 @@ public class AddShiftView implements ViewModule {
 		cargo_combobox.setOnAction(e -> {
 			Cargo selected = cargo_combobox.getSelectionModel().getSelectedItem();
 			if(selected != null) {
-				selectedCargoList.add(selected);
+				//block duplicate entries
+				if(!selectedCargoList.contains(selected)) {
+					selectedCargoList.add(selected);
+					createRemoveButton(selected);
+				}
 				if(cargo_listView.getOpacity() < 1) {
 					cargo_listView.setOpacity(1);
 				}
 				Platform.runLater(() -> {
 					cargo_combobox.getSelectionModel().clearSelection();
-					createRemoveButton(selected);
+					
 				});
 			}
 		});
