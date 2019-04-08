@@ -67,7 +67,7 @@ public class SuperiorShiftView implements ViewModule, UndoObserver {
 			DrivingShift shift = shiftList.getSelectionModel().getSelectedItem();
 			if(shift != null) {
 				UndoPopup p = new UndoPopup(controller, shift, this);
-				controller.showUndoMessage(p.getView());
+				p.showMessage();
 				shifts.remove(shift);
 			}
 		});

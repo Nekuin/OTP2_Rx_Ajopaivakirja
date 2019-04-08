@@ -31,6 +31,7 @@ public class LandingView implements ViewModule {
 	private BorderPane bpane;
 	private int logged_in_id;
 	private Strings strings;
+	private IView main;
 	
 	@FXML
 	private Button login_button;
@@ -51,7 +52,8 @@ public class LandingView implements ViewModule {
 	 * Constructor which takes a Controller as a parameter
 	 * @param controller instance of Controller
 	 */
-	public LandingView(IController controller) {
+	public LandingView(IController controller, IView main) {
+		this.main = main;
 		strings = Strings.getInstance();
 		this.controller = controller;
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("Landing_View.fxml"), strings.getBundle());
@@ -83,10 +85,12 @@ public class LandingView implements ViewModule {
 		
 		FI_button.setOnAction(e -> {
 			strings.changeBundle(new Locale("fi", "FI"));
+			main.createViews();
 		});
 		
 		EN_button.setOnAction(e ->{
 			strings.changeBundle(new Locale("en", "US"));
+			main.createViews();
 		});
 		
 		shutdown_button.setOnAction(e ->{

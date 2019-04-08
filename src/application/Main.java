@@ -11,6 +11,7 @@ import controller.Controller;
 import controller.IController;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressIndicator;
@@ -120,7 +121,8 @@ public class Main extends Application implements IView {
 		}
 	}
 	
-	private void createViews() {
+	@Override
+	public void createViews() {
 		
 		//create and set driver view
 		this.dv = new DriverView(this.controller);
@@ -145,7 +147,7 @@ public class Main extends Application implements IView {
 		});
 		
 		//create and set landing view
-		this.landing = new LandingView(this.controller);
+		this.landing = new LandingView(this.controller, this);
 		root.setCenter(landing.getView());
 		
 		//create hr view
@@ -158,23 +160,10 @@ public class Main extends Application implements IView {
 			Main.LOGGED_IN_ID = 0;
 			this.root.setTop(null);
 		});
-		
-		//create a button to change the language to Finnish
-		Button fi = new Button("FI");
-		fi.setOnAction(e -> {
-			strings.changeBundle(new Locale("fi", "FI"));
-			createViews();
-		});
-		
-		//create a button to change the language to English
-		Button us = new Button("US");
-		us.setOnAction(e -> {
-			strings.changeBundle(new Locale("en", "US"));
-			createViews();
-		});
-		
+				
 		bottomBox = new HBox();
-		bottomBox.getChildren().addAll(logout, fi, us);
+		bottomBox.setPadding(new Insets(0, 50, 50, 50));
+		bottomBox.getChildren().addAll(logout);
 		root.setBottom(bottomBox);
 		
 		//create SuperiorView
@@ -355,4 +344,5 @@ public class Main extends Application implements IView {
 	public void resetRootBottom() {
 		root.setBottom(bottomBox);
 	}
+
 }
