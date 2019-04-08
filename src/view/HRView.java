@@ -33,6 +33,11 @@ public class HRView implements ViewModule {
 	//test
 	private TextField driverNameTextF;
 	private TextField driversLicenseTextF;
+	
+	String cssLayoutDriverBox = "-fx-border-color: black;\n" +
+            "-fx-border-insets: 5;\n" +
+            "-fx-border-width: 2;\n" +
+            "-fx-border-style: solid;\n";
 
 	/**
 	 * Constructor which takes a controller as parameter
@@ -84,8 +89,11 @@ public class HRView implements ViewModule {
 		
 		Text driverInfo = new Text("Driver Info: ");
 		TextField name = new TextField("");
-		TextField driversLicense = new TextField("");;
-		TextField driverID = new TextField("");;
+		name.setPromptText("Name");
+		TextField driversLicense = new TextField("");
+		driversLicense.setPromptText("Drivers license");
+		TextField driverID = new TextField("");
+		driverID.setPromptText("Employee ID");
 		
 		HBox hazardousBox = new HBox();
 		Text hazardousText = new Text("Can drive hazardous: ");
@@ -119,7 +127,9 @@ public class HRView implements ViewModule {
 		driverBoxButtons.getChildren().addAll(updateDriver, deleteDriver);
 		
 		driverBox.getChildren().addAll(driverInfo, name, driverID, driversLicense, hazardousBox, driverBoxButtons);
-
+		
+		driverBox.setStyle(cssLayoutDriverBox);
+		
 		drivers = FXCollections.observableArrayList();
 		lv = new ListView<>();
 		lv.setMinWidth(300);
