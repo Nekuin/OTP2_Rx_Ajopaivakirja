@@ -29,13 +29,13 @@ public class UndoPopup implements ViewModule {
     private Button dismiss_button;
     
     private boolean userDismissed;
-    private Object o;
+    private Object removedObject;
     private UndoObserver observer;
 	
-	public UndoPopup(IController controller, Object o, UndoObserver caller) {
+	public UndoPopup(IController controller, Object removedObject, UndoObserver caller) {
 		this.controller = controller;
 		userDismissed = false;
-		this.o = o;
+		this.removedObject = removedObject;
 		observer = caller;
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("undo_msg.fxml"));
 		loader.setController(this);
@@ -45,7 +45,7 @@ public class UndoPopup implements ViewModule {
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
-		setup("Removed " + o.toString() + ", Undo?");
+		setup("Removed " + removedObject.toString() + ", Undo?");
 		startHideUndoTimer();
 	}
 	
@@ -54,15 +54,15 @@ public class UndoPopup implements ViewModule {
 		undo_button.setOnAction(e -> {
 			System.out.println("clicked undo");
 			//determine if the object is an Employee or something else
-			if(o instanceof Employee) {
+			if(removedObject instanceof Employee) {
 				System.out.println("employee detected");
 				//its possible we could just call controller.updateEmployee on all subclasses
 				//of Employee - not tested
-			} else if(o instanceof DrivingShift) {
+			} else if(removedObject instanceof DrivingShift) {
 				System.out.println("shift detected");
 				//you have to merge (re-attach), not create a new Entity
 				//thats why you call update and not create
-				controller.updateDrivingShift((DrivingShift)o);
+				controller.updateDrivingShift((DrivingShift)removedObject);
 			}
 			//clicking undo counts as "dismissing" the message
 			userDismissed = true;
@@ -104,16 +104,22 @@ public class UndoPopup implements ViewModule {
 	
 	private void removeFromDatabase() {
 		//determine type of the object
-		if(o instanceof Employee) {
-			controller.deleteEmployee((Employee)o);
-		} else if(o instanceof DrivingShift) {
-			controller.deleteShift((DrivingShift)o);
+		if(removedObject instanceof Employee) {
+			controller.deleteEmployee((Employee)removedObject);
+		} else if(removedObject instanceof DrivingShift) {
+			controller.deleteShift((DrivingShift)removedObject);
 		}
 	}
 	
 	private void setup(String message) {
 		undo_button.setText(message);
-		
+	}
+	
+	/**
+	 * Show the popup message
+	 */
+	public void showMessage() {
+		controller.showUndoMessage(getView());
 	}
 	
 	@Override
