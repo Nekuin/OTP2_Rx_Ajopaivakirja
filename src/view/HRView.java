@@ -150,16 +150,22 @@ public class HRView implements ViewModule {
 		return grid;
 	}
 	
+	/**
+	 * Modal for adding drivers
+	 * @return BorderPane
+	 */
 	public BorderPane handleAddDriver() {
 		
 		BorderPane modalPane = new BorderPane();
 		
+		//label
 		VBox labelBox = new VBox();
 		labelBox.setSpacing(30);
 		labelBox.setPadding(new Insets(30, 20, 20, 20));
 		Text label = new Text("Give new drivers information");
 		labelBox.getChildren().addAll(label);
 		
+		//drivers name
 		HBox driverNameBox = new HBox();
 		driverNameBox.setSpacing(20);
 		driverNameBox.setPadding(new Insets(20,20,20,20));
@@ -167,6 +173,7 @@ public class HRView implements ViewModule {
 		driverNameTextF = new TextField();
 		driverNameBox.getChildren().addAll(nameText, driverNameTextF);
 		
+		//drivers license
 		HBox driversLicenseBox = new HBox();
 		driversLicenseBox.setSpacing(20);
 		driversLicenseBox.setPadding(new Insets(20,20,20,20));
@@ -174,6 +181,7 @@ public class HRView implements ViewModule {
 		driversLicenseTextF = new TextField();
 		driversLicenseBox.getChildren().addAll(licenseText, driversLicenseTextF);
 		
+		//confirm button
 		Button addDriver = new Button("Confirm");
 		addDriver.setOnAction(e -> {
 			Driver d = new Driver(driverNameTextF.getText(), driversLicenseTextF.getText());
@@ -183,11 +191,13 @@ public class HRView implements ViewModule {
 			updateDrivers(this.controller.readAllDrivers());
 		});
 		
+		//cancel button
 		Button cancelButton = new Button("Cancel");
 		cancelButton.setOnAction(e -> {
 			((Node) e.getSource()).getScene().getWindow().hide();
 		});
 		
+		//button box
 		HBox buttons = new HBox();
 		buttons.setSpacing(30);
 		buttons.setPadding(new Insets(30,30,30,30));
