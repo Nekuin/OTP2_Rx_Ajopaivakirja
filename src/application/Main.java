@@ -120,7 +120,7 @@ public class Main extends Application implements IView {
 		}
 	}
 	
-	private void createViews() {
+	public void createViews() {
 		
 		//create and set driver view
 		this.dv = new DriverView(this.controller);
@@ -145,7 +145,7 @@ public class Main extends Application implements IView {
 		});
 		
 		//create and set landing view
-		this.landing = new LandingView(this.controller);
+		this.landing = new LandingView(this.controller, this);
 		root.setCenter(landing.getView());
 		
 		//create hr view
@@ -355,4 +355,5 @@ public class Main extends Application implements IView {
 	public void resetRootBottom() {
 		root.setBottom(bottomBox);
 	}
+
 }

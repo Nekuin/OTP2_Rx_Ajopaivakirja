@@ -13,4 +13,5 @@ public interface IView {
 	public void setShiftData(Collection<DrivingShift> shifts);
 	public void setUndoMessage(BorderPane root);
 	public void resetRootBottom();
+	public void createViews();
 }
