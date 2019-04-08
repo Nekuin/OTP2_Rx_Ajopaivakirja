@@ -11,7 +11,12 @@ import javafx.scene.layout.BorderPane;
 import model.DrivingShift;
 import model.Employee;
 
-public class UndoPopup {
+/**
+ * Popup style module that handles the undo action
+ * @author Nekuin
+ *
+ */
+public class UndoPopup implements ViewModule {
 	
 	private IController controller;
 	
@@ -111,6 +116,7 @@ public class UndoPopup {
 		
 	}
 	
+	@Override
 	public BorderPane getView() {
 		return root;
 	}

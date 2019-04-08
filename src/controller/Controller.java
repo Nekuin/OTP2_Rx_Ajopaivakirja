@@ -1,6 +1,5 @@
 package controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -8,6 +7,11 @@ import javafx.scene.layout.BorderPane;
 import model.*;
 import view.IView;
 
+/**
+ * 
+ * @author Nekuin
+ *
+ */
 public class Controller implements IController{
 	
 	private IView view;
