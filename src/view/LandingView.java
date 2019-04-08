@@ -38,6 +38,15 @@ public class LandingView implements ViewModule {
 	@FXML
 	private TextField login_field;
 	
+	@FXML
+	private Button FI_button;
+	
+	@FXML
+	private Button EN_button;
+	
+	@FXML
+	private Button shutdown_button;
+	
 	/**
 	 * Constructor which takes a Controller as a parameter
 	 * @param controller instance of Controller
@@ -70,6 +79,18 @@ public class LandingView implements ViewModule {
 				login(getLoginID());
 				login_field.setText("");
 			}
+		});
+		
+		FI_button.setOnAction(e -> {
+			strings.changeBundle(new Locale("fi", "FI"));
+		});
+		
+		EN_button.setOnAction(e ->{
+			strings.changeBundle(new Locale("en", "US"));
+		});
+		
+		shutdown_button.setOnAction(e ->{
+			System.exit(1);
 		});
 	}
 	
@@ -161,11 +182,6 @@ public class LandingView implements ViewModule {
 		});
 		
 	}
-	
-
-	@Override
-	public void setNavBar(NavBar navBar) {
-	}
 
 	/**
 	 * Get the whole LandingView module
@@ -179,5 +195,4 @@ public class LandingView implements ViewModule {
 	public int getLoggedInid() {
 		return logged_in_id;
 	}
-	
 }

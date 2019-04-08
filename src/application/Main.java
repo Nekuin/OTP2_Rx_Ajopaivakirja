@@ -37,6 +37,9 @@ public class Main extends Application implements IView {
 	private ViewModule supView;
 	private ViewModule supEmpView;
 	private IController controller;
+	private NavBar supNav;
+	private NavBar driverNav;
+	private HBox bottomBox;
 	private EntityManager entityManager;
 	private boolean startUpFinish = false;
 	private Strings strings;
@@ -58,6 +61,7 @@ public class Main extends Application implements IView {
 			createTestVehicles();
 			createTestHRManagers();
 			createSuperiors();
+			createTestCargo();
 			
 			startUpFinish = true;
 		}).start();
@@ -83,7 +87,7 @@ public class Main extends Application implements IView {
 			p.setMaxSize(50, 50);
 			root.setCenter(p);
 			
-			Scene scene = new Scene(root,720,600);
+			Scene scene = new Scene(root,1024,768);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			
 			primaryStage.setOnCloseRequest(e -> {
@@ -132,18 +136,13 @@ public class Main extends Application implements IView {
 		Button driverResButton = new Button(strings.getString("driver_reserve_nav_text"));
 		Button driverViewButton = new Button(strings.getString("driver_report_nav_text"));
 		
-		NavBar nav = new NavBar(this, driverResButton, driverViewButton);
+		driverNav = new NavBar(this, driverResButton, driverViewButton);
 		driverResButton.setOnAction(e -> {
 			root.setCenter(driverRes.getView());
-			driverRes.setNavBar(nav);
 		});
 		driverViewButton.setOnAction(e -> {
 			root.setCenter(this.personalShift.getView());
-			personalShift.setNavBar(nav);
 		});
-		
-		
-		personalShift.setNavBar(nav);
 		
 		//create and set landing view
 		this.landing = new LandingView(this.controller);
@@ -157,6 +156,7 @@ public class Main extends Application implements IView {
 		logout.setOnAction(e -> {
 			this.root.setCenter(landing.getView());
 			Main.LOGGED_IN_ID = 0;
+			this.root.setTop(null);
 		});
 		
 		//create a button to change the language to Finnish
@@ -173,9 +173,9 @@ public class Main extends Application implements IView {
 			createViews();
 		});
 		
-		HBox hbox = new HBox();
-		hbox.getChildren().addAll(logout, fi, us);
-		this.root.setBottom(hbox);
+		bottomBox = new HBox();
+		bottomBox.getChildren().addAll(logout, fi, us);
+		root.setBottom(bottomBox);
 		
 		//create SuperiorView
 		this.supView = new SuperiorView(this.controller);
@@ -192,24 +192,18 @@ public class Main extends Application implements IView {
 		Button supShiftViewButton = new Button("Superior Shifts");
 		
 		//create navBar for Superior
-		NavBar supNav = new NavBar(this, supViewButton, supEmpViewButton, supShiftViewButton);
+		supNav = new NavBar(this, supViewButton, supEmpViewButton, supShiftViewButton);
 		supEmpViewButton.setOnAction(e -> {
 			root.setCenter(supEmpView.getView());
-			supEmpView.setNavBar(supNav);
 		});
 		
 		supViewButton.setOnAction(e -> {
 			root.setCenter(supView.getView());
-			supView.setNavBar(supNav);
 		});
 		
 		supShiftViewButton.setOnAction(e -> {
 			root.setCenter(supShiftView.getView());
-			supShiftView.setNavBar(supNav);
 		});
-		
-		//set navBar for SuperiorView
-		supView.setNavBar(supNav);
 		
 	}
 	
@@ -302,6 +296,15 @@ public class Main extends Application implements IView {
 
 		return shifts;
 	}
+	
+	private Collection<Cargo> createTestCargo(){
+		Collection<Cargo> cargo = new ArrayList<>();
+		for(int i = 0; i < 2; i++) {
+			cargo.add(new Cargo(i+3));
+		}
+		cargo.forEach(controller::createCargo);
+		return cargo;
+	}
 
 	/**
 	 * Update user interface with a Collection of new drivers
@@ -328,11 +331,28 @@ public class Main extends Application implements IView {
 			this.root.setCenter(this.driverRes.getView());
 			((PersonalShiftView)this.personalShift).updateShifts(shifts);
 			this.root.setCenter(this.personalShift.getView());
+			this.root.setTop(driverNav.getNavBar());
 		} else if(view == Main.HR_VIEW) {
 			this.hr.updateDrivers(this.controller.readAllDrivers());
 			this.root.setCenter(this.hr.getView());
 		} else if(view == Main.SUPERIOR_VIEW) {
 			this.root.setCenter(this.supView.getView());
+			this.root.setTop(supNav.getNavBar());
 		}
+	}
+
+
+	@Override
+	public void setUndoMessage(BorderPane root) {
+		this.root.setBottom(root);
+	}
+
+
+	/**
+	 * Set logout and language buttons back to the root
+	 */
+	@Override
+	public void resetRootBottom() {
+		root.setBottom(bottomBox);
 	}
 }

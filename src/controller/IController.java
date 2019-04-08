@@ -2,6 +2,7 @@ package controller;
 
 import java.util.List;
 
+import javafx.scene.layout.BorderPane;
 import model.*;
 
 /**
@@ -128,9 +129,67 @@ public interface IController {
 	 */
 	public void updateVehicle(Vehicle vehicle);
 	
+	/**
+	 * Update an Employee in the database
+	 * @param employee instance of Employee
+	 */
 	public void updateEmployee(Employee employee);
 	
+	/**
+	 * Returns a list of all Employees in the database
+	 * @return List of Employee objects
+	 */
 	public List<Employee> readAllEmployees();
 	
+	/**
+	 * Delete an Employee from the database
+	 * @param employee instance of Employee
+	 */
 	public void deleteEmployee(Employee employee);
+	
+	/**
+	 * Show undo option to the user after i.e. deleting a Driving shift
+	 * @param root Root of the UndoPopup object
+	 */
+	public void showUndoMessage(BorderPane root);
+	
+	/**
+	 * Set Logout and language buttons back to the bottom of the root found in Main
+	 */
+	public void resetRootBottom();
+	
+	/**
+	 * Create an Employee
+	 * @param e instance of Employee
+	 */
+	public void createEmployee(Employee e);
+	
+	/**
+	 * Delete a DrivingShift from the database
+	 * @param shift instance of DrivingShift
+	 */
+	public void deleteShift(DrivingShift shift);
+	
+	/**
+	 * Returns a list of all Cargo in the database
+	 * @return List of Cargo objects
+	 */
+	public List<Cargo> readAllCargo();
+	
+	/**
+	 * Returns a list of all Clients in the database
+	 * @return List of Client objects
+	 */
+	public List<Client> readAllClients();
+	
+	/**
+	 * Create a Cargo
+	 * @param cargo instance of Cargo
+	 */
+	public void createCargo(Cargo cargo);
+	
+	/**
+	 * Returns a list of all Cargo where shift is null
+	 */
+	public List<Cargo> readAllUnassignedCargo();
 }

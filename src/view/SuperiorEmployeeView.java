@@ -67,11 +67,6 @@ public class SuperiorEmployeeView implements ViewModule {
 	public BorderPane getView() {
 		return this.borderPane;
 	}
-	
-	@Override
-	public void setNavBar(NavBar navBar) {
-		this.borderPane.setTop(navBar.getNavBar());
-	}
 
 	private ListView<Employee> getEmployeeList() {
 		this.employees = FXCollections.observableArrayList();

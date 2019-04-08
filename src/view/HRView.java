@@ -165,10 +165,6 @@ public class HRView implements ViewModule {
 		this.drivers.addAll(drivers);
 	}
 
-	@Override
-	public void setNavBar(NavBar navBar) {
-	}
-
 	/**
 	 * Get the whole HRView module
 	 * @return BorderPane
@@ -177,5 +173,4 @@ public class HRView implements ViewModule {
 	public BorderPane getView() {
 		return this.bpane;
 	}
-
 }

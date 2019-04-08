@@ -3,6 +3,8 @@ package controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import javafx.scene.layout.BorderPane;
 import model.*;
 import view.IView;
 
@@ -31,6 +33,8 @@ public class Controller implements IController{
 		this.vehicleAO = new Dao<>(model.Vehicle.class);
 		this.superiorAO = new Dao<>(model.Superior.class);
 		this.empAo = new Dao<>(model.Employee.class);
+		this.cargoAO = new Dao<>(model.Cargo.class);
+		this.clientAO = new Dao<>(model.Client.class);
 	}
 	
 	@Override
@@ -107,19 +111,13 @@ public class Controller implements IController{
 	
 	@Override
 	public List<DrivingShift> readGoodDrivingShifts(Driver driver) {
-		List<DrivingShift> shifts = this.drivingShiftAO.getAll();
-		System.out.println("shifts: " + shifts);
-		List<DrivingShift> goodShifts = new ArrayList<>();
-		
 		if(!driver.getCanDriveHazardous()) {
-			goodShifts = shifts.stream().filter(cargoList -> cargoList.getCargo()
-					.stream().anyMatch(e -> e.isHazardous())).collect(Collectors.toList());
-			
+			return readAllDrivingShifts().stream()
+					.filter(cargoList -> cargoList.getCargo()
+					.stream().anyMatch(Cargo::isHazardous)).collect(Collectors.toList());
 		} else {
-			return shifts;
+			return readAllDrivingShifts();
 		}
-		
-		return goodShifts;
 	}
 	
 
@@ -170,6 +168,50 @@ public class Controller implements IController{
 	public void deleteEmployee(Employee employee) {
 		this.empAo.delete(employee);
 	}
+
+	@Override
+	public void showUndoMessage(BorderPane root) {
+		this.view.setUndoMessage(root);
+	}
+
+	@Override
+	public void resetRootBottom() {
+		view.resetRootBottom();
+	}
+
+	@Override
+	public void createEmployee(Employee e) {
+		this.empAo.create(e);
+	}
+
+	@Override
+	public void deleteShift(DrivingShift shift) {
+		this.drivingShiftAO.delete(shift);
+	}
+
+	@Override
+	public List<Cargo> readAllCargo() {
+		return this.cargoAO.getAll();
+	}
+
+	@Override
+	public List<Client> readAllClients() {
+		return this.clientAO.getAll();
+	}
+
+	@Override
+	public void createCargo(Cargo cargo) {
+		this.cargoAO.create(cargo);
+	}
+
+	@Override
+	public List<Cargo> readAllUnassignedCargo() {
+		return this.cargoAO.getAll().stream()
+				.filter(cargo -> cargo.getShift() == null)
+				.collect(Collectors.toList());
+	}
+	
+	
 
 
 }

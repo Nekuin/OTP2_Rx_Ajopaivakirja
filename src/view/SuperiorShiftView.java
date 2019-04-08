@@ -1,21 +1,31 @@
 package view;
 
 import java.io.IOException;
+import java.util.stream.Collectors;
 
 import controller.IController;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import model.DrivingShift;
 import util.Strings;
 
-public class SuperiorShiftView implements ViewModule {
+public class SuperiorShiftView implements ViewModule, UndoObserver {
 	
 	private BorderPane bpane;
 	private IController controller;
 	private Strings strings;
+	private ObservableList<DrivingShift> shifts;
 	
     @FXML
     private Button add_shift_button;
@@ -26,8 +36,11 @@ public class SuperiorShiftView implements ViewModule {
     @FXML
     private Button update_shift_button;
 
-    @FXML
+
     private ListView<DrivingShift> shiftList;
+    
+    @FXML
+    private VBox list_view_container;
 	
 	public SuperiorShiftView(IController controller) {
 		this.controller = controller;
@@ -40,23 +53,62 @@ public class SuperiorShiftView implements ViewModule {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		setup();
 	}
 	
 	@FXML
 	private void initialize() {
 		add_shift_button.setOnAction(e -> {
 			System.out.println("add shift");
+			showAddShiftStage(e);
+		});
+		
+		delete_shift_button.setOnAction(e -> {
+			DrivingShift shift = shiftList.getSelectionModel().getSelectedItem();
+			if(shift != null) {
+				UndoPopup p = new UndoPopup(controller, shift, this);
+				controller.showUndoMessage(p.getView());
+				shifts.remove(shift);
+			}
+		});
+		
+		update_shift_button.setOnAction(e -> {
+			updateShiftList();
+			
 		});
 	}
-
-	@Override
-	public void setNavBar(NavBar navBar) {
-		bpane.setTop(navBar.getNavBar());
+	
+	private void showAddShiftStage(ActionEvent e) {
+		Stage stage = new Stage();
+		stage.setScene(new Scene(new AddShiftView(controller).getView()));
+		stage.setTitle("Add new Driving shift");
+		stage.initModality(Modality.APPLICATION_MODAL);
+		stage.initOwner(((Node) e.getSource()).getScene().getWindow());
+		stage.show();
+	}
+	
+	private void setup() {
+		shiftList = new ListView<>();
+		shifts = FXCollections.observableArrayList();
+		shiftList.setItems(shifts);
+		updateShiftList();
+		list_view_container.getChildren().add(shiftList);
+	}
+	
+	
+	private void updateShiftList() {
+		shifts.clear();
+		shifts.addAll(controller.readAllDrivingShifts());
 	}
 
 	@Override
 	public BorderPane getView() {
 		return bpane;
+	}
+
+	@Override
+	public void notifyUndo() {
+		updateShiftList();
 	}
 	
 }
