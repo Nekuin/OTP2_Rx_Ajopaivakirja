@@ -20,7 +20,7 @@ import javafx.stage.Stage;
 import model.DrivingShift;
 import util.Strings;
 
-public class SuperiorShiftView implements ViewModule, UndoObserver {
+public class SuperiorShiftView implements ViewModule, UndoObserver, SubmitObserver {
 	
 	private BorderPane bpane;
 	private IController controller;
@@ -73,13 +73,23 @@ public class SuperiorShiftView implements ViewModule, UndoObserver {
 		});
 		
 		update_shift_button.setOnAction(e -> {
-			updateShiftList();
+			DrivingShift shift = shiftList.getSelectionModel().getSelectedItem();
+			showUpdateShiftStage(e, shift);
 		});
+	}
+	
+	private void showUpdateShiftStage(ActionEvent e, DrivingShift shift) {
+		Stage stage = new Stage();
+		stage.setScene(new Scene(new UpdateShiftView(controller, shift, this).getView()));
+		stage.setTitle("Update Driving shift");
+		stage.initModality(Modality.APPLICATION_MODAL);
+		stage.initOwner(((Node) e.getSource()).getScene().getWindow());
+		stage.show();
 	}
 	
 	private void showAddShiftStage(ActionEvent e) {
 		Stage stage = new Stage();
-		stage.setScene(new Scene(new AddShiftView(controller).getView()));
+		stage.setScene(new Scene(new AddShiftView(controller, this).getView()));
 		stage.setTitle("Add new Driving shift");
 		stage.initModality(Modality.APPLICATION_MODAL);
 		stage.initOwner(((Node) e.getSource()).getScene().getWindow());
@@ -107,6 +117,11 @@ public class SuperiorShiftView implements ViewModule, UndoObserver {
 
 	@Override
 	public void notifyUndo() {
+		updateShiftList();
+	}
+
+	@Override
+	public void notifyListener() {
 		updateShiftList();
 	}
 	

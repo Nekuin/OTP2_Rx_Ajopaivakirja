@@ -1,8 +1,6 @@
 package view;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import controller.IController;
 import javafx.application.Platform;
@@ -22,7 +20,7 @@ import model.Client;
 import model.DrivingShift;
 import util.Strings;
 
-public class AddShiftView implements ViewModule {
+public class UpdateShiftView implements ViewModule {
 	
 	private IController controller;
 	private Strings strings;
@@ -47,15 +45,17 @@ public class AddShiftView implements ViewModule {
     
     private BorderPane root;
     private ObservableList<Cargo> selectedCargoList;
+    private DrivingShift shift;
     private SubmitObserver observer;
 	
-	public AddShiftView(IController controller, SubmitObserver observer) {
+	public UpdateShiftView(IController controller, DrivingShift shift, SubmitObserver observer) {
 		this.controller = controller;
 		this.strings = Strings.getInstance();
+		this.shift = shift;
 		this.observer = observer;
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("AddShiftView.fxml"), strings.getBundle());
-		loader.setController(this);
 		
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("UpdateShiftView.fxml"), strings.getBundle());
+		loader.setController(this);
 		try {
 			loader.load();
 		} catch (IOException e) {
@@ -76,11 +76,28 @@ public class AddShiftView implements ViewModule {
 		
 		populateCargoBox();
 		populateClientBox();
-		
 	}
-	
+
+	private void populateClientBox() {
+		ObservableList<Client> clientList = FXCollections.observableArrayList();
+		clientList.addAll(controller.readAllClients());
+		client_combobox.setItems(clientList);
+		//default the selection to the client that is already used in shift
+		client_combobox.getSelectionModel().select(shift.getClient());
+		client_combobox.setOnAction(e -> {
+			Client selected = client_combobox.getSelectionModel().getSelectedItem();
+			if(selected != null) {
+				shift.setClient(selected);
+			}
+		});
+	}
+
 	private void populateCargoBox() {
 		selectedCargoList = FXCollections.observableArrayList();
+		shift.getCargo().forEach(e -> {
+			selectedCargoList.add(e);
+			createRemoveButton(e);
+		});
 		cargo_listView.setItems(selectedCargoList);
 		ObservableList<Cargo> cargoList = FXCollections.observableArrayList();
 		cargoList.addAll(controller.readAllUnassignedCargo());
@@ -89,6 +106,7 @@ public class AddShiftView implements ViewModule {
 			Cargo selected = cargo_combobox.getSelectionModel().getSelectedItem();
 			if(selected != null) {
 				selectedCargoList.add(selected);
+				shift.addCargo(selected);
 				if(cargo_listView.getOpacity() < 1) {
 					cargo_listView.setOpacity(1);
 				}
@@ -112,35 +130,14 @@ public class AddShiftView implements ViewModule {
 			listItem_remove_box.getChildren().remove(button);
 			//remove cargo from list
 			selectedCargoList.remove(cargo);
+			//remove cargo from shift object
+			shift.getCargo().remove(cargo);
 		});
 		//add button next to the item on the list
 		listItem_remove_box.getChildren().add(button);
 	}
 	
-	private void populateClientBox() {
-		ObservableList<Client> clientList = FXCollections.observableArrayList();
-		clientList.addAll(controller.readAllClients());
-		client_combobox.setItems(clientList);
-	}
-	
 	private void confirmAction(ActionEvent event) {
-		List<Cargo> cargo = selectedCargoList.stream().collect(Collectors.toList());
-		Client client = client_combobox.getSelectionModel().getSelectedItem();
-		if(client == null) {
-			System.out.println("no client");
-			return;
-		}
-		if(cargo.size() == 0) {
-			System.out.println("no cargo");
-			return;
-		}
-		DrivingShift shift = new DrivingShift();
-		controller.createDrivingShift(shift);
-		cargo.forEach(c -> {
-			shift.addCargo(c);
-			c.setShift(shift);
-		});
-		shift.setClient(client);
 		controller.updateDrivingShift(shift);
 		observer.notifyListener();
 		((Node) event.getSource()).getScene().getWindow().hide();
@@ -150,6 +147,5 @@ public class AddShiftView implements ViewModule {
 	public BorderPane getView() {
 		return root;
 	}
-	
-	
+
 }
