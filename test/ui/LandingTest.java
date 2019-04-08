@@ -44,7 +44,7 @@ public class LandingTest {
 		strings.changeBundle(new Locale("fi", "FI"));
 		BorderPane root = new BorderPane();
 		controller = new Controller(null);
-		landing = new LandingView(controller);
+		landing = new LandingView(controller, null);
 		
 		root.setCenter(landing.getView());
 		Scene scene = new Scene(root, 400, 400);
