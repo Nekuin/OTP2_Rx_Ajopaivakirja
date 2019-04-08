@@ -87,7 +87,7 @@ public class Main extends Application implements IView {
 			p.setMaxSize(50, 50);
 			root.setCenter(p);
 			
-			Scene scene = new Scene(root,720,600);
+			Scene scene = new Scene(root,1024,768);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			
 			primaryStage.setOnCloseRequest(e -> {
