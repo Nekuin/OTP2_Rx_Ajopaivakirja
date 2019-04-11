@@ -45,6 +45,9 @@ public class DriverView implements ViewModule{
 
 	@FXML
 	private TableView<DrivingShift> reserve_tableview;
+	
+	@FXML
+	private TableView<DrivingShift> report_tableview;
 
 	@FXML
 	private TableColumn<DrivingShift, String> shift_time;
@@ -88,8 +91,10 @@ public class DriverView implements ViewModule{
 			unassignShift();
 		});
 		
-		//shift_time.setCellValueFactory(new PropertyValueFactory<DrivingShift, String>(clicked.getStartTime()));
-		//customer_name.setCellValueFactory(new PropertyValueFactory<DrivingShift, String>(clicked.getClient().getName()));
+		//shift_time.setCellValueFactory(new PropertyValueFactory<DrivingShift, String>(""));
+		//customer_name.setCellValueFactory(new PropertyValueFactory<DrivingShift, String>("name"));
+	
+		report_tableview.setItems(shifts);
 		reserve_tableview.setItems(getUpdatetdShifts());
 
 	}
@@ -126,7 +131,6 @@ public class DriverView implements ViewModule{
 
 	public void updateDriver() {
 		this.driver = this.controller.readDriver(Main.LOGGED_IN_ID);
-
 	}
 
 	@Override
