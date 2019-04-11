@@ -51,6 +51,9 @@ public class DriverView implements ViewModule{
 
 	@FXML
 	private TableView<DrivingShift> reserve_tableview;
+	
+	@FXML
+	private TableView<DrivingShift> report_tableview;
 
 	@FXML
 	private TableColumn<DrivingShift, String> shift_time;
@@ -149,7 +152,6 @@ public class DriverView implements ViewModule{
 
 	public void updateDriver() {
 		this.driver = this.controller.readDriver(Main.LOGGED_IN_ID);
-
 	}
 
 	@Override

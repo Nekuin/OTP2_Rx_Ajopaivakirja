@@ -51,7 +51,7 @@
                                     <Label layoutX="10.0" layoutY="10.0" text="%customer_name" />
                                     <Label layoutX="10.0" layoutY="10.0" text="%shift_id" />
                                     <Label layoutX="10.0" layoutY="28.0" text="%cargo_text" />
-                                    <Label layoutX="10.0" layoutY="45.0" text="%time_text" />
+                                    <Label layoutX="10.0" layoutY="45.0" text="%time_ttext" />
                                     <Button fx:id="reserve_button" mnemonicParsing="false" text="%reserve_button" wrapText="true">
                                        <VBox.margin>
                                           <Insets />
@@ -87,7 +87,7 @@
                               </Label>
                            </top>
                            <left>
-                              <TableView prefHeight="500.0" prefWidth="400.0" BorderPane.alignment="CENTER">
+                              <TableView fx:id="report_tableview" prefHeight="500.0" prefWidth="400.0" BorderPane.alignment="CENTER">
                                 <columns>
                                     <TableColumn fx:id="time_info" minWidth="30.0" prefWidth="200.0" text="%time_info" />
                                     <TableColumn fx:id="customer_name" minWidth="30.0" prefWidth="200.0" text="%client_name" />
@@ -108,7 +108,7 @@
                                     <Label text="%customer_name" />
                                     <Label text="%shift_id" />
                                     <Label text="%cargo_text" />
-                                    <Label text="%time_text" />
+                                    <Label text="%time_ttext" />
                                     <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                                        <children>
                                           <Button fx:id="report_button" mnemonicParsing="false" text="%report_button" wrapText="true" />
