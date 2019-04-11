@@ -2,10 +2,13 @@ package view;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.ResourceBundle;
+
 import application.Main;
 import controller.IController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -13,6 +16,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
@@ -29,7 +33,7 @@ public class DriverView implements ViewModule{
 	private ObservableList<DrivingShift> shifts;
 	private Driver driver;
 	private Strings strings;
-
+	
 	@FXML
 	private Button reserve_button;
 
@@ -57,6 +61,7 @@ public class DriverView implements ViewModule{
 	private DrivingShift clicked;
 
 	public DriverView(IController controller) {
+		shifts = FXCollections.observableArrayList();
 		strings = Strings.getInstance();
 		this.controller = controller;
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("Driver_view.fxml"), strings.getBundle());
@@ -72,29 +77,51 @@ public class DriverView implements ViewModule{
 	@FXML
 	private void initialize() {
 		reserve_button.setOnAction(e -> {
-			Driver driver = this.driver;
-			DrivingShift shift = this.shiftListView.getSelectionModel().getSelectedItem();
-			System.out.println("[PH] assigning driver " + driver.getEmployeeID() + " to shift " + shift.getShiftID());
-			this.driverSelection.setText("");
-			this.shiftSelection.setText("");
-			this.controller.assignShift(driver, shift);
-			this.updateDriver();
+			assignShift(e);
 		});
 
 		report_button.setOnAction(e -> {
-				Stage stage = new Stage();
-				stage.setScene(new Scene(new ReportingView(controller, clicked).getReportingView()));
-				stage.setTitle("Report your shift");
-				stage.initModality(Modality.APPLICATION_MODAL);
-				stage.initOwner(((Node) e.getSource()).getScene().getWindow());
-				stage.show();
+			reportShift(e);
 		});
+		
+		unassign_button.setOnAction(e ->{
+			unassignShift();
+		});
+		
+		//shift_time.setCellValueFactory(new PropertyValueFactory<DrivingShift, String>(clicked.getStartTime()));
+		//customer_name.setCellValueFactory(new PropertyValueFactory<DrivingShift, String>(clicked.getClient().getName()));
+		reserve_tableview.setItems(getUpdatetdShifts());
 
 	}
+	
+	public void unassignShift() {
+		clicked.setShiftDriver(null);
+		//Listasta poisto samalla
+	}
 
-	public void updateShifts(Collection<DrivingShift> shifts) {
+	public ObservableList<DrivingShift> getUpdatetdShifts(){
 		this.shifts.clear();
-		this.shifts.addAll(shifts);
+		this.shifts.addAll(controller.readAllDrivingShifts());
+		return shifts;
+	}
+	
+	public void assignShift(ActionEvent e){
+		Driver driver = this.driver;
+		DrivingShift shift = this.shiftListView.getSelectionModel().getSelectedItem();
+		System.out.println("[PH] assigning driver " + driver.getEmployeeID() + " to shift " + shift.getShiftID());
+		this.driverSelection.setText("");
+		this.shiftSelection.setText("");
+		this.controller.assignShift(driver, shift);
+		this.updateDriver();
+	}
+	
+	public void reportShift(ActionEvent e) {
+		Stage stage = new Stage();
+		stage.setScene(new Scene(new ReportingView(controller, clicked).getReportingView()));
+		stage.setTitle("Report your shift");
+		stage.initModality(Modality.APPLICATION_MODAL);
+		stage.initOwner(((Node) e.getSource()).getScene().getWindow());
+		stage.show();
 	}
 
 	public void updateDriver() {

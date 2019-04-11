@@ -30,13 +30,13 @@
                               </Label>
                            </top>
                            <left>
-                              <TableView fx:id="reserve_tableview" prefHeight="295.0" prefWidth="436.0" BorderPane.alignment="CENTER">
+                              <TableView fx:id="reserve_tableview" prefHeight="500.0" prefWidth="400.0" BorderPane.alignment="CENTER">
                                 <columns>
-                                  <TableColumn fx:id="shift_time" minWidth="30.0" prefWidth="220.0" text="%time_info" />
-                                  <TableColumn fx:id="customer_name" minWidth="30.0" prefWidth="220.0" text="%client_name" />
+                                  <TableColumn fx:id="shift_time" minWidth="30.0" prefWidth="200.0" text="%time_info" />
+                                  <TableColumn fx:id="customer_name" minWidth="30.0" prefWidth="200.0" text="%client_name" />
                                 </columns>
                                  <BorderPane.margin>
-                                    <Insets bottom="20.0" left="20.0" />
+                                    <Insets bottom="20.0" left="50.0" />
                                  </BorderPane.margin>
                               </TableView>
                            </left>
@@ -45,7 +45,7 @@
                                  <children>
                                     <Label text="%drivingshift_info">
                                        <font>
-                                          <Font size="14.0" />
+                                          <Font size="16.0" />
                                        </font>
                                     </Label>
                                     <Label layoutX="10.0" layoutY="10.0" text="%customer_name" />
@@ -87,13 +87,13 @@
                               </Label>
                            </top>
                            <left>
-                              <TableView prefHeight="295.0" prefWidth="436.0" BorderPane.alignment="CENTER">
+                              <TableView prefHeight="500.0" prefWidth="400.0" BorderPane.alignment="CENTER">
                                 <columns>
-                                    <TableColumn fx:id="time_info" minWidth="30.0" prefWidth="220.0" text="%time_info" />
-                                    <TableColumn fx:id="customer_name" minWidth="30.0" prefWidth="220.0" text="%client_name" />
+                                    <TableColumn fx:id="time_info" minWidth="30.0" prefWidth="200.0" text="%time_info" />
+                                    <TableColumn fx:id="customer_name" minWidth="30.0" prefWidth="200.0" text="%client_name" />
                                 </columns>
                                  <BorderPane.margin>
-                                    <Insets bottom="20.0" left="20.0" />
+                                    <Insets bottom="20.0" left="50.0" />
                                  </BorderPane.margin>
                               </TableView>
                            </left>
@@ -102,7 +102,7 @@
                                  <children>
                                     <Label text="%drivingshift_info">
                                        <font>
-                                          <Font size="14.0" />
+                                          <Font size="16.0" />
                                        </font>
                                     </Label>
                                     <Label text="%customer_name" />
