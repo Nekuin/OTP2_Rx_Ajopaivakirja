@@ -326,13 +326,14 @@ public class Main extends Application implements IView {
 	@Override
 	public void changeView(int view) {
 		if(view == Main.DRIVER_VIEW) {
-			this.dv.updateDriver();
+			/*this.dv.updateDriver();
 			List<DrivingShift> shifts = this.controller.readGoodDrivingShifts(this.controller.readDriver(Main.LOGGED_IN_ID));
 			((DriverReserveView)this.driverRes).updateShiftList(shifts);
 			this.root.setCenter(this.driverRes.getView());
 			((PersonalShiftView)this.personalShift).updateShifts(shifts);
 			this.root.setCenter(this.personalShift.getView());
-			this.root.setTop(driverNav.getNavBar());
+			this.root.setTop(driverNav.getNavBar());*/
+			this.root.setCenter(this.dv.getView());
 		} else if(view == Main.HR_VIEW) {
 			this.hr.updateDrivers(this.controller.readAllDrivers());
 			this.root.setCenter(this.hr.getView());

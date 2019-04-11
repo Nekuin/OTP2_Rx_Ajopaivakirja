@@ -22,7 +22,7 @@ import model.DrivingShift;
 import util.Strings;
 import javafx.scene.Node;
 
-public class DriverView {
+public class DriverView implements ViewModule{
 
 	private IController controller;
 	private BorderPane bpane;
@@ -97,13 +97,14 @@ public class DriverView {
 		this.shifts.addAll(shifts);
 	}
 
-	public BorderPane getDriverView() {
-		return this.bpane;
-	}
-
 	public void updateDriver() {
 		this.driver = this.controller.readDriver(Main.LOGGED_IN_ID);
 
+	}
+
+	@Override
+	public BorderPane getView() {
+		return this.bpane;
 	}
 
 }
