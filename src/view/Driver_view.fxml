@@ -12,7 +12,6 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
 <BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <top>
@@ -67,9 +66,6 @@
                                  </BorderPane.margin>
                               </VBox>
                            </center>
-                           <bottom>
-                              <Text fx:id="driver_Info" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" BorderPane.alignment="CENTER" />
-                           </bottom>
                         </BorderPane>
                      </children>
                   </AnchorPane>
@@ -93,7 +89,7 @@
                            <left>
                               <TableView prefHeight="295.0" prefWidth="436.0" BorderPane.alignment="CENTER">
                                 <columns>
-                                    <TableColumn fx:id="shift_time" minWidth="30.0" prefWidth="220.0" text="%time_info" />
+                                    <TableColumn fx:id="time_info" minWidth="30.0" prefWidth="220.0" text="%time_info" />
                                     <TableColumn fx:id="customer_name" minWidth="30.0" prefWidth="220.0" text="%client_name" />
                                 </columns>
                                  <BorderPane.margin>
