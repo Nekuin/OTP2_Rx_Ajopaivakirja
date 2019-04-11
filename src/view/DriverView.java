@@ -6,6 +6,9 @@ import java.util.ResourceBundle;
 
 import application.Main;
 import controller.IController;
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,12 +18,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Callback;
+import model.Client;
 import model.Driver;
 import model.DrivingShift;
 import util.Strings;
@@ -88,9 +94,26 @@ public class DriverView implements ViewModule{
 			unassignShift();
 		});
 		
-		//shift_time.setCellValueFactory(new PropertyValueFactory<DrivingShift, String>(clicked.getStartTime()));
-		//customer_name.setCellValueFactory(new PropertyValueFactory<DrivingShift, String>(clicked.getClient().getName()));
+		//setup columns
+		TableColumn<DrivingShift, ?> clientCol = reserve_tableview.getColumns().get(1);
+		//"client" comes from DrivingShift instance variables
+		//the string HAS TO match one of them exactly
+		//client is row 56 in DrivingShift
+		clientCol.setCellValueFactory(new PropertyValueFactory<>("client"));
+		
+		TableColumn<DrivingShift, ?> timeCol = reserve_tableview.getColumns().get(0);
+		//startTime row 24 in DrivingShift
+		timeCol.setCellValueFactory(new PropertyValueFactory<>("startTime"));
 		reserve_tableview.setItems(getUpdatetdShifts());
+		
+		//example on click event - OnAction doesn't seem to exist in tables
+		reserve_tableview.setOnMouseClicked(e -> {
+			DrivingShift clicked = reserve_tableview.getSelectionModel().getSelectedItem();
+			if(clicked != null) {
+				System.out.println("clicked: " + clicked);
+			}
+		});
+		
 
 	}
 	
