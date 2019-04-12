@@ -195,7 +195,7 @@ public class ReportingView {
 					Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setTitle("Shift reported successfully");
 					alert.setHeaderText(null);
-					alert.setContentText("nShift ID:" + drivingShift.getShiftID() + "\nClient: " + drivingShift.getClient().getName());
+					alert.setContentText("Shift ID: " + drivingShift.getShiftID() + "\nClient: " + drivingShift.getClient().getName());
 					alert.showAndWait();
 					((Node) e.getSource()).getScene().getWindow().hide();
 				}
