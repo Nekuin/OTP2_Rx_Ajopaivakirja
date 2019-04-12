@@ -26,12 +26,6 @@ public class DrivingShift {
 	@Column(name="finishtime")
 	private String finishTime;
 	
-	@Column(name="shiftdriver")
-	private int shiftDriverID;
-	/*
-	@Column(name="cargoid")
-	private int cargoID;
-	*/
 	@Column(name="clientid")
 	private int clientID;
 	
@@ -142,7 +136,6 @@ public class DrivingShift {
 	 */
 	public void setShiftDriver(Driver shiftDriver) {
 		this.driver = shiftDriver;
-		this.shiftDriverID = shiftDriver.getEmployeeID();
 	}
 	
 	/**

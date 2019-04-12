@@ -92,6 +92,8 @@ public class DriverView implements ViewModule{
 		
 		unassign_button.setOnAction(e ->{
 			unassignShift();
+			report_tableview.setItems(getReservedShifts());
+			reserve_tableview.setItems(getAvailableShifts());
 		});
 		
 		//setup columns
@@ -153,8 +155,15 @@ public class DriverView implements ViewModule{
 	}
 	
 	private void unassignShift() {
-		clicked.setShiftDriver(null);
-		clicked.setShiftTaken(false);
+		DrivingShift selectedShift = report_tableview.getSelectionModel().getSelectedItem();
+		if(selectedShift == null) {
+			
+			return;
+		}
+		System.out.println("selected: " + selectedShift + " " + selectedShift.getShiftDriver());
+		driver.getShift().remove(selectedShift);
+		selectedShift.setShiftDriver(null);
+		selectedShift.setShiftTaken(false);
 		//Listasta poisto samalla
 		reserveShifts.remove(clicked);
 	}
@@ -179,6 +188,14 @@ public class DriverView implements ViewModule{
 	
 	
 	private void assignShift(ActionEvent e){
+		if(driver == null) {
+			System.out.println("driver was null");
+			return;
+		}
+		if(clicked == null) {
+			System.out.println("clicked was null (shift)");
+			return;
+		}
 		this.controller.assignShift(driver, clicked);
 		reserve_tableview.setItems(getAvailableShifts());
 	}
