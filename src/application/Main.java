@@ -127,17 +127,8 @@ public class Main extends Application implements IView {
 	@Override
 	public void createViews() {
 		
-		//create and set driver view
-		this.dv = new DriverView(this.controller);
-		
-		//create DriverReserveView
-		driverRes = new DriverReserveView(this.controller);
-		
-		//create PersonalShiftView
-		personalShift = new PersonalShiftView(this.controller);
-		
 		//navigation for Driver
-		createDriverNavBar();
+		//createDriverNavBar();
 		
 		//create and set landing view
 		this.landing = new LandingView(this.controller, this);
@@ -333,6 +324,9 @@ public class Main extends Application implements IView {
 			((PersonalShiftView)this.personalShift).updateShifts(shifts);
 			this.root.setCenter(this.personalShift.getView());
 			this.root.setTop(driverNav.getNavBar());*/
+			if(this.dv == null) {
+				this.dv = new DriverView(controller);
+			}
 			this.root.setCenter(this.dv.getView());
 		} else if(view == Main.HR_VIEW) {
 			this.hr.updateDrivers(this.controller.readAllDrivers());

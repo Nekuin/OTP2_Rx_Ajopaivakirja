@@ -1,6 +1,8 @@
 package view;
 
 import java.io.IOException;
+import java.util.stream.Collectors;
+
 import application.Main;
 import controller.IController;
 import javafx.collections.FXCollections;
@@ -10,7 +12,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -27,7 +28,8 @@ public class DriverView implements ViewModule{
 
 	private IController controller;
 	private BorderPane bpane;
-	private ObservableList<DrivingShift> shifts;
+	private ObservableList<DrivingShift> reserveShifts;
+	private ObservableList<DrivingShift> reportShifts;
 	private Driver driver;
 	private Strings strings;
 	
@@ -60,9 +62,12 @@ public class DriverView implements ViewModule{
 	
 
 	public DriverView(IController controller) {
-		shifts = FXCollections.observableArrayList();
+		reserveShifts = FXCollections.observableArrayList();
+		reportShifts = FXCollections.observableArrayList();
 		strings = Strings.getInstance();
 		this.controller = controller;
+		//get logged in Driver
+		updateDriver();
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("Driver_view.fxml"), strings.getBundle());
 		loader.setController(this);
 		try {
@@ -78,6 +83,7 @@ public class DriverView implements ViewModule{
 		
 		reserve_button.setOnAction(e -> {
 			assignShift(e);
+			report_tableview.setItems(getReservedShifts());
 		});
 
 		report_button.setOnAction(e -> {
@@ -89,6 +95,38 @@ public class DriverView implements ViewModule{
 		});
 		
 		//setup columns
+		setupReserveTableColumns();
+		setupReportTableColumns();
+		
+		reserve_tableview.setItems(getFilteredShifts());
+		report_tableview.setItems(getReservedShifts());
+		
+		reserve_tableview.setOnMouseClicked(e -> {
+			clicked = reserve_tableview.getSelectionModel().getSelectedItem();
+			if(clicked != null) {
+				updateReserveShiftInfo();
+			}
+		});
+		
+		report_tableview.setOnMouseClicked(e -> {
+			clicked = report_tableview.getSelectionModel().getSelectedItem();
+			if(clicked != null) {
+				updateReportShiftInfo();
+			}
+		});
+		
+
+	}
+	
+	private void setupReportTableColumns() {
+		TableColumn<DrivingShift, ?> clienCol = report_tableview.getColumns().get(1);
+		clienCol.setCellValueFactory(new PropertyValueFactory<>("client"));
+		
+		TableColumn<DrivingShift, ?> timeCol = report_tableview.getColumns().get(0);
+		timeCol.setCellValueFactory(new PropertyValueFactory<>("startTime"));
+	}
+	
+	private void setupReserveTableColumns() {
 		TableColumn<DrivingShift, ?> clientCol = reserve_tableview.getColumns().get(1);
 		//"client" comes from DrivingShift instance variables
 		//the string HAS TO match one of them exactly
@@ -98,29 +136,6 @@ public class DriverView implements ViewModule{
 		TableColumn<DrivingShift, ?> timeCol = reserve_tableview.getColumns().get(0);
 		//startTime row 24 in DrivingShift
 		timeCol.setCellValueFactory(new PropertyValueFactory<>("startTime"));
-		
-		reserve_tableview.setItems(getUpdatetdShifts());
-		
-		//example on click event - OnAction doesn't seem to exist in tables
-		reserve_tableview.setOnMouseClicked(e -> {
-			clicked = reserve_tableview.getSelectionModel().getSelectedItem();
-			if(clicked != null) {
-				updateReserveShiftInfo();
-			}
-		});
-		
-		TableColumn<DrivingShift, ?> clienCol = report_tableview.getColumns().get(1);
-		clienCol.setCellValueFactory(new PropertyValueFactory<>("client"));
-		
-		
-		report_tableview.setOnMouseClicked(e -> {
-			clicked = reserve_tableview.getSelectionModel().getSelectedItem();
-			if(clicked != null) {
-				updateReportShiftInfo();
-			}
-		});
-		
-
 	}
 	
 	private void updateReportShiftInfo() {
@@ -137,25 +152,38 @@ public class DriverView implements ViewModule{
 		time_info2.setText(clicked.getStartTime());
 	}
 	
-	public void unassignShift() {
+	private void unassignShift() {
 		clicked.setShiftDriver(null);
 		clicked.setShiftTaken(false);
 		//Listasta poisto samalla
+		reserveShifts.remove(clicked);
 	}
 
-	public ObservableList<DrivingShift> getUpdatetdShifts(){
-		this.shifts.clear();
-		this.shifts.addAll(controller.readAllDrivingShifts());
-		return shifts;
+	private ObservableList<DrivingShift> getFilteredShifts(){
+		this.reserveShifts.clear();
+		this.reserveShifts.addAll(controller.readGoodDrivingShifts(driver));
+		return reserveShifts;
 	}
 	
-	public void assignShift(ActionEvent e){
-		updateDriver();
+	private ObservableList<DrivingShift> getReservedShifts(){
+		this.reportShifts.clear();
+		this.reportShifts.addAll(driver.getShift());
+		return reportShifts;
+	}
+	
+	private ObservableList<DrivingShift> getAvailableShifts(){
+		return getFilteredShifts().stream()
+				.filter(shift -> !shift.getShiftTaken())
+				.collect(Collectors.toCollection(FXCollections::observableArrayList));
+	}
+	
+	
+	private void assignShift(ActionEvent e){
 		this.controller.assignShift(driver, clicked);
-		reserve_tableview.setItems(getUpdatetdShifts());
+		reserve_tableview.setItems(getAvailableShifts());
 	}
 	
-	public void reportShift(ActionEvent e) {
+	private void reportShift(ActionEvent e) {
 		Stage stage = new Stage();
 		stage.setScene(new Scene(new ReportingView(controller, clicked).getReportingView()));
 		stage.setTitle("Report your shift");
@@ -164,7 +192,7 @@ public class DriverView implements ViewModule{
 		stage.show();
 	}
 
-	public void updateDriver() {
+	private void updateDriver() {
 		this.driver = this.controller.readDriver(Main.LOGGED_IN_ID);
 	}
 

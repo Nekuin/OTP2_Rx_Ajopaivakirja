@@ -53,7 +53,6 @@ public class Controller implements IController{
 		shift.setShiftTaken(true);
 		this.driverAccessObject.update(driver);
 		this.drivingShiftAO.update(shift);
-		this.view.setShiftData(this.readAllDrivingShifts());
 	}
 
 	@Override
