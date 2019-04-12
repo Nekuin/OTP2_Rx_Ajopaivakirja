@@ -43,6 +43,7 @@ public class Controller implements IController{
 	
 	@Override
 	public void assignShift(Driver driver, DrivingShift shift) {
+	
 		if(shift.getShiftTaken()) {
 			System.out.println("shift " + shift.getShiftID() + " was taken");
 			return;

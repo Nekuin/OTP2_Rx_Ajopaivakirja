@@ -107,40 +107,6 @@ public class LandingView implements ViewModule {
 	}
 	
 	/**
-	 * A module which has fields for employee ID input and a button for logging in
-	 * @return GridPane
-	 */
-	private GridPane loginPane() {
-		GridPane pane = new GridPane();
-		pane.setPadding(new Insets(30, 0, 0, 30));
-		
-		TextField idField = new TextField();
-		idField.setPromptText("Your Employee ID");
-		idField.setId("id-field");
-		
-		
-		Button loginButton = new Button(strings.getString("login_text"));
-		loginButton.setOnAction(e -> {
-			int id = Integer.parseInt(idField.getText());
-			idField.setText("");
-			login(id);
-		});
-		loginButton.setId("login-button");
-		
-		idField.setOnKeyPressed(e -> {
-			if(e.getCode() == KeyCode.ENTER) {
-				this.login(Integer.parseInt(idField.getText()));
-				idField.setText("");
-			}
-		});
-		
-		
-		pane.add(loginButton, 1, 0);
-		pane.add(idField, 0, 0);
-		return pane;
-	}
-	
-	/**
 	 * Log the user in with the employeeID given as argument
 	 * @param id Employee ID
 	 */
