@@ -299,19 +299,6 @@ public class Main extends Application implements IView {
 	}
 
 	/**
-	 * Update user interface with a Collection of new drivers
-	 */
-	@Override
-	public void setDriverData(Collection<Driver> drivers) {
-		//this.dv.updateDrivers(drivers);
-	}
-	
-	@Override
-	public void setShiftData(Collection<DrivingShift> shifts) {
-		((DriverReserveView)driverRes).updateShiftList(shifts);
-	}
-
-	/**
 	 * Change between Driver view and HR View
 	 */
 	@Override
