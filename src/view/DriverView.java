@@ -120,6 +120,9 @@ public class DriverView implements ViewModule{
 
 	}
 	
+	/**
+	 * Set CellValueFactory on Report tab table columns
+	 */
 	private void setupReportTableColumns() {
 		TableColumn<DrivingShift, ?> clienCol = report_tableview.getColumns().get(1);
 		clienCol.setCellValueFactory(new PropertyValueFactory<>("client"));
@@ -128,6 +131,9 @@ public class DriverView implements ViewModule{
 		timeCol.setCellValueFactory(new PropertyValueFactory<>("startTime"));
 	}
 	
+	/**
+	 * Set CellValueFactory on Reserve tab table columns
+	 */
 	private void setupReserveTableColumns() {
 		TableColumn<DrivingShift, ?> clientCol = reserve_tableview.getColumns().get(1);
 		//"client" comes from DrivingShift instance variables
@@ -140,6 +146,9 @@ public class DriverView implements ViewModule{
 		timeCol.setCellValueFactory(new PropertyValueFactory<>("startTime"));
 	}
 	
+	/**
+	 * Update shift details in Report tab
+	 */
 	private void updateReportShiftInfo() {
 		client_Name1.setText(clicked.getClient().getName());
 		shift_id1.setText(Integer.toString(clicked.getClient().getClientID()));
@@ -147,6 +156,9 @@ public class DriverView implements ViewModule{
 		time_info3.setText(clicked.getStartTime());
 	}
 
+	/**
+	 * Update shift details in Reserve tab
+	 */
 	private void updateReserveShiftInfo() {
 		client_Name.setText(clicked.getClient().getName());
 		shift_id.setText(Integer.toString(clicked.getClient().getClientID()));
@@ -154,6 +166,9 @@ public class DriverView implements ViewModule{
 		time_info2.setText(clicked.getStartTime());
 	}
 	
+	/**
+	 * Unassign the selected DrivingShift from the Driver
+	 */
 	private void unassignShift() {
 		DrivingShift selectedShift = report_tableview.getSelectionModel().getSelectedItem();
 		if(selectedShift == null) {
@@ -168,38 +183,49 @@ public class DriverView implements ViewModule{
 		reserveShifts.remove(clicked);
 	}
 
+	/**
+	 * Get DrivingShifts that are filtered by the drivers ability to drive hazardous cargo
+	 * @return
+	 */
 	private ObservableList<DrivingShift> getFilteredShifts(){
 		this.reserveShifts.clear();
 		this.reserveShifts.addAll(controller.readGoodDrivingShifts(driver));
 		return reserveShifts;
 	}
 	
+	/**
+	 * Get shifts that the Driver has reserved
+	 * @return
+	 */
 	private ObservableList<DrivingShift> getReservedShifts(){
 		this.reportShifts.clear();
 		this.reportShifts.addAll(driver.getShift());
 		return reportShifts;
 	}
 	
+	/**
+	 * Get shifts that the Driver can reserve (unreserved and filtered)
+	 * @return
+	 */
 	private ObservableList<DrivingShift> getAvailableShifts(){
 		return getFilteredShifts().stream()
 				.filter(shift -> !shift.getShiftTaken())
 				.collect(Collectors.toCollection(FXCollections::observableArrayList));
 	}
 	
-	
+	/**
+	 * Assign selected DrivingShift to the Driver
+	 * @param e
+	 */
 	private void assignShift(ActionEvent e){
-		if(driver == null) {
-			System.out.println("driver was null");
-			return;
-		}
-		if(clicked == null) {
-			System.out.println("clicked was null (shift)");
-			return;
-		}
 		this.controller.assignShift(driver, clicked);
 		reserve_tableview.setItems(getAvailableShifts());
 	}
 	
+	/**
+	 * Open reporting window for the selected DrivingShift
+	 * @param e
+	 */
 	private void reportShift(ActionEvent e) {
 		Stage stage = new Stage();
 		stage.setScene(new Scene(new ReportingView(controller, clicked).getReportingView()));
@@ -209,6 +235,9 @@ public class DriverView implements ViewModule{
 		stage.show();
 	}
 
+	/**
+	 * Get the logged in Driver
+	 */
 	private void updateDriver() {
 		this.driver = this.controller.readDriver(Main.LOGGED_IN_ID);
 	}
