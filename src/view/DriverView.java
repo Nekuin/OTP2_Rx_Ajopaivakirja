@@ -171,15 +171,13 @@ public class DriverView implements ViewModule{
 	 */
 	private void unassignShift() {
 		DrivingShift selectedShift = report_tableview.getSelectionModel().getSelectedItem();
-		if(selectedShift == null) {
-			
+		if(selectedShift == null) {			
 			return;
 		}
 		System.out.println("selected: " + selectedShift + " " + selectedShift.getShiftDriver());
 		driver.getShift().remove(selectedShift);
 		selectedShift.setShiftDriver(null);
 		selectedShift.setShiftTaken(false);
-		//Listasta poisto samalla
 		reserveShifts.remove(clicked);
 	}
 
@@ -233,6 +231,7 @@ public class DriverView implements ViewModule{
 		stage.initModality(Modality.APPLICATION_MODAL);
 		stage.initOwner(((Node) e.getSource()).getScene().getWindow());
 		stage.show();
+		
 	}
 
 	/**

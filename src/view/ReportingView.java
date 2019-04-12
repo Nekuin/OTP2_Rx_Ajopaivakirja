@@ -78,14 +78,10 @@ public class ReportingView {
 		Text title = new Text("You are now reporting:");
 		title.setStyle("-fx-font: 24 arial;");
 		
-		  Text client = new Text("Client: " + "Asiakas"); 
-		  Text shift = new Text("Shift id: " + "1"); 
-		  Text cargo = new Text("Cargo: " + "50kg");
-		 /*
-		Text client = new Text("Client: ");
-		Text shift = new Text("Shift id: ");
-		Text cargo = new Text("Cargo: ");
-*/
+		  Text client = new Text("Client: " + drivingShift.getClient().getName()); 
+		  Text shift = new Text("Shift ID: " + drivingShift.getShiftID()); 
+		  Text cargo = new Text("Cargo: " + drivingShift.getTotalCargoWeight() + " kg");
+		 
 		shiftInfoVBox.getChildren().addAll(title, client, shift, cargo);
 		grid.add(shiftInfoVBox, 0, 0);
 
@@ -197,9 +193,11 @@ public class ReportingView {
 					drivingShift.setFinishTime(finishTimeTextF.getText());
 					controller.updateDrivingShift(drivingShift);
 					Alert alert = new Alert(AlertType.INFORMATION);
-					alert.setTitle("Successfully reported");
-					alert.setContentText("You have successfully reported shift:" + drivingShift.getShiftID());
+					alert.setTitle("Shift reported successfully");
+					alert.setHeaderText(null);
+					alert.setContentText("nShift ID:" + drivingShift.getShiftID() + "\nClient: " + drivingShift.getClient().getName());
 					alert.showAndWait();
+					((Node) e.getSource()).getScene().getWindow().hide();
 				}
 
 			} else {
