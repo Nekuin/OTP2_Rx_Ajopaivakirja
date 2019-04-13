@@ -142,7 +142,7 @@ public class Main extends Application implements IView {
 		bottomBox = new HBox();
 		bottomBox.setPadding(new Insets(0, 50, 50, 50));
 		bottomBox.getChildren().addAll(logout);
-		root.setBottom(bottomBox);
+		//root.setBottom(bottomBox);
 		
 		//create SuperiorView
 		this.supView = new SuperiorView(this.controller);
@@ -177,6 +177,7 @@ public class Main extends Application implements IView {
 			this.root.setCenter(landing.getView());
 			Main.LOGGED_IN_ID = 0;
 			this.root.setTop(null);
+			root.setBottom(null);
 		});
 		return logout;
 	}
@@ -303,6 +304,7 @@ public class Main extends Application implements IView {
 	 */
 	@Override
 	public void changeView(int view) {
+		root.setBottom(bottomBox);
 		if(view == Main.DRIVER_VIEW) {
 			/*this.dv.updateDriver();
 			List<DrivingShift> shifts = this.controller.readGoodDrivingShifts(this.controller.readDriver(Main.LOGGED_IN_ID));
