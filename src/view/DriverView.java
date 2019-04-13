@@ -226,8 +226,8 @@ public class DriverView implements ViewModule{
 	 */
 	private void reportShift(ActionEvent e) {
 		Stage stage = new Stage();
-		stage.setScene(new Scene(new ReportingView(controller, clicked).getReportingView()));
-		stage.setTitle("Report your shift");
+		stage.setScene(new Scene(new ReportingModal(controller, clicked).getReportingView()));
+		stage.setTitle(strings.getString("report_shift_modal_title"));
 		stage.initModality(Modality.APPLICATION_MODAL);
 		stage.initOwner(((Node) e.getSource()).getScene().getWindow());
 		stage.show();
