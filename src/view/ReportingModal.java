@@ -84,8 +84,9 @@ public class ReportingModal {
 		  Text client = new Text(strings.getString("customer_name") + " " + drivingShift.getClient().getName()); 
 		  Text shift = new Text(strings.getString("shift_id") + " " +drivingShift.getShiftID()); 
 		  Text cargo = new Text(strings.getString("cargo_text") + " " +drivingShift.getTotalCargoWeight() + " kg");
-		 
-		shiftInfoVBox.getChildren().addAll(title, client, shift, cargo);
+		  Text deadLine = new Text(strings.getString("deadline_info") + ": " + drivingShift.getDeadline());
+		  
+		shiftInfoVBox.getChildren().addAll(title, client, shift, cargo, deadLine);
 		grid.add(shiftInfoVBox, 0, 0);
 
 		return grid;

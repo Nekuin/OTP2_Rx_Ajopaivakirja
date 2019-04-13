@@ -1,6 +1,8 @@
 package application;
 	
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -274,7 +276,7 @@ public class Main extends Application implements IView {
 		Collection<DrivingShift> shifts = new ArrayList<>();
 		for(int i = 0; i < 4; i++) {
 			Cargo cargo = new Cargo(i, false);
-			DrivingShift shift = new DrivingShift(new Client("Reiskan paja"), cargo);
+			DrivingShift shift = new DrivingShift(new Client("Reiskan paja"), cargo, LocalDate.of(2018, 5, 26));
 			cargo.setShift(shift);
 			if(i == 1) {
 				cargo.setHazardous(true);

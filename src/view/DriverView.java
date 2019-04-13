@@ -128,7 +128,7 @@ public class DriverView implements ViewModule{
 		clienCol.setCellValueFactory(new PropertyValueFactory<>("client"));
 		
 		TableColumn<DrivingShift, ?> timeCol = report_tableview.getColumns().get(0);
-		timeCol.setCellValueFactory(new PropertyValueFactory<>("startTime"));
+		timeCol.setCellValueFactory(new PropertyValueFactory<>("deadline"));
 	}
 	
 	/**
@@ -143,7 +143,7 @@ public class DriverView implements ViewModule{
 		
 		TableColumn<DrivingShift, ?> timeCol = reserve_tableview.getColumns().get(0);
 		//startTime row 24 in DrivingShift
-		timeCol.setCellValueFactory(new PropertyValueFactory<>("startTime"));
+		timeCol.setCellValueFactory(new PropertyValueFactory<>("deadline"));
 	}
 	
 	/**
@@ -153,7 +153,7 @@ public class DriverView implements ViewModule{
 		client_Name1.setText(clicked.getClient().getName());
 		shift_id1.setText(Integer.toString(clicked.getClient().getClientID()));
 		cargo_info1.setText(clicked.getTotalCargoWeight() + " Kg");
-		time_info3.setText(clicked.getStartTime());
+		time_info3.setText(clicked.getDeadline().toString());
 	}
 
 	/**
@@ -163,7 +163,7 @@ public class DriverView implements ViewModule{
 		client_Name.setText(clicked.getClient().getName());
 		shift_id.setText(Integer.toString(clicked.getClient().getClientID()));
 		cargo_info.setText(clicked.getTotalCargoWeight() + " Kg");
-		time_info2.setText(clicked.getStartTime());
+		time_info2.setText(clicked.getDeadline().toString());
 	}
 	
 	/**

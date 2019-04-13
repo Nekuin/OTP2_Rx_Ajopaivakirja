@@ -28,30 +28,42 @@
                                  <children>
                                     <Label text="%drivingshift_info">
                                        <font>
-                                          <Font size="16.0" />
+                                          <Font name="System Bold" size="18.0" />
                                        </font>
                                     </Label>
                                     <HBox prefHeight="12.0" prefWidth="300.0" spacing="10.0">
                                        <children>
-                                          <Label text="%customer_name" />
+                                          <Label text="%customer_name">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font></Label>
                                           <Text fx:id="client_Name" strokeType="OUTSIDE" strokeWidth="0.0" />
                                        </children>
                                     </HBox>
                                     <HBox prefHeight="11.0" prefWidth="300.0" spacing="10.0">
                                        <children>
-                                          <Label text="%shift_id" />
+                                          <Label text="%shift_id">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font></Label>
                                           <Text fx:id="shift_id" strokeType="OUTSIDE" strokeWidth="0.0" />
                                        </children>
                                     </HBox>
                                     <HBox prefHeight="12.0" prefWidth="300.0" spacing="10.0">
                                        <children>
-                                          <Label text="%cargo_text" />
+                                          <Label text="%cargo_text">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font></Label>
                                           <Text fx:id="cargo_info" strokeType="OUTSIDE" strokeWidth="0.0" />
                                        </children>
                                     </HBox>
                                     <HBox prefHeight="12.0" prefWidth="300.0" spacing="10.0">
                                        <children>
-                                          <Label text="%time_ttext" />
+                                          <Label text="%time_ttext">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font></Label>
                                           <Text fx:id="time_info2" strokeType="OUTSIDE" strokeWidth="0.0" />
                                        </children>
                                     </HBox>
@@ -59,6 +71,9 @@
                                        <VBox.margin>
                                           <Insets />
                                        </VBox.margin>
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
                                     </Button>
                                  </children>
                                  <padding>
@@ -76,6 +91,9 @@
                                        <padding>
                                           <Insets bottom="20.0" top="20.0" />
                                        </padding>
+                                       <font>
+                                          <Font name="System Bold" size="14.0" />
+                                       </font>
                                     </Label>
                                     <TableView fx:id="reserve_tableview" prefHeight="500.0" prefWidth="400.0">
                                       <columns>
@@ -107,7 +125,7 @@
                                  <children>
                                     <Label text="%drivingshift_info">
                                        <font>
-                                          <Font size="16.0" />
+                                          <Font name="System Bold" size="18.0" />
                                        </font>
                                        <VBox.margin>
                                           <Insets />
@@ -115,32 +133,50 @@
                                     </Label>
                                     <HBox prefHeight="12.0" prefWidth="300.0" spacing="10.0">
                                        <children>
-                                          <Label text="%customer_name" />
+                                          <Label text="%customer_name">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font></Label>
                                           <Text fx:id="client_Name1" strokeType="OUTSIDE" strokeWidth="0.0" />
                                        </children>
                                     </HBox>
                                     <HBox prefHeight="11.0" prefWidth="300.0" spacing="10.0">
                                        <children>
-                                          <Label text="%shift_id" />
+                                          <Label text="%shift_id">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font></Label>
                                           <Text fx:id="shift_id1" strokeType="OUTSIDE" strokeWidth="0.0" />
                                        </children>
                                     </HBox>
                                     <HBox prefHeight="12.0" prefWidth="300.0" spacing="10.0">
                                        <children>
-                                          <Label text="%cargo_text" />
+                                          <Label text="%cargo_text">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font></Label>
                                           <Text fx:id="cargo_info1" strokeType="OUTSIDE" strokeWidth="0.0" />
                                        </children>
                                     </HBox>
                                     <HBox prefHeight="12.0" prefWidth="300.0" spacing="10.0">
                                        <children>
-                                          <Label text="%time_ttext" />
+                                          <Label text="%time_ttext">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font></Label>
                                           <Text fx:id="time_info3" strokeType="OUTSIDE" strokeWidth="0.0" />
                                        </children>
                                     </HBox>
                                     <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                                        <children>
-                                          <Button fx:id="report_button" mnemonicParsing="false" text="%report_button" wrapText="true" />
-                                          <Button fx:id="unassign_button" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="%unassign_button" wrapText="true" />
+                                          <Button fx:id="report_button" mnemonicParsing="false" text="%report_button" wrapText="true">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font></Button>
+                                          <Button fx:id="unassign_button" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="%unassign_button" wrapText="true">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font></Button>
                                        </children>
                                     </HBox>
                                  </children>
@@ -162,6 +198,9 @@
                                        <VBox.margin>
                                           <Insets bottom="20.0" />
                                        </VBox.margin>
+                                       <font>
+                                          <Font name="System Bold" size="14.0" />
+                                       </font>
                                     </Label>
                                     <TableView fx:id="report_tableview" prefHeight="500.0" prefWidth="400.0">
                                       <columns>
