@@ -26,7 +26,7 @@ import model.Driver;
  * @author Nekuin
  *
  */
-public class HRView implements ViewModule {
+public class HRView implements ViewModule, UndoObserver {
 
 	private IController controller;
 	private BorderPane bpane;
@@ -99,8 +99,15 @@ public class HRView implements ViewModule {
 		
 		Button deleteDriver = new Button("Remove");
 		deleteDriver.setOnAction(e -> {
-			this.controller.deleteDriver(lv.getSelectionModel().getSelectedItem());
-			updateDrivers(this.controller.readAllDrivers());
+			Driver dr = lv.getSelectionModel().getSelectedItem();
+			if(dr != null) {
+				//this.controller.deleteDriver(lv.getSelectionModel().getSelectedItem());
+				UndoPopup pop = new UndoPopup (this.controller, lv.getSelectionModel().getSelectedItem(), this);
+				//updateDrivers(this.controller.readAllDrivers());
+				pop.showMessage();
+				drivers.remove(dr);
+			}
+			
 		});
 		
 		Button updateDriver = new Button("Update");
@@ -232,4 +239,11 @@ public class HRView implements ViewModule {
 	public BorderPane getView() {
 		return this.bpane;
 	}
+@Override
+public void notifyUndo() {
+	// TODO Auto-generated method stub
+	updateDrivers(this.controller.readAllDrivers());
+	
+	
+}
 }
