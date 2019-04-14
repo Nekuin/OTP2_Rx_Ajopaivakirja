@@ -41,7 +41,6 @@ public class Main extends Application implements IView {
 	private IController controller;
 	private ViewModule supShiftView;
 	private NavBar supNav;
-	private NavBar driverNav;
 	private HBox bottomBox;
 	private EntityManager entityManager;
 	private boolean startUpFinish = false;
@@ -158,19 +157,6 @@ public class Main extends Application implements IView {
 		//create Buttons for Superior navBar
 		createSuperiorNavBar();
 		
-	}
-	
-	private void createDriverNavBar() {
-		Button driverResButton = new Button(strings.getString("driver_reserve_nav_text"));
-		Button driverViewButton = new Button(strings.getString("driver_report_nav_text"));
-		
-		driverNav = new NavBar(this, driverResButton, driverViewButton);
-		driverResButton.setOnAction(e -> {
-			root.setCenter(driverRes.getView());
-		});
-		driverViewButton.setOnAction(e -> {
-			root.setCenter(this.personalShift.getView());
-		});
 	}
 	
 	private Button createLogoutButton() {
@@ -315,9 +301,7 @@ public class Main extends Application implements IView {
 			((PersonalShiftView)this.personalShift).updateShifts(shifts);
 			this.root.setCenter(this.personalShift.getView());
 			this.root.setTop(driverNav.getNavBar());*/
-			if(this.dv == null) {
-				this.dv = new DriverView(controller);
-			}
+			this.dv = new DriverView(controller);
 			this.root.setCenter(this.dv.getView());
 		} else if(view == Main.HR_VIEW) {
 			this.hr.updateDrivers(this.controller.readAllDrivers());
