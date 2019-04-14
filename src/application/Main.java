@@ -1,6 +1,8 @@
 package application;
 	
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -39,7 +41,6 @@ public class Main extends Application implements IView {
 	private IController controller;
 	private ViewModule supShiftView;
 	private NavBar supNav;
-	private NavBar driverNav;
 	private HBox bottomBox;
 	private EntityManager entityManager;
 	private boolean startUpFinish = false;
@@ -127,17 +128,8 @@ public class Main extends Application implements IView {
 	@Override
 	public void createViews() {
 		
-		//create and set driver view
-		this.dv = new DriverView(this.controller);
-		
-		//create DriverReserveView
-		driverRes = new DriverReserveView(this.controller);
-		
-		//create PersonalShiftView
-		personalShift = new PersonalShiftView(this.controller);
-		
 		//navigation for Driver
-		createDriverNavBar();
+		//createDriverNavBar();
 		
 		//create and set landing view
 		this.landing = new LandingView(this.controller, this);
@@ -151,7 +143,7 @@ public class Main extends Application implements IView {
 		bottomBox = new HBox();
 		bottomBox.setPadding(new Insets(0, 50, 50, 50));
 		bottomBox.getChildren().addAll(logout);
-		root.setBottom(bottomBox);
+		//root.setBottom(bottomBox);
 		
 		//create SuperiorView
 		this.supView = new SuperiorView(this.controller);
@@ -167,25 +159,13 @@ public class Main extends Application implements IView {
 		
 	}
 	
-	private void createDriverNavBar() {
-		Button driverResButton = new Button(strings.getString("driver_reserve_nav_text"));
-		Button driverViewButton = new Button(strings.getString("driver_report_nav_text"));
-		
-		driverNav = new NavBar(this, driverResButton, driverViewButton);
-		driverResButton.setOnAction(e -> {
-			root.setCenter(driverRes.getView());
-		});
-		driverViewButton.setOnAction(e -> {
-			root.setCenter(this.personalShift.getView());
-		});
-	}
-	
 	private Button createLogoutButton() {
 		Button logout = new Button(strings.getString("logout_text"));
 		logout.setOnAction(e -> {
 			this.root.setCenter(landing.getView());
 			Main.LOGGED_IN_ID = 0;
 			this.root.setTop(null);
+			root.setBottom(null);
 		});
 		return logout;
 	}
@@ -282,7 +262,7 @@ public class Main extends Application implements IView {
 		Collection<DrivingShift> shifts = new ArrayList<>();
 		for(int i = 0; i < 4; i++) {
 			Cargo cargo = new Cargo(i, false);
-			DrivingShift shift = new DrivingShift(new Client("client"), cargo);
+			DrivingShift shift = new DrivingShift(new Client("Reiskan paja"), cargo, LocalDate.of(2018, 5, 26));
 			cargo.setShift(shift);
 			if(i == 1) {
 				cargo.setHazardous(true);
@@ -308,31 +288,21 @@ public class Main extends Application implements IView {
 	}
 
 	/**
-	 * Update user interface with a Collection of new drivers
-	 */
-	@Override
-	public void setDriverData(Collection<Driver> drivers) {
-		//this.dv.updateDrivers(drivers);
-	}
-	
-	@Override
-	public void setShiftData(Collection<DrivingShift> shifts) {
-		((DriverReserveView)driverRes).updateShiftList(shifts);
-	}
-
-	/**
 	 * Change between Driver view and HR View
 	 */
 	@Override
 	public void changeView(int view) {
+		root.setBottom(bottomBox);
 		if(view == Main.DRIVER_VIEW) {
-			this.dv.updateDriver();
+			/*this.dv.updateDriver();
 			List<DrivingShift> shifts = this.controller.readGoodDrivingShifts(this.controller.readDriver(Main.LOGGED_IN_ID));
 			((DriverReserveView)this.driverRes).updateShiftList(shifts);
 			this.root.setCenter(this.driverRes.getView());
 			((PersonalShiftView)this.personalShift).updateShifts(shifts);
 			this.root.setCenter(this.personalShift.getView());
-			this.root.setTop(driverNav.getNavBar());
+			this.root.setTop(driverNav.getNavBar());*/
+			this.dv = new DriverView(controller);
+			this.root.setCenter(this.dv.getView());
 		} else if(view == Main.HR_VIEW) {
 			this.hr.updateDrivers(this.controller.readAllDrivers());
 			this.root.setCenter(this.hr.getView());

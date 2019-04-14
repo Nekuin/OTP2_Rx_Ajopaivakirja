@@ -3,19 +3,15 @@ package view;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
-import java.util.ResourceBundle;
-
 import application.Main;
 import controller.IController;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import model.Driver;
 import model.HrManager;
 import model.Superior;
 import util.Strings;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -104,40 +100,6 @@ public class LandingView implements ViewModule {
 			return -1;
 		}
 		return Integer.parseInt(fieldText);
-	}
-	
-	/**
-	 * A module which has fields for employee ID input and a button for logging in
-	 * @return GridPane
-	 */
-	private GridPane loginPane() {
-		GridPane pane = new GridPane();
-		pane.setPadding(new Insets(30, 0, 0, 30));
-		
-		TextField idField = new TextField();
-		idField.setPromptText("Your Employee ID");
-		idField.setId("id-field");
-		
-		
-		Button loginButton = new Button(strings.getString("login_text"));
-		loginButton.setOnAction(e -> {
-			int id = Integer.parseInt(idField.getText());
-			idField.setText("");
-			login(id);
-		});
-		loginButton.setId("login-button");
-		
-		idField.setOnKeyPressed(e -> {
-			if(e.getCode() == KeyCode.ENTER) {
-				this.login(Integer.parseInt(idField.getText()));
-				idField.setText("");
-			}
-		});
-		
-		
-		pane.add(loginButton, 1, 0);
-		pane.add(idField, 0, 0);
-		return pane;
 	}
 	
 	/**

@@ -1,5 +1,7 @@
 package model;
 
+import java.time.LocalDate;
+
 import javax.persistence.Entity;
 import javax.persistence.Transient;
 /**
@@ -74,8 +76,8 @@ public class HrManager extends Employee{
 	 * @param client client of the driving shift
 	 * @param cargo cargo of the driving shift
 	 */
-	public void addDrivingShift(Client client, Cargo cargo) {
-		DrivingShift shift = new DrivingShift(client, cargo);
+	public void addDrivingShift(Client client, Cargo cargo, LocalDate deadline) {
+		DrivingShift shift = new DrivingShift(client, cargo, deadline );
 		ao.createDrivingShift(shift);
 	}
 	

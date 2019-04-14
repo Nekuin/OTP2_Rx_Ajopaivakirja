@@ -45,7 +45,7 @@ public class SuperiorShiftView implements ViewModule, UndoObserver, SubmitObserv
 	public SuperiorShiftView(IController controller) {
 		this.controller = controller;
 		this.strings = Strings.getInstance();
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("Superior_Employee_View.fxml"), strings.getBundle());
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("Superior_Shift_View.fxml"), strings.getBundle());
 		loader.setController(this);
 		try {
 			loader.load();
@@ -74,14 +74,16 @@ public class SuperiorShiftView implements ViewModule, UndoObserver, SubmitObserv
 		
 		update_shift_button.setOnAction(e -> {
 			DrivingShift shift = shiftList.getSelectionModel().getSelectedItem();
-			showUpdateShiftStage(e, shift);
+			if(shift != null) {
+				showUpdateShiftStage(e, shift);
+			}
 		});
 	}
 	
 	private void showUpdateShiftStage(ActionEvent e, DrivingShift shift) {
 		Stage stage = new Stage();
 		stage.setScene(new Scene(new UpdateShiftView(controller, shift, this).getView()));
-		stage.setTitle("Update Driving shift");
+		stage.setTitle(strings.getString("upd_shift_text"));
 		stage.initModality(Modality.APPLICATION_MODAL);
 		stage.initOwner(((Node) e.getSource()).getScene().getWindow());
 		stage.show();
@@ -90,7 +92,7 @@ public class SuperiorShiftView implements ViewModule, UndoObserver, SubmitObserv
 	private void showAddShiftStage(ActionEvent e) {
 		Stage stage = new Stage();
 		stage.setScene(new Scene(new AddShiftView(controller, this).getView()));
-		stage.setTitle("Add new Driving shift");
+		stage.setTitle(strings.getString("add_shift_text"));
 		stage.initModality(Modality.APPLICATION_MODAL);
 		stage.initOwner(((Node) e.getSource()).getScene().getWindow());
 		stage.show();

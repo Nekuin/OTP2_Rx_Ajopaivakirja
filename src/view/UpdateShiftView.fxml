@@ -15,7 +15,7 @@
    <center>
       <VBox alignment="CENTER" BorderPane.alignment="CENTER">
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Update shift">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%upd_shift_text">
                <font>
                   <Font size="20.0" />
                </font>
@@ -25,20 +25,20 @@
             </Text>
             <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <ComboBox fx:id="cargo_combobox" prefWidth="200.0" promptText="Cargo" />
+                  <ComboBox fx:id="cargo_combobox" prefWidth="200.0" promptText="%cargo_text" />
                   <HBox alignment="CENTER" prefHeight="200.0">
                      <children>
                         <ListView fx:id="cargo_listView" prefWidth="200.0" />
                         <VBox fx:id="listItem_remove_box" prefWidth="25.0" />
                      </children>
                   </HBox>
-                  <ComboBox fx:id="client_combobox" prefWidth="200.0" promptText="Client" />
+                  <ComboBox fx:id="client_combobox" prefWidth="200.0" promptText="%client_text" />
                </children>
             </VBox>
             <AnchorPane prefHeight="50.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="confirm_button" layoutX="112.0" layoutY="13.0" mnemonicParsing="false" text="Confirm" />
-                  <Button fx:id="cancel_button" layoutX="236.0" layoutY="13.0" mnemonicParsing="false" text="Cancel" />
+                  <Button fx:id="confirm_button" layoutX="112.0" layoutY="13.0" mnemonicParsing="false" text="%confirm_text" />
+                  <Button fx:id="cancel_button" layoutX="236.0" layoutY="13.0" mnemonicParsing="false" text="%cancel_text" />
                </children>
             </AnchorPane>
          </children>
