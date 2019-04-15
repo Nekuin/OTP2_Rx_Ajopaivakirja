@@ -55,14 +55,14 @@ public class SuperiorTest {
 		strings = Strings.getInstance();
 		strings.changeBundle(new Locale("fi", "FI"));
 		
-		BorderPane root = new BorderPane();
+		
 		
 		
 		
 		sup = new SuperiorEmployeeView(controller);
 		
-		root.setCenter(sup.getView());
-		Scene scene = new Scene(root, 400, 400);
+		
+		Scene scene = new Scene(sup.getView(), 400, 400);
 		stage.setScene(scene);
 		stage.show();
 		

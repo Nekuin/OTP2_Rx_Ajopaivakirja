@@ -42,34 +42,33 @@ public class LandingTest {
 	private void start(Stage stage) {
 		strings = Strings.getInstance();
 		strings.changeBundle(new Locale("fi", "FI"));
-		BorderPane root = new BorderPane();
 		controller = new Controller(null, true);
 		landing = new LandingView(controller, null);
-		
-		root.setCenter(landing.getView());
-		Scene scene = new Scene(root, 1000, 1000);
+		System.out.println(landing.getView().getChildren());
+		Scene scene = new Scene(landing.getView(), 1000, 1000);
 		stage.setScene(scene);
 		stage.show();
 	}
 	
 	@Test
 	void should_contain_button(FxRobot robot) {
-		Assertions.assertThat(robot.lookup("#login-button").queryAs(Button.class));
+		Assertions.assertThat(robot.lookup("#login_button").queryAs(Button.class));
 		
 	}
 	
 	@Test
 	void should_contain_textField(FxRobot robot) {
-		Assertions.assertThat(robot.lookup("#id-field").queryAs(TextField.class));
+		Assertions.assertThat(robot.lookup("#login_field").queryAs(TextField.class));
 	}
 	
 	@Test
 	void login_test(FxRobot robot) {
-		Button b = robot.lookup("#login-button").queryAs(Button.class);
-		TextField idField = robot.lookup("#id-field").queryAs(TextField.class);
+		Button b = robot.lookup("#login_button").queryAs(Button.class);
+		TextField idField = robot.lookup("#login_field").queryAs(TextField.class);
 		robot.clickOn(idField);
 		robot.write("1");
 		robot.clickOn(b);
+		
 	}
 	
 
