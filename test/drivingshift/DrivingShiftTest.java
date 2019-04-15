@@ -33,7 +33,7 @@ public class DrivingShiftTest {
 		//we don't have an instance of view => null as first parameter
 		//use false as the second if you want to test locally
 		//and use true if you want Jenkins to test
-		controller = new Controller(null, false);
+		controller = new Controller(null, true);
 	}
 	
 	/**
