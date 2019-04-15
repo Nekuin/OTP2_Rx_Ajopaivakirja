@@ -78,21 +78,6 @@ public class DrivingShift {
 	}
 	
 	/**
-	 * Getter for shift ID's
-	 * @return int
-	 */
-	public int getShiftID() {
-		return shiftID;
-	}
-	
-	/**
-	 * Setter for shift ID's
-	 * @param shiftID shifts ID
-	 */
-	public void setShiftID(int shiftID) {
-		this.shiftID = shiftID;
-	}
-	/**
 	 * Setter for deadlines
 	 * @param deadline
 	 */
@@ -178,6 +163,10 @@ public class DrivingShift {
 	public void setVehicle(Vehicle vehicle) {
 		this.vehicleID = vehicle.getCarID();
 		this.vehicle = vehicle;
+	}
+	
+	public Vehicle getVehicle() {
+		return this.vehicle;
 	}
 	
 	/**
