@@ -67,6 +67,10 @@ public class DriverView implements ViewModule {
 
 	private DrivingShift clicked;
 
+	/**
+	 * Constructor for driver's view
+	 * @param controller
+	 */
 	public DriverView(IController controller) {
 		reserveShifts = FXCollections.observableArrayList();
 		reportShifts = FXCollections.observableArrayList();
@@ -84,6 +88,9 @@ public class DriverView implements ViewModule {
 		}
 	}
 
+	/**
+	 * Initializes buttons and columns in driver's view
+	 */
 	@FXML
 	private void initialize() {
 
@@ -251,6 +258,9 @@ public class DriverView implements ViewModule {
 		this.driver = this.controller.readDriver(Main.LOGGED_IN_ID);
 	}
 
+	/**
+	 * returns the borderpane that includes the view
+	 */
 	@Override
 	public BorderPane getView() {
 		return this.bpane;
