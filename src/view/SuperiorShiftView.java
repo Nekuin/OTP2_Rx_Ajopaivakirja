@@ -20,6 +20,10 @@ import javafx.stage.Stage;
 import model.DrivingShift;
 import util.Strings;
 
+/**
+ * 
+ * NOT GOING TO BE USED
+ */
 public class SuperiorShiftView implements ViewModule, UndoObserver, SubmitObserver {
 	
 	private BorderPane bpane;

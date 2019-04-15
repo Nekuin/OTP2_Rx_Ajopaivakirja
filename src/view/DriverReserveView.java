@@ -18,7 +18,7 @@ import javafx.scene.text.Text;
 import model.Driver;
 import model.DrivingShift;
 import util.Strings;
-/**
+/**NOT IN USE
  * View module where the Driver can reserve shifts
  * @author Nekuin
  *

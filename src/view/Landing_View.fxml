@@ -40,7 +40,7 @@
                                     <Font size="14.0" />
                                  </font>
                               </TextField>
-                              <Button fx:id="login_button" mnemonicParsing="false" prefHeight="39.0" prefWidth="164.0" text="%login_text" wrapText="true">
+                              <Button id="login_button" fx:id="login_button" mnemonicParsing="false" prefHeight="39.0" prefWidth="164.0" text="%login_text" wrapText="true">
                                  <font>
                                     <Font size="18.0" />
                                  </font>

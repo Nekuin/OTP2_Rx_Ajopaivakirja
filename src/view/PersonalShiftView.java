@@ -17,6 +17,10 @@ import javafx.stage.Stage;
 import model.Driver;
 import model.DrivingShift;
 
+/**
+ * 
+ * NOT GOING TO BE USED
+ */
 public class PersonalShiftView implements ViewModule {
 	
 	private BorderPane bpane;

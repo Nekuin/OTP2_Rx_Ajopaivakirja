@@ -18,6 +18,10 @@ public class HibernateUtil {
 	private static EntityManagerFactory emf;
 	private static EntityManager em;
 	
+	/**
+	 * Creates a session factory
+	 * @return SessionFactory sessionFactory
+	 */
 	private static SessionFactory buildSessionFactory() {
 		try {
 			Configuration configuration = new Configuration();
@@ -42,13 +46,19 @@ public class HibernateUtil {
 			throw new ExceptionInInitializerError(e);
 		}
 	}
-	
+	/**
+	 * Getter for the session factory, if it does not exist, creates one
+	 * @return SessionFactory sessionFactory
+	 */
 	
 	public static synchronized SessionFactory getSessionFactory() {
 		if(sessionFactory == null) sessionFactory = buildSessionFactory();
 		return sessionFactory;
 	}
-	
+	/**
+	 * Getter for an entity manager factory
+	 * @return EntityManagerFactory emf
+	 */
 	public static synchronized EntityManagerFactory getEntityManagerFactory() {
 		if(emf == null) {
 			System.out.println("[UTIL] create new factory");
@@ -58,7 +68,10 @@ public class HibernateUtil {
 		
 		return emf;
 	}
-	
+	/**
+	 * Test getter for an entity manager factory
+	 * @return EntityManagerFactory emf
+	 */
 	public static synchronized EntityManagerFactory getTestEntityManagerFactory() {
 		if(emf == null) {
 			System.out.println("[UTIL] creating test factory");
@@ -67,7 +80,10 @@ public class HibernateUtil {
 		}
 		return emf;
 	}
-	
+	/**
+	 * Getter for an entity manager
+	 * @return EntityManager em
+	 */
 	public static synchronized EntityManager getEntityManager() {
 		if(em == null) {
 			System.out.println("[UTIL] creating new manager");

@@ -31,7 +31,12 @@ public class UndoPopup implements ViewModule {
     private boolean userDismissed;
     private Object removedObject;
     private UndoObserver observer;
-	
+	/**
+	 * Constructor for Undo Popup
+	 * @param IController controller
+	 * @param Object removedObject
+	 * @param UndoObserver caller
+	 */
 	public UndoPopup(IController controller, Object removedObject, UndoObserver caller) {
 		this.controller = controller;
 		userDismissed = false;
@@ -48,7 +53,9 @@ public class UndoPopup implements ViewModule {
 		setup("Removed " + removedObject.toString() + ", Undo?");
 		startHideUndoTimer();
 	}
-	
+	/**
+	 * Initializes the buttons in the popup
+	 */
 	@FXML
 	private void initialize() {
 		undo_button.setOnAction(e -> {
@@ -83,6 +90,9 @@ public class UndoPopup implements ViewModule {
 		dismiss_button.getStyleClass().add("dismissButton");
 	}
 	
+	/**
+	 * Starts the timer that determines when the popup will be disabled
+	 */
 	private void startHideUndoTimer() {
 		new Thread(() -> {
 			long startTime = System.currentTimeMillis();
@@ -101,7 +111,9 @@ public class UndoPopup implements ViewModule {
 			});
 		}).start();
 	}
-	
+	/**
+	 * Removes the object from database
+	 */
 	private void removeFromDatabase() {
 		//determine type of the object
 		if(removedObject instanceof Employee) {
@@ -110,7 +122,10 @@ public class UndoPopup implements ViewModule {
 			controller.deleteShift((DrivingShift)removedObject);
 		}
 	}
-	
+	/**
+	 * Sets up the button 
+	 * @param message
+	 */
 	private void setup(String message) {
 		undo_button.setText(message);
 	}

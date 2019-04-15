@@ -28,8 +28,7 @@ import javafx.stage.Stage;
 import model.Vehicle;
 
 /**
- * 
- * @author tuoma
+ * NOT GONNA BE USED
  *
  */
 public class SuperiorView implements ViewModule {

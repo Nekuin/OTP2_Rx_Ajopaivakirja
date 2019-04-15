@@ -94,6 +94,10 @@ public class LandingView implements ViewModule {
 		});
 	}
 	
+	/**
+	 * Getter for login ID
+	 * @return Integer 
+	 */
 	private int getLoginID() {
 		String fieldText = login_field.getText();
 		if(fieldText.equals("")) {

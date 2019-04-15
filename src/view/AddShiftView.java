@@ -21,7 +21,7 @@ import model.Cargo;
 import model.Client;
 import model.DrivingShift;
 import util.Strings;
-
+// NOT GOING TO BE USED
 public class AddShiftView implements ViewModule {
 	
 	private IController controller;
