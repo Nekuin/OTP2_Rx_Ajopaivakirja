@@ -78,6 +78,14 @@ public class DrivingShift {
 	}
 	
 	/**
+	 * Getter for shift ID's
+	 * @return int
+	 */
+	public int getShiftID() {
+		return shiftID;
+	}
+	
+	/**
 	 * Setter for deadlines
 	 * @param deadline
 	 */
