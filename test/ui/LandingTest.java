@@ -38,6 +38,10 @@ public class LandingTest {
 	private IController controller;
 	private Strings strings;
 	
+	/**
+	 * Starts the landing view
+	 * @param stage
+	 */
 	@Start
 	private void start(Stage stage) {
 		strings = Strings.getInstance();
@@ -52,17 +56,29 @@ public class LandingTest {
 		stage.show();
 	}
 	
+	/**
+	 * Tests if there is a login button
+	 * @param robot
+	 */
 	@Test
 	void should_contain_button(FxRobot robot) {
 		Assertions.assertThat(robot.lookup("#login-button").queryAs(Button.class));
 		
 	}
 	
+	/**
+	 * Tests if there is a text field for log in information
+	 * @param robot
+	 */
 	@Test
 	void should_contain_textField(FxRobot robot) {
 		Assertions.assertThat(robot.lookup("#id-field").queryAs(TextField.class));
 	}
 	
+	/**
+	 * Test for login in
+	 * @param robot
+	 */
 	@Test
 	void login_test(FxRobot robot) {
 		Button b = robot.lookup("#login-button").queryAs(Button.class);
