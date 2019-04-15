@@ -76,7 +76,7 @@ public class Client {
 	 * Method for getting information about the client in string format
 	 */
 	public String toString() {
-		return "Client ID: " + this.clientID + " Name: " + this.name;
+		return this.name + " (ID: " + this.clientID + ")";
 	}
 	
 	

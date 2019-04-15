@@ -28,8 +28,7 @@ import javafx.stage.Stage;
 import model.Vehicle;
 
 /**
- * 
- * @author tuoma
+ * NOT GONNA BE USED
  *
  */
 public class SuperiorView implements ViewModule {
@@ -52,11 +51,6 @@ public class SuperiorView implements ViewModule {
 		viewBox.getChildren().addAll(addButtons(), getCarList());
 		viewBox.setAlignment(Pos.TOP_CENTER);
 		this.borderPane.setCenter(viewBox);
-	}
-
-	@Override
-	public void setNavBar(NavBar navBar) {
-		this.borderPane.setTop(navBar.getNavBar());
 	}
 
 	private ListView<Vehicle> getCarList() {
@@ -461,4 +455,5 @@ public class SuperiorView implements ViewModule {
 	public BorderPane getView() {
 		return this.borderPane;
 	}
+
 }

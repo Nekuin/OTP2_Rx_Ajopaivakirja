@@ -1,9 +1,8 @@
 package model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-
 import javax.persistence.*;
 
 /**
@@ -20,18 +19,15 @@ public class DrivingShift {
 	@Column(name="shiftid")
 	private int shiftID;
 	
+	@Column(name="deadline")
+	private LocalDate deadline;
+	
 	@Column(name="starttime")
 	private String startTime;
 	
 	@Column(name="finishtime")
 	private String finishTime;
 	
-	@Column(name="shiftdriver")
-	private int shiftDriverID;
-	/*
-	@Column(name="cargoid")
-	private int cargoID;
-	*/
 	@Column(name="clientid")
 	private int clientID;
 	
@@ -64,7 +60,8 @@ public class DrivingShift {
 	 * @param client client of the shift
 	 * @param cargo cargo of the shift
 	 */
-	public DrivingShift(Client client, Cargo cargo) {
+	public DrivingShift(Client client, Cargo cargo, LocalDate deadline) {
+		this.deadline = deadline;
 		this.cargo = new ArrayList<>();
 		this.cargo.add(cargo);
 		this.client = client;
@@ -77,7 +74,7 @@ public class DrivingShift {
 	 * empty constructor for the driving shift
 	 */
 	public DrivingShift() {
-		
+		this.cargo = new ArrayList<>();
 	}
 	
 	/**
@@ -94,6 +91,20 @@ public class DrivingShift {
 	 */
 	public void setShiftID(int shiftID) {
 		this.shiftID = shiftID;
+	}
+	/**
+	 * Setter for deadlines
+	 * @param deadline
+	 */
+	public void setDeadline(LocalDate deadline) {
+		this.deadline = deadline;
+	}
+	/**
+	 * Getter for deadlines
+	 * @return
+	 */
+	public LocalDate getDeadline() {
+		return this.deadline;
 	}
 
 	/**
@@ -142,7 +153,6 @@ public class DrivingShift {
 	 */
 	public void setShiftDriver(Driver shiftDriver) {
 		this.driver = shiftDriver;
-		this.shiftDriverID = shiftDriver.getEmployeeID();
 	}
 	
 	/**

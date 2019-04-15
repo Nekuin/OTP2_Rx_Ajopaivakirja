@@ -11,7 +11,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import util.HibernateUtil;
-
+//NOT IN USE
 public class CargoAccessObject {
 	
 	SessionFactory sf;

@@ -6,11 +6,15 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+/**
+ * NOT GOING TO BE USED
+ * Class for the navigation bar
+ */
 public class NavigationBar {
 	
 	private HBox hbox;
 	private IView view;
-	
+
 	public NavigationBar(IView view) {
 		this.view = view;
 		this.hbox = createNavBar();

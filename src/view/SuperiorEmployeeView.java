@@ -31,9 +31,7 @@ import model.HrManager;
 import model.Superior;
 
 /**
- * 
- * @author tuoma
- *
+NOT GOING TO BE USED
  */
 public class SuperiorEmployeeView implements ViewModule {
 
@@ -66,11 +64,6 @@ public class SuperiorEmployeeView implements ViewModule {
 	@Override
 	public BorderPane getView() {
 		return this.borderPane;
-	}
-	
-	@Override
-	public void setNavBar(NavBar navBar) {
-		this.borderPane.setTop(navBar.getNavBar());
 	}
 
 	private ListView<Employee> getEmployeeList() {

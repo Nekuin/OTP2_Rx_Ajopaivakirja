@@ -38,6 +38,14 @@ public enum Strings {
 	}
 	
 	/**
+	 * Get the loaded resource bundle
+	 * @return ResourceBundle loaded bundle
+	 */
+	public ResourceBundle getBundle() {
+		return bundle;
+	}
+	
+	/**
 	 * Returns an instance of Strings
 	 * @return instance of Strings
 	 */
