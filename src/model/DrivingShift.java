@@ -92,11 +92,17 @@ public class DrivingShift {
 	public void setShiftID(int shiftID) {
 		this.shiftID = shiftID;
 	}
-	
+	/**
+	 * Setter for deadlines
+	 * @param deadline
+	 */
 	public void setDeadline(LocalDate deadline) {
 		this.deadline = deadline;
 	}
-	
+	/**
+	 * Getter for deadlines
+	 * @return
+	 */
 	public LocalDate getDeadline() {
 		return this.deadline;
 	}
