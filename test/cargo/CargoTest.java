@@ -2,10 +2,12 @@ package cargo;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import controller.Controller;
 import model.Cargo;
 
 /**
@@ -15,6 +17,7 @@ import model.Cargo;
 public class CargoTest {
 	
 	static Cargo testCargo;
+	static Controller controller;
 	
 	/**
 	 * Creates a new cargo object
@@ -22,6 +25,12 @@ public class CargoTest {
 	@BeforeEach
 	void resetCargo() {
 		testCargo = new Cargo(2300, false);
+	}
+	
+	@BeforeAll
+	void init() {
+		//use test version of controller by passing true as the last argument
+		controller = new Controller(null, true);
 	}
 	
 	/**
