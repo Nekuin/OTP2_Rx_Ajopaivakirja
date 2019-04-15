@@ -44,7 +44,7 @@
         <property name="hibernate.dialect" value="org.hibernate.dialect.MariaDBDialect"/>
         <property name="hibernate.hbm2ddl.auto" value="create"/>
         <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
-        <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/database_r6?serverTimezone=EEST"/>
+        <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/database_r6?serverTimezone=UTC"/>
         <property name="javax.persistence.jdbc.user" value="database_user6"/>
         <property name="javax.persistence.jdbc.password" value="user_password6"/>
         <property name="hibernate.show_sql" value="true"/>
