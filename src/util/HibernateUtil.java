@@ -77,4 +77,11 @@ public class HibernateUtil {
 		
 		return em;
 	}
+	
+	public static synchronized EntityManager getTestEntityManager() {
+		if(em == null) {
+			em = getTestEntityManagerFactory().createEntityManager();
+		}
+		return em;
+	}
 }
