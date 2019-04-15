@@ -58,6 +58,15 @@ public class HibernateUtil {
 		return emf;
 	}
 	
+	public static synchronized EntityManagerFactory getTestEntityManagerFactory() {
+		if(emf == null) {
+			System.out.println("[UTIL] creating test factory");
+			emf = Persistence.createEntityManagerFactory("otp-test");
+			System.out.println("[UTIL] test factory created");
+		}
+		return emf;
+	}
+	
 	public static synchronized EntityManager getEntityManager() {
 		if(em == null) {
 			System.out.println("[UTIL] creating new manager");
