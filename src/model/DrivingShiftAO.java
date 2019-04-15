@@ -9,7 +9,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import org.hibernate.*;
 
 import util.HibernateUtil;
-
+//NOT IN USE
 public class DrivingShiftAO implements IDao<DrivingShift>{
 
 	private org.hibernate.SessionFactory sf;

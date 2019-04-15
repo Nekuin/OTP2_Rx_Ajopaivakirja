@@ -31,9 +31,7 @@ import model.HrManager;
 import model.Superior;
 
 /**
- * 
- * @author tuoma
- *
+NOT GOING TO BE USED
  */
 public class SuperiorEmployeeView implements ViewModule {
 

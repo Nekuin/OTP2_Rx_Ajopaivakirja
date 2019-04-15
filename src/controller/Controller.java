@@ -41,6 +41,19 @@ public class Controller implements IController{
 		this.clientAO = new Dao<>(model.Client.class);
 	}
 	
+	public Controller(IView view, boolean test) {
+		System.out.println("test controller");
+		this.view = view;
+		this.drivingShiftAO = new Dao<>(model.DrivingShift.class, test);
+		this.hrAO = new Dao<>(model.HrManager.class, test);
+		this.driverAccessObject = new Dao<>(model.Driver.class, test);
+		this.vehicleAO = new Dao<>(model.Vehicle.class, test);
+		this.superiorAO = new Dao<>(model.Superior.class, test);
+		this.empAo = new Dao<>(model.Employee.class, test);
+		this.cargoAO = new Dao<>(model.Cargo.class, test);
+		this.clientAO = new Dao<>(model.Client.class, test);
+	}
+	
 	@Override
 	public void assignShift(Driver driver, DrivingShift shift) {
 	

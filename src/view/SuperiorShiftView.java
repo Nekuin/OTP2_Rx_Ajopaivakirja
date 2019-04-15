@@ -20,6 +20,10 @@ import javafx.stage.Stage;
 import model.DrivingShift;
 import util.Strings;
 
+/**
+ * 
+ * NOT GOING TO BE USED
+ */
 public class SuperiorShiftView implements ViewModule, UndoObserver, SubmitObserver {
 	
 	private BorderPane bpane;
@@ -82,7 +86,7 @@ public class SuperiorShiftView implements ViewModule, UndoObserver, SubmitObserv
 	
 	private void showUpdateShiftStage(ActionEvent e, DrivingShift shift) {
 		Stage stage = new Stage();
-		stage.setScene(new Scene(new UpdateShiftView(controller, shift, this).getView()));
+		stage.setScene(new Scene(new UpdateShiftModal(controller, shift, this).getView()));
 		stage.setTitle(strings.getString("upd_shift_text"));
 		stage.initModality(Modality.APPLICATION_MODAL);
 		stage.initOwner(((Node) e.getSource()).getScene().getWindow());

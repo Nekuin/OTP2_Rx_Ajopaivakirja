@@ -46,7 +46,7 @@ public class SuperiorTest {
 	
 	@BeforeAll
 	public static void beforeAll() {
-		controller = new Controller(null);
+		controller = new Controller(null, true);
 		controller.createDriver(new Driver("Soini2", "A"));
 	}
 	

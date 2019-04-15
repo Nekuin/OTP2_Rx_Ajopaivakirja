@@ -27,4 +27,27 @@
         <property name="hibernate.show_sql" value="true"/>
     </properties>
 </persistence-unit>
+<persistence-unit name="otp-test">
+    <description>Hibernate EntityManager</description>
+    
+    <class>model.Employee</class>
+    <class>model.Driver</class>
+    <class>model.DrivingShift</class>
+    <class>model.Client</class>
+    <class>model.Cargo</class>
+    <class>model.HrManager</class>
+    <class>model.Vehicle</class>
+    <class>model.Superior</class>
+
+    <exclude-unlisted-classes>true</exclude-unlisted-classes>
+    <properties>
+        <property name="hibernate.dialect" value="org.hibernate.dialect.MariaDBDialect"/>
+        <property name="hibernate.hbm2ddl.auto" value="create"/>
+        <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+        <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/database_r6"/>
+        <property name="javax.persistence.jdbc.user" value="database_user6"/>
+        <property name="javax.persistence.jdbc.password" value="user_password6"/>
+        <property name="hibernate.show_sql" value="true"/>
+    </properties>
+</persistence-unit>
 </persistence>

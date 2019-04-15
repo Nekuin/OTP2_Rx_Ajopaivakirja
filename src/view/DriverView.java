@@ -24,6 +24,11 @@ import model.DrivingShift;
 import util.Strings;
 import javafx.scene.Node;
 
+/**
+ * Class for the driver's view
+ * @author tuoma
+ *
+ */
 public class DriverView implements ViewModule {
 
 	private IController controller;

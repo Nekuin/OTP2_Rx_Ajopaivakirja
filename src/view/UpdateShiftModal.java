@@ -20,7 +20,12 @@ import model.Client;
 import model.DrivingShift;
 import util.Strings;
 
-public class UpdateShiftView implements ViewModule {
+/**
+ * Modal for updating driving shifts
+ * @author tuoma
+ *
+ */
+public class UpdateShiftModal implements ViewModule {
 	
 	private IController controller;
 	private Strings strings;
@@ -48,7 +53,13 @@ public class UpdateShiftView implements ViewModule {
     private DrivingShift shift;
     private SubmitObserver observer;
 	
-	public UpdateShiftView(IController controller, DrivingShift shift, SubmitObserver observer) {
+    /**
+     * Constructor for the modal
+     * @param IController controller
+     * @param DrivingShift shift
+     * @param SubmitObserver observer
+     */
+	public UpdateShiftModal(IController controller, DrivingShift shift, SubmitObserver observer) {
 		this.controller = controller;
 		this.strings = Strings.getInstance();
 		this.shift = shift;
@@ -64,6 +75,9 @@ public class UpdateShiftView implements ViewModule {
 		root = loader.getRoot();
 	}
 	
+	/**
+	 * Initializes the buttons in the modal
+	 */
 	@FXML
 	private void initialize() {
 		cancel_button.setOnAction(e -> {
@@ -78,6 +92,9 @@ public class UpdateShiftView implements ViewModule {
 		populateClientBox();
 	}
 
+	/**
+	 * Populates the items into the combobox
+	 */
 	private void populateClientBox() {
 		ObservableList<Client> clientList = FXCollections.observableArrayList();
 		clientList.addAll(controller.readAllClients());
@@ -92,6 +109,10 @@ public class UpdateShiftView implements ViewModule {
 		});
 	}
 
+
+	/**
+	 * Populates the items into the combobox
+	 */
 	private void populateCargoBox() {
 		selectedCargoList = FXCollections.observableArrayList();
 		shift.getCargo().forEach(e -> {
@@ -122,11 +143,18 @@ public class UpdateShiftView implements ViewModule {
 		});
 	}
 	
+	/**
+	 * Updates the cargo in the combobox
+	 */
 	private void updateAvailableCargo() {
 		cargo_combobox.getItems().clear();
 		cargo_combobox.getItems().addAll(controller.readAllUnassignedCargo());
 	}
 	
+	/**
+	 * Creates remove button and its functionalities
+	 * @param Cargo cargo
+	 */
 	private void createRemoveButton(Cargo cargo) {
 		Button button = new Button("X");
 		//mimic cell height
@@ -152,6 +180,10 @@ public class UpdateShiftView implements ViewModule {
 		listItem_remove_box.getChildren().add(button);
 	}
 	
+	/**
+	 * Confirms the driving shift information
+	 * @param event
+	 */
 	private void confirmAction(ActionEvent event) {
 		controller.updateDrivingShift(shift);
 		observer.notifyListener();
