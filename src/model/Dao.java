@@ -10,16 +10,22 @@ import util.HibernateUtil;
 
 /**
  * 
- * @author tuoma
+ * @author tuoma, Nekuin
  * Class for DAO
  * @param <T> Type of the object
  */
 public class Dao<T> {
 	
 	private final Class<T> cl;
+	private boolean test = false;
 	
 	public Dao(Class<T> c){
 		this.cl = c;
+	}
+	
+	public Dao(Class<T> c, boolean test) {
+		this.cl = c;
+		this.test = test;
 	}
 
 	public T get(int id) {
