@@ -44,6 +44,12 @@ public class CargoTest {
 		assertEquals(7001, testCargo.getCargoID(), "Cargo ID not correct.");
 	}
 	
+	@Test
+	void createCargo() {
+		//create a new cargo that weights 50 and is not hazardous
+		controller.createCargo(new Cargo(50, false));
+	}
+	
 	/**
 	 * Tests the setter and getter of ID of a cargo object
 	 */
