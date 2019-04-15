@@ -8,15 +8,24 @@ import org.junit.jupiter.api.Test;
 
 import model.Client;
 
+/**
+ * Tests for client objects
+ *
+ */
 public class ClientTest {
 	
 	static Client testClient;
 	
+	/**
+	 * Creates a client object
+	 */
 	@BeforeEach
 	void resetClient() {
 		testClient = new Client("Hookoo");
 	}
-	
+	/**
+	 * Tests getter and setter of client ID
+	 */
 	@Test
 	@DisplayName("Test clientID")
 	void setClientID() {
@@ -24,12 +33,17 @@ public class ClientTest {
 		assertEquals(999, testClient.getClientID(), "Client ID not changed.");
 	}
 	
+	/**
+	 * Tests getter of client name
+	 */
 	@Test
 	@DisplayName("Test getName")
 	void getName() {
 		assertEquals("Hookoo", testClient.getName(), "Client name not correct.");
 	}
-	
+	/**
+	 * Tests getter and setter of client name
+	 */
 	@Test
 	@DisplayName("Test setName")
 	void setName() {

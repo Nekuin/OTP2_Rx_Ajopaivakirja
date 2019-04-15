@@ -8,15 +8,25 @@ import org.junit.jupiter.api.Test;
 
 import model.Cargo;
 
+/**
+ * Tests for cargo objects
+ *
+ */
 public class CargoTest {
 	
 	static Cargo testCargo;
 	
+	/**
+	 * Creates a new cargo object
+	 */
 	@BeforeEach
 	void resetCargo() {
 		testCargo = new Cargo(2300, false);
 	}
 	
+	/**
+	 * Tests the setter and getter of cargo object
+	 */
 	@Test
 	@DisplayName("Test cargoID")
 	void getCargoID() {	
@@ -24,19 +34,27 @@ public class CargoTest {
 		assertEquals(7001, testCargo.getCargoID(), "Cargo ID not correct.");
 	}
 	
+	/**
+	 * Tests the setter and getter of ID of a cargo object
+	 */
 	@Test
 	@DisplayName("Test setCargoID")
 	void setCargoID() {	
 		testCargo.setCargoID(8002);
 		assertEquals(8002, testCargo.getCargoID(), "Cargo ID not changed.");
 	}
-	
+	/**
+	 * Tests the setter and getter of ID of a cargo object
+	 */
 	@Test
 	@DisplayName("Test getWeight")
 	void getWeight() {	
 		assertEquals(2300, testCargo.getWeight(), "Cargo weight not correct.");
 	}
 	
+	/**
+	 * Tests the setter and getter of weight of a cargo object
+	 */
 	@Test
 	@DisplayName("Test setWeight")
 	void setWeight() {	
@@ -44,13 +62,18 @@ public class CargoTest {
 		assertEquals(3003, testCargo.getWeight(), "Cargo weight not changed.");
 	}
 	
+	/**
+	 * Tests if the cargo is hazardous or not
+	 */
 	@Test
 	@DisplayName("Test isHazardous")
 	void isHazardous() {	
 		assertEquals(false, testCargo.isHazardous(), "Cargo hazardous status not correct.");
 	}
 	
-	
+	/**
+	 * Tests if the cargo is hazardous or not, after setting value to be true
+	 */
 	@Test
 	@DisplayName("Test setHazardous")
 	void setHazardous() {

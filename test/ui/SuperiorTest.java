@@ -1,32 +1,22 @@
 package ui;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import java.util.Collection;
-import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
-import java.util.ResourceBundle;
-import java.util.stream.Collectors;
-
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.testfx.api.FxRobot;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
-
-import application.Main;
 import controller.Controller;
 import controller.IController;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -36,6 +26,9 @@ import util.Strings;
 import view.SuperiorEmployeeView;
 import view.ViewModule;
 
+/**
+ * Tests for superior UI
+ */
 @ExtendWith(ApplicationExtension.class)
 public class SuperiorTest {
 	
@@ -43,31 +36,35 @@ public class SuperiorTest {
 	private static IController controller;
 	private Strings strings;
 	
-	
+	/**
+	 * Creates a new driver 
+	 */
 	@BeforeAll
 	public static void beforeAll() {
 		controller = new Controller(null, true);
 		controller.createDriver(new Driver("Soini2", "A"));
 	}
 	
+	/**
+	 * Start method for the test
+	 * @param Stage stage
+	 */
 	@Start
 	public void start(Stage stage) {
 		strings = Strings.getInstance();
 		strings.changeBundle(new Locale("fi", "FI"));
 		
-		
-		
-		
-		
 		sup = new SuperiorEmployeeView(controller);
-		
 		
 		Scene scene = new Scene(sup.getView(), 400, 400);
 		stage.setScene(scene);
 		stage.show();
 		
 	}
-	
+	/**
+	 * Tests adding a driver
+	 * @param FxRobot robot
+	 */
 	@Test
 	public void addDriver(FxRobot robot) {
 		Button addEmpBtn = robot.lookup("#add-employee").queryAs(Button.class);
@@ -104,6 +101,10 @@ public class SuperiorTest {
 		assertEquals(1, n, "Employee was not created, expected 1 only counted 0!");
 	}
 	
+	/**
+	 * Test removing a driver
+	 * @param FxRobot robot
+	 */
 	@Test
 	public void removeDriver(FxRobot robot) {
 		
@@ -117,6 +118,9 @@ public class SuperiorTest {
 		System.out.println("remove n: " + n);
 	}
 	
+	/**
+	 * Checks if a specific driver is found
+	 */
 	@Test
 	public void checkDriver() {
 		Collection<Driver> drivers = controller.readAllDrivers();
