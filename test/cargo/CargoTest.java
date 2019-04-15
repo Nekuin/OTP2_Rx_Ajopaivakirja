@@ -1,7 +1,9 @@
 package cargo;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.List;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -44,10 +46,18 @@ public class CargoTest {
 		assertEquals(7001, testCargo.getCargoID(), "Cargo ID not correct.");
 	}
 	
+	/**
+	 * Tests if we can create a cargo object, store it in the database
+	 * and retrieve it
+	 */
 	@Test
+	@DisplayName("Testing create to database")
 	void createCargo() {
 		//create a new cargo that weights 50 and is not hazardous
-		controller.createCargo(new Cargo(50, false));
+		Cargo cargo = new Cargo(50, false);
+		controller.createCargo(cargo);
+		List<Cargo> cargoList = controller.readAllCargo();
+		assertTrue(cargoList.contains(cargo));
 	}
 	
 	/**
