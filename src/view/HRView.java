@@ -20,11 +20,17 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Driver;
+import util.Strings;
 
 /**
  * View module for the HR managers
  * @author Nekuin
  *
+ */
+
+/*
+ * Class not commented
+ * Going to be remade with scene builder
  */
 public class HRView implements ViewModule, UndoObserver {
 
@@ -37,6 +43,8 @@ public class HRView implements ViewModule, UndoObserver {
 	//test
 	private TextField driverNameTextF;
 	private TextField driversLicenseTextF;
+	
+	
 	
 	String cssLayoutDriverBox = "-fx-border-color: black;\n" +
             "-fx-border-insets: 5;\n" +
@@ -90,6 +98,8 @@ public class HRView implements ViewModule, UndoObserver {
 		driversLicense.setPromptText("Drivers license");
 		TextField driverID = new TextField("");
 		driverID.setPromptText("Employee ID");
+		
+		
 		
 		HBox hazardousBox = new HBox();
 		Text hazardousText = new Text("Can drive hazardous: ");
