@@ -13,9 +13,6 @@ import javax.persistence.Transient;
 public class HrManager extends Employee{
 	
 	@Transient
-	private DriverAccessObject a;
-	
-	@Transient
 	private DrivingShiftAO ao;
 	
 	/**
@@ -36,40 +33,12 @@ public class HrManager extends Employee{
 	
 	
 	/**
-	 * Sets the access object for driver objects
-	 * @param a driver access object
-	 */
-	public void setAjoAccessObject(DriverAccessObject a) {
-		this.a = a;
-	}
-	
-	
-	/**
 	 * Sets the access object for driving shift objects
 	 * @param ao driving shift access object
 	 */
 	public void setDrivingShiftAO(DrivingShiftAO ao) {
 		this.ao = ao;
 	}
-	
-	/**
-	 * Add driver to the database
-	 * @param name name of the driver
-	 * @param driversLicense drivers license of the driver
-	 */
-	public void addDriver(String name, String driversLicense) {
-		Driver driver = new Driver(name,driversLicense);
-		a.create(driver);	
-	}
-	
-	/**
-	 * Removes driver from the database
-	 * @param driver driver that is about to be removed
-	 */
-	public void removeDriver(Driver driver) {
-		a.delete(driver);
-	}
-	
 	
 	/**
 	 * Adds driving shift to the database

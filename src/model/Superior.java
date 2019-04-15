@@ -11,8 +11,6 @@ import javax.persistence.Transient;
 @Entity
 public class Superior extends Employee{	
 	
-	@Transient
-	private VehicleAccessObject vao;
 	
 	/**
 	 * Constructor with name
@@ -27,43 +25,5 @@ public class Superior extends Employee{
 	 */
 	public Superior() {
 		super();
-	}
-	
-	/**
-	 * Setter for the data access object
-	 * @param vao VehicleAccessObject
-	 */
-	public void setVehicleAccessObject( VehicleAccessObject vao) {
-		this.vao = vao;
-	}
-	
-	/**
-	 * Method for creating a new vehicle
-	 * @param regNr
-	 * @param drivenDistance
-	 * @param maxCargoLoad
-	 * @param model
-	 * @param brand
-	 * @param maintained
-	 */
-	public void createVehicle(String regNr, double drivenDistance, int maxCargoLoad, String model, String brand, boolean maintained) {
-		Vehicle newVehicle = new Vehicle(regNr, drivenDistance, maxCargoLoad, model, brand, maintained);
-		vao.createVehicle(newVehicle);
-	}
-	
-	/**
-	 * Method for updating car specs
-	 * @param vehicle
-	 */
-	public void updateVehicle(Vehicle vehicle) {
-		vao.updateVehicle(vehicle);
-	}
-	
-	/**
-	 * Method for deleting a vehicle
-	 * @param vehicle
-	 */
-	public void deleteVehicle(Vehicle vehicle) {
-		vao.deleteVehicle(vehicle.getCarID());
 	}
 }
