@@ -8,6 +8,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import controller.Controller;
+import controller.IController;
 import model.Cargo;
 
 /**
@@ -17,7 +18,7 @@ import model.Cargo;
 public class CargoTest {
 	
 	static Cargo testCargo;
-	static Controller controller;
+	static IController controller;
 	
 	/**
 	 * Creates a new cargo object
