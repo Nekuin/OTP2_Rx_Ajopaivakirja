@@ -29,7 +29,7 @@ public class CargoTest {
 	}
 	
 	@BeforeAll
-	void init() {
+	static void init() {
 		//use test version of controller by passing true as the last argument
 		controller = new Controller(null, true);
 	}
