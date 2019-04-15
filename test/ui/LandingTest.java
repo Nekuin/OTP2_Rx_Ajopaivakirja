@@ -17,6 +17,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import model.Driver;
+import util.Strings;
 import view.LandingView;
 import view.ViewModule;
 
@@ -35,14 +36,15 @@ public class LandingTest {
 
 	private ViewModule landing;
 	private IController controller;
+	private Strings strings;
 	
 	@Start
 	private void start(Stage stage) {
+		strings = Strings.getInstance();
+		strings.changeBundle(new Locale("fi", "FI"));
 		BorderPane root = new BorderPane();
-		Locale.setDefault(new Locale("fi", "FI"));
-		Main.b = ResourceBundle.getBundle("Strings");
 		controller = new Controller(null);
-		landing = new LandingView(controller);
+		landing = new LandingView(controller, null);
 		
 		root.setCenter(landing.getView());
 		Scene scene = new Scene(root, 400, 400);

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+
+<BorderPane fx:id="root" prefHeight="30.0" style="-fx-background-color: red;" xmlns="http://javafx.com/javafx/10" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <HBox alignment="CENTER" prefHeight="50.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button id="undoButton" fx:id="undo_button" mnemonicParsing="false" text="Removed employee ID 1, Undo?" />
+            <Button id="dismissButton" fx:id="dismiss_button" mnemonicParsing="false" text="X">
+               <opaqueInsets>
+                  <Insets left="10.0" />
+               </opaqueInsets>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
+   </center>
+</BorderPane>

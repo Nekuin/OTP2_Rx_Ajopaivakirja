@@ -17,37 +17,28 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import model.Driver;
 import model.DrivingShift;
+import util.Strings;
 /**
  * View module where the Driver can reserve shifts
  * @author Nekuin
  *
  */
-public class DriverReserveView implements ViewModule{
+public class DriverReserveView implements ViewModule, UndoObserver{
 	
 	private BorderPane bpane;
 	private ObservableList<DrivingShift> shifts;
 	private ListView<DrivingShift> shiftListView;
 	private Text[] shiftDetailTexts;
+	private Strings strings;
 	
 	private IController controller;
-	
-	/**
-	 * Constructor which takes the controller and navbar as arguments
-	 * @param controller instance of Controller
-	 * @param navBar instance of NavBar
-	 */
-	public DriverReserveView(IController controller, NavBar navBar) {
-		this.controller = controller;
-		this.bpane = new BorderPane();
-		this.setNavBar(navBar);
-		setup();
-	}
 	
 	/**
 	 * Constructor which takes the controller as argument
 	 * @param controller instance of Controller
 	 */
 	public DriverReserveView(IController controller) {
+		strings = Strings.getInstance();
 		this.controller = controller;
 		this.bpane = new BorderPane();
 		setup();
@@ -63,11 +54,13 @@ public class DriverReserveView implements ViewModule{
 		VBox vbox = new VBox();
 		vbox.getChildren().add(shiftDetailsPanel());
 		
-		Button reserveButton = new Button(Main.b.getString("driver_reserve_text"));
+		Button reserveButton = new Button(strings.getString("driver_reserve_text"));
 		reserveButton.setOnAction(e -> {
 			Driver driver = this.controller.readDriver(Main.LOGGED_IN_ID);
 			this.controller.assignShift(driver, shiftListView.getSelectionModel().getSelectedItem());
 			this.updateShiftList(this.controller.readGoodDrivingShifts(driver));
+			//clear details text
+			this.updateShiftDetailText("", "", "", "");
 		});
 		
 		vbox.getChildren().add(reserveButton);
@@ -89,6 +82,11 @@ public class DriverReserveView implements ViewModule{
 		
 		shiftListView.setOnMouseClicked(e -> {
 			DrivingShift selected = shiftListView.getSelectionModel().getSelectedItem();
+			if(selected == null) {
+				//clear details text
+				this.updateShiftDetailText("", "", "", "");
+				return;
+			}
 			//this.updateShiftDetailText(new String[] {selected.getClient().toString(), "" + selected.getShiftID(), "" + selected.getTotalCargoWeight(), "time"});
 			this.updateShiftDetailText(selected.getClient().toString(), "" + selected.getShiftID(), "" + selected.getTotalCargoWeight(), "time");
 		});
@@ -103,13 +101,13 @@ public class DriverReserveView implements ViewModule{
 	 */
 	private GridPane shiftDetailsPanel() {
 		GridPane grid = new GridPane();
-		Text title = new Text(Main.b.getString("shift_details_text") + ": ");
+		Text title = new Text(strings.getString("shift_details_text") + ": ");
 		grid.add(title, 0, 0);
 		
-		Text client = new Text(Main.b.getString("client_text") + ": ");
-		Text shift = new Text(Main.b.getString("shift_text") + " id: ");
-		Text cargo = new Text(Main.b.getString("cargo_text") + ": ");
-		Text time = new Text(Main.b.getString("time_text") + ": ");
+		Text client = new Text(strings.getString("client_text") + ": ");
+		Text shift = new Text(strings.getString("shift_text") + " id: ");
+		Text cargo = new Text(strings.getString("cargo_text") + ": ");
+		Text time = new Text(strings.getString("time_text") + ": ");
 		
 		for(int i = 0; i < shiftDetailTexts.length; i++) {
 			this.shiftDetailTexts[i] = new Text("");
@@ -145,14 +143,6 @@ public class DriverReserveView implements ViewModule{
 		this.shifts.clear();
 		this.shifts.addAll(shifts.stream().filter(shift -> !shift.getShiftTaken()).collect(Collectors.toList()));
 	}
-	
-	/**
-	 * Set the instance of NavBar
-	 * @param navBar instance of NavBar
-	 */
-	public void setNavBar(NavBar navBar) {
-		this.bpane.setTop(navBar.getNavBar());
-	}
 
 	/**
 	 * Get the whole module
@@ -161,6 +151,12 @@ public class DriverReserveView implements ViewModule{
 	@Override
 	public BorderPane getView() {
 		return this.bpane;
+	}
+
+	@Override
+	public void notifyUndo() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

@@ -105,7 +105,12 @@ public class Cargo {
 	 * Method for getting information about the cargo in string format
 	 */
 	public String toString() {
-		return "Cargo ID: " + this.getCargoID() + " Weight: " + this.getWeight() + " Hazardous: " + this.isHazardous();
+		if(this.isHazardous()) {
+			return "Cargo ID: " + getCargoID() + ", " + getWeight() + "kg, Hazardous";
+		} else {
+			return "Cargo ID: " + getCargoID() + ", " + getWeight() + "kg";
+		}
+		
 	}
 
 /**

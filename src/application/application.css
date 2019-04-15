@@ -24,3 +24,27 @@
 .navButton:selected{
 	-fx-background-insets: 0;
 }
+
+.undoButton{
+	-fx-background-radius: 0;
+	-fx-background-insets: 0;
+	-fx-background-color: red;
+}
+
+.undoButton:hover{
+	-fx-background-radius: 0;
+	-fx-background-insets: 0;
+	-fx-background-color: pink;
+}
+
+.dismissButton {
+	-fx-background-radius: 0;
+	-fx-background-insets: 0;
+	-fx-background-color: gray;
+}
+
+.dismissButton:hover {
+	-fx-background-radius: 0;
+	-fx-background-insets: 0;
+	-fx-background-color: white;
+}

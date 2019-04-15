@@ -1,17 +1,17 @@
 package view;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
-import java.util.ResourceBundle;
-
 import application.Main;
 import controller.IController;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import model.Driver;
 import model.HrManager;
 import model.Superior;
-import javafx.geometry.Insets;
+import util.Strings;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -26,52 +26,80 @@ public class LandingView implements ViewModule {
 	private IController controller;
 	private BorderPane bpane;
 	private int logged_in_id;
+	private Strings strings;
+	private IView main;
+	
+	@FXML
+	private Button login_button;
+	
+	@FXML
+	private TextField login_field;
+	
+	@FXML
+	private Button FI_button;
+	
+	@FXML
+	private Button EN_button;
+	
+	@FXML
+	private Button shutdown_button;
 	
 	/**
 	 * Constructor which takes a Controller as a parameter
 	 * @param controller instance of Controller
 	 */
-	public LandingView(IController controller) {
+	public LandingView(IController controller, IView main) {
+		this.main = main;
+		strings = Strings.getInstance();
 		this.controller = controller;
-		this.bpane = new BorderPane();
-		
-		GridPane pane = loginPane();
-		pane.setId("loginPane");
-		this.bpane.setCenter(pane);
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("Landing_View.fxml"), strings.getBundle());
+		loader.setController(this);
+		try {
+			loader.load();
+			bpane = loader.getRoot();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**
-	 * A module which has fields for employee ID input and a button for logging in
-	 * @return GridPane
+	 * initialize is called after @FXML tagged fields are injected
 	 */
-	private GridPane loginPane() {
-		GridPane pane = new GridPane();
-		pane.setPadding(new Insets(30, 0, 0, 30));
-		
-		TextField idField = new TextField();
-		idField.setPromptText("Your Employee ID");
-		idField.setId("id-field");
-		
-		
-		Button loginButton = new Button(Main.b.getString("login_text"));
-		loginButton.setOnAction(e -> {
-			int id = Integer.parseInt(idField.getText());
-			idField.setText("");
-			login(id);
+	@FXML
+	private void initialize() {
+		login_button.setOnAction(e -> {
+			login(getLoginID());
+			login_field.setText("");
 		});
-		loginButton.setId("login-button");
 		
-		idField.setOnKeyPressed(e -> {
+		login_field.setOnKeyPressed(e -> {
 			if(e.getCode() == KeyCode.ENTER) {
-				this.login(Integer.parseInt(idField.getText()));
-				idField.setText("");
+				login(getLoginID());
+				login_field.setText("");
 			}
 		});
 		
+		FI_button.setOnAction(e -> {
+			strings.changeBundle(new Locale("fi", "FI"));
+			main.createViews();
+		});
 		
-		pane.add(loginButton, 1, 0);
-		pane.add(idField, 0, 0);
-		return pane;
+		EN_button.setOnAction(e ->{
+			strings.changeBundle(new Locale("en", "US"));
+			main.createViews();
+		});
+		
+		shutdown_button.setOnAction(e ->{
+			System.exit(1);
+		});
+	}
+	
+	private int getLoginID() {
+		String fieldText = login_field.getText();
+		if(fieldText.equals("")) {
+			return -1;
+		}
+		return Integer.parseInt(fieldText);
 	}
 	
 	/**
@@ -79,6 +107,9 @@ public class LandingView implements ViewModule {
 	 * @param id Employee ID
 	 */
 	private void login(int id) {
+		if(id < 0) {
+			return;
+		}
 		System.out.println("[ph] logging in as id: " + id);
 		//check if the id belongs to a driver
 		List<Driver> drivers = this.controller.readAllDrivers();
@@ -117,11 +148,6 @@ public class LandingView implements ViewModule {
 		});
 		
 	}
-	
-
-	@Override
-	public void setNavBar(NavBar navBar) {
-	}
 
 	/**
 	 * Get the whole LandingView module
@@ -135,5 +161,4 @@ public class LandingView implements ViewModule {
 	public int getLoggedInid() {
 		return logged_in_id;
 	}
-	
 }

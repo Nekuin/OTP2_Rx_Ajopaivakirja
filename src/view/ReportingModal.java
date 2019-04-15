@@ -22,15 +22,17 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import model.DrivingShift;
 import model.Vehicle;
+import util.Strings;
 
 /**
  * 
  * @author tuoma
  * View class for reporting
  */
-public class ReportingView {
+public class ReportingModal {
 
 	private BorderPane bpane;
+	private Strings strings;
 	private IController controller;
 	private DrivingShift drivingShift;
 	private CheckBox confirmBox;
@@ -45,7 +47,8 @@ public class ReportingView {
 	 * @param controller controller of reporting view
 	 * @param drivingShift drivingShift for reporting view
 	 */
-	public ReportingView(IController controller, DrivingShift drivingShift) {
+	public ReportingModal(IController controller, DrivingShift drivingShift) {
+		this.strings = Strings.getInstance();
 		this.controller = controller;
 		this.drivingShift = drivingShift;
 		this.bpane = new BorderPane();
@@ -72,21 +75,18 @@ public class ReportingView {
 
 		GridPane grid = new GridPane();
 		VBox shiftInfoVBox = new VBox();
-		shiftInfoVBox.setSpacing(20);
+		shiftInfoVBox.setSpacing(25);
 		shiftInfoVBox.setPadding(new Insets(20, 20, 20, 20));
 
-		Text title = new Text("You are now reporting:");
-		title.setStyle("-fx-font: 24 arial;");
+		Text title = new Text(strings.getString("now_repoting_title"));
+		title.setStyle("-fx-font: 22 arial;");
 		
-		  Text client = new Text("Client: " + "Asiakas"); 
-		  Text shift = new Text("Shift id: " + "1"); 
-		  Text cargo = new Text("Cargo: " + "50kg");
-		 /*
-		Text client = new Text("Client: ");
-		Text shift = new Text("Shift id: ");
-		Text cargo = new Text("Cargo: ");
-*/
-		shiftInfoVBox.getChildren().addAll(title, client, shift, cargo);
+		  Text client = new Text(strings.getString("customer_name") + " " + drivingShift.getClient().getName()); 
+		  Text shift = new Text(strings.getString("shift_id") + " " +drivingShift.getShiftID()); 
+		  Text cargo = new Text(strings.getString("cargo_text") + " " +drivingShift.getTotalCargoWeight() + " kg");
+		  Text deadLine = new Text(strings.getString("deadline_info") + ": " + drivingShift.getDeadline());
+		  
+		shiftInfoVBox.getChildren().addAll(title, client, shift, cargo, deadLine);
 		grid.add(shiftInfoVBox, 0, 0);
 
 		return grid;
@@ -100,11 +100,11 @@ public class ReportingView {
 		GridPane grid = new GridPane();
 
 		VBox labelVBox = new VBox();
-		labelVBox.setSpacing(20);
-		labelVBox.setPadding(new Insets(0, 20, 20, 20));
-		Text label = new Text("Fill in the information below:");
+		labelVBox.setSpacing(25);
+		labelVBox.setPadding(new Insets(20, 20, 40, 20));
+		Text label = new Text(strings.getString("fill_in_info"));
 		label.setStyle("-fx-font: 20 arial;");
-		Text mandatoryText = new Text("Fields with * are mandatory");
+		Text mandatoryText = new Text(strings.getString("mandatory_info"));
 		mandatoryText.setStyle("-fx-font: 17 arial;");
 		labelVBox.getChildren().addAll(label, mandatoryText);
 
@@ -115,7 +115,7 @@ public class ReportingView {
 		this.carList.addAll(controller.readAllVehicles());
 		carDropDown = new ComboBox<>(carList);
 		carDropDown.setPrefWidth(200);
-		Text carSelectText = new Text("* Which car did you use?");
+		Text carSelectText = new Text(strings.getString("which_car"));
 		carHBox.getChildren().addAll(carSelectText, carDropDown);
 
 		VBox timeInfoVbox = new VBox();
@@ -125,7 +125,7 @@ public class ReportingView {
 		HBox dateHBox = new HBox();
 		dateHBox.setSpacing(20);
 		dateHBox.setPadding(new Insets(20, 20, 0, 0));
-		Text dateText = new Text("* Select the date:");
+		Text dateText = new Text(strings.getString("date_field"));
 		DatePicker datePicker = new DatePicker();
 		datePicker.showWeekNumbersProperty();
 		datePicker.setOnAction(action -> {
@@ -135,13 +135,13 @@ public class ReportingView {
 
 		HBox startHBox = new HBox();
 		startHBox.setSpacing(20);
-		Text startTimeText = new Text("* Start time (hh:mm):  ");
+		Text startTimeText = new Text(strings.getString("start_time_field"));
 		startTimeTextF = new TextField();
 		startHBox.getChildren().addAll(startTimeText, startTimeTextF);
 
 		HBox finishHBox = new HBox();
 		finishHBox.setSpacing(20);
-		Text finishTimeText = new Text("* Finish time (hh:mm):");
+		Text finishTimeText = new Text(strings.getString("finish_time_field"));
 		finishTimeTextF = new TextField();
 		finishHBox.getChildren().addAll(finishTimeText, finishTimeTextF);
 
@@ -150,7 +150,7 @@ public class ReportingView {
 		VBox additionalInfoVBox = new VBox();
 		additionalInfoVBox.setSpacing(10);
 		additionalInfoVBox.setPadding(new Insets(0, 20, 20, 20));
-		Text additionalInfoText = new Text("Additional info about the shift:");
+		Text additionalInfoText = new Text(strings.getString("Additional_info"));
 		TextArea additionalInfo = new TextArea();
 		additionalInfo.setPrefSize(300, 150);
 		additionalInfo.setWrapText(true);
@@ -160,7 +160,7 @@ public class ReportingView {
 		checkBeforeSubmitHBox.setSpacing(20);
 		checkBeforeSubmitHBox.setPadding(new Insets(0, 20, 20, 20));
 		confirmBox = new CheckBox();
-		Text confirmText = new Text("I have filled in the all information needed");
+		Text confirmText = new Text(strings.getString("confirmBox_info"));
 		checkBeforeSubmitHBox.getChildren().addAll(confirmText, confirmBox);
 
 		grid.add(labelVBox, 0, 0);
@@ -180,15 +180,15 @@ public class ReportingView {
 	private GridPane addButtons() {
 		GridPane buttonPane = new GridPane();
 
-		Button submitButton = new Button("Submit");
+		Button submitButton = new Button(strings.getString("submit_button_text"));
 		submitButton.setOnAction(e -> {
 
 			if (checkInput()) {
 				if (!confirmBox.isSelected()) {
 					Alert alert = new Alert(AlertType.INFORMATION);
-					alert.setTitle("Check the confirmation box");
+					alert.setTitle(strings.getString("confirmbox_alert_title"));
 					alert.setHeaderText(null);
-					alert.setContentText("Please check the box before submitting.");
+					alert.setContentText(strings.getString("confirmbox_alert_info"));
 					alert.showAndWait();
 				} else {
 					drivingShift.setShiftDriven(true);
@@ -197,9 +197,11 @@ public class ReportingView {
 					drivingShift.setFinishTime(finishTimeTextF.getText());
 					controller.updateDrivingShift(drivingShift);
 					Alert alert = new Alert(AlertType.INFORMATION);
-					alert.setTitle("Successfully reported");
-					alert.setContentText("You have successfully reported shift:" + drivingShift.getShiftID());
+					alert.setTitle(strings.getString("reproted_alert_title"));
+					alert.setHeaderText(null);
+					alert.setContentText(strings.getString("shift_id") + " "+drivingShift.getShiftID() + "\n" + strings.getString("customer_name") + ": "+ drivingShift.getClient().getName());
 					alert.showAndWait();
+					((Node) e.getSource()).getScene().getWindow().hide();
 				}
 
 			} else {
@@ -208,7 +210,7 @@ public class ReportingView {
 
 		});
 
-		Button closeButton = new Button("Cancel");
+		Button closeButton = new Button(strings.getString("cancel_button_text"));
 		closeButton.setOnAction(e -> {
 			((Node) e.getSource()).getScene().getWindow().hide();
 		});
@@ -231,9 +233,9 @@ public class ReportingView {
 
 		if (carDropDown.getSelectionModel().isEmpty()) {
 			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Choose a car");
+			alert.setTitle(strings.getString("car_missing_alert_title"));
 			alert.setHeaderText(null);
-			alert.setContentText("Please choose the used car from the dropdown menu.");
+			alert.setContentText(strings.getString("car_missing_alert_info"));
 			alert.showAndWait();
 			return false;
 		}
@@ -241,27 +243,27 @@ public class ReportingView {
 		if (localDate == null) {
 
 			Alert alert = new Alert(AlertType.WARNING);
-			alert.setTitle("Enter the date");
+			alert.setTitle(strings.getString("date_missing_alert_info"));
 			alert.setHeaderText(null);
-			alert.setContentText("Please enter the date you drove the shift.");
+			alert.setContentText(strings.getString("date_missing_alert_info"));
 			alert.showAndWait();
 			return false;
 		}
 
 		if (startTimeTextF.getText() == null || !startTimeTextF.getText().matches(timeRegex)) {
 			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Enter start time");
+			alert.setTitle(strings.getString("startTime_missing_alert_info"));
 			alert.setHeaderText(null);
-			alert.setContentText("Please enter the time (hh:mm) you started the shift.");
+			alert.setContentText(strings.getString("startTime_missing_alert_info"));
 			alert.showAndWait();
 			return false;
 		}
 
 		if (finishTimeTextF.getText() == null || !finishTimeTextF.getText().matches(timeRegex)) {
 			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Enter finish time");
+			alert.setTitle(strings.getString("finishTime_missing_alert_info"));
 			alert.setHeaderText(null);
-			alert.setContentText("Please enter the time (hh:mm) you finished the shift.");
+			alert.setContentText(strings.getString("finishTime_missing_alert_info"));
 			alert.showAndWait();
 			return false;
 		}

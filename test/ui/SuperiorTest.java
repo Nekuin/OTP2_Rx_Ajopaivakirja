@@ -32,6 +32,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import model.Driver;
 import model.Employee;
+import util.Strings;
 import view.SuperiorEmployeeView;
 import view.ViewModule;
 
@@ -40,6 +41,7 @@ public class SuperiorTest {
 	
 	private ViewModule sup;
 	private static IController controller;
+	private Strings strings;
 	
 	
 	@BeforeAll
@@ -50,8 +52,8 @@ public class SuperiorTest {
 	
 	@Start
 	public void start(Stage stage) {
-		Locale.setDefault(new Locale("fi", "FI"));
-		Main.b = ResourceBundle.getBundle("Strings");
+		strings = Strings.getInstance();
+		strings.changeBundle(new Locale("fi", "FI"));
 		
 		BorderPane root = new BorderPane();
 		
