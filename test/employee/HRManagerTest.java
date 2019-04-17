@@ -1,30 +1,35 @@
 package employee;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import controller.Controller;
+import controller.IController;
 import model.*;
 
 public class HRManagerTest {
 	
 	static HrManager testHR;
-	static Driver kuski; 
+	static Driver kuski;
+	static IController controller;
 
 	@BeforeAll
 	static void setup() {
 		System.out.println("testing HR manager");
-		//a = new DriverAccessObject();
+		controller = new Controller(null, true);
 		
 	}
 
 	@BeforeEach
 	void resetHR() {
 		testHR = new HrManager("HR Heikki");
-		kuski = new Driver("Asko Kuski", "B1");
 	}
 	
 	@Test
@@ -34,23 +39,19 @@ public class HRManagerTest {
 	}
 	
 	@Test
-	@DisplayName("Test removeDriver")
-	void removeDriver() {			
-		//TODO: implement
+	@DisplayName("Hr database")
+	void createHrManager() {
+		HrManager mng = new HrManager("Makke Manageeri");
+		controller.createHrManager(mng);
+		List<HrManager> managers = controller.readAllHrManagers();
+		assertTrue(managers.contains(mng));
 	}
 	
 	@Test
-	@DisplayName("Test addDrivingShift")
-	void addDrivingShift() {			
-	//	boolean test = testHR.addDrivingShift(101, "12:00", "16:00", arska);
-		//assertEquals(true, test, "Adding a driver failed!");
-	}
-		
-	@Test
-	@DisplayName("Test removeDrivingShift")
-	void removeDrivingShift() {			
-	//	boolean test = testHR.removeDrivingShift(101, "12:00", "16:00", arska);
-		//assertEquals(true, test, "Removing the driver failed!");
+	@DisplayName("Hr name change")
+	void changeName() {
+		testHR.setName("HR Helena");
+		assertEquals("HR Helena", testHR.getName(), "Name is not correct");
 	}
 	
 
