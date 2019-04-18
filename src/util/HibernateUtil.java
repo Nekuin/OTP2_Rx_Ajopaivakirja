@@ -4,7 +4,11 @@ package util;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-
+/**
+ * Handles creating EntityManager for Data Access objects
+ * @author Nekuin
+ *
+ */
 public class HibernateUtil {
 
 	
@@ -25,7 +29,7 @@ public class HibernateUtil {
 		return emf;
 	}
 	/**
-	 * Test getter for an entity manager factory
+	 * Getter for the test version of entity manager factory
 	 * @return EntityManagerFactory emf
 	 */
 	public static synchronized EntityManagerFactory getTestEntityManagerFactory() {
@@ -50,6 +54,10 @@ public class HibernateUtil {
 		return em;
 	}
 	
+	/**
+	 * Getter for the test version of the EntityManager
+	 * @return EntityManager em
+	 */
 	public static synchronized EntityManager getTestEntityManager() {
 		if(em == null) {
 			em = getTestEntityManagerFactory().createEntityManager();
