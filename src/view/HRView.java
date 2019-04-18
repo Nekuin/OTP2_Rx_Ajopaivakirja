@@ -162,7 +162,7 @@ public class HRView implements ViewModule, UndoObserver {
 		grid.add(title, 0, 0);
 		grid.add(lv, 0, 1);
 		grid.add(driverBox, 1, 1);
-		grid.add(addDriverBtn, 2, 2);
+		grid.add(addDriverBtn, 1, 2);
 
 		return grid;
 	}
@@ -179,7 +179,7 @@ public class HRView implements ViewModule, UndoObserver {
 		VBox labelBox = new VBox();
 		labelBox.setSpacing(30);
 		labelBox.setPadding(new Insets(30, 20, 20, 20));
-		Text label = new Text("Give new drivers information");
+		Text label = new Text("Give drivers information");
 		labelBox.getChildren().addAll(label);
 		
 		//drivers name
