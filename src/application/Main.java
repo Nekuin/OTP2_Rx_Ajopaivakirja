@@ -2,10 +2,8 @@ package application;
 	
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Locale;
 
 import javax.persistence.EntityManager;
@@ -28,14 +26,11 @@ import view.*;
 
 public class Main extends Application implements IView {
 	
-	public static int DRIVER_VIEW = 1, HR_VIEW = 2, SUPERIOR_VIEW = 3;
+	public final static int DRIVER_VIEW = 1, HR_VIEW = 2, SUPERIOR_VIEW = 3;
 	public static int LOGGED_IN_ID = 0;
 	private BorderPane root;
-	private DriverView dv;
 	private HRView hr;
 	private ViewModule landing;
-	private ViewModule driverRes;
-	private ViewModule personalShift;
 	private ViewModule supView;
 	private ViewModule supEmpView;
 	private IController controller;
@@ -102,6 +97,7 @@ public class Main extends Application implements IView {
 						Thread.sleep(100);
 					} catch (InterruptedException e1) {
 						e1.printStackTrace();
+						Thread.currentThread().interrupt();
 					}
 				
 				//createViews must be called on UI thread!!
@@ -128,9 +124,6 @@ public class Main extends Application implements IView {
 	@Override
 	public void createViews() {
 		
-		//navigation for Driver
-		//createDriverNavBar();
-		
 		//create and set landing view
 		this.landing = new LandingView(this.controller, this);
 		root.setCenter(landing.getView());
@@ -143,7 +136,6 @@ public class Main extends Application implements IView {
 		bottomBox = new HBox();
 		bottomBox.setPadding(new Insets(0, 50, 50, 50));
 		bottomBox.getChildren().addAll(logout);
-		//root.setBottom(bottomBox);
 		
 		//create SuperiorView
 		this.supView = new SuperiorView(this.controller);
@@ -294,15 +286,8 @@ public class Main extends Application implements IView {
 	public void changeView(int view) {
 		root.setBottom(bottomBox);
 		if(view == Main.DRIVER_VIEW) {
-			/*this.dv.updateDriver();
-			List<DrivingShift> shifts = this.controller.readGoodDrivingShifts(this.controller.readDriver(Main.LOGGED_IN_ID));
-			((DriverReserveView)this.driverRes).updateShiftList(shifts);
-			this.root.setCenter(this.driverRes.getView());
-			((PersonalShiftView)this.personalShift).updateShifts(shifts);
-			this.root.setCenter(this.personalShift.getView());
-			this.root.setTop(driverNav.getNavBar());*/
-			this.dv = new DriverView(controller);
-			this.root.setCenter(this.dv.getView());
+			//creates a new DriverView every time to handle language changes
+			this.root.setCenter(new DriverView(controller).getView());
 		} else if(view == Main.HR_VIEW) {
 			this.hr.updateDrivers(this.controller.readAllDrivers());
 			this.root.setCenter(this.hr.getView());
