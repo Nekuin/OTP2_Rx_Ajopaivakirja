@@ -27,7 +27,7 @@ public class Controller implements IController{
 	
 	/**
 	 * Contructor for the controller
-	 * @param view view that the controller is going to use
+	 * @param view instance of view
 	 */
 	public Controller(IView view) {
 		this.view = view;
@@ -41,6 +41,11 @@ public class Controller implements IController{
 		this.clientAO = new Dao<>(model.Client.class);
 	}
 	
+	/**
+	 * Constructor for the JUnit testing version of the controller
+	 * @param view instance of View or null for testing
+	 * @param test boolean indicating whether or not to use the test database on jenkins server
+	 */
 	public Controller(IView view, boolean test) {
 		System.out.println("test controller");
 		this.view = view;
