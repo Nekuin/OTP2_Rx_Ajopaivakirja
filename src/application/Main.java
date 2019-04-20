@@ -31,11 +31,8 @@ public class Main extends Application implements IView {
 	private BorderPane root;
 	private HRView hr;
 	private ViewModule landing;
-	private ViewModule supView;
-	private ViewModule supEmpView;
 	private IController controller;
-	private ViewModule supShiftView;
-	private NavBar supNav;
+	private ViewModule superiorView;
 	private HBox bottomBox;
 	private EntityManager entityManager;
 	private boolean startUpFinish = false;
@@ -138,16 +135,7 @@ public class Main extends Application implements IView {
 		bottomBox.getChildren().addAll(logout);
 		
 		//create SuperiorView
-		this.supView = new SuperiorView(this.controller);
-		
-		//create SuperiorEmployeeView
-		this.supEmpView = new SuperiorEmployeeView(this.controller);
-		
-		//create SuperiorShiftView
-		this.supShiftView = new SuperiorShiftView(this.controller);
-		
-		//create Buttons for Superior navBar
-		createSuperiorNavBar();
+		this.superiorView = new SuperiorViewController(controller);
 		
 	}
 	
@@ -160,26 +148,6 @@ public class Main extends Application implements IView {
 			root.setBottom(null);
 		});
 		return logout;
-	}
-	
-	private void createSuperiorNavBar() {
-		Button supViewButton = new Button("Superior Vehicle");
-		Button supEmpViewButton = new Button("Superior Employees");
-		Button supShiftViewButton = new Button("Superior Shifts");
-		
-		//create navBar for Superior
-		supNav = new NavBar(this, supViewButton, supEmpViewButton, supShiftViewButton);
-		supEmpViewButton.setOnAction(e -> {
-			root.setCenter(supEmpView.getView());
-		});
-		
-		supViewButton.setOnAction(e -> {
-			root.setCenter(supView.getView());
-		});
-		
-		supShiftViewButton.setOnAction(e -> {
-			root.setCenter(supShiftView.getView());
-		});
 	}
 	
 	public static void main(String[] args) {
@@ -292,8 +260,7 @@ public class Main extends Application implements IView {
 			this.hr.updateDrivers(this.controller.readAllDrivers());
 			this.root.setCenter(this.hr.getView());
 		} else if(view == Main.SUPERIOR_VIEW) {
-			this.root.setCenter(this.supView.getView());
-			this.root.setTop(supNav.getNavBar());
+			this.root.setCenter(this.superiorView.getView());
 		}
 	}
 
