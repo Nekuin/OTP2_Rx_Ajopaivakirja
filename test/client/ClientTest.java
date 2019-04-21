@@ -69,6 +69,6 @@ public class ClientTest {
 		Client client = new Client("MakenMakkara");
 		controller.createClient(client);
 		List<Client> clientList = controller.readAllClients();
-		assertTrue(clientList.contains(client),"Database should have the cargo!");
+		assertTrue(clientList.contains(client),"Database should have the client!");
 	}
 }
