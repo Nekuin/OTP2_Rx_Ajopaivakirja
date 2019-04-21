@@ -39,8 +39,6 @@ public class HRView implements ViewModule, UndoObserver {
 	private Strings strings;
 	private Driver clicked;
 
-
-
 	@FXML
 	private Button addDriverBtn;
 	@FXML
