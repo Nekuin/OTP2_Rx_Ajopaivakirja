@@ -64,11 +64,10 @@ public class AddDriverModal {
 		hazardousInfoBox.setPadding(new Insets(20, 20, 20, 20));
 		Text hazardousInfo = new Text(strings.getString("hazardous_input"));
 		hazaBox = new CheckBox();
-		driversLicenseBox.getChildren().addAll(hazardousInfo, hazaBox);
+		hazardousInfoBox.getChildren().addAll(hazardousInfo, hazaBox);
 
 		// confirm button
-		Button addDriver = new Button("Confirm");
-		
+		Button addDriver = new Button(strings.getString("submit_button_text"));	
 		addDriver.setOnAction(e -> {
 			Driver newDriver = new Driver(driverNameTextF.getText(), driversLicenseTextF.getText(), canDriveHaz());
 			this.controller.createDriver(newDriver);
@@ -78,7 +77,7 @@ public class AddDriverModal {
 		});
 
 		// cancel button
-		Button cancelButton = new Button("Cancel");
+		Button cancelButton = new Button(strings.getString("cancel_button_text"));
 		cancelButton.setOnAction(e -> {
 			((Node) e.getSource()).getScene().getWindow().hide();
 		});
@@ -93,7 +92,9 @@ public class AddDriverModal {
 		pane.add(labelBox, 0, 0);
 		pane.add(driverNameBox, 0, 1);
 		pane.add(driversLicenseBox, 0, 2);
-		pane.add(buttons, 0, 3);
+		pane.add(hazardousInfoBox, 0, 3);
+		pane.add(buttons, 0, 4);
+		
 		modalPane.setBottom(pane);
 
 	}

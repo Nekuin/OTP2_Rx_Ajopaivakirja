@@ -84,7 +84,7 @@ public class HRView implements ViewModule, UndoObserver {
 		addDriverBtn.setOnAction(e -> {
 			Stage stage = new Stage();
 			stage.setScene(new Scene(new AddDriverModal(controller).getAddDriverModal()));
-			stage.setTitle("Add a new driver");
+			stage.setTitle(strings.getString("addModal_driver_text"));
 			stage.initModality(Modality.APPLICATION_MODAL);
 			stage.initOwner(((Node) e.getSource()).getScene().getWindow());
 			stage.show();
