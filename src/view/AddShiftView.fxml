@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -35,12 +36,27 @@
                   <ComboBox fx:id="client_combobox" prefWidth="200.0" promptText="%client_text" />
                </children>
             </VBox>
-            <AnchorPane prefHeight="50.0" prefWidth="200.0">
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="confirm_button" layoutX="112.0" layoutY="13.0" mnemonicParsing="false" text="%confirm_text" />
-                  <Button fx:id="cancel_button" layoutX="236.0" layoutY="13.0" mnemonicParsing="false" text="%cancel_text" />
+                  <VBox alignment="CENTER">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="select deadline">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Text>
+                        <DatePicker fx:id="deadlinePicker" promptText="Deadline" />
+                     </children>
+                  </VBox>
                </children>
-            </AnchorPane>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="75.0" prefWidth="200.0" spacing="20.0">
+               <children>
+                  <Button fx:id="confirm_button" mnemonicParsing="false" text="%confirm_text" />
+                  <Button fx:id="cancel_button" mnemonicParsing="false" text="%cancel_text" />
+               </children>
+            </HBox>
+            <AnchorPane prefHeight="50.0" prefWidth="200.0" />
          </children>
       </VBox>
    </center>

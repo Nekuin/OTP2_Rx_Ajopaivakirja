@@ -1,6 +1,7 @@
 package view;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,12 +15,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import model.Cargo;
 import model.Client;
 import model.DrivingShift;
+import util.ErrorTooltip;
 import util.Strings;
 // NOT GOING TO BE USED
 public class AddShiftView implements ViewModule {
@@ -44,6 +47,9 @@ public class AddShiftView implements ViewModule {
     
     @FXML
     private VBox listItem_remove_box;
+    
+    @FXML
+    private DatePicker deadlinePicker;
     
     private BorderPane root;
     private ObservableList<Cargo> selectedCargoList;
@@ -130,14 +136,29 @@ public class AddShiftView implements ViewModule {
 	private void confirmAction(ActionEvent event) {
 		List<Cargo> cargo = selectedCargoList.stream().collect(Collectors.toList());
 		Client client = client_combobox.getSelectionModel().getSelectedItem();
-		if(client == null) {
-			System.out.println("no client");
-			return;
-		}
+		LocalDate deadline = deadlinePicker.getValue();
+		
 		if(cargo.size() == 0) {
 			System.out.println("no cargo");
+			ErrorTooltip.showErrorTooltip(confirm_button, event, "Select cargo");
 			return;
 		}
+		if(client == null) {
+			System.out.println("no client");
+			ErrorTooltip.showErrorTooltip(confirm_button, event, "Select a client");
+			return;
+		}
+		if(deadline == null) {
+			System.out.println("no deadline");
+			ErrorTooltip.showErrorTooltip(confirm_button, event, "Pick a date");
+			return;
+		}
+		if(deadline.isBefore(LocalDate.now())) {
+			System.out.println("in da past");
+			ErrorTooltip.showErrorTooltip(confirm_button, event, "Can't pick a date from the past!");
+			return;
+		}
+		
 		DrivingShift shift = new DrivingShift();
 		controller.createDrivingShift(shift);
 		cargo.forEach(c -> {
@@ -145,6 +166,7 @@ public class AddShiftView implements ViewModule {
 			c.setShift(shift);
 		});
 		shift.setClient(client);
+		shift.setDeadline(deadline);
 		controller.updateDrivingShift(shift);
 		observer.notifyListener();
 		((Node) event.getSource()).getScene().getWindow().hide();
