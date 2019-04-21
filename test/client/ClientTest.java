@@ -5,11 +5,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-
+import controller.Controller;
 import controller.IController;
 import model.Cargo;
 import model.Client;
@@ -22,6 +23,12 @@ public class ClientTest {
 	
 	static Client testClient;
 	static IController controller;
+	
+	@BeforeAll
+	static void init() {
+		//use test version of controller by passing true as the last argument
+		controller = new Controller(null,true);
+	}
 	
 	/**
 	 * Creates a client object
