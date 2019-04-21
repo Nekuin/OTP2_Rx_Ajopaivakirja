@@ -12,6 +12,11 @@ import javafx.scene.text.Text;
 import model.Driver;
 import model.Employee;
 
+/**
+ * Handles SuperiorView Employee Tab
+ * @author Nekuin
+ *
+ */
 public class SuperiorEmployeeTab implements UndoObserver {
 	
 	private IController controller;

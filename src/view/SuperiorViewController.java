@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
+import model.DrivingShift;
 import model.Employee;
 import model.Vehicle;
 import util.Strings;
@@ -22,7 +23,7 @@ import javafx.scene.control.TableView;
 public class SuperiorViewController implements ViewModule {
 
 	@FXML
-    private TableView<?> shiftTableView;
+    private TableView<DrivingShift> shiftTableView;
 
     @FXML
     private Text shiftClientText;
@@ -70,7 +71,7 @@ public class SuperiorViewController implements ViewModule {
     private Button deleteEmpButton;
 
     @FXML
-    private TableView<?> vehicleTableView;
+    private TableView<Vehicle> vehicleTableView;
 
     @FXML
     private Text brandText;
@@ -80,6 +81,15 @@ public class SuperiorViewController implements ViewModule {
 
     @FXML
     private Text regPlateText;
+    
+    @FXML
+    private Button addVehicleButton;
+
+    @FXML
+    private Button updateVehicleButton;
+
+    @FXML
+    private Button deleteVehicleButton;
     
     private IController controller;
     private Strings strings;
@@ -106,6 +116,8 @@ public class SuperiorViewController implements ViewModule {
     	new SuperiorEmployeeTab(controller, empNameText, empIdText,
     			empLicenseLabelHolder, empLicenseText, addEmpButton,
     			updateEmpButton, deleteEmpButton, empTableView);
+    	new SuperiorVehicleTab(controller, brandText, modelText, regPlateText,
+    			addVehicleButton, updateVehicleButton, deleteVehicleButton, vehicleTableView);
     }
 
 	@Override
