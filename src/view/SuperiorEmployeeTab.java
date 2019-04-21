@@ -61,24 +61,46 @@ public class SuperiorEmployeeTab implements UndoObserver {
 	 */
 	private void createButtonListeners(Button addEmpButton, Button updateEmpButton, Button deleteEmpButton) {
 		addEmpButton.setOnAction(e -> {
-			
+			addEmployee();
 		});
 		
 		updateEmpButton.setOnAction(e -> {
-			Employee clicked = empTableView.getSelectionModel().getSelectedItem();
-			if(clicked != null) {
-				System.out.println("update: " + clicked);
-			}
+			updateEmployee();
 		});
 		
 		deleteEmpButton.setOnAction(e -> {
-			Employee clicked = empTableView.getSelectionModel().getSelectedItem();
-			if(clicked != null) {
-				System.out.println("remove: " + clicked);
-				employees.remove(clicked);
-				new UndoPopup(controller, clicked, this).showMessage();
-			}
+			deleteEmployee();
 		});
+	}
+	
+	/**
+	 * Add button action
+	 */
+	private void addEmployee() {
+		
+	}
+	
+	/**
+	 * Update button action
+	 */
+	private void updateEmployee() {
+		Employee clicked = empTableView.getSelectionModel().getSelectedItem();
+		if(clicked != null) {
+			System.out.println("update: " + clicked);
+		}
+	}
+	
+	/**
+	 * Delete button action
+	 */
+	private void deleteEmployee() {
+		Employee clicked = empTableView.getSelectionModel().getSelectedItem();
+		if(clicked != null) {
+			System.out.println("remove: " + clicked);
+			employees.remove(clicked);
+			//create and show Undo popup for the user
+			new UndoPopup(controller, clicked, this).showMessage();
+		}
 	}
 	
 	/**

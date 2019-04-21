@@ -116,8 +116,14 @@ public class SuperiorViewController implements ViewModule {
     	new SuperiorEmployeeTab(controller, empNameText, empIdText,
     			empLicenseLabelHolder, empLicenseText, addEmpButton,
     			updateEmpButton, deleteEmpButton, empTableView);
+    	//pass all Vehicle related elements to the Vehicle tab handler
     	new SuperiorVehicleTab(controller, brandText, modelText, regPlateText,
     			addVehicleButton, updateVehicleButton, deleteVehicleButton, vehicleTableView);
+    	//pass all DrivingShift related elements to the DrivingShift tab handler
+    	new SuperiorDrivingShiftTab(controller, shiftClientText, shiftIdText,
+    			shiftCargoText, shiftDeadlineText, shiftAddButton,
+    			shiftUpdateButton, shiftDeleteButton, shiftTableView);
+
     }
 
 	@Override

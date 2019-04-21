@@ -9,17 +9,15 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import model.Vehicle;
-import util.Strings;
 
 /**
- * Handles SupoeriorView Vehicle Tab
+ * Handles SuperiorView Vehicle Tab
  * @author Nekuin
  *
  */
 public class SuperiorVehicleTab implements UndoObserver {
 	
 	private IController controller;
-	private Strings strings;
 	private Text[] vehInfoTexts;
 	private TableView<Vehicle> vehicleTableView;
 	private ObservableList<Vehicle> vehicles;
@@ -37,9 +35,8 @@ public class SuperiorVehicleTab implements UndoObserver {
 	 */
 	public SuperiorVehicleTab(IController controller, Text brandText, Text modelText, Text regPlateText, Button addVehicleButton, Button updateVehicleButton, Button deleteVehicleButton, TableView<Vehicle> vehicleTableView) {
 		this.controller = controller;
-		strings = Strings.getInstance();
 		this.vehicleTableView = vehicleTableView;
-		//store Text nodes in an array for easy updates
+		//store Text nodes in an array for easy updating
 		vehInfoTexts = new Text[] {brandText, modelText, regPlateText};
 		//create listeners for buttons
 		createButtonListeners(addVehicleButton, updateVehicleButton, deleteVehicleButton);
@@ -58,17 +55,43 @@ public class SuperiorVehicleTab implements UndoObserver {
 	private void createButtonListeners(Button addVehicleButton, Button updateVehicleButton,
 			Button deleteVehicleButton) {
 		addVehicleButton.setOnAction(e -> {
-			
+			addVehicle();
 		});
 		
 		updateVehicleButton.setOnAction(e -> {
-			
+			updateVehicle();
 		});
 		
 		deleteVehicleButton.setOnAction(e -> {
-			
+			deleteVehicle();
 		});
 		
+	}
+	
+	/**
+	 * Add button action
+	 */
+	private void addVehicle() {
+		
+	}
+	
+	/**
+	 * Update button action
+	 */
+	private void updateVehicle() {
+		
+	}
+	
+	/**
+	 * Delete button action
+	 */
+	private void deleteVehicle() {
+		Vehicle clicked = vehicleTableView.getSelectionModel().getSelectedItem();
+		if(clicked != null) {
+			vehicles.remove(clicked);
+			//create and show Undo popup for the user
+			new UndoPopup(controller, clicked, this).showMessage();
+		}
 	}
 	
 	/**
