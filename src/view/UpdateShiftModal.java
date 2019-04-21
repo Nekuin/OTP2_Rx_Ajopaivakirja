@@ -12,6 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -47,6 +48,9 @@ public class UpdateShiftModal implements ViewModule {
     
     @FXML
     private VBox listItem_remove_box;
+    
+    @FXML
+    private DatePicker deadlinePicker;
     
     private BorderPane root;
     private ObservableList<Cargo> selectedCargoList;
@@ -90,6 +94,8 @@ public class UpdateShiftModal implements ViewModule {
 		
 		populateCargoBox();
 		populateClientBox();
+		//set deadline
+		deadlinePicker.setValue(shift.getDeadline());
 	}
 
 	/**

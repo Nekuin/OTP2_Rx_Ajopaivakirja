@@ -140,22 +140,22 @@ public class AddShiftView implements ViewModule {
 		
 		if(cargo.size() == 0) {
 			System.out.println("no cargo");
-			ErrorTooltip.showErrorTooltip(confirm_button, event, "Select cargo");
+			ErrorTooltip.showErrorTooltip(confirm_button, event, strings.getString("sup_shift_cargo_err"));
 			return;
 		}
 		if(client == null) {
 			System.out.println("no client");
-			ErrorTooltip.showErrorTooltip(confirm_button, event, "Select a client");
+			ErrorTooltip.showErrorTooltip(confirm_button, event, strings.getString("sup_shift_client_err"));
 			return;
 		}
 		if(deadline == null) {
 			System.out.println("no deadline");
-			ErrorTooltip.showErrorTooltip(confirm_button, event, "Pick a date");
+			ErrorTooltip.showErrorTooltip(confirm_button, event, strings.getString("sup_shift_date_err"));
 			return;
 		}
 		if(deadline.isBefore(LocalDate.now())) {
 			System.out.println("in da past");
-			ErrorTooltip.showErrorTooltip(confirm_button, event, "Can't pick a date from the past!");
+			ErrorTooltip.showErrorTooltip(confirm_button, event, strings.getString("sup_shift_past_err"));
 			return;
 		}
 		
