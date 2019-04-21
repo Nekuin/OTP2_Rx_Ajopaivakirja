@@ -177,6 +177,24 @@ public interface IController {
 	public List<Cargo> readAllCargo();
 	
 	/**
+	 * Create a client object in the database
+	 * @param client
+	 */
+	public void createClient(Client client);
+	
+	/**
+	 * Delete client from database
+	 * @param client
+	 */
+	public void deleteClient(Client client);
+	
+	 /**
+	  * Update client object in the database
+	  * @param client
+	  */
+	public void updateClient(Client client);
+	
+	/**
 	 * Returns a list of all Clients in the database
 	 * @return List of Client objects
 	 */

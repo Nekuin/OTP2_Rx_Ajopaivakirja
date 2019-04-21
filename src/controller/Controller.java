@@ -215,6 +215,21 @@ public class Controller implements IController{
 	public List<Cargo> readAllCargo() {
 		return this.cargoAO.getAll();
 	}
+	
+	@Override
+	public void createClient(Client client) {
+		this.clientAO.create(client);
+	}
+
+	@Override
+	public void deleteClient(Client client) {
+		this.clientAO.delete(client);
+	}
+
+	@Override
+	public void updateClient(Client client) {
+		this.clientAO.update(client);
+	}
 
 	@Override
 	public List<Client> readAllClients() {
@@ -237,6 +252,8 @@ public class Controller implements IController{
 	public void updateCargo(Cargo cargo) {
 		cargoAO.update(cargo);
 	}
+
+
 	
 	
 

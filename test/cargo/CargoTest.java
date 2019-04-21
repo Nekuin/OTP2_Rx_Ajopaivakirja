@@ -57,7 +57,7 @@ public class CargoTest {
 		Cargo cargo = new Cargo(50, false);
 		controller.createCargo(cargo);
 		List<Cargo> cargoList = controller.readAllCargo();
-		assertTrue(cargoList.contains(cargo));
+		assertTrue(cargoList.contains(cargo),"Database should have the cargo!");
 	}
 	
 	/**
