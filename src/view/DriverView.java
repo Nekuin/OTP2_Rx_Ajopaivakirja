@@ -38,37 +38,19 @@ public class DriverView implements ViewModule {
 	private Driver driver;
 	private Strings strings;
 
-	@FXML
-	private Button reserve_button;
-
-	@FXML
-	private Button report_button;
-
-	@FXML
-	private Button unassign_button;
-
-	@FXML
-	private TableView<DrivingShift> reserve_tableview;
-
-	@FXML
-	private TableView<DrivingShift> report_tableview;
-
-	@FXML
-	private Text client_Name;
-	@FXML
-	private Text shift_id;
-	@FXML
-	private Text cargo_info;
-	@FXML
-	private Text time_info2;
-	@FXML
-	private Text client_Name1;
-	@FXML
-	private Text shift_id1;
-	@FXML
-	private Text cargo_info1;
-	@FXML
-	private Text time_info3;
+	@FXML private Button reserve_button;
+	@FXML private Button report_button;
+	@FXML private Button unassign_button;
+	@FXML private TableView<DrivingShift> reserve_tableview;
+	@FXML private TableView<DrivingShift> report_tableview;
+	@FXML private Text client_Name;
+	@FXML private Text shift_id;
+	@FXML private Text cargo_info;
+	@FXML private Text time_info2;
+	@FXML private Text client_Name1;
+	@FXML private Text shift_id1;
+	@FXML private Text cargo_info1;
+	@FXML private Text time_info3;
 
 	private DrivingShift clicked;
 
