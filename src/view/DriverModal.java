@@ -14,22 +14,42 @@ import javafx.scene.text.Text;
 import model.Driver;
 import util.Strings;
 
-public class AddDriverModal {
+/**
+ * 
+ * @author Nekuin, tuoma
+ *
+ */
+public class DriverModal implements ViewModule {
 
 	private BorderPane modalPane;
 	private Strings strings;
 	private IController controller;
 	private boolean canDriveHazardous;
 	private CheckBox hazaBox;
-	// test
 	private TextField driverNameTextF;
 	private TextField driversLicenseTextF;
+	private Driver driver;
 
-	public AddDriverModal(IController controller) {
+	private DriverModal(IController controller) {
 		this.strings = Strings.getInstance();
 		this.controller = controller;
 		modalPane = new BorderPane();
 		setup();
+	}
+	
+	private DriverModal(IController controller, Driver driver) {
+		this.strings = Strings.getInstance();
+		this.controller = controller;
+		modalPane = new BorderPane();
+		this.driver = driver;
+		setup();
+		driverNameTextF.setText(driver.getName());
+		driversLicenseTextF.setText(driver.getDriversLicense());
+		if(driver.getCanDriveHazardous()) {
+			hazaBox.setSelected(true);
+			canDriveHazardous = true;
+		}
+		
 	}
 
 	private void setup() {
@@ -94,10 +114,17 @@ public class AddDriverModal {
 	private Button createConfirmButton() {
 		Button addDriver = new Button(strings.getString("submit_button_text"));	
 		addDriver.setOnAction(e -> {
-			Driver newDriver = new Driver(driverNameTextF.getText(), driversLicenseTextF.getText(), canDriveHaz());
-			this.controller.createDriver(newDriver);
-			driverNameTextF.setText("");
-			driversLicenseTextF.setText("");
+			//if driver is null we are in Add modal
+			if(this.driver == null) {
+				Driver newDriver = new Driver(driverNameTextF.getText(), driversLicenseTextF.getText(), canDriveHaz());
+				this.controller.createDriver(newDriver);
+			} else {
+				this.driver.setName(driverNameTextF.getText());
+				this.driver.setDriversLicense(driversLicenseTextF.getText());
+				this.driver.setCanDriveHazardous(canDriveHaz());
+				controller.updateDriver(this.driver);
+			}
+			
 			((Node) e.getSource()).getScene().getWindow().hide();
 		});
 		return addDriver;
@@ -118,7 +145,17 @@ public class AddDriverModal {
 		return canDriveHazardous;
 	}
 	
-	public BorderPane getAddDriverModal() {
+	public static DriverModal createEditModal(IController controller, Driver driver) {
+		return new DriverModal(controller, driver);
+	}
+	
+	public static DriverModal createAddModal(IController controller) {
+		return new DriverModal(controller);
+	}
+	
+
+	@Override
+	public BorderPane getView() {
 		return modalPane;
 	}
 }

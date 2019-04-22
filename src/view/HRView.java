@@ -83,7 +83,7 @@ public class HRView implements ViewModule, UndoObserver {
 		
 		addDriverBtn.setOnAction(e -> {
 			Stage stage = new Stage();
-			stage.setScene(new Scene(new AddDriverModal(controller).getAddDriverModal()));
+			stage.setScene(new Scene(DriverModal.createAddModal(controller).getView()));
 			stage.setTitle(strings.getString("addModal_driver_text"));
 			stage.initModality(Modality.APPLICATION_MODAL);
 			stage.initOwner(((Node) e.getSource()).getScene().getWindow());
@@ -112,6 +112,17 @@ public class HRView implements ViewModule, UndoObserver {
 
 		updateDriverBtn.setOnAction(e -> {
 			// TÄN VOIS TEHÄ MODALINA
+			if(clicked != null) {
+				Stage stage = new Stage();
+				stage.setScene(new Scene(DriverModal.createEditModal(controller, clicked).getView()));
+				stage.setTitle("edit driver [PH]");
+				stage.initOwner(((Node)e.getSource()).getScene().getWindow());
+				stage.show();
+				stage.setOnHidden(event -> {
+					hr_tableView.setItems(getDriversInfo());
+					hr_tableView.getSelectionModel().clearSelection();
+				});
+			}
 		});
 
 	}
