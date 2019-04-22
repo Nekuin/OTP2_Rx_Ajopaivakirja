@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import controller.Controller;
 import controller.IController;
 import model.Cargo;
+import model.DrivingShift;
 
 /**
  * Tests for cargo objects
@@ -105,5 +106,13 @@ public class CargoTest {
 	void setHazardous() {
 		testCargo.setHazardous(true);
 		assertEquals(true, testCargo.isHazardous(), "Cargo hazardous status not changed.");
+	}
+	
+	@Test
+	@DisplayName("Test setDrivingshift")
+	void setDrivingShift() {
+		DrivingShift s = new DrivingShift();
+		testCargo.setShift(s);
+		assertEquals(s, testCargo.getShift(), "Setting shift didn't work.");
 	}
 }
