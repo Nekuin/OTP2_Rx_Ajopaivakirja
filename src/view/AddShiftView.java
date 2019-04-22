@@ -25,7 +25,7 @@ import model.DrivingShift;
 import util.ErrorTooltip;
 import util.Strings;
 /**
- * Modal for adding a new DrivingShift
+ * Modal for adding or editing a DrivingShift
  * @author Nekuin
  *
  */

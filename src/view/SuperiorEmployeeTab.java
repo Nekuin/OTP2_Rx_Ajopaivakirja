@@ -3,21 +3,24 @@ package view;
 import controller.IController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import model.Driver;
 import model.Employee;
+import util.Strings;
 
 /**
  * Handles SuperiorView Employee Tab
  * @author Nekuin
  *
  */
-public class SuperiorEmployeeTab implements UndoObserver {
+public class SuperiorEmployeeTab implements UndoObserver, SubmitObserver {
 	
 	private IController controller;
 	private Text[] empInfoTexts;
@@ -77,7 +80,10 @@ public class SuperiorEmployeeTab implements UndoObserver {
 	 * Add button action
 	 */
 	private void addEmployee() {
-		
+		Stage stage = new Stage();
+		stage.setScene(new Scene(EmployeeModal.createAddEmployeeModal(controller, this).getView()));
+		stage.setTitle(Strings.getInstance().getString("add_employee_title"));
+		stage.show();
 	}
 	
 	/**
@@ -86,7 +92,10 @@ public class SuperiorEmployeeTab implements UndoObserver {
 	private void updateEmployee() {
 		Employee clicked = empTableView.getSelectionModel().getSelectedItem();
 		if(clicked != null) {
-			System.out.println("update: " + clicked);
+			Stage stage = new Stage();
+			stage.setScene(new Scene(EmployeeModal.createEditEmployeeModal(controller, clicked, this).getView()));
+			stage.setTitle(Strings.getInstance().getString("add_employee_title"));
+			stage.show();
 		}
 	}
 	
@@ -161,5 +170,12 @@ public class SuperiorEmployeeTab implements UndoObserver {
 	@Override
 	public void notifyUndo() {
 		updateEmployeeList();
+	}
+
+	@Override
+	public void notifyListener() {
+		updateEmployeeList();
+		updateInfoTexts("", "", "");
+		
 	}
 }
