@@ -9,12 +9,12 @@ import javafx.scene.control.Tooltip;
 
 public class ErrorTooltip {
 
-	public static void showErrorTooltip(Button button, ActionEvent e, String message) {
+	public static void showErrorTooltip(Node parent, ActionEvent e, String message) {
 		//create the tooltip
 		Tooltip tooltip = new Tooltip();
 		tooltip.setText(message);
 		tooltip.setStyle("-fx-font: 24 arial;");
-		Tooltip.install(button, tooltip);
+		Tooltip.install(parent, tooltip);
 		//get bounds and show tooltip near the button
 		Node node = (Node) e.getSource();
 		Bounds bounds = node.localToScreen(node.getBoundsInLocal());
@@ -26,7 +26,7 @@ public class ErrorTooltip {
 				//hiding must be run on UI thread!
 				Platform.runLater(() -> {
 					tooltip.hide();
-					Tooltip.uninstall(button, tooltip);
+					Tooltip.uninstall(parent, tooltip);
 				});
 			} catch (InterruptedException e1) {
 				e1.printStackTrace();
