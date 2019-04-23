@@ -144,7 +144,7 @@ public class EmployeeModal implements ViewModule {
 	 */
 	private void submitAction(ActionEvent e) {
 		//validate
-		if(validateFields(e)) {
+		if(validateFields()) {
 			// if employee is null we're in the Add modal
 			if(employee == null) {
 				String selectedRole = roleComboBox.getSelectionModel().getSelectedItem();
@@ -176,16 +176,16 @@ public class EmployeeModal implements ViewModule {
 	 * @param e ActionEvent
 	 * @return boolean
 	 */
-	private boolean validateFields(ActionEvent e) {
+	private boolean validateFields() {
 		String name = nameTextField.getText();
 		if(name.length() == 0) {
-			ErrorTooltip.showErrorTooltip(submitButton, e, strings.getString("sup_emp_noname_err"));
+			ErrorTooltip.showErrorTooltip(submitButton, strings.getString("sup_emp_noname_err"));
 			return false;
 		}
 		if(roleComboBox.getSelectionModel().getSelectedItem().equals("Driver")) {
 			String license = licenseTextField.getText();
 			if(license.length() == 0) {
-				ErrorTooltip.showErrorTooltip(submitButton, e, strings.getString("sup_emp_nolicense_err"));
+				ErrorTooltip.showErrorTooltip(submitButton, strings.getString("sup_emp_nolicense_err"));
 				return false;
 			}
 		}

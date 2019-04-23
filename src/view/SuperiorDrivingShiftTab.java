@@ -103,7 +103,7 @@ public class SuperiorDrivingShiftTab implements UndoObserver, SubmitObserver {
 			if(shift != null) {
 				updateShift(e, shift);
 			} else {
-				ErrorTooltip.showErrorTooltip(shiftUpdateButton, e,
+				ErrorTooltip.showErrorTooltip(shiftUpdateButton,
 						Strings.getInstance().getString("sup_shift_err_msg"));
 			}
 			
@@ -114,7 +114,7 @@ public class SuperiorDrivingShiftTab implements UndoObserver, SubmitObserver {
 			if(shift != null) {
 				deleteShift();
 			} else {
-				ErrorTooltip.showErrorTooltip(shiftDeleteButton, e,
+				ErrorTooltip.showErrorTooltip(shiftDeleteButton,
 						Strings.getInstance().getString("sup_shift_err_msg"));
 			}
 		});

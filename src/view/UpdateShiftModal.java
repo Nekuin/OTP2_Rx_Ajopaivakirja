@@ -106,7 +106,7 @@ public class UpdateShiftModal implements ViewModule {
 			if(newDate.isBefore(LocalDate.now())) {
 				//in the past, reset value and display error
 				deadlinePicker.setValue(shift.getDeadline());
-				ErrorTooltip.showErrorTooltip(deadlinePicker, e, "past");
+				ErrorTooltip.showErrorTooltip(deadlinePicker, "past");
 			} else {
 				//not in the past, set newDate as Deadline
 				shift.setDeadline(newDate);

@@ -42,7 +42,7 @@ public class UndoPopup implements ViewModule {
 		userDismissed = false;
 		this.removedObject = removedObject;
 		observer = caller;
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("undo_msg.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/xml/undo_msg.fxml"));
 		loader.setController(this);
 		try {
 			loader.load();

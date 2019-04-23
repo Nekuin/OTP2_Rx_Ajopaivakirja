@@ -13,6 +13,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.Driver;
 import model.Employee;
+import util.ErrorTooltip;
 import util.Strings;
 
 /**
@@ -68,11 +69,11 @@ public class SuperiorEmployeeTab implements UndoObserver, SubmitObserver {
 		});
 		
 		updateEmpButton.setOnAction(e -> {
-			updateEmployee();
+			updateEmployee(updateEmpButton);
 		});
 		
 		deleteEmpButton.setOnAction(e -> {
-			deleteEmployee();
+			deleteEmployee(deleteEmpButton);
 		});
 	}
 	
@@ -88,27 +89,33 @@ public class SuperiorEmployeeTab implements UndoObserver, SubmitObserver {
 	
 	/**
 	 * Update button action
+	 * @param updateEmpButton 
 	 */
-	private void updateEmployee() {
+	private void updateEmployee(Button updateEmpButton) {
 		Employee clicked = empTableView.getSelectionModel().getSelectedItem();
 		if(clicked != null) {
 			Stage stage = new Stage();
 			stage.setScene(new Scene(EmployeeModal.createEditEmployeeModal(controller, clicked, this).getView()));
 			stage.setTitle(Strings.getInstance().getString("add_employee_title"));
 			stage.show();
+		} else {
+			ErrorTooltip.showErrorTooltip(updateEmpButton, Strings.getInstance().getString("sup_emp_select_err"));
 		}
 	}
 	
 	/**
 	 * Delete button action
+	 * @param deleteEmpButton 
 	 */
-	private void deleteEmployee() {
+	private void deleteEmployee(Button deleteEmpButton) {
 		Employee clicked = empTableView.getSelectionModel().getSelectedItem();
 		if(clicked != null) {
 			System.out.println("remove: " + clicked);
 			employees.remove(clicked);
 			//create and show Undo popup for the user
 			new UndoPopup(controller, clicked, this).showMessage();
+		} else {
+			ErrorTooltip.showErrorTooltip(deleteEmpButton, Strings.getInstance().getString("sup_emp_select_err"));
 		}
 	}
 	

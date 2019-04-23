@@ -163,7 +163,7 @@ public class AddShiftView implements ViewModule {
 		Client client = client_combobox.getSelectionModel().getSelectedItem();
 		LocalDate deadline = deadlinePicker.getValue();
 		
-		boolean validate = validateConfirmAction(event, cargo, client, deadline);
+		boolean validate = validateConfirmAction(cargo, client, deadline);
 		//don't continue if validation fails, validate method displays errors to the user
 		if(validate == false) {
 			return;
@@ -193,25 +193,25 @@ public class AddShiftView implements ViewModule {
 	 * @param deadline selected deadline
 	 * @return boolean
 	 */
-	private boolean validateConfirmAction(ActionEvent event, List<Cargo> cargo, Client client, LocalDate deadline) {
+	private boolean validateConfirmAction(List<Cargo> cargo, Client client, LocalDate deadline) {
 		if(cargo.size() == 0) {
 			System.out.println("no cargo");
-			ErrorTooltip.showErrorTooltip(confirm_button, event, strings.getString("sup_shift_cargo_err"));
+			ErrorTooltip.showErrorTooltip(confirm_button, strings.getString("sup_shift_cargo_err"));
 			return false;
 		}
 		if(client == null) {
 			System.out.println("no client");
-			ErrorTooltip.showErrorTooltip(confirm_button, event, strings.getString("sup_shift_client_err"));
+			ErrorTooltip.showErrorTooltip(confirm_button, strings.getString("sup_shift_client_err"));
 			return false;
 		}
 		if(deadline == null) {
 			System.out.println("no deadline");
-			ErrorTooltip.showErrorTooltip(confirm_button, event, strings.getString("sup_shift_date_err"));
+			ErrorTooltip.showErrorTooltip(confirm_button, strings.getString("sup_shift_date_err"));
 			return false;
 		}
 		if(deadline.isBefore(LocalDate.now())) {
 			System.out.println("in da past");
-			ErrorTooltip.showErrorTooltip(confirm_button, event, strings.getString("sup_shift_past_err"));
+			ErrorTooltip.showErrorTooltip(confirm_button, strings.getString("sup_shift_past_err"));
 			return false;
 		}
 		//all tests are passed, return true
