@@ -98,7 +98,7 @@ public class SuperiorViewController implements ViewModule {
     public SuperiorViewController(IController controller) {
     	this.controller = controller;
     	strings = Strings.getInstance();
-    	FXMLLoader loader = new FXMLLoader(getClass().getResource("SuperiorView.fxml"), strings.getBundle());
+    	FXMLLoader loader = new FXMLLoader(getClass().getResource("/xml/SuperiorView.fxml"), strings.getBundle());
     	loader.setController(this);
     	try {
     		loader.load();

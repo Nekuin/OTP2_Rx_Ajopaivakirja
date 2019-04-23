@@ -68,7 +68,7 @@ public class AddShiftView implements ViewModule {
 		this.controller = controller;
 		this.strings = Strings.getInstance();
 		this.observer = observer;
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("AddShiftView.fxml"), strings.getBundle());
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/xml/AddShiftView.fxml"), strings.getBundle());
 		loader.setController(this);
 		
 		try {

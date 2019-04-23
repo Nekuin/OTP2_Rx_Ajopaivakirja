@@ -65,7 +65,7 @@ public class DriverView implements ViewModule {
 		this.controller = controller;
 		// get logged in Driver
 		updateDriver();
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("Driver_view.fxml"), strings.getBundle());
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/xml/Driver_view.fxml"), strings.getBundle());
 		loader.setController(this);
 		try {
 			loader.load();

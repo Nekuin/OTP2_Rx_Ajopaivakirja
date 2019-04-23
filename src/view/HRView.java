@@ -65,7 +65,7 @@ public class HRView implements ViewModule, UndoObserver {
 		drivers = FXCollections.observableArrayList();
 		strings = Strings.getInstance();
 		this.controller = controller;
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("HrView.fxml"), strings.getBundle());
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/xml/HrView.fxml"), strings.getBundle());
 		loader.setController(this);
 		try {
 			loader.load();

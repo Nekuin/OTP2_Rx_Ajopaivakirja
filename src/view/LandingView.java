@@ -52,7 +52,7 @@ public class LandingView implements ViewModule {
 		this.main = main;
 		strings = Strings.getInstance();
 		this.controller = controller;
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("Landing_View.fxml"), strings.getBundle());
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/xml/Landing_View.fxml"), strings.getBundle());
 		loader.setController(this);
 		try {
 			loader.load();

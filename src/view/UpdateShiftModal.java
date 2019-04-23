@@ -71,7 +71,7 @@ public class UpdateShiftModal implements ViewModule {
 		this.shift = shift;
 		this.observer = observer;
 		
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("UpdateShiftView.fxml"), strings.getBundle());
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/xml/UpdateShiftView.fxml"), strings.getBundle());
 		loader.setController(this);
 		try {
 			loader.load();

@@ -114,7 +114,7 @@ public class EmployeeModal implements ViewModule {
 	 * Loads EmployeeModal FXML file
 	 */
 	private void loadXML() {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("EmployeeModal.fxml"), strings.getBundle());
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/xml/EmployeeModal.fxml"), strings.getBundle());
 		loader.setController(this);
 		try {
 			loader.load();
