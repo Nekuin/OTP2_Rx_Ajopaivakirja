@@ -83,6 +83,15 @@ public class SuperiorViewController implements ViewModule {
     private Text regPlateText;
     
     @FXML
+    private Text drivenText;
+
+    @FXML
+    private Text cargoText;
+
+    @FXML
+    private Text maintainedText;
+    
+    @FXML
     private Button addVehicleButton;
 
     @FXML
@@ -118,7 +127,8 @@ public class SuperiorViewController implements ViewModule {
     			updateEmpButton, deleteEmpButton, empTableView);
     	//pass all Vehicle related elements to the Vehicle tab handler
     	new SuperiorVehicleTab(controller, brandText, modelText, regPlateText,
-    			addVehicleButton, updateVehicleButton, deleteVehicleButton, vehicleTableView);
+    			drivenText, cargoText, maintainedText, addVehicleButton,
+    			updateVehicleButton, deleteVehicleButton, vehicleTableView);
     	//pass all DrivingShift related elements to the DrivingShift tab handler
     	new SuperiorDrivingShiftTab(controller, shiftClientText, shiftIdText,
     			shiftCargoText, shiftDeadlineText, shiftAddButton,
