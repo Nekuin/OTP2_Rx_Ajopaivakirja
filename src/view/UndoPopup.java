@@ -31,6 +31,7 @@ public class UndoPopup implements ViewModule {
     private boolean userDismissed;
     private Object removedObject;
     private UndoObserver observer;
+    
 	/**
 	 * Constructor for Undo Popup
 	 * @param IController controller
@@ -50,27 +51,16 @@ public class UndoPopup implements ViewModule {
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
-		setup("Removed " + removedObject.toString() + ", Undo?");
+		setUndoButtonText("Removed " + removedObject.toString() + ", Undo?");
 		startHideUndoTimer();
 	}
+	
 	/**
 	 * Initializes the buttons in the popup
 	 */
 	@FXML
 	private void initialize() {
 		undo_button.setOnAction(e -> {
-			System.out.println("clicked undo");
-			//determine if the object is an Employee or something else
-			if(removedObject instanceof Employee) {
-				System.out.println("employee detected");
-				//its possible we could just call controller.updateEmployee on all subclasses
-				//of Employee - not tested
-			} else if(removedObject instanceof DrivingShift) {
-				System.out.println("shift detected");
-				//you have to merge (re-attach), not create a new Entity
-				//thats why you call update and not create
-				controller.updateDrivingShift((DrivingShift)removedObject);
-			}
 			//clicking undo counts as "dismissing" the message
 			userDismissed = true;
 			observer.notifyUndo();
@@ -111,6 +101,7 @@ public class UndoPopup implements ViewModule {
 			});
 		}).start();
 	}
+	
 	/**
 	 * Removes the object from database
 	 */
@@ -122,11 +113,12 @@ public class UndoPopup implements ViewModule {
 			controller.deleteShift((DrivingShift)removedObject);
 		}
 	}
+	
 	/**
-	 * Sets up the button 
+	 * Sets the text to the undo button
 	 * @param message
 	 */
-	private void setup(String message) {
+	private void setUndoButtonText(String message) {
 		undo_button.setText(message);
 	}
 	
