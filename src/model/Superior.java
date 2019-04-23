@@ -1,7 +1,6 @@
 package model;
 
 import javax.persistence.Entity;
-import javax.persistence.Transient;
 
 /**
  * Class for superiors

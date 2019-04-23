@@ -75,6 +75,7 @@ public class Client {
 	/**
 	 * Method for getting information about the client in string format
 	 */
+	@Override
 	public String toString() {
 		return this.name + " (ID: " + this.clientID + ")";
 	}

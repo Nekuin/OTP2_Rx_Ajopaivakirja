@@ -1,6 +1,12 @@
 package model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 /**
  * 
@@ -26,13 +32,20 @@ public class Cargo {
 	private DrivingShift drivingShift;
 	
 	/**
-	 * 
+	 * Constructor
 	 * @param weight weight of the cargo
 	 * @param hazardous is the cargo hazardous
 	 */
 	public Cargo(double weight, boolean hazardous) {
 		this.weight = weight;
 		this.hazardous = hazardous;
+	}
+	
+	/**
+	 * Empty constructor for cargo
+	 */
+	public Cargo() {
+		
 	}
 	
 	
@@ -45,13 +58,6 @@ public class Cargo {
 		this.hazardous = false;
 	}
 	
-	
-	/**
-	 * Empty constructor for cargo
-	 */
-	public Cargo() {
-		
-	}
 	
 	/**
 	 * Method that tells whether the cargo is hazardous or not
@@ -104,6 +110,7 @@ public class Cargo {
 	/**
 	 * Method for getting information about the cargo in string format
 	 */
+	@Override
 	public String toString() {
 		if(this.isHazardous()) {
 			return "Cargo ID: " + getCargoID() + ", " + getWeight() + "kg, Hazardous";
@@ -113,18 +120,18 @@ public class Cargo {
 		
 	}
 
-/**
- * Method for setting the shift for cargo
- * @param shift shift that the cargo belongs to
- */
+	/**
+	 * Method for setting the shift for cargo
+	 * @param shift shift that the cargo belongs to
+	 */
 	public void setShift(DrivingShift shift) {
 		this.drivingShift = shift;
 	}
 
-/**
- * Method for getting the shift of the cargo
- * @return
- */
+	/**
+	 * Method for getting the shift of the cargo
+	 * @return
+	 */
 	public DrivingShift getShift() {
 		return this.drivingShift;
 	}

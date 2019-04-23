@@ -2,7 +2,12 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.*;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 
 
 /**
@@ -197,6 +202,7 @@ public class Driver extends Employee {
 	/**
 	 * Method that returns information about the driver in string format
 	 */
+	@Override
 	public String toString() {
 		return super.toString() + ", License: " + this.driversLicense + ", Shifts: " + this.getShift();
 	}
