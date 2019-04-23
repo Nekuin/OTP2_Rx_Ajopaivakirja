@@ -86,7 +86,7 @@ public class UndoPopup implements ViewModule {
 	private void startHideUndoTimer() {
 		new Thread(() -> {
 			long startTime = System.currentTimeMillis();
-			//loop for 5 seconds
+			//loop for some time before hiding the popup
 			while((startTime+10000) > System.currentTimeMillis() && !userDismissed) {
 				Thread.yield();
 			}
