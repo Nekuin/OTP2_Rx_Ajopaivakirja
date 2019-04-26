@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.Transient;
 
 /**
  * Class for Employee
@@ -25,12 +26,32 @@ public class Employee {
 	@Column(name="name")
 	private String name;
 	
+	@Transient
+	private String role;
+	
 	/**
 	 * Constructor of the employee
 	 * @param name name of the employee
 	 */
 	public Employee(String name) {
 		this.name = name;
+		role = "";
+	}
+	
+	/**
+	 * Get the role of this Employee
+	 * @return
+	 */
+	public String getRole() {
+		return role;
+	}
+	
+	/**
+	 * Set the role of this Employee
+	 * @param role
+	 */
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 	/**

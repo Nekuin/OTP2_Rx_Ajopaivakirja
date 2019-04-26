@@ -17,6 +17,7 @@ public class Superior extends Employee{
 	 */
 	public Superior(String name) {
 		super(name);
+		super.setRole("Superior");
 	}
 
 	/**

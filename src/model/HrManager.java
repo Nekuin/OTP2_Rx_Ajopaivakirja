@@ -15,6 +15,7 @@ public class HrManager extends Employee{
 	 */
 	public HrManager(String name) {
 		super(name);
+		super.setRole("Hr Manager");
 	}
 	
 	

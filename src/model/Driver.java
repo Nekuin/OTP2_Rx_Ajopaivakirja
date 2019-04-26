@@ -44,6 +44,7 @@ public class Driver extends Employee {
 	 */
 	public Driver(String name, String driversLicense, boolean canDriveHazardous) {
 		super(name);
+		super.setRole("Driver");
 		this.driversLicense = driversLicense; 
 		//this.shifts = new HashSet<>();
 		this.shift = new ArrayList<>();
@@ -57,6 +58,7 @@ public class Driver extends Employee {
 	 */
 	public Driver(String name, String driversLicense) {
 		super(name);
+		super.setRole("Driver");
 		this.driversLicense = driversLicense; 
 		//this.shifts = new HashSet<>();
 		this.shift = new ArrayList<>();
