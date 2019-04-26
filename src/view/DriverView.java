@@ -235,7 +235,12 @@ public class DriverView implements ViewModule {
 		stage.initModality(Modality.APPLICATION_MODAL);
 		stage.initOwner(((Node) e.getSource()).getScene().getWindow());
 		stage.show();
-
+		stage.setOnHidden(e1 -> {
+			if(clicked.getShiftDriven()) {
+				reportShifts.remove(clicked);
+			}
+			updateReportShiftInfo();			
+		});
 	}
 
 	/**
