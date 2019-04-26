@@ -135,10 +135,13 @@ public class Controller implements IController{
 	public List<DrivingShift> readGoodDrivingShifts(Driver driver) {
 		if(!driver.getCanDriveHazardous()) {
 			return readAllDrivingShifts().stream()
+					.filter(shift -> shift.getShiftDriver() == null)
 					.filter(cargoList -> cargoList.getCargo()
 					.stream().anyMatch(Cargo::isHazardous)).collect(Collectors.toList());
 		} else {
-			return readAllDrivingShifts();
+			return readAllDrivingShifts().stream()
+					.filter(shift -> shift.getShiftDriver() == null)
+					.collect(Collectors.toList());
 		}
 	}
 	
