@@ -27,7 +27,7 @@ import view.*;
 public class Main extends Application implements IView {
 	
 	public final static int DRIVER_VIEW = 1, HR_VIEW = 2, SUPERIOR_VIEW = 3;
-	public static int LOGGED_IN_ID = 0;
+	private static int LOGGED_IN_ID = 0;
 	private BorderPane root;
 	private ViewModule landing;
 	private IController controller;
