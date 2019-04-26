@@ -93,19 +93,7 @@ public class EmployeeModal implements ViewModule {
 		this.observer = observer;
 		loadXML();
 		setTitle(strings.getString("edit_employee_title"));
-		prefillTextFields(employee);
-		// Select correct role from roleComboBox based on Employee role
-		if(employee instanceof Driver) {
-			roleComboBox.getSelectionModel().select(0);
-		} else if(employee instanceof HrManager) {
-			// hide driver related options
-			licenseHolder.setOpacity(0);
-			roleComboBox.getSelectionModel().select(1);
-		} else if(employee instanceof Superior) {
-			// hide driver related options
-			licenseHolder.setOpacity(0);
-			roleComboBox.getSelectionModel().select(2);
-		}
+		prefillFields(employee);
 		// disabled roleComboBox, you cannot change roles
 		roleComboBox.setDisable(true);
 	}
@@ -149,7 +137,7 @@ public class EmployeeModal implements ViewModule {
 			if(employee == null) {
 				String selectedRole = roleComboBox.getSelectionModel().getSelectedItem();
 				if(selectedRole.equals("Driver")) {
-					controller.createDriver(new Driver(nameTextField.getText(), licenseTextField.getText()));
+					controller.createDriver(new Driver(nameTextField.getText(), licenseTextField.getText(), hazardousCheckBox.isSelected()));
 				} else if(selectedRole.equals("HR")) {
 					controller.createHrManager(new HrManager(nameTextField.getText()));
 				} else if(selectedRole.equals("Superior")) {
@@ -161,6 +149,7 @@ public class EmployeeModal implements ViewModule {
 				employee.setName(nameTextField.getText());
 				if(employee instanceof Driver) {
 					((Driver)employee).setDriversLicense(licenseTextField.getText());
+					((Driver)employee).setCanDriveHazardous(hazardousCheckBox.isSelected());
 				}
 				controller.updateEmployee(employee);
 			}
@@ -212,13 +201,23 @@ public class EmployeeModal implements ViewModule {
 	}
 	
 	/**
-	 * Fill out text fields with the Employees information if this is Edit modal
+	 * Fill out the fields with the Employees information if this is Edit modal
 	 * @param emp
 	 */
-	private void prefillTextFields(Employee emp) {
+	private void prefillFields(Employee emp) {
 		nameTextField.setText(emp.getName());
 		if(emp instanceof Driver) {
 			licenseTextField.setText(((Driver)emp).getDriversLicense());
+			hazardousCheckBox.selectedProperty().set(((Driver)emp).canDriveHazardous());
+			roleComboBox.getSelectionModel().select(0);
+		} else if(emp instanceof HrManager) {
+			// hide driver related options
+			licenseHolder.setOpacity(0);
+			roleComboBox.getSelectionModel().select(1);
+		} else if(emp instanceof Superior) {
+			// hide driver related options
+			licenseHolder.setOpacity(0);
+			roleComboBox.getSelectionModel().select(2);
 		}
 		
 	}
