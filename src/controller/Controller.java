@@ -133,11 +133,13 @@ public class Controller implements IController{
 	
 	@Override
 	public List<DrivingShift> readGoodDrivingShifts(Driver driver) {
-		if(!driver.canDriveHazardous()) {
+		if(!driver.canDriveHazardous()) {		
 			return readAllDrivingShifts().stream()
 					.filter(shift -> shift.getShiftDriver() == null)
-					.filter(cargoList -> cargoList.getCargo()
-					.stream().anyMatch(cargo -> !cargo.isHazardous())).collect(Collectors.toList());
+					.filter(cargoList -> !cargoList.getCargo().stream()
+							.anyMatch(Cargo::isHazardous))
+					.collect(Collectors.toList());
+					
 		} else {
 			return readAllDrivingShifts().stream()
 					.filter(shift -> shift.getShiftDriver() == null)
