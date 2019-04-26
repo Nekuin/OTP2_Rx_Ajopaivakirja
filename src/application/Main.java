@@ -226,6 +226,7 @@ public class Main extends Application implements IView {
 			cargo.setShift(shift);
 			if(i == 1) {
 				cargo.setHazardous(true);
+				shift.getClient().setName("Reiskan paja[h]");
 			}
 			shifts.add(shift);
 		}

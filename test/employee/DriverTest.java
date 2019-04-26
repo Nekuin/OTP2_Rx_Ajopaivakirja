@@ -53,14 +53,14 @@ public class DriverTest {
 	@Test
 	@DisplayName("Can drive hazardous?")
 	void canDriveHazardous() {
-		assertEquals(false,testdriver.getCanDriveHazardous(),"This driver should not be able to drive hazardous!");
+		assertEquals(false,testdriver.canDriveHazardous(),"This driver should not be able to drive hazardous!");
 	}
 	
 	@Test
 	@DisplayName("Set can drive hazardous")
 	void setCanDriveHazardous() {
 		testdriver.setCanDriveHazardous(true);
-		assertEquals(true,testdriver.getCanDriveHazardous(),"This driver should be able to drive hazardous!");
+		assertEquals(true,testdriver.canDriveHazardous(),"This driver should be able to drive hazardous!");
 	}
 	
 	

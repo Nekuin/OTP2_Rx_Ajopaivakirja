@@ -45,7 +45,7 @@ public class DriverModal implements ViewModule {
 		setup();
 		driverNameTextF.setText(driver.getName());
 		driversLicenseTextF.setText(driver.getDriversLicense());
-		if(driver.getCanDriveHazardous()) {
+		if(driver.canDriveHazardous()) {
 			hazaBox.setSelected(true);
 			canDriveHazardous = true;
 		}

@@ -132,7 +132,7 @@ public class HRView implements ViewModule, UndoObserver {
 		driver_name.setText(clicked.getName());
 		driver_ID.setText(Integer.toString(clicked.getEmployeeID()));
 		driver_licence.setText(clicked.getDriversLicense());
-		if (clicked.getCanDriveHazardous()) {
+		if (clicked.canDriveHazardous()) {
 			hazardous_box.setSelected(true);
 		}else {
 			hazardous_box.setSelected(false);

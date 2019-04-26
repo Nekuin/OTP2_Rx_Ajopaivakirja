@@ -76,7 +76,7 @@ public class Driver extends Employee {
 	 * Method that returns the drivers ability to drive hazardous cargo
 	 * @return
 	 */
-	public boolean getCanDriveHazardous() {
+	public boolean canDriveHazardous() {
 		return canDriveHazardous;
 	}
 	
