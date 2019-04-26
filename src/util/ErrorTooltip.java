@@ -29,6 +29,7 @@ public class ErrorTooltip {
 				});
 			} catch (InterruptedException e1) {
 				e1.printStackTrace();
+				Thread.currentThread().interrupt();
 			}
 		}).start();
 	}
