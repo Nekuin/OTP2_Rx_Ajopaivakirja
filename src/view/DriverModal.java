@@ -48,13 +48,13 @@ public class DriverModal implements ViewModule {
 		if(driver.canDriveHazardous()) {
 			hazaBox.setSelected(true);
 			canDriveHazardous = true;
+		}else {
+			canDriveHazardous = false;
 		}
 		
 	}
 
 	private void setup() {
-		
-		canDriveHazardous = false;
 
 		// button box
 		HBox buttons = new HBox();
@@ -114,14 +114,15 @@ public class DriverModal implements ViewModule {
 	private Button createConfirmButton() {
 		Button addDriver = new Button(strings.getString("submit_button_text"));	
 		addDriver.setOnAction(e -> {
+			canDriveHazardous();
 			//if driver is null we are in Add modal
 			if(this.driver == null) {
-				Driver newDriver = new Driver(driverNameTextF.getText(), driversLicenseTextF.getText(), canDriveHaz());
+				Driver newDriver = new Driver(driverNameTextF.getText(), driversLicenseTextF.getText(), canDriveHazardous);
 				this.controller.createDriver(newDriver);
 			} else {
 				this.driver.setName(driverNameTextF.getText());
 				this.driver.setDriversLicense(driversLicenseTextF.getText());
-				this.driver.setCanDriveHazardous(canDriveHaz());
+				this.driver.setCanDriveHazardous(canDriveHazardous);
 				controller.updateDriver(this.driver);
 			}
 			
@@ -130,19 +131,20 @@ public class DriverModal implements ViewModule {
 		return addDriver;
 	}
 	
+	private void canDriveHazardous() {
+		if(hazaBox.isSelected()) {
+			canDriveHazardous = true;
+		}else {
+			canDriveHazardous = false;
+		}
+	}
+	
 	private Button createCancelButton() {
 		Button cancelButton = new Button(strings.getString("cancel_button_text"));
 		cancelButton.setOnAction(e -> {
 			((Node) e.getSource()).getScene().getWindow().hide();
 		});
 		return cancelButton;
-	}
-
-	private boolean canDriveHaz() {
-		if (hazaBox.selectedProperty() != null) {
-			canDriveHazardous = true;
-		}
-		return canDriveHazardous;
 	}
 	
 	public static DriverModal createEditModal(IController controller, Driver driver) {

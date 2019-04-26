@@ -102,7 +102,6 @@ public class HRView implements ViewModule, UndoObserver {
 			clicked = hr_tableView.getSelectionModel().getSelectedItem();
 			if (clicked != null) {
 				updateDriverInfo();
-				System.out.println("res shift amount " + clicked.getShiftsReserved());
 			}
 		});
 
@@ -116,6 +115,7 @@ public class HRView implements ViewModule, UndoObserver {
 				stage.setOnHidden(event -> {
 					hr_tableView.setItems(getDriversInfo());
 					hr_tableView.getSelectionModel().clearSelection();
+					updateDriverInfo();
 				});
 			}
 		});
