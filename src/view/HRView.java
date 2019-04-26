@@ -7,19 +7,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -111,11 +106,10 @@ public class HRView implements ViewModule, UndoObserver {
 		});
 
 		updateDriverBtn.setOnAction(e -> {
-			// TÄN VOIS TEHÄ MODALINA
 			if(clicked != null) {
 				Stage stage = new Stage();
 				stage.setScene(new Scene(DriverModal.createEditModal(controller, clicked).getView()));
-				stage.setTitle("edit driver [PH]");
+				stage.setTitle(strings.getString("edit_driver_txt"));
 				stage.initOwner(((Node)e.getSource()).getScene().getWindow());
 				stage.show();
 				stage.setOnHidden(event -> {
