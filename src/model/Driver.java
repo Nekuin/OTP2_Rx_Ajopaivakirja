@@ -1,5 +1,4 @@
 package model;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,8 +32,11 @@ public class Driver extends Employee {
 	@Column(name="candrivehazardous")
 	private boolean canDriveHazardous;
 	
+	@Column(name="shiftsReserved")
+	private int shiftsReserved;
+	
 	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
-	private List<DrivingShift> shift;
+	private List<DrivingShift> shifts;
 	
 	/**
 	 * Constructor for the driver
@@ -45,8 +47,7 @@ public class Driver extends Employee {
 	public Driver(String name, String driversLicense, boolean canDriveHazardous) {
 		super(name);
 		this.driversLicense = driversLicense; 
-		//this.shifts = new HashSet<>();
-		this.shift = new ArrayList<>();
+		this.shifts = new ArrayList<>();
 		this.canDriveHazardous = canDriveHazardous;
 	}
 	
@@ -58,8 +59,7 @@ public class Driver extends Employee {
 	public Driver(String name, String driversLicense) {
 		super(name);
 		this.driversLicense = driversLicense; 
-		//this.shifts = new HashSet<>();
-		this.shift = new ArrayList<>();
+		this.shifts = new ArrayList<>();
 		this.canDriveHazardous = false;
 	}
 	
@@ -204,7 +204,7 @@ public class Driver extends Employee {
 	 */
 	@Override
 	public String toString() {
-		return super.toString() + ", License: " + this.driversLicense + ", Shifts: " + this.getShift();
+		return super.toString() + ", License: " + this.driversLicense;
 	}
 
 	
@@ -214,7 +214,7 @@ public class Driver extends Employee {
 	 */
 	public void addDrivingShift(DrivingShift drivingShift) {
 		//shifts.add(drivingShift);
-		this.shift.add(drivingShift);
+		this.shifts.add(drivingShift);
 		System.out.println("added shift: " + drivingShift);
 		//this.shiftID = drivingShift.getShiftID();
 	}
@@ -224,10 +224,13 @@ public class Driver extends Employee {
 	 * Returns list of shifts the driver has
 	 * @return
 	 */
-	public List<DrivingShift> getShift() {
-		return this.shift;
+	public List<DrivingShift> getShifts() {
+		return this.shifts;
 	}
-
 	
+	public int getShiftsReserved() {
+		shiftsReserved = getShifts().size();
+		return shiftsReserved;
+	}
 	
 }
