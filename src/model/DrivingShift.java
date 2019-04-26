@@ -246,16 +246,11 @@ public class DrivingShift {
 		return this.cargo;
 	}
 	
-	public boolean getShiftDriven() {
-		return shiftDriven;
-	}
-	
 	/**
 	 * returns a string representation of the driving shift
 	 */
 	@Override
 	public String toString() {
-		//return "Shift id: " + this.shiftID + " " + this.cargo + " " + this.client;
 		return "" + this.shiftID;
 	}
 	
@@ -280,7 +275,7 @@ public class DrivingShift {
 	 * @return double
 	 */
 	public double getTotalCargoWeight() {
-		return this.cargo.stream().mapToDouble(cargo -> cargo.getWeight()).sum();
+		return this.cargo.stream().mapToDouble(c -> c.getWeight()).sum();
 	}
 
 }

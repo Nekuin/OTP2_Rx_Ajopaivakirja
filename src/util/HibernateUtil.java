@@ -15,6 +15,11 @@ public class HibernateUtil {
 	private static EntityManagerFactory emf;
 	private static EntityManager em;
 	
+	//hide implicit public constructor
+	private HibernateUtil() {
+		
+	}
+	
 	/**
 	 * Getter for an entity manager factory
 	 * @return EntityManagerFactory emf

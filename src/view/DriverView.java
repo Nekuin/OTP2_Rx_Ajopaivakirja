@@ -82,7 +82,7 @@ public class DriverView implements ViewModule {
 	private void initialize() {
 
 		reserve_button.setOnAction(e -> {
-			assignShift(e);
+			assignShift();
 			report_tableview.setItems(getReservedShifts());
 		});
 
@@ -218,7 +218,7 @@ public class DriverView implements ViewModule {
 	 * 
 	 * @param e
 	 */
-	private void assignShift(ActionEvent e) {
+	private void assignShift() {
 		this.controller.assignShift(driver, clicked);
 		reserve_tableview.setItems(getAvailableShifts());
 	}
@@ -236,7 +236,7 @@ public class DriverView implements ViewModule {
 		stage.initOwner(((Node) e.getSource()).getScene().getWindow());
 		stage.show();
 		stage.setOnHidden(e1 -> {
-			if(clicked.getShiftDriven()) {
+			if(clicked.isShiftDriven()) {
 				reportShifts.remove(clicked);
 			}
 			updateReportShiftInfo();			

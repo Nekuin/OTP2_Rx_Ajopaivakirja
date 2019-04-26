@@ -29,10 +29,10 @@ public class Main extends Application implements IView {
 	public final static int DRIVER_VIEW = 1, HR_VIEW = 2, SUPERIOR_VIEW = 3;
 	public static int LOGGED_IN_ID = 0;
 	private BorderPane root;
-	private HRView hr;
 	private ViewModule landing;
 	private IController controller;
 	private ViewModule superiorView;
+	private ViewModule hrView;
 	private HBox bottomBox;
 	private EntityManager entityManager;
 	private boolean startUpFinish = false;
@@ -125,8 +125,8 @@ public class Main extends Application implements IView {
 		this.landing = new LandingView(this.controller, this);
 		root.setCenter(landing.getView());
 		
-		//create hr view
-		this.hr = new HRView(this.controller);
+		//create HR view
+		this.hrView = new HRView(controller);
 		
 		//logout button
 		Button logout = createLogoutButton();	
@@ -258,9 +258,7 @@ public class Main extends Application implements IView {
 			//creates a new DriverView every time to handle language changes
 			this.root.setCenter(new DriverView(controller).getView());
 		} else if(view == Main.HR_VIEW) {
-			/*this.hr.updateDrivers(this.controller.readAllDrivers());
-			this.root.setCenter(this.hr.getView());*/
-			this.root.setCenter(new HRView(controller).getView());
+			this.root.setCenter(this.hrView.getView());
 		} else if(view == Main.SUPERIOR_VIEW) {
 			this.root.setCenter(this.superiorView.getView());
 		}

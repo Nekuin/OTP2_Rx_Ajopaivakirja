@@ -6,6 +6,11 @@ import javafx.scene.Node;
 import javafx.scene.control.Tooltip;
 
 public class ErrorTooltip {
+	
+	//hide implicit public constructor
+	private ErrorTooltip() {
+		
+	}
 
 	public static void showErrorTooltip(Node parent, String message) {
 		//create the tooltip
@@ -14,10 +19,8 @@ public class ErrorTooltip {
 		tooltip.setStyle("-fx-font: 24 arial;");
 		Tooltip.install(parent, tooltip);
 		//get bounds and show tooltip near the button
-		//Node node = (Node) e.getSource();
-		Node node = parent;
-		Bounds bounds = node.localToScreen(node.getBoundsInLocal());
-		tooltip.show(node.getScene().getWindow(), bounds.getMaxX(), bounds.getMaxY()-12);
+		Bounds bounds = parent.localToScreen(parent.getBoundsInLocal());
+		tooltip.show(parent.getScene().getWindow(), bounds.getMaxX(), bounds.getMaxY()-12);
 		//hide the tooltip after a delay
 		new Thread(() ->  {
 			try {

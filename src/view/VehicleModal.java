@@ -3,9 +3,6 @@ package view;
 import javafx.scene.layout.BorderPane;
 
 import java.io.IOException;
-
-import com.sun.java.util.jar.pack.DriverResource_zh_CN;
-
 import controller.IController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

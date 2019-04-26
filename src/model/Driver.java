@@ -215,10 +215,8 @@ public class Driver extends Employee {
 	 * @param drivingShift shift thats going to bo added for a driver
 	 */
 	public void addDrivingShift(DrivingShift drivingShift) {
-		//shifts.add(drivingShift);
 		this.shifts.add(drivingShift);
 		System.out.println("added shift: " + drivingShift);
-		//this.shiftID = drivingShift.getShiftID();
 	}
 
 	
