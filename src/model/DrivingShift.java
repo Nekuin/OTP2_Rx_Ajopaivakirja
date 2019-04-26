@@ -69,14 +69,29 @@ public class DrivingShift {
 	
 
 	/**
-	 * Constructor for driving shift
-	 * @param client client of the shift
-	 * @param cargo cargo of the shift
+	 * Constructor for driving shift with initial cargo
+	 * @param client Client client of the shift
+	 * @param cargo Cargo cargo of the shift
+	 * @param deadline LocalDate deadline for the shift
 	 */
 	public DrivingShift(Client client, Cargo cargo, LocalDate deadline) {
 		this.deadline = deadline;
 		this.cargo = new ArrayList<>();
 		this.cargo.add(cargo);
+		this.client = client;
+		this.clientID = client.getClientID();
+		this.shiftTaken = false;
+		this.shiftDriven = false;
+	}
+	
+	/**
+	 * Constructor without initial cargo
+	 * @param client Client client for the shift
+	 * @param deadline LocalDate deadline for the shift
+	 */
+	public DrivingShift(Client client, LocalDate deadline) {
+		this.deadline = deadline;
+		this.cargo = new ArrayList<>();
 		this.client = client;
 		this.clientID = client.getClientID();
 		this.shiftTaken = false;
@@ -196,6 +211,14 @@ public class DrivingShift {
 	 */
 	public void addCargo(Cargo cargo) {
 		this.cargo.add(cargo);
+	}
+	
+	/**
+	 * Adds a list of cargo to this shift
+	 * @param cargo List of Cargo objects
+	 */
+	public void addCargo(List<Cargo> cargo) {
+		cargo.forEach(this::addCargo);
 	}
 	
 	/**
