@@ -222,7 +222,7 @@ public class Main extends Application implements IView {
 		Collection<DrivingShift> shifts = new ArrayList<>();
 		for(int i = 0; i < 4; i++) {
 			Cargo cargo = new Cargo(i, false);
-			DrivingShift shift = new DrivingShift(new Client("Reiskan paja" + i), cargo, LocalDate.now());
+			DrivingShift shift = new DrivingShift(new Client("Reiskan paja"), cargo, LocalDate.now());
 			cargo.setShift(shift);
 			if(i == 1) {
 				cargo.setHazardous(true);

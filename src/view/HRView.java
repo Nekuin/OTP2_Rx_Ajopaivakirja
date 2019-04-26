@@ -102,6 +102,7 @@ public class HRView implements ViewModule, UndoObserver {
 			clicked = hr_tableView.getSelectionModel().getSelectedItem();
 			if (clicked != null) {
 				updateDriverInfo();
+				System.out.println("res shift amount " + clicked.getShiftsReserved());
 			}
 		});
 
@@ -150,7 +151,7 @@ public class HRView implements ViewModule, UndoObserver {
 		licenceCol.setCellValueFactory(new PropertyValueFactory<>("driversLicense"));
 
 		TableColumn<Driver, ?> shiftsCol = hr_tableView.getColumns().get(3);
-		shiftsCol.setCellValueFactory(new PropertyValueFactory<>("shift"));
+		shiftsCol.setCellValueFactory(new PropertyValueFactory<>("shiftsReserved"));
 
 		hr_tableView.setItems(getDriversInfo());
 	}

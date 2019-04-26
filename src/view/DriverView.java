@@ -174,7 +174,7 @@ public class DriverView implements ViewModule {
 			return;
 		}
 		System.out.println("selected: " + selectedShift + " " + selectedShift.getShiftDriver());
-		driver.getShift().remove(selectedShift);
+		driver.getShifts().remove(selectedShift);
 		selectedShift.setShiftDriver(null);
 		selectedShift.setShiftTaken(false);
 		reserveShifts.remove(clicked);
@@ -199,7 +199,7 @@ public class DriverView implements ViewModule {
 	 */
 	private ObservableList<DrivingShift> getReservedShifts() {
 		this.reportShifts.clear();
-		this.reportShifts.addAll(driver.getShift());
+		this.reportShifts.addAll(driver.getShifts());
 		return reportShifts;
 	}
 

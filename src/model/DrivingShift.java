@@ -223,13 +223,15 @@ public class DrivingShift {
 		return this.cargo;
 	}
 	
+	
+	
 	/**
 	 * returns a string representation of the driving shift
 	 */
 	@Override
 	public String toString() {
 		//return "Shift id: " + this.shiftID + " " + this.cargo + " " + this.client;
-		return "Shift id:  " + this.shiftID;
+		return "" + this.shiftID;
 	}
 	
 	/**
