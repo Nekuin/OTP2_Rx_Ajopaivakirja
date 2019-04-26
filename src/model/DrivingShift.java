@@ -246,7 +246,9 @@ public class DrivingShift {
 		return this.cargo;
 	}
 	
-	
+	public boolean getShiftDriven() {
+		return shiftDriven;
+	}
 	
 	/**
 	 * returns a string representation of the driving shift
