@@ -120,7 +120,7 @@ public class LandingView implements ViewModule {
 		drivers.forEach(e -> {
 			if(e.getEmployeeID() == id) {
 				System.out.println("logged in as a driver");
-				Main.LOGGED_IN_ID = id;
+				Main.setLoggedInId(id);
 				this.logged_in_id = id;
 				this.controller.changeView(Main.DRIVER_VIEW);
 				return;
@@ -132,7 +132,7 @@ public class LandingView implements ViewModule {
 		managers.forEach(e -> {
 			if(e.getEmployeeID() == id) {
 				System.out.println("logged in as a manager");
-				Main.LOGGED_IN_ID = id;
+				Main.setLoggedInId(id);
 				this.logged_in_id = id;
 				this.controller.changeView(Main.HR_VIEW);
 				return;
@@ -144,7 +144,7 @@ public class LandingView implements ViewModule {
 		superiors.forEach(e -> {
 			if(e.getEmployeeID() == id) {
 				System.out.println("logged in as a superior");
-				Main.LOGGED_IN_ID = id;
+				Main.setLoggedInId(id);
 				this.logged_in_id = id;
 				this.controller.changeView(Main.SUPERIOR_VIEW);
 				return;

@@ -143,7 +143,7 @@ public class Main extends Application implements IView {
 		Button logout = new Button(strings.getString("logout_text"));
 		logout.setOnAction(e -> {
 			this.root.setCenter(landing.getView());
-			Main.LOGGED_IN_ID = 0;
+			Main.setLoggedInId(0);
 			this.root.setTop(null);
 			root.setBottom(null);
 		});
@@ -279,6 +279,14 @@ public class Main extends Application implements IView {
 	@Override
 	public void resetRootBottom() {
 		root.setBottom(bottomBox);
+	}
+	
+	public static void setLoggedInId(int id) {
+		Main.LOGGED_IN_ID = id;
+	}
+	
+	public static int loggedInId() {
+		return Main.LOGGED_IN_ID;
 	}
 
 }

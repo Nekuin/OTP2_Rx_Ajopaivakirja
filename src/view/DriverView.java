@@ -247,7 +247,7 @@ public class DriverView implements ViewModule {
 	 * Get the logged in Driver
 	 */
 	private void updateDriver() {
-		this.driver = this.controller.readDriver(Main.LOGGED_IN_ID);
+		this.driver = this.controller.readDriver(Main.loggedInId());
 	}
 
 	/**
