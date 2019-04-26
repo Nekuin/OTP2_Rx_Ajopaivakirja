@@ -66,6 +66,7 @@ public class EmployeeModal implements ViewModule {
     private Employee employee;
     private IController controller;
     private SubmitObserver observer;
+    private final String DRIVER = "Driver", HR = "HR", SUPERIOR = "Superior";
 	
     /**
      * Add constructor
@@ -136,11 +137,11 @@ public class EmployeeModal implements ViewModule {
 			// if employee is null we're in the Add modal
 			if(employee == null) {
 				String selectedRole = roleComboBox.getSelectionModel().getSelectedItem();
-				if(selectedRole.equals("Driver")) {
+				if(selectedRole.equals(DRIVER)) {
 					controller.createDriver(new Driver(nameTextField.getText(), licenseTextField.getText(), hazardousCheckBox.isSelected()));
-				} else if(selectedRole.equals("HR")) {
+				} else if(selectedRole.equals(HR)) {
 					controller.createHrManager(new HrManager(nameTextField.getText()));
-				} else if(selectedRole.equals("Superior")) {
+				} else if(selectedRole.equals(SUPERIOR)) {
 					controller.createSuperior(new Superior(nameTextField.getText()));
 				}
 				
@@ -171,7 +172,7 @@ public class EmployeeModal implements ViewModule {
 			ErrorTooltip.showErrorTooltip(submitButton, strings.getString("sup_emp_noname_err"));
 			return false;
 		}
-		if(roleComboBox.getSelectionModel().getSelectedItem().equals("Driver")) {
+		if(roleComboBox.getSelectionModel().getSelectedItem().equals(DRIVER)) {
 			String license = licenseTextField.getText();
 			if(license.length() == 0) {
 				ErrorTooltip.showErrorTooltip(submitButton, strings.getString("sup_emp_nolicense_err"));
@@ -188,11 +189,11 @@ public class EmployeeModal implements ViewModule {
 	private void populateRoleBox() {
 		//put roles into combo box -  Driver, HR and Superior
 		ObservableList<String> roles = FXCollections.observableArrayList();
-		roles.addAll("Driver", "HR", "Superior");
+		roles.addAll(DRIVER, HR, SUPERIOR);
 		roleComboBox.setItems(roles);
 		//hide or show Driver related options based on the selection
 		roleComboBox.setOnAction(e -> {
-			if(roleComboBox.getSelectionModel().getSelectedItem().equals("Driver")) {
+			if(roleComboBox.getSelectionModel().getSelectedItem().equals(DRIVER)) {
 				licenseHolder.setOpacity(1);
 			} else {
 				licenseHolder.setOpacity(0);
