@@ -161,8 +161,9 @@
                                     </Label>
                                     <TableView fx:id="empTableView" prefHeight="500.0" prefWidth="400.0">
                                        <columns>
-                                          <TableColumn minWidth="30.0" prefWidth="200.0" text="%name_column_text" />
-                                          <TableColumn minWidth="30.0" prefWidth="200.0" text="%id_column_text" />
+                                          <TableColumn minWidth="30.0" prefWidth="133.0" text="%name_column_text" />
+                                          <TableColumn minWidth="30.0" prefWidth="133.0" text="%id_column_text" />
+                                          <TableColumn minWidth="30.0" prefWidth="133.0" text="%role_column_text" />
                                        </columns>
                                     </TableView>
                                  </children>
