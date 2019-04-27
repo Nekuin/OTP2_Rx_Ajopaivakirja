@@ -119,7 +119,30 @@ public class DriverTest {
 		assertEquals(true, shift.isShiftDriven(), "Shift was not driven.");
 	}
 	
+	/**
+	 * Tests assigning shift
+	 */
+	@Test
+	@DisplayName("Assign shift")
+	void testAssign() {
+		DrivingShift shift = new DrivingShift(new Client(), LocalDate.now());
+		controller.assignShift(testdriver, shift);
+		assertEquals(testdriver, shift.getShiftDriver(), "Driver was not assigned.");
+	}
 	
+	/**
+	 * Tests searching driver with employee id
+	 */
+	@Test
+	@DisplayName("Search driver with id")
+	void findDriverWithID() {
+		testdriver.setEmployeeID(100);
+		assertEquals(testdriver, controller.readDriver(100), "Driver was not found");
+	}
+	
+	/**
+	 * Tests creating hazardous cargo and simulates driver looking for suitable shifts
+	 */
 	@Test
 	@DisplayName("Hazardous cargo test")
 	void hazardousShiftCargoTest() {
@@ -138,6 +161,9 @@ public class DriverTest {
 		System.out.println("/haz test");
 	}
 	
+	/**
+	 * Tests creating non hazardous cargo and simulates driver looking for suitable shifts
+	 */
 	@Test
 	@DisplayName("Non hazardous cargo test")
 	void nonHazardousShiftCargoTest() {
