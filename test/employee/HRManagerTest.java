@@ -53,18 +53,6 @@ public class HRManagerTest {
 	}
 	
 	/**
-	 * Tests creating hr manager to database and retrieving it
-	 */
-	@Test
-	@DisplayName("Hr database")
-	void createHrManager() {
-		HrManager mng = new HrManager("Makke Manageeri");
-		controller.createHrManager(mng);
-		List<HrManager> managers = controller.readAllHrManagers();
-		assertTrue(managers.contains(mng));
-	}
-	
-	/**
 	 * Tests name setter
 	 */
 	@Test
@@ -83,6 +71,29 @@ public class HRManagerTest {
 		testHR.setEmployeeID(11);
 		assertEquals(11, testHR.getEmployeeID(), "Hr managers ID did not change!");
 	}
+	
+	/**
+	 * Tests the role getter
+	 */
+	@Test
+	@DisplayName("Test role")
+	void testRole() {
+		assertEquals("Hr Manager", testHR.getRole(), "Role is not correct!");
+	}
+	
+	/**
+	 * Tests creating hr manager to database and retrieving it
+	 */
+	@Test
+	@DisplayName("Hr database")
+	void createHrManager() {
+		HrManager mng = new HrManager("Makke Manageeri");
+		controller.createHrManager(mng);
+		List<HrManager> managers = controller.readAllHrManagers();
+		assertTrue(managers.contains(mng));
+	}
+	
+	
 	
 
 }

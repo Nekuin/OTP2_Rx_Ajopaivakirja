@@ -57,6 +57,15 @@ public class SuperiorTest {
 	}
 	
 	/**
+	 * Tests the role getter
+	 */
+	@Test
+	@DisplayName("Test role")
+	void testRole() {
+		assertEquals("Superior", testSuperior.getRole(), "Role is not correct!");
+	}
+	
+	/**
 	 * Tests id setter
 	 */
 	@Test
