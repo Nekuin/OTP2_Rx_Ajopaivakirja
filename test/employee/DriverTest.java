@@ -21,19 +21,37 @@ public class DriverTest {
 	static Driver testdriver;
 	static IController controller;
 
-	
+	/**
+	 * Setup for driver tests
+	 * Creates test version of controller
+	 */
 	@BeforeAll
 	public static void setup() {
 		System.out.println("testing");
 		controller = new Controller(null,true);
 	}
 	
+	/**
+	 * Creates a new driver before each test
+	 */
 	@BeforeEach
 	public void resetDriver() {
 		testdriver = new Driver("Kalle", "AB", false);
 		
 	}
 	
+	/**
+	 * Tests the role getter
+	 */
+	@Test
+	@DisplayName("Test role")
+	void testRole() {
+		assertEquals("Driver", testdriver.getRole(), "Role is not correct!");
+	}
+	
+	/**
+	 * Test for driver id setter
+	 */
 	@Test
 	@DisplayName("Driver ID")
 	void testID() {
@@ -41,6 +59,9 @@ public class DriverTest {
 		assertEquals(11, testdriver.getEmployeeID(), "Driver ID did not change!");
 	}
 	
+	/**
+	 * Test for drivers license getter
+	 */
 	@Test
 	@DisplayName("Drivers License")
 	void getDLicense() {		
@@ -48,6 +69,9 @@ public class DriverTest {
 		
 	}
 	
+	/**
+	 * Test for drivers license setter
+	 */
 	@Test
 	@DisplayName("Change drivers license")
 	void changeDLicense() {
@@ -55,18 +79,46 @@ public class DriverTest {
 		assertEquals("C1", testdriver.getDriversLicense(), "Drivers license has not changed!");
 	}
 	
+	/**
+	 * Tests getter for canDriveHazardous parameter
+	 */
 	@Test
 	@DisplayName("Can drive hazardous?")
 	void canDriveHazardous() {
 		assertEquals(false,testdriver.canDriveHazardous(),"This driver should not be able to drive hazardous!");
 	}
 	
+	/**
+	 * Tests setter for canDriveHazardous parameter
+	 */
 	@Test
 	@DisplayName("Set can drive hazardous")
 	void setCanDriveHazardous() {
 		testdriver.setCanDriveHazardous(true);
 		assertEquals(true,testdriver.canDriveHazardous(),"This driver should be able to drive hazardous!");
 	}
+	
+	/**
+	 * Tests shift that hasn't been driven
+	 */
+	@Test
+	@DisplayName("Shift not driven")
+	void testNotDriving() {
+		DrivingShift shift = new DrivingShift(new Client(), LocalDate.now());
+		assertEquals(false, shift.isShiftDriven(), "Shift should not be driven.");
+	}
+	
+	/**
+	 * Tests driving a shift
+	 */
+	@Test
+	@DisplayName("Drive shift")
+	void testDriving() {
+		DrivingShift shift = new DrivingShift(new Client(), LocalDate.now());
+		testdriver.driveShift(shift);
+		assertEquals(true, shift.isShiftDriven(), "Shift was not driven.");
+	}
+	
 	
 	@Test
 	@DisplayName("Hazardous cargo test")
