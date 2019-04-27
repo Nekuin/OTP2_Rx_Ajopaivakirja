@@ -13,13 +13,21 @@ import org.junit.jupiter.api.Test;
 import controller.Controller;
 import controller.IController;
 import model.*;
-
+/**
+ * 
+ * @author jorin
+ *
+ */
 public class HRManagerTest {
 	
 	static HrManager testHR;
 	static Driver kuski;
 	static IController controller;
 
+	/**
+	 * Setup for the tests
+	 * Creates test version of controller
+	 */
 	@BeforeAll
 	static void setup() {
 		System.out.println("testing HR manager");
@@ -27,17 +35,26 @@ public class HRManagerTest {
 		
 	}
 
+	/**
+	 * Creates a hr manager before every test
+	 */
 	@BeforeEach
 	void resetHR() {
 		testHR = new HrManager("HR Heikki");
 	}
 	
+	/**
+	 * Tests name getter
+	 */
 	@Test
 	@DisplayName("HR name")
 	void testName() {
 		assertEquals("HR Heikki", testHR.getName(), "Name is not correct");
 	}
 	
+	/**
+	 * Tests creating hr manager to database and retrieving it
+	 */
 	@Test
 	@DisplayName("Hr database")
 	void createHrManager() {
@@ -47,11 +64,24 @@ public class HRManagerTest {
 		assertTrue(managers.contains(mng));
 	}
 	
+	/**
+	 * Tests name setter
+	 */
 	@Test
 	@DisplayName("Hr name change")
 	void changeName() {
 		testHR.setName("HR Helena");
 		assertEquals("HR Helena", testHR.getName(), "Name is not correct");
+	}
+	
+	/**
+	 * Tests id setter
+	 */
+	@Test
+	@DisplayName("Employee ID")
+	void testID() {
+		testHR.setEmployeeID(11);
+		assertEquals(11, testHR.getEmployeeID(), "Hr managers ID did not change!");
 	}
 	
 

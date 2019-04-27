@@ -23,7 +23,7 @@ import util.Strings;
 
 /**
  * View module for the HR managers
- * @author tuoma
+ * @author tuoma, jorin
  *
  */
 public class HRView implements ViewModule, UndoObserver {
