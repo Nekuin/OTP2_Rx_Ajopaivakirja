@@ -23,7 +23,7 @@ import util.Strings;
 
 /**
  * View module for the HR managers
- * @author tuoma, jorin
+ * @author tuoma
  *
  */
 public class HRView implements ViewModule, UndoObserver {
@@ -71,6 +71,12 @@ public class HRView implements ViewModule, UndoObserver {
 		setupColumns();
 	}
 
+	/**
+	 * Initializes the Hr-managers view
+	 * Creates  the stage
+	 * Adds table with all drivers
+	 * Adds buttons for updating, adding and deleting drivers
+	 */
 	@FXML
 	private void initialize() {
 			
@@ -122,12 +128,19 @@ public class HRView implements ViewModule, UndoObserver {
 
 	}
 
+	/**
+	 * Gets information of all the drivers
+	 * @return ObservableList<Driver>
+	 */
 	private ObservableList<Driver> getDriversInfo() {
 		this.drivers.clear();
 		this.drivers.addAll(controller.readAllDrivers());
 		return drivers;
 	}
 
+	/**
+	 * Updates the drivers information
+	 */
 	private void updateDriverInfo() {
 		driver_name.setText(clicked.getName());
 		driver_ID.setText(Integer.toString(clicked.getEmployeeID()));
@@ -139,6 +152,9 @@ public class HRView implements ViewModule, UndoObserver {
 		}
 	}
 
+	/**
+	 * Sets up the columns for the driver table
+	 */
 	private void setupColumns() {
 
 		TableColumn<Driver, ?> nameCol = hr_tableView.getColumns().get(0);
@@ -174,6 +190,9 @@ public class HRView implements ViewModule, UndoObserver {
 		return this.bpane;
 	}
 
+	/**
+	 * Observer calls this method to update driver list
+	 */
 	@Override
 	public void notifyUndo() {
 		updateDrivers(this.controller.readAllDrivers());
