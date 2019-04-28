@@ -194,6 +194,11 @@ public class Controller implements IController{
 		List<Employee> employees = this.empAo.getAll();
 		return employees;
 	}
+	
+	@Override
+	public Employee readEmployee(int id) {
+		return this.empAo.get(id);
+	}
 
 	@Override
 	public void deleteEmployee(Employee employee) {
@@ -261,6 +266,8 @@ public class Controller implements IController{
 	public void updateCargo(Cargo cargo) {
 		cargoAO.update(cargo);
 	}
+
+	
 
 
 	
