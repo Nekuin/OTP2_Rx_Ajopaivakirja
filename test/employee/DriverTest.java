@@ -120,6 +120,20 @@ public class DriverTest {
 	}
 	
 	/**
+	 * Tests if we can create a driver object, store it in the database
+	 * and retrieve it
+	 */
+	@Test
+	@DisplayName("Testing create to database")
+	void createDriver() {
+		//create a new driver
+		Driver dr = new Driver("Make", "C2", true);
+		controller.createDriver(dr);
+		List<Driver> driverList = controller.readAllDrivers();
+		assertTrue(driverList.contains(dr),"Database should have the driver!");
+	}
+	
+	/**
 	 * Tests assigning shift
 	 */
 	@Test
@@ -138,6 +152,30 @@ public class DriverTest {
 	void findDriverWithID() {
 		testdriver.setEmployeeID(100);
 		assertEquals(testdriver, controller.readDriver(100), "Driver was not found");
+	}
+	
+	/**
+	 * Tests updating driver information
+	 */
+	@Test
+	@DisplayName("Update driver info")
+	void updateDriver() {
+		controller.createDriver(testdriver);
+		testdriver.setEmployeeID(100);
+		testdriver.setName("Kimmo");
+		controller.updateDriver(testdriver);
+		assertEquals("Kimmo", controller.readDriver(100).getName());
+	}
+	
+	/**
+	 * Tests deleting driver
+	 */
+	@Test
+	@DisplayName("Delete driver")
+	void testDelete(){
+		int id = testdriver.getEmployeeID();
+		controller.deleteDriver(testdriver);
+		assertEquals(null, controller.readDriver(id));
 	}
 	
 	/**
