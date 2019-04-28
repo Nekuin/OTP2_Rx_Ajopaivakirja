@@ -258,6 +258,7 @@ public class Main extends Application implements IView {
 			//creates a new DriverView every time to handle language changes
 			this.root.setCenter(new DriverView(controller).getView());
 		} else if(view == Main.HR_VIEW) {
+			((HRView)hrView).updateReports();
 			this.root.setCenter(this.hrView.getView());
 		} else if(view == Main.SUPERIOR_VIEW) {
 			this.root.setCenter(this.superiorView.getView());

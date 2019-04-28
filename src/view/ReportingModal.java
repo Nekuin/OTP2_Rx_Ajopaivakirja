@@ -202,7 +202,7 @@ public class ReportingModal {
 					Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setTitle(strings.getString("reproted_alert_title"));
 					alert.setHeaderText(null);
-					alert.setContentText(strings.getString("shift_id") + ": "+drivingShift.getShiftID() + "\n" + strings.getString("customer_name") + drivingShift.getClient().getName());
+					alert.setContentText(strings.getString("shift_id") + " "+drivingShift.getShiftID() + "\n" + strings.getString("customer_name") + " " + drivingShift.getClient().getName());
 					alert.showAndWait();
 					((Node) e.getSource()).getScene().getWindow().hide();
 				}

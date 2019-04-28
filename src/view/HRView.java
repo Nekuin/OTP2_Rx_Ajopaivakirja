@@ -32,7 +32,7 @@ public class HRView implements ViewModule, UndoObserver {
 	private IController controller;
 	private BorderPane bpane;
 	private ObservableList<Driver> drivers;
-	private ObservableList<DrivingShift> reported_shifts;
+	private ObservableList<DrivingShift> reportedShifts;
 	private Strings strings;
 	private Driver clicked;
 	private DrivingShift clickedReport;
@@ -80,7 +80,7 @@ public class HRView implements ViewModule, UndoObserver {
 	 */
 	public HRView(IController controller) {
 		drivers = FXCollections.observableArrayList();
-		reported_shifts = FXCollections.observableArrayList();
+		reportedShifts = FXCollections.observableArrayList();
 		strings = Strings.getInstance();
 		this.controller = controller;
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/xml/HrView.fxml"), strings.getBundle());
@@ -228,15 +228,13 @@ public class HRView implements ViewModule, UndoObserver {
 
 		TableColumn<DrivingShift, ?> deadlineCol = hr_ReportsTableView.getColumns().get(3);
 		deadlineCol.setCellValueFactory(new PropertyValueFactory<>("deadline"));
-
-		hr_ReportsTableView.setItems(getReportsInfo());
 		
 	}
 
-	private ObservableList<DrivingShift> getReportsInfo() {
-		this.reported_shifts.clear();
-		this.reported_shifts.addAll(controller.readReportedShifts());		
-		return reported_shifts;
+	public void updateReports() {
+		this.reportedShifts.clear();
+		this.reportedShifts.addAll(controller.readReportedShifts());		
+		hr_ReportsTableView.setItems(reportedShifts);
 	}
 
 	/**
