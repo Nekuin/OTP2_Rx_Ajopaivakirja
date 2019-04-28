@@ -64,16 +64,7 @@ public class SuperiorTest {
 	void testRole() {
 		assertEquals("Superior", testSuperior.getRole(), "Role is not correct!");
 	}
-	
-	/**
-	 * Tests id setter
-	 */
-	@Test
-	@DisplayName("Employee ID")
-	void testID() {
-		testSuperior.setEmployeeID(11);
-		assertEquals(11, testSuperior.getEmployeeID(), "Driver ID did not change!");
-	}
+
 	
 	/**
 	 * Tests if we can create a superior object, store it in the database

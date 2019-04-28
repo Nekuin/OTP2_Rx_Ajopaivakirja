@@ -48,13 +48,4 @@ public class EmployeeTest {
 		assertEquals("", testEmployee.getRole(), "Role is not correct!");
 	}
 	
-	/**
-	 * Tests employee id setter
-	 */
-	@Test
-	@DisplayName("Test employeeID")
-	void setEmployeeID() {	
-		testEmployee.setEmployeeID(2010);
-		assertEquals(2010, testEmployee.getEmployeeID(), "Employee ID not changed.");
-	}
 }

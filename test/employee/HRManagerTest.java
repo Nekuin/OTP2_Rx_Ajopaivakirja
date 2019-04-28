@@ -61,16 +61,7 @@ public class HRManagerTest {
 		testHR.setName("HR Helena");
 		assertEquals("HR Helena", testHR.getName(), "Name is not correct");
 	}
-	
-	/**
-	 * Tests id setter
-	 */
-	@Test
-	@DisplayName("Employee ID")
-	void testID() {
-		testHR.setEmployeeID(11);
-		assertEquals(11, testHR.getEmployeeID(), "Hr managers ID did not change!");
-	}
+
 	
 	/**
 	 * Tests the role getter

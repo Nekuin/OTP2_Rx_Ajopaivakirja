@@ -50,16 +50,6 @@ public class DriverTest {
 	}
 	
 	/**
-	 * Test for driver id setter
-	 */
-	@Test
-	@DisplayName("Driver ID")
-	void testID() {
-		testdriver.setEmployeeID(11);
-		assertEquals(11, testdriver.getEmployeeID(), "Driver ID did not change!");
-	}
-	
-	/**
 	 * Test for drivers license getter
 	 */
 	@Test
@@ -142,16 +132,6 @@ public class DriverTest {
 		DrivingShift shift = new DrivingShift(new Client(), LocalDate.now());
 		controller.assignShift(testdriver, shift);
 		assertEquals(testdriver, shift.getShiftDriver(), "Driver was not assigned.");
-	}
-	
-	/**
-	 * Tests searching driver with employee id
-	 */
-	@Test
-	@DisplayName("Search driver with id")
-	void findDriverWithID() {
-		testdriver.setEmployeeID(100);
-		assertEquals(testdriver, controller.readDriver(100), "Driver was not found");
 	}
 	
 	/**
