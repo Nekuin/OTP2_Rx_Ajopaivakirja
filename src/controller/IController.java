@@ -216,4 +216,10 @@ public interface IController {
 	 * @param cargo
 	 */
 	public void updateCargo(Cargo cargo);
+
+	/**
+	 * Read reported drivingshifts
+	 * @return
+	 */
+	public List<DrivingShift> readReportedShifts();
 }

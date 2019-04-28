@@ -19,6 +19,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Driver;
+import model.DrivingShift;
 import util.Strings;
 
 /**
@@ -31,8 +32,10 @@ public class HRView implements ViewModule, UndoObserver {
 	private IController controller;
 	private BorderPane bpane;
 	private ObservableList<Driver> drivers;
+	private ObservableList<DrivingShift> reported_shifts;
 	private Strings strings;
 	private Driver clicked;
+	private DrivingShift clickedReport;
 
 	@FXML
 	private Button addDriverBtn;
@@ -50,7 +53,26 @@ public class HRView implements ViewModule, UndoObserver {
 	private Text driver_licence;
 	@FXML
 	private CheckBox hazardous_box;
-
+	@FXML
+	private Text finishtime_info;
+	@FXML
+	private Text starttime_info;
+	@FXML
+	private Text date_info;
+	@FXML
+	private Text deadline_info;
+	@FXML
+	private Text car_info;
+	@FXML
+	private Text driver_info;
+	@FXML
+	private Text shift_id;
+	@FXML
+	private Text client_name;
+	@FXML
+	private Text cargoTotalWeight;
+	@FXML
+	private TableView<DrivingShift> hr_ReportsTableView;
 	/**
 	 * Constructor which takes a controller as parameter
 	 * 
@@ -58,6 +80,7 @@ public class HRView implements ViewModule, UndoObserver {
 	 */
 	public HRView(IController controller) {
 		drivers = FXCollections.observableArrayList();
+		reported_shifts = FXCollections.observableArrayList();
 		strings = Strings.getInstance();
 		this.controller = controller;
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/xml/HrView.fxml"), strings.getBundle());
@@ -68,7 +91,8 @@ public class HRView implements ViewModule, UndoObserver {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		setupColumns();
+		setupDriverColumns();
+		setupReportColumns();
 	}
 
 	/**
@@ -110,6 +134,13 @@ public class HRView implements ViewModule, UndoObserver {
 				updateDriverInfo();
 			}
 		});
+		
+		hr_ReportsTableView.setOnMouseClicked(e1 ->{
+			clickedReport = hr_ReportsTableView.getSelectionModel().getSelectedItem();
+			if(clickedReport != null) {
+				updateReportsInfo();
+			}
+		});
 
 		updateDriverBtn.setOnAction(e -> {
 			if(clicked != null) {
@@ -126,6 +157,18 @@ public class HRView implements ViewModule, UndoObserver {
 			}
 		});
 
+	}
+
+	private void updateReportsInfo() {
+		client_name.setText(clickedReport.getClient().getName());
+		shift_id.setText(Integer.toString(clickedReport.getShiftID()));
+		cargoTotalWeight.setText(Double.toString(clickedReport.getTotalCargoWeight()) + " kg");
+		driver_info.setText(clickedReport.getShiftDriver().getName() + " (ID: " + clickedReport.getShiftDriver().getEmployeeID() + ")");
+		car_info.setText(clickedReport.getVehicle().toString());
+		deadline_info.setText(clickedReport.getDeadline().toString());
+		date_info.setText(clickedReport.getDrivenDate().toString());
+		starttime_info.setText(clickedReport.getStartTime());
+		finishtime_info.setText(clickedReport.getFinishTime());
 	}
 
 	/**
@@ -155,7 +198,7 @@ public class HRView implements ViewModule, UndoObserver {
 	/**
 	 * Sets up the columns for the driver table
 	 */
-	private void setupColumns() {
+	private void setupDriverColumns() {
 
 		TableColumn<Driver, ?> nameCol = hr_tableView.getColumns().get(0);
 		nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -170,6 +213,30 @@ public class HRView implements ViewModule, UndoObserver {
 		shiftsCol.setCellValueFactory(new PropertyValueFactory<>("shiftsReserved"));
 
 		hr_tableView.setItems(getDriversInfo());
+	}
+	
+	private void setupReportColumns() {
+		
+		TableColumn<DrivingShift, ?> clientNameCol = hr_ReportsTableView.getColumns().get(0);
+		clientNameCol.setCellValueFactory(new PropertyValueFactory<>("client"));
+
+		TableColumn<DrivingShift, ?> shiftIDCol = hr_ReportsTableView.getColumns().get(1);
+		shiftIDCol.setCellValueFactory(new PropertyValueFactory<>("shiftID"));
+
+		TableColumn<DrivingShift, ?> cargoCol = hr_ReportsTableView.getColumns().get(2);
+		cargoCol.setCellValueFactory(new PropertyValueFactory<>("totalCargoWeight"));
+
+		TableColumn<DrivingShift, ?> deadlineCol = hr_ReportsTableView.getColumns().get(3);
+		deadlineCol.setCellValueFactory(new PropertyValueFactory<>("deadline"));
+
+		hr_ReportsTableView.setItems(getReportsInfo());
+		
+	}
+
+	private ObservableList<DrivingShift> getReportsInfo() {
+		this.reported_shifts.clear();
+		this.reported_shifts.addAll(controller.readReportedShifts());		
+		return reported_shifts;
 	}
 
 	/**

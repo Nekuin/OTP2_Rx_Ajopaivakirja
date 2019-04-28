@@ -147,6 +147,10 @@ public class Controller implements IController{
 		}
 	}
 	
+	public List<DrivingShift> readReportedShifts(){
+		return readAllDrivingShifts().stream().filter(shift -> shift.getShiftReported() == true).collect(Collectors.toList());
+	}
+	
 
 	@Override
 	public void createHrManager(HrManager manager) {

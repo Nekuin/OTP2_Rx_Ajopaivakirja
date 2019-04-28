@@ -35,6 +35,9 @@ public class DrivingShift {
 	@Column(name="deadline")
 	private LocalDate deadline;
 	
+	@Column(name="drivenDate")
+	private LocalDate drivenDate;
+
 	@Column(name="starttime")
 	private String startTime;
 	
@@ -52,6 +55,12 @@ public class DrivingShift {
 	
 	@Column(name="shifttaken")
 	private boolean shiftTaken;
+	
+	@Column(name="shiftReported")
+	private boolean shiftReported;
+	
+	@Column(name="totalCargoWeight")
+	private double totalCargoWeight;
 	
 	@Transient
 	private Vehicle vehicle;
@@ -96,6 +105,7 @@ public class DrivingShift {
 		this.clientID = client.getClientID();
 		this.shiftTaken = false;
 		this.shiftDriven = false;
+		this.shiftReported = false;
 	}
 	
 	/**
@@ -111,6 +121,20 @@ public class DrivingShift {
 	 */
 	public void setShiftID(int shiftID) {
 		this.shiftID = shiftID;
+	}
+	/**
+	 * Setter for shiftReported
+	 * @param bool
+	 */
+	public void setShiftReported(boolean bool) {
+		this.shiftReported = bool;
+	}
+	/**
+	 * Getter for shiftReported
+	 * @return
+	 */
+	public boolean getShiftReported() {
+		return this.shiftReported;
 	}
 	
 	/**
@@ -283,7 +307,22 @@ public class DrivingShift {
 	 * @return double
 	 */
 	public double getTotalCargoWeight() {
-		return this.cargo.stream().mapToDouble(c -> c.getWeight()).sum();
+		totalCargoWeight = this.cargo.stream().mapToDouble(c -> c.getWeight()).sum();
+		return totalCargoWeight;
+	}
+	/**
+	 * Getter for drivenDate
+	 * @return
+	 */
+	public LocalDate getDrivenDate() {
+		return drivenDate;
+	}
+	/**
+	 * Setter for drivenDate
+	 * @param drivenDate
+	 */
+	public void setDrivenDate(LocalDate drivenDate) {
+		this.drivenDate = drivenDate;
 	}
 
 }

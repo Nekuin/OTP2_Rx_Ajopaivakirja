@@ -19,7 +19,7 @@
    <top>
       <TabPane prefHeight="600.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
-          <Tab text="Kuljettajat">
+          <Tab text="%drivers_label_text">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -35,12 +35,12 @@
                                           <Insets bottom="20.0" top="20.0" />
                                        </padding>
                                     </Label>
-                                    <TableView fx:id="hr_tableView" prefHeight="512.0" prefWidth="526.0">
+                                    <TableView fx:id="hr_tableView" prefHeight="483.0" prefWidth="369.0">
                                        <columns>
-                                          <TableColumn prefWidth="124.79998624324799" text="%namePrompt_text" />
-                                          <TableColumn prefWidth="100.79999542236328" text="%employeeIDPrompt_text" />
-                                          <TableColumn prefWidth="128.79998779296875" text="%driversLicensePrompt_text" />
-                                          <TableColumn prefWidth="127.199951171875" text="%shiftsPrompt_text" />
+                                          <TableColumn prefWidth="110.0" text="%namePrompt_text" />
+                                          <TableColumn prefWidth="110.0" text="%employeeIDPrompt_text" />
+                                          <TableColumn prefWidth="110.0" text="%driversLicensePrompt_text" />
+                                          <TableColumn prefWidth="147.99996948242188" text="%shiftsPrompt_text" />
                                        </columns>
                                     </TableView>
                                  </children>
@@ -52,7 +52,7 @@
                                           <Font name="System Bold" size="18.0" />
                                        </font>
                                     </Label>
-                                    <VBox prefHeight="135.0" prefWidth="447.0" spacing="20.0">
+                                    <VBox prefHeight="314.0" prefWidth="374.0" spacing="20.0">
                                        <children>
                                           <HBox prefHeight="100.0" prefWidth="200.0" spacing="5.0">
                                              <children>
@@ -133,16 +133,190 @@
                               </VBox>
                            </children>
                            <padding>
-                              <Insets bottom="20.0" left="50.0" right="50.0" />
+                              <Insets bottom="20.0" left="50.0" />
                            </padding>
                         </HBox>
                      </children>
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab text="Raportit">
+          <Tab text="%reports_label">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <HBox prefHeight="570.0" prefWidth="800.0" spacing="20.0">
+                           <children>
+                              <VBox prefHeight="600.0" prefWidth="480.0">
+                                 <children>
+                                    <Label text="%reports_label">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets bottom="20.0" top="20.0" />
+                                       </padding>
+                                    </Label>
+                                    <TableView fx:id="hr_ReportsTableView" prefHeight="512.0" prefWidth="350.0">
+                                       <columns>
+                                          <TableColumn prefWidth="110.0" text="%client_text" />
+                                          <TableColumn prefWidth="110.0" text="%shift_ID_text" />
+                                          <TableColumn prefWidth="110.0" text="%cargo_textt" />
+                                          <TableColumn prefWidth="110.0" text="%deadline_info" />
+                                       </columns>
+                                    </TableView>
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="550.0" prefWidth="313.0" spacing="25.0">
+                                 <children>
+                                    <Label prefWidth="194.0" text="%shift_details_text">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <VBox prefHeight="135.0" prefWidth="447.0" spacing="20.0">
+                                       <children>
+                                          <HBox prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+                                             <children>
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%client_name">
+                                                   <font>
+                                                      <Font name="System Bold" size="15.0" />
+                                                   </font>
+                                                </Text>
+                                                <Text fx:id="client_name" strokeType="OUTSIDE" strokeWidth="0.0" text=" ">
+                                                   <font>
+                                                      <Font size="15.0" />
+                                                   </font>
+                                                </Text>
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+                                             <children>
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%shift_id">
+                                                   <font>
+                                                      <Font name="System Bold" size="15.0" />
+                                                   </font>
+                                                </Text>
+                                                <Text fx:id="shift_id" strokeType="OUTSIDE" strokeWidth="0.0" text=" ">
+                                                   <font>
+                                                      <Font size="15.0" />
+                                                   </font>
+                                                </Text>
+                                             </children>
+                                          </HBox>
+                                          <HBox layoutX="10.0" layoutY="50.0" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+                                             <children>
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%cargo_info_text">
+                                                   <font>
+                                                      <Font name="System Bold" size="15.0" />
+                                                   </font>
+                                                </Text>
+                                                <Text fx:id="cargoTotalWeight" strokeType="OUTSIDE" strokeWidth="0.0" text=" ">
+                                                   <font>
+                                                      <Font size="15.0" />
+                                                   </font>
+                                                </Text>
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+                                             <children>
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%driver">
+                                                   <font>
+                                                      <Font name="System Bold" size="15.0" />
+                                                   </font>
+                                                </Text>
+                                                <Text fx:id="driver_info" strokeType="OUTSIDE" strokeWidth="0.0" text=" ">
+                                                   <font>
+                                                      <Font size="15.0" />
+                                                   </font>
+                                                </Text>
+                                             </children>
+                                          </HBox>
+                                          <HBox layoutX="10.0" layoutY="90.0" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+                                             <children>
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%used_car">
+                                                   <font>
+                                                      <Font name="System Bold" size="15.0" />
+                                                   </font>
+                                                </Text>
+                                                <Text fx:id="car_info" strokeType="OUTSIDE" strokeWidth="0.0" text=" ">
+                                                   <font>
+                                                      <Font size="15.0" />
+                                                   </font>
+                                                </Text>
+                                             </children>
+                                          </HBox>
+                                          <HBox layoutX="10.0" layoutY="130.0" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+                                             <children>
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%deadline_info_text">
+                                                   <font>
+                                                      <Font name="System Bold" size="15.0" />
+                                                   </font>
+                                                </Text>
+                                                <Text fx:id="deadline_info" strokeType="OUTSIDE" strokeWidth="0.0" text=" ">
+                                                   <font>
+                                                      <Font size="15.0" />
+                                                   </font>
+                                                </Text>
+                                             </children>
+                                          </HBox>
+                                          <HBox layoutX="10.0" layoutY="170.0" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+                                             <children>
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%date_text">
+                                                   <font>
+                                                      <Font name="System Bold" size="15.0" />
+                                                   </font>
+                                                </Text>
+                                                <Text fx:id="date_info" strokeType="OUTSIDE" strokeWidth="0.0" text=" ">
+                                                   <font>
+                                                      <Font size="15.0" />
+                                                   </font>
+                                                </Text>
+                                             </children>
+                                          </HBox>
+                                          <HBox layoutX="10.0" layoutY="170.0" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+                                             <children>
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%starttime_text">
+                                                   <font>
+                                                      <Font name="System Bold" size="15.0" />
+                                                   </font>
+                                                </Text>
+                                                <Text fx:id="starttime_info" strokeType="OUTSIDE" strokeWidth="0.0" text=" ">
+                                                   <font>
+                                                      <Font size="15.0" />
+                                                   </font>
+                                                </Text>
+                                             </children>
+                                          </HBox>
+                                          <HBox layoutX="10.0" layoutY="210.0" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+                                             <children>
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%finishtime_text">
+                                                   <font>
+                                                      <Font name="System Bold" size="15.0" />
+                                                   </font>
+                                                </Text>
+                                                <Text fx:id="finishtime_info" strokeType="OUTSIDE" strokeWidth="0.0" text=" ">
+                                                   <font>
+                                                      <Font size="15.0" />
+                                                   </font>
+                                                </Text>
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                                 <padding>
+                                    <Insets top="65.0" />
+                                 </padding>
+                                 <HBox.margin>
+                                    <Insets right="20.0" />
+                                 </HBox.margin>
+                              </VBox>
+                           </children>
+                           <padding>
+                              <Insets bottom="20.0" left="50.0" />
+                           </padding>
+                        </HBox>
+                     </children></AnchorPane>
             </content>
           </Tab>
         </tabs>

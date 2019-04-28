@@ -200,6 +200,6 @@ public class Vehicle {
 	 */
 	@Override
 	public String toString() {
-		return this.brand + " " + this.model + " "  + this.regNr; 
+		return this.brand + " " + this.model + " ("  + this.regNr + ")"; 
 	}
 }
