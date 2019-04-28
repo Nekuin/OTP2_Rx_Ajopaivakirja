@@ -102,7 +102,7 @@ public class Employee {
 	 */
 	@Override
 	public String toString() {
-		return "Name: " + this.name + ", Employee ID: " + this.employeeID;
+		return "Name: " + this.name + ", Role: " + this.role + ", Employee ID: " + this.employeeID;
 	}
 	
 }

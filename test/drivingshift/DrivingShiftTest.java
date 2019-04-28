@@ -45,7 +45,7 @@ public class DrivingShiftTest {
 	}
 	
 	/**
-	 * Tests shift id getter nad setter
+	 * Tests shift id getter and setter
 	 */
 	@Test
 	@DisplayName("Shift ID")

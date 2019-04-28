@@ -141,10 +141,11 @@ public class DriverTest {
 	@Test
 	@DisplayName("Update driver info")
 	void updateDriver() {
+		int id = testdriver.getEmployeeID();
 		controller.createDriver(testdriver);
 		testdriver.setName("Kimmo");
 		controller.updateDriver(testdriver);
-		assertEquals("Kimmo", controller.readDriver(1).getName());
+		assertEquals("Kimmo", controller.readDriver(id).getName());
 	}
 	
 	/**
