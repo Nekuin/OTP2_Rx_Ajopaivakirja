@@ -106,6 +106,14 @@ public class DrivingShift {
 	}
 	
 	/**
+	 * Setter for shift ID's
+	 * @param shiftID
+	 */
+	public void setShiftID(int shiftID) {
+		this.shiftID = shiftID;
+	}
+	
+	/**
 	 * Getter for shift ID's
 	 * @return int
 	 */

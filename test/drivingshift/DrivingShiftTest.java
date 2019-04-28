@@ -45,6 +45,17 @@ public class DrivingShiftTest {
 	}
 	
 	/**
+	 * Tests shift id getter nad setter
+	 */
+	@Test
+	@DisplayName("Shift ID")
+	void idTest() {
+		int testID = 10;
+		testShift.setShiftID(testID);
+		assertEquals(testID, testShift.getShiftID(), "Shift ID was not correct.");
+	}
+	
+	/**
 	 * Tests Shift finish time set/get
 	 */
 	@Test
