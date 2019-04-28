@@ -133,7 +133,7 @@ public class VehicleTest {
 	}
 	
 	/**
-	 * Tests max acrgo load setter
+	 * Tests max cargo load setter
 	 */
 	@Test
 	@DisplayName("Test setMaxCargoLoad")

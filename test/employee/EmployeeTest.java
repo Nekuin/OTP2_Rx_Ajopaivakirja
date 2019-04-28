@@ -83,7 +83,7 @@ public class EmployeeTest {
 	 */
 	@Test
 	@DisplayName("Update employee info")
-	void updateDriver() {
+	void updateEmployee() {
 		Employee emp = new Employee("Kalle Kylma");
 		int id = emp.getEmployeeID();
 		controller.createEmployee(emp);
