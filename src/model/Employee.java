@@ -88,13 +88,13 @@ public class Employee {
 	}
 
 	
-	/**
+	/*
 	 * Sets id of the employee
 	 * @param employeeID id of the employee
-	 */
 	public void setEmployeeID(int employeeID) {
 		this.employeeID = employeeID;
 	}
+	*/
 
 
 	/**

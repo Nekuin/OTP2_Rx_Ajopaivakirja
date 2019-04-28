@@ -115,13 +115,15 @@ public class DrivingShift {
 		this.cargo = new ArrayList<>();
 	}
 	
-	/**
+	/*
 	 * Setter for shift ID's
 	 * @param shiftID
-	 */
+	 *
 	public void setShiftID(int shiftID) {
 		this.shiftID = shiftID;
 	}
+	*/
+	
 	/**
 	 * Setter for shiftReported
 	 * @param bool

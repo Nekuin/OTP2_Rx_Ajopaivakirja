@@ -169,14 +169,14 @@ public class Vehicle {
 	}
 
 	
-	/**
+	/*
 	 * Sets id of the vehicle
 	 * @param carID id of the vehicle
-	 */
+	 *
 	public void setCarID(int carID) {
 		this.carID = carID;
 	}
-
+	*/
 	
 	/**
 	 * Returns whether the vehicle is maintained or not

@@ -99,13 +99,14 @@ public class Cargo {
 		this.hazardous = hazardous;
 	}
 	
-	/**
+	/*
 	 * Method for setting the cargo id
 	 * @param cargoID id of the cargo
-	 */
+	 *
 	public void setCargoID(int cargoID) {
 		this.cargoID = cargoID;
 	}
+	*/
 	
 	/**
 	 * Method for getting information about the cargo in string format
