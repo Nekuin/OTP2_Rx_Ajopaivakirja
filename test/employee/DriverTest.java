@@ -121,6 +121,7 @@ public class DriverTest {
 		controller.createDriver(dr);
 		List<Driver> driverList = controller.readAllDrivers();
 		assertTrue(driverList.contains(dr),"Database should have the driver!");
+		controller.deleteDriver(dr);
 	}
 	
 	/**
@@ -141,10 +142,9 @@ public class DriverTest {
 	@DisplayName("Update driver info")
 	void updateDriver() {
 		controller.createDriver(testdriver);
-		testdriver.setEmployeeID(100);
 		testdriver.setName("Kimmo");
 		controller.updateDriver(testdriver);
-		assertEquals("Kimmo", controller.readDriver(100).getName());
+		assertEquals("Kimmo", controller.readDriver(1).getName());
 	}
 	
 	/**
