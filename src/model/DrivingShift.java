@@ -226,7 +226,10 @@ public class DrivingShift {
 		this.vehicleID = vehicle.getCarID();
 		this.vehicle = vehicle;
 	}
-	
+	/**
+	 * Getter for the used vehicle
+	 * @return vehicle
+	 */
 	public Vehicle getVehicle() {
 		return this.vehicle;
 	}

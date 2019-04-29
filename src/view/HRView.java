@@ -158,7 +158,9 @@ public class HRView implements ViewModule, UndoObserver {
 		});
 
 	}
-
+	/**
+	 * Updates the text fields with information about clicked driving shift 
+	 */
 	private void updateReportsInfo() {
 		client_name.setText(clickedReport.getClient().getName());
 		shift_id.setText(Integer.toString(clickedReport.getShiftID()));
@@ -214,7 +216,9 @@ public class HRView implements ViewModule, UndoObserver {
 
 		hr_tableView.setItems(getDriversInfo());
 	}
-	
+	/**
+	 * Sets up the columns for the reports table
+	 */
 	private void setupReportColumns() {
 		
 		TableColumn<DrivingShift, ?> clientNameCol = hr_ReportsTableView.getColumns().get(0);
@@ -231,6 +235,9 @@ public class HRView implements ViewModule, UndoObserver {
 		
 	}
 
+	/**
+	 * Updates hr_ReportsTableView which includes all reported shifts
+	 */
 	public void updateReports() {
 		this.reportedShifts.clear();
 		this.reportedShifts.addAll(controller.readReportedShifts());		
