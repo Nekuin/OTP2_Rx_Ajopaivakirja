@@ -70,7 +70,7 @@ public class Client {
 	 */
 	@Override
 	public String toString() {
-		return "Name: " + this.name + ", Client ID: " + this.clientID;
+		return this.name;
 	}
 	
 	
