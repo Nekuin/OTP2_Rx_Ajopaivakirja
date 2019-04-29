@@ -85,8 +85,8 @@ public class EmployeeTest {
 	@DisplayName("Update employee info")
 	void updateEmployee() {
 		Employee emp = new Employee("Kalle Kylma");
-		int id = emp.getEmployeeID();
 		controller.createEmployee(emp);
+		int id = emp.getEmployeeID();
 		emp.setName("Kimmo");
 		controller.updateEmployee(emp);
 		assertEquals("Kimmo", controller.readEmployee(id).getName());

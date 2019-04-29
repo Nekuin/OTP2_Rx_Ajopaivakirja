@@ -145,8 +145,8 @@ public class DriverTest {
 	@DisplayName("Update driver info")
 	void updateDriver() {
 		Driver dr = new Driver("Make", "C2", true);
-		int id = dr.getEmployeeID();
 		controller.createDriver(dr);
+		int id = dr.getEmployeeID();
 		dr.setName("Kimmo");
 		controller.updateDriver(dr);
 		assertEquals("Kimmo", controller.readDriver(id).getName());
