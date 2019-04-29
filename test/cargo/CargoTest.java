@@ -1,6 +1,7 @@
 package cargo;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
@@ -114,5 +115,16 @@ public class CargoTest {
 		DrivingShift s = new DrivingShift();
 		testCargo.setShift(s);
 		assertEquals(s, testCargo.getShift(), "Setting shift didn't work.");
+	}
+	
+	@Test
+	@DisplayName("toString test")
+	void testToString() {
+		Cargo cargo = new Cargo(50.0);
+		boolean contains = cargo.toString().contains("Hazardous");
+		assertFalse(contains, "toString prints with Hazardous text!");
+		cargo.setHazardous(true);
+		contains = cargo.toString().contains("Hazardous");
+		assertTrue(contains, "toString prints without Hazardous text!");
 	}
 }
