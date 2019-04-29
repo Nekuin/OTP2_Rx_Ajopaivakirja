@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import controller.Controller;
 import controller.IController;
 import model.*;
+import util.TestUtil;
 
 public class DriverTest {
 	
@@ -28,7 +29,7 @@ public class DriverTest {
 	@BeforeAll
 	public static void setup() {
 		System.out.println("testing");
-		controller = new Controller(null,true);
+		controller = new Controller(null, TestUtil.testVersion);
 	}
 	
 	/**

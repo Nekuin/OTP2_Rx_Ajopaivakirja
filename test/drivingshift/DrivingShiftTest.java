@@ -18,6 +18,7 @@ import model.Client;
 import model.Driver;
 import model.DrivingShift;
 import model.Vehicle;
+import util.TestUtil;
 
 public class DrivingShiftTest {
 	static DrivingShift testShift;
@@ -33,7 +34,7 @@ public class DrivingShiftTest {
 		//we don't have an instance of view => null as first parameter
 		//use false as the second if you want to test locally
 		//and use true if you want Jenkins to test
-		controller = new Controller(null, true);
+		controller = new Controller(null, TestUtil.testVersion);
 	}
 	
 	/**
@@ -97,6 +98,7 @@ public class DrivingShiftTest {
 		controller.createDrivingShift(s);
 		List<DrivingShift> shifts = controller.readAllDrivingShifts();
 		assertTrue(shifts.contains(s));
+		controller.deleteShift(s);
 	}
 	
 	/**

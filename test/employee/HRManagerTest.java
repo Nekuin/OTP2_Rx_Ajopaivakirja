@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import controller.Controller;
 import controller.IController;
 import model.*;
+import util.TestUtil;
 /**
  * 
  * @author jorin
@@ -31,7 +32,7 @@ public class HRManagerTest {
 	@BeforeAll
 	static void setup() {
 		System.out.println("testing HR manager");
-		controller = new Controller(null, true);
+		controller = new Controller(null, TestUtil.testVersion);
 		
 	}
 

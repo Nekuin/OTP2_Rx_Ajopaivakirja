@@ -14,6 +14,7 @@ import controller.Controller;
 import controller.IController;
 import model.Cargo;
 import model.DrivingShift;
+import util.TestUtil;
 
 /**
  * Tests for cargo objects
@@ -35,7 +36,7 @@ public class CargoTest {
 	@BeforeAll
 	static void init() {
 		//use test version of controller by passing true as the last argument
-		controller = new Controller(null, true);
+		controller = new Controller(null, TestUtil.testVersion);
 	}
 	
 	

@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import controller.Controller;
 import controller.IController;
 import model.Client;
+import util.TestUtil;
 
 /**
  * Tests for client objects
@@ -26,7 +27,7 @@ public class ClientTest {
 	@BeforeAll
 	static void init() {
 		//use test version of controller by passing true as the last argument
-		controller = new Controller(null,true);
+		controller = new Controller(null, TestUtil.testVersion);
 	}
 	
 	/**
