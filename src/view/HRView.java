@@ -1,236 +1,248 @@
 package view;
 
+import java.io.IOException;
 import java.util.Collection;
-
 import controller.IController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Driver;
+import model.DrivingShift;
 import util.Strings;
 
 /**
  * View module for the HR managers
- * @author Nekuin
+ * @author tuoma
  *
- */
-
-/*
- * Class not commented
- * Going to be remade with scene builder
  */
 public class HRView implements ViewModule, UndoObserver {
 
 	private IController controller;
 	private BorderPane bpane;
 	private ObservableList<Driver> drivers;
+	private ObservableList<DrivingShift> reportedShifts;
+	private Strings strings;
+	private Driver clicked;
+	private DrivingShift clickedReport;
 
-	private ListView<Driver> lv;
-	
-	//test
-	private TextField driverNameTextF;
-	private TextField driversLicenseTextF;
-	
-	
-	
-	String cssLayoutDriverBox = "-fx-border-color: black;\n" +
-            "-fx-border-insets: 5;\n" +
-            "-fx-border-width: 2;\n" +
-            "-fx-border-style: solid;\n";
-
+	@FXML
+	private Button addDriverBtn;
+	@FXML
+	private Button updateDriverBtn;
+	@FXML
+	private Button deleteDriverBtn;
+	@FXML
+	private TableView<Driver> hr_tableView;
+	@FXML
+	private Text driver_name;
+	@FXML
+	private Text driver_ID;
+	@FXML
+	private Text driver_licence;
+	@FXML
+	private CheckBox hazardous_box;
+	@FXML
+	private Text finishtime_info;
+	@FXML
+	private Text starttime_info;
+	@FXML
+	private Text date_info;
+	@FXML
+	private Text deadline_info;
+	@FXML
+	private Text car_info;
+	@FXML
+	private Text driver_info;
+	@FXML
+	private Text shift_id;
+	@FXML
+	private Text client_name;
+	@FXML
+	private Text cargoTotalWeight;
+	@FXML
+	private TableView<DrivingShift> hr_ReportsTableView;
 	/**
 	 * Constructor which takes a controller as parameter
+	 * 
 	 * @param controller instance of Controller
 	 */
 	public HRView(IController controller) {
+		drivers = FXCollections.observableArrayList();
+		reportedShifts = FXCollections.observableArrayList();
+		strings = Strings.getInstance();
 		this.controller = controller;
-		this.bpane = new BorderPane();
-		this.bpane.setLeft(driverInfo());
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/xml/HrView.fxml"), strings.getBundle());
+		loader.setController(this);
+		try {
+			loader.load();
+			bpane = loader.getRoot();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		setupDriverColumns();
+		setupReportColumns();
 	}
 
 	/**
-	 * A module which displays info about the Drivers
-	 * @return GridPane
+	 * Initializes the Hr-managers view
+	 * Creates  the stage
+	 * Adds table with all drivers
+	 * Adds buttons for updating, adding and deleting drivers
 	 */
-	public GridPane driverInfo() {
-		GridPane grid = new GridPane();
-		Text title = new Text("Drivers:");
+	@FXML
+	private void initialize() {
+			
+		hazardous_box.setDisable(true);
 		
-		VBox driverBox = new VBox();
-		driverBox.setPadding(new Insets(20));
-		
-		HBox driverBoxButtons = new HBox();
-		driverBoxButtons.setPadding(new Insets(20));
-		
-		VBox addDriverBox = new VBox();
-		addDriverBox.setPadding(new Insets(20));
-		
-		
-		Button addDriverBtn = new Button("Add driver");
 		addDriverBtn.setOnAction(e -> {
 			Stage stage = new Stage();
-			stage.setScene(new Scene(handleAddDriver()));
-			stage.setTitle("Add a new driver");
+			stage.setScene(new Scene(DriverModal.createAddModal(controller).getView()));
+			stage.setTitle(strings.getString("addModal_driver_text"));
 			stage.initModality(Modality.APPLICATION_MODAL);
 			stage.initOwner(((Node) e.getSource()).getScene().getWindow());
 			stage.show();
+			stage.setOnHidden(e1 -> {
+				hr_tableView.setItems(getDriversInfo());
+			}); 
 		});
-		
-		
-		
-		Text driverInfo = new Text("Driver Info: ");
-		TextField name = new TextField("");
-		name.setPromptText("Name");
-		TextField driversLicense = new TextField("");
-		driversLicense.setPromptText("Drivers license");
-		TextField driverID = new TextField("");
-		driverID.setPromptText("Employee ID");
-		
-		
-		
-		HBox hazardousBox = new HBox();
-		Text hazardousText = new Text("Can drive hazardous: ");
-		CheckBox hazardousCheck = new CheckBox();
-		hazardousBox.getChildren().addAll(hazardousText, hazardousCheck);
-		
-		
-		Button deleteDriver = new Button("Remove");
-		deleteDriver.setOnAction(e -> {
-			Driver dr = lv.getSelectionModel().getSelectedItem();
-			if(dr != null) {
-				//this.controller.deleteDriver(lv.getSelectionModel().getSelectedItem());
-				UndoPopup pop = new UndoPopup (this.controller, lv.getSelectionModel().getSelectedItem(), this);
-				//updateDrivers(this.controller.readAllDrivers());
+
+		deleteDriverBtn.setOnAction(e -> {
+			if (clicked != null) {
+				UndoPopup pop = new UndoPopup(this.controller, clicked, this);
 				pop.showMessage();
-				drivers.remove(dr);
+				drivers.remove(clicked);
+				clicked = null;
 			}
-			
 		});
-		
-		Button updateDriver = new Button("Update");
-		updateDriver.setOnAction(e -> {
-			Driver clicked = lv.getSelectionModel().getSelectedItem();
-			clicked.setName(name.getText());
-			clicked.setDriversLicense(driversLicense.getText());
-			
-			if(hazardousCheck.isSelected()) {
-				clicked.setCanDriveHazardous(true);
-			} else {
-				clicked.setCanDriveHazardous(false);
-			}
-			
-			this.controller.updateDriver(clicked);
-			updateDrivers(this.controller.readAllDrivers());
-		});
-		
-		
-		driverBoxButtons.getChildren().addAll(updateDriver, deleteDriver);
-		
-		driverBox.getChildren().addAll(driverInfo, name, driverID, driversLicense, hazardousBox, driverBoxButtons);
-		
-		driverBox.setStyle(cssLayoutDriverBox);
-		
-		drivers = FXCollections.observableArrayList();
-		lv = new ListView<>();
-		lv.setMinWidth(300);
-		lv.setItems(drivers);
 
-		lv.setOnMouseClicked(e -> {
-			Driver clicked = lv.getSelectionModel().getSelectedItem();
-			name.setText(clicked.getName());
-			driversLicense.setText(clicked.getDriversLicense());
-			driverID.setText(Integer.toString(clicked.getEmployeeID()));
-			hazardousCheck.setSelected(clicked.getCanDriveHazardous());
-
-		});
-		
-		
-		
-		grid.add(title, 0, 0);
-		grid.add(lv, 0, 1);
-		grid.add(driverBox, 1, 1);
-		grid.add(addDriverBtn, 2, 2);
-
-		return grid;
-	}
 	
+		hr_tableView.setOnMouseClicked(e -> {
+			clicked = hr_tableView.getSelectionModel().getSelectedItem();
+			if (clicked != null) {
+				updateDriverInfo();
+			}
+		});
+		
+		hr_ReportsTableView.setOnMouseClicked(e1 ->{
+			clickedReport = hr_ReportsTableView.getSelectionModel().getSelectedItem();
+			if(clickedReport != null) {
+				updateReportsInfo();
+			}
+		});
+
+		updateDriverBtn.setOnAction(e -> {
+			if(clicked != null) {
+				Stage stage = new Stage();
+				stage.setScene(new Scene(DriverModal.createEditModal(controller, clicked).getView()));
+				stage.setTitle(strings.getString("edit_driver_txt"));
+				stage.initOwner(((Node)e.getSource()).getScene().getWindow());
+				stage.show();
+				stage.setOnHidden(event -> {
+					hr_tableView.setItems(getDriversInfo());
+					hr_tableView.getSelectionModel().clearSelection();
+					updateDriverInfo();
+				});
+			}
+		});
+
+	}
 	/**
-	 * Modal for adding drivers
-	 * @return BorderPane
+	 * Updates the text fields with information about clicked driving shift 
 	 */
-	public BorderPane handleAddDriver() {
-		
-		BorderPane modalPane = new BorderPane();
-		
-		//label
-		VBox labelBox = new VBox();
-		labelBox.setSpacing(30);
-		labelBox.setPadding(new Insets(30, 20, 20, 20));
-		Text label = new Text("Give new drivers information");
-		labelBox.getChildren().addAll(label);
-		
-		//drivers name
-		HBox driverNameBox = new HBox();
-		driverNameBox.setSpacing(20);
-		driverNameBox.setPadding(new Insets(20,20,20,20));
-		Text nameText = new Text("Drivers name:  ");
-		driverNameTextF = new TextField();
-		driverNameBox.getChildren().addAll(nameText, driverNameTextF);
-		
-		//drivers license
-		HBox driversLicenseBox = new HBox();
-		driversLicenseBox.setSpacing(20);
-		driversLicenseBox.setPadding(new Insets(20,20,20,20));
-		Text licenseText = new Text("Drivers license:  ");
-		driversLicenseTextF = new TextField();
-		driversLicenseBox.getChildren().addAll(licenseText, driversLicenseTextF);
-		
-		//confirm button
-		Button addDriver = new Button("Confirm");
-		addDriver.setOnAction(e -> {
-			Driver d = new Driver(driverNameTextF.getText(), driversLicenseTextF.getText());
-			this.controller.createDriver(d);
-			driverNameTextF.setText("");
-			driversLicenseTextF.setText("");
-			updateDrivers(this.controller.readAllDrivers());
-		});
-		
-		//cancel button
-		Button cancelButton = new Button("Cancel");
-		cancelButton.setOnAction(e -> {
-			((Node) e.getSource()).getScene().getWindow().hide();
-		});
-		
-		//button box
-		HBox buttons = new HBox();
-		buttons.setSpacing(30);
-		buttons.setPadding(new Insets(30,30,30,30));
-		buttons.getChildren().addAll(addDriver, cancelButton);
-		
-		GridPane pane = new GridPane();
-		pane.add(labelBox, 0, 0);
-		pane.add(driverNameBox, 0, 1);
-		pane.add(driversLicenseBox, 0, 2);
-		pane.add(buttons, 0, 3);
-		modalPane.setBottom(pane);
-		
-		
-		return modalPane;
+	private void updateReportsInfo() {
+		client_name.setText(clickedReport.getClient().getName());
+		shift_id.setText(Integer.toString(clickedReport.getShiftID()));
+		cargoTotalWeight.setText(Double.toString(clickedReport.getTotalCargoWeight()) + " kg");
+		driver_info.setText(clickedReport.getShiftDriver().getName() + " (ID: " + clickedReport.getShiftDriver().getEmployeeID() + ")");
+		car_info.setText(clickedReport.getVehicle().toString());
+		deadline_info.setText(clickedReport.getDeadline().toString());
+		date_info.setText(clickedReport.getDrivenDate().toString());
+		starttime_info.setText(clickedReport.getStartTime());
+		finishtime_info.setText(clickedReport.getFinishTime());
 	}
-	
+
+	/**
+	 * Gets information of all the drivers
+	 * @return ObservableList<Driver>
+	 */
+	private ObservableList<Driver> getDriversInfo() {
+		this.drivers.clear();
+		this.drivers.addAll(controller.readAllDrivers());
+		return drivers;
+	}
+
+	/**
+	 * Updates the drivers information
+	 */
+	private void updateDriverInfo() {
+		driver_name.setText(clicked.getName());
+		driver_ID.setText(Integer.toString(clicked.getEmployeeID()));
+		driver_licence.setText(clicked.getDriversLicense());
+		if (clicked.canDriveHazardous()) {
+			hazardous_box.setSelected(true);
+		}else {
+			hazardous_box.setSelected(false);
+		}
+	}
+
+	/**
+	 * Sets up the columns for the driver table
+	 */
+	private void setupDriverColumns() {
+
+		TableColumn<Driver, ?> nameCol = hr_tableView.getColumns().get(0);
+		nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+
+		TableColumn<Driver, ?> IDCol = hr_tableView.getColumns().get(1);
+		IDCol.setCellValueFactory(new PropertyValueFactory<>("employeeID"));
+
+		TableColumn<Driver, ?> licenceCol = hr_tableView.getColumns().get(2);
+		licenceCol.setCellValueFactory(new PropertyValueFactory<>("driversLicense"));
+
+		TableColumn<Driver, ?> shiftsCol = hr_tableView.getColumns().get(3);
+		shiftsCol.setCellValueFactory(new PropertyValueFactory<>("shiftsReserved"));
+
+		hr_tableView.setItems(getDriversInfo());
+	}
+	/**
+	 * Sets up the columns for the reports table
+	 */
+	private void setupReportColumns() {
+		
+		TableColumn<DrivingShift, ?> clientNameCol = hr_ReportsTableView.getColumns().get(0);
+		clientNameCol.setCellValueFactory(new PropertyValueFactory<>("client"));
+
+		TableColumn<DrivingShift, ?> shiftIDCol = hr_ReportsTableView.getColumns().get(1);
+		shiftIDCol.setCellValueFactory(new PropertyValueFactory<>("shiftID"));
+
+		TableColumn<DrivingShift, ?> cargoCol = hr_ReportsTableView.getColumns().get(2);
+		cargoCol.setCellValueFactory(new PropertyValueFactory<>("totalCargoWeight"));
+
+		TableColumn<DrivingShift, ?> deadlineCol = hr_ReportsTableView.getColumns().get(3);
+		deadlineCol.setCellValueFactory(new PropertyValueFactory<>("deadline"));
+		
+	}
+
+	/**
+	 * Updates hr_ReportsTableView which includes all reported shifts
+	 */
+	public void updateReports() {
+		this.reportedShifts.clear();
+		this.reportedShifts.addAll(controller.readReportedShifts());		
+		hr_ReportsTableView.setItems(reportedShifts);
+	}
 
 	/**
 	 * Update the driver list with a Collection of Drivers
@@ -249,11 +261,13 @@ public class HRView implements ViewModule, UndoObserver {
 	public BorderPane getView() {
 		return this.bpane;
 	}
-@Override
-public void notifyUndo() {
-	// TODO Auto-generated method stub
-	updateDrivers(this.controller.readAllDrivers());
-	
-	
-}
+
+	/**
+	 * Observer calls this method to update driver list
+	 */
+	@Override
+	public void notifyUndo() {
+		updateDrivers(this.controller.readAllDrivers());
+
+	}
 }

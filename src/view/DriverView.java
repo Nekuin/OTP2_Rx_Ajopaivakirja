@@ -38,37 +38,19 @@ public class DriverView implements ViewModule {
 	private Driver driver;
 	private Strings strings;
 
-	@FXML
-	private Button reserve_button;
-
-	@FXML
-	private Button report_button;
-
-	@FXML
-	private Button unassign_button;
-
-	@FXML
-	private TableView<DrivingShift> reserve_tableview;
-
-	@FXML
-	private TableView<DrivingShift> report_tableview;
-
-	@FXML
-	private Text client_Name;
-	@FXML
-	private Text shift_id;
-	@FXML
-	private Text cargo_info;
-	@FXML
-	private Text time_info2;
-	@FXML
-	private Text client_Name1;
-	@FXML
-	private Text shift_id1;
-	@FXML
-	private Text cargo_info1;
-	@FXML
-	private Text time_info3;
+	@FXML private Button reserve_button;
+	@FXML private Button report_button;
+	@FXML private Button unassign_button;
+	@FXML private TableView<DrivingShift> reserve_tableview;
+	@FXML private TableView<DrivingShift> report_tableview;
+	@FXML private Text client_Name;
+	@FXML private Text shift_id;
+	@FXML private Text cargo_info;
+	@FXML private Text time_info2;
+	@FXML private Text client_Name1;
+	@FXML private Text shift_id1;
+	@FXML private Text cargo_info1;
+	@FXML private Text time_info3;
 
 	private DrivingShift clicked;
 
@@ -83,7 +65,7 @@ public class DriverView implements ViewModule {
 		this.controller = controller;
 		// get logged in Driver
 		updateDriver();
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("Driver_view.fxml"), strings.getBundle());
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/xml/Driver_view.fxml"), strings.getBundle());
 		loader.setController(this);
 		try {
 			loader.load();
@@ -100,7 +82,7 @@ public class DriverView implements ViewModule {
 	private void initialize() {
 
 		reserve_button.setOnAction(e -> {
-			assignShift(e);
+			assignShift();
 			report_tableview.setItems(getReservedShifts());
 		});
 
@@ -192,7 +174,7 @@ public class DriverView implements ViewModule {
 			return;
 		}
 		System.out.println("selected: " + selectedShift + " " + selectedShift.getShiftDriver());
-		driver.getShift().remove(selectedShift);
+		driver.getShifts().remove(selectedShift);
 		selectedShift.setShiftDriver(null);
 		selectedShift.setShiftTaken(false);
 		reserveShifts.remove(clicked);
@@ -217,7 +199,7 @@ public class DriverView implements ViewModule {
 	 */
 	private ObservableList<DrivingShift> getReservedShifts() {
 		this.reportShifts.clear();
-		this.reportShifts.addAll(driver.getShift());
+		this.reportShifts.addAll(driver.getShifts());
 		return reportShifts;
 	}
 
@@ -236,7 +218,7 @@ public class DriverView implements ViewModule {
 	 * 
 	 * @param e
 	 */
-	private void assignShift(ActionEvent e) {
+	private void assignShift() {
 		this.controller.assignShift(driver, clicked);
 		reserve_tableview.setItems(getAvailableShifts());
 	}
@@ -253,14 +235,19 @@ public class DriverView implements ViewModule {
 		stage.initModality(Modality.APPLICATION_MODAL);
 		stage.initOwner(((Node) e.getSource()).getScene().getWindow());
 		stage.show();
-
+		stage.setOnHidden(e1 -> {
+			if(clicked.isShiftDriven()) {
+				reportShifts.remove(clicked);
+			}
+			updateReportShiftInfo();			
+		});
 	}
 
 	/**
 	 * Get the logged in Driver
 	 */
 	private void updateDriver() {
-		this.driver = this.controller.readDriver(Main.LOGGED_IN_ID);
+		this.driver = this.controller.readDriver(Main.loggedInId());
 	}
 
 	/**

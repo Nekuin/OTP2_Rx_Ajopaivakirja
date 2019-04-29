@@ -5,5 +5,8 @@ package view;
  *
  */
 public interface SubmitObserver {
+	/**
+	 * Notify observer that the user has successfully submitted an action
+	 */
 	public void notifyListener();
 }

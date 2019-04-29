@@ -72,7 +72,7 @@
                                           <Insets />
                                        </VBox.margin>
                                        <font>
-                                          <Font size="18.0" />
+                                          <Font size="16.0" />
                                        </font>
                                     </Button>
                                  </children>
@@ -171,11 +171,11 @@
                                        <children>
                                           <Button fx:id="report_button" mnemonicParsing="false" text="%report_button" wrapText="true">
                                              <font>
-                                                <Font size="18.0" />
+                                                <Font size="16.0" />
                                              </font></Button>
                                           <Button fx:id="unassign_button" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="%unassign_button" wrapText="true">
                                              <font>
-                                                <Font size="18.0" />
+                                                <Font size="16.0" />
                                              </font></Button>
                                        </children>
                                     </HBox>

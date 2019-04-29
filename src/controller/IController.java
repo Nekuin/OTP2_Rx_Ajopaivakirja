@@ -75,6 +75,13 @@ public interface IController {
 	public Driver readDriver(int id);
 	
 	/**
+	 * Returns an employee from database
+	 * @param id id of the employee
+	 * @return
+	 */
+	public Employee readEmployee(int id);
+	
+	/**
 	 * Deletes a driver from database
 	 * @param driver driver thats going to be deleted
 	 */
@@ -177,6 +184,24 @@ public interface IController {
 	public List<Cargo> readAllCargo();
 	
 	/**
+	 * Create a client object in the database
+	 * @param client
+	 */
+	public void createClient(Client client);
+	
+	/**
+	 * Delete client from database
+	 * @param client
+	 */
+	public void deleteClient(Client client);
+	
+	 /**
+	  * Update client object in the database
+	  * @param client
+	  */
+	public void updateClient(Client client);
+	
+	/**
 	 * Returns a list of all Clients in the database
 	 * @return List of Client objects
 	 */
@@ -198,4 +223,10 @@ public interface IController {
 	 * @param cargo
 	 */
 	public void updateCargo(Cargo cargo);
+
+	/**
+	 * Read reported drivingshifts
+	 * @return
+	 */
+	public List<DrivingShift> readReportedShifts();
 }

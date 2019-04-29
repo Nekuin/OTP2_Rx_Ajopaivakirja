@@ -3,7 +3,20 @@ package model;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.*;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.OrderColumn;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  * 
@@ -22,6 +35,9 @@ public class DrivingShift {
 	@Column(name="deadline")
 	private LocalDate deadline;
 	
+	@Column(name="drivenDate")
+	private LocalDate drivenDate;
+
 	@Column(name="starttime")
 	private String startTime;
 	
@@ -40,6 +56,12 @@ public class DrivingShift {
 	@Column(name="shifttaken")
 	private boolean shiftTaken;
 	
+	@Column(name="shiftReported")
+	private boolean shiftReported;
+	
+	@Column(name="totalCargoWeight")
+	private double totalCargoWeight;
+	
 	@Transient
 	private Vehicle vehicle;
 	
@@ -56,9 +78,10 @@ public class DrivingShift {
 	
 
 	/**
-	 * Constructor for driving shift
-	 * @param client client of the shift
-	 * @param cargo cargo of the shift
+	 * Constructor for driving shift with initial cargo
+	 * @param client Client client of the shift
+	 * @param cargo Cargo cargo of the shift
+	 * @param deadline LocalDate deadline for the shift
 	 */
 	public DrivingShift(Client client, Cargo cargo, LocalDate deadline) {
 		this.deadline = deadline;
@@ -71,10 +94,41 @@ public class DrivingShift {
 	}
 	
 	/**
+	 * Constructor without initial cargo
+	 * @param client Client client for the shift
+	 * @param deadline LocalDate deadline for the shift
+	 */
+	public DrivingShift(Client client, LocalDate deadline) {
+		this.deadline = deadline;
+		this.cargo = new ArrayList<>();
+		this.client = client;
+		this.clientID = client.getClientID();
+		this.shiftTaken = false;
+		this.shiftDriven = false;
+		this.shiftReported = false;
+	}
+	
+	/**
 	 * empty constructor for the driving shift
 	 */
 	public DrivingShift() {
 		this.cargo = new ArrayList<>();
+	}
+	
+	
+	/**
+	 * Setter for shiftReported
+	 * @param bool
+	 */
+	public void setShiftReported(boolean bool) {
+		this.shiftReported = bool;
+	}
+	/**
+	 * Getter for shiftReported
+	 * @return
+	 */
+	public boolean getShiftReported() {
+		return this.shiftReported;
 	}
 	
 	/**
@@ -85,13 +139,6 @@ public class DrivingShift {
 		return shiftID;
 	}
 	
-	/**
-	 * Setter for shift ID's
-	 * @param shiftID shifts ID
-	 */
-	public void setShiftID(int shiftID) {
-		this.shiftID = shiftID;
-	}
 	/**
 	 * Setter for deadlines
 	 * @param deadline
@@ -179,6 +226,13 @@ public class DrivingShift {
 		this.vehicleID = vehicle.getCarID();
 		this.vehicle = vehicle;
 	}
+	/**
+	 * Getter for the used vehicle
+	 * @return vehicle
+	 */
+	public Vehicle getVehicle() {
+		return this.vehicle;
+	}
 	
 	/**
 	 * Adds cargo into a driving shift
@@ -186,6 +240,14 @@ public class DrivingShift {
 	 */
 	public void addCargo(Cargo cargo) {
 		this.cargo.add(cargo);
+	}
+	
+	/**
+	 * Adds a list of cargo to this shift
+	 * @param cargo List of Cargo objects
+	 */
+	public void addCargo(List<Cargo> cargo) {
+		cargo.forEach(this::addCargo);
 	}
 	
 	/**
@@ -216,9 +278,9 @@ public class DrivingShift {
 	/**
 	 * returns a string representation of the driving shift
 	 */
+	@Override
 	public String toString() {
-		//return "Shift id: " + this.shiftID + " " + this.cargo + " " + this.client;
-		return "Shift id:  " + this.shiftID;
+		return "" + this.shiftID;
 	}
 	
 	/**
@@ -242,7 +304,22 @@ public class DrivingShift {
 	 * @return double
 	 */
 	public double getTotalCargoWeight() {
-		return this.cargo.stream().mapToDouble(cargo -> cargo.getWeight()).sum();
+		totalCargoWeight = this.cargo.stream().mapToDouble(c -> c.getWeight()).sum();
+		return totalCargoWeight;
+	}
+	/**
+	 * Getter for drivenDate
+	 * @return
+	 */
+	public LocalDate getDrivenDate() {
+		return drivenDate;
+	}
+	/**
+	 * Setter for drivenDate
+	 * @param drivenDate
+	 */
+	public void setDrivenDate(LocalDate drivenDate) {
+		this.drivenDate = drivenDate;
 	}
 
 }

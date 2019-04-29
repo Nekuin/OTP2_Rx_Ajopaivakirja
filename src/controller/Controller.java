@@ -27,7 +27,7 @@ public class Controller implements IController{
 	
 	/**
 	 * Contructor for the controller
-	 * @param view view that the controller is going to use
+	 * @param view instance of view
 	 */
 	public Controller(IView view) {
 		this.view = view;
@@ -41,6 +41,11 @@ public class Controller implements IController{
 		this.clientAO = new Dao<>(model.Client.class);
 	}
 	
+	/**
+	 * Constructor for the JUnit testing version of the controller
+	 * @param view instance of View or null for testing
+	 * @param test boolean indicating whether or not to use the test database on jenkins server
+	 */
 	public Controller(IView view, boolean test) {
 		System.out.println("test controller");
 		this.view = view;
@@ -128,13 +133,22 @@ public class Controller implements IController{
 	
 	@Override
 	public List<DrivingShift> readGoodDrivingShifts(Driver driver) {
-		if(!driver.getCanDriveHazardous()) {
+		if(!driver.canDriveHazardous()) {		
 			return readAllDrivingShifts().stream()
-					.filter(cargoList -> cargoList.getCargo()
-					.stream().anyMatch(Cargo::isHazardous)).collect(Collectors.toList());
+					.filter(shift -> shift.getShiftDriver() == null)
+					.filter(cargoList -> !cargoList.getCargo().stream()
+							.anyMatch(Cargo::isHazardous))
+					.collect(Collectors.toList());
+					
 		} else {
-			return readAllDrivingShifts();
+			return readAllDrivingShifts().stream()
+					.filter(shift -> shift.getShiftDriver() == null)
+					.collect(Collectors.toList());
 		}
+	}
+	
+	public List<DrivingShift> readReportedShifts(){
+		return readAllDrivingShifts().stream().filter(shift -> shift.getShiftReported() == true).collect(Collectors.toList());
 	}
 	
 
@@ -180,6 +194,11 @@ public class Controller implements IController{
 		List<Employee> employees = this.empAo.getAll();
 		return employees;
 	}
+	
+	@Override
+	public Employee readEmployee(int id) {
+		return this.empAo.get(id);
+	}
 
 	@Override
 	public void deleteEmployee(Employee employee) {
@@ -210,6 +229,21 @@ public class Controller implements IController{
 	public List<Cargo> readAllCargo() {
 		return this.cargoAO.getAll();
 	}
+	
+	@Override
+	public void createClient(Client client) {
+		this.clientAO.create(client);
+	}
+
+	@Override
+	public void deleteClient(Client client) {
+		this.clientAO.delete(client);
+	}
+
+	@Override
+	public void updateClient(Client client) {
+		this.clientAO.update(client);
+	}
 
 	@Override
 	public List<Client> readAllClients() {
@@ -232,6 +266,10 @@ public class Controller implements IController{
 	public void updateCargo(Cargo cargo) {
 		cargoAO.update(cargo);
 	}
+
+	
+
+
 	
 	
 

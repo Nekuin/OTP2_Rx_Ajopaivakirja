@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/10" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <TabPane prefHeight="600.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+        <tabs>
+          <Tab text="%sup_shift_tab">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="488.0" prefWidth="800.0">
+                     <children>
+                        <BorderPane prefHeight="572.0" prefWidth="800.0">
+                           <left>
+                              <VBox prefHeight="570.0" prefWidth="450.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <Label text="%shifts_label">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <TableView fx:id="shiftTableView" prefHeight="500.0" prefWidth="400.0">
+                                      <columns>
+                                        <TableColumn minWidth="30.0" prefWidth="200.0" text="%time_text" />
+                                        <TableColumn minWidth="30.0" prefWidth="200.0" text="%client_text" />
+                                      </columns>
+                                    </TableView>
+                                 </children>
+                                 <opaqueInsets>
+                                    <Insets left="20.0" />
+                                 </opaqueInsets>
+                                 <padding>
+                                    <Insets left="50.0" />
+                                 </padding>
+                              </VBox>
+                           </left>
+                           <center>
+                              <VBox prefHeight="570.0" prefWidth="300.0" spacing="20.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <Label text="%drivingshift_info">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <HBox prefHeight="12.0" prefWidth="300.0" spacing="10.0">
+                                       <children>
+                                          <Label text="%customer_name">
+                                             <font>
+                                                <Font name="System Bold" size="15.0" />
+                                             </font>
+                                          </Label>
+                                          <Text fx:id="shiftClientText" strokeType="OUTSIDE" strokeWidth="0.0" text="shiftClientText">
+                                             <font>
+                                                <Font size="15.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </HBox>
+                                    <HBox prefHeight="12.0" prefWidth="300.0" spacing="10.0">
+                                       <children>
+                                          <Label text="%shift_id">
+                                             <font>
+                                                <Font name="System Bold" size="15.0" />
+                                             </font>
+                                          </Label>
+                                          <Text fx:id="shiftIdText" strokeType="OUTSIDE" strokeWidth="0.0" text="shiftIdText">
+                                             <font>
+                                                <Font size="15.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </HBox>
+                                    <HBox prefHeight="12.0" prefWidth="300.0" spacing="10.0">
+                                       <children>
+                                          <Label text="%cargo_text">
+                                             <font>
+                                                <Font name="System Bold" size="15.0" />
+                                             </font>
+                                          </Label>
+                                          <Text fx:id="shiftCargoText" strokeType="OUTSIDE" strokeWidth="0.0" text="shiftCargoText">
+                                             <font>
+                                                <Font size="15.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </HBox>
+                                    <HBox prefHeight="12.0" prefWidth="300.0" spacing="10.0">
+                                       <children>
+                                          <Label text="%time_ttext">
+                                             <font>
+                                                <Font name="System Bold" size="15.0" />
+                                             </font>
+                                          </Label>
+                                          <Text fx:id="shiftDeadlineText" strokeType="OUTSIDE" strokeWidth="0.0" text="shiftDeadlineText">
+                                             <font>
+                                                <Font size="15.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </HBox>
+                                    <VBox alignment="BOTTOM_LEFT" prefHeight="200.0" prefWidth="100.0" spacing="20.0">
+                                       <children>
+                                          <Button fx:id="shiftAddButton" mnemonicParsing="false" text="%add_shift_text">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Button>
+                                          <Button fx:id="shiftUpdateButton" mnemonicParsing="false" text="%upd_shift_text">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Button>
+                                          <Button fx:id="shiftDeleteButton" mnemonicParsing="false" text="%del_shift_text">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Button>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                                 <padding>
+                                    <Insets left="50.0" top="60.0" />
+                                 </padding>
+                              </VBox>
+                           </center>
+                        </BorderPane>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+            <Tab text="%sup_emp_tab">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="488.0" prefWidth="800.0">
+                     <children>
+                        <BorderPane prefHeight="572.0" prefWidth="800.0">
+                           <left>
+                              <VBox prefHeight="570.0" prefWidth="450.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <Label text="%sup_emp_title">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <TableView fx:id="empTableView" prefHeight="500.0" prefWidth="400.0">
+                                       <columns>
+                                          <TableColumn minWidth="30.0" prefWidth="133.0" text="%name_column_text" />
+                                          <TableColumn minWidth="30.0" prefWidth="133.0" text="%id_column_text" />
+                                          <TableColumn minWidth="30.0" prefWidth="133.0" text="%role_column_text" />
+                                       </columns>
+                                    </TableView>
+                                 </children>
+                                 <opaqueInsets>
+                                    <Insets left="20.0" />
+                                 </opaqueInsets>
+                                 <padding>
+                                    <Insets left="50.0" />
+                                 </padding>
+                              </VBox>
+                           </left>
+                           <center>
+                              <VBox prefHeight="570.0" prefWidth="300.0" spacing="20.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <Label text="%employee_info_title">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <HBox prefHeight="12.0" prefWidth="300.0" spacing="10.0">
+                                       <children>
+                                          <Label text="%name_label_text">
+                                             <font>
+                                                <Font name="System Bold" size="15.0" />
+                                             </font>
+                                          </Label>
+                                          <Text fx:id="empNameText" strokeType="OUTSIDE" strokeWidth="0.0" text="empNameText">
+                                             <font>
+                                                <Font size="15.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </HBox>
+                                    <HBox prefHeight="12.0" prefWidth="300.0" spacing="10.0">
+                                       <children>
+                                          <Label text="%id_label_text">
+                                             <font>
+                                                <Font name="System Bold" size="15.0" />
+                                             </font>
+                                          </Label>
+                                          <Text fx:id="empIdText" strokeType="OUTSIDE" strokeWidth="0.0" text="empIdText">
+                                             <font>
+                                                <Font size="15.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </HBox>
+                                    <HBox fx:id="empLicenseLabelHolder" prefHeight="12.0" prefWidth="300.0" spacing="10.0">
+                                       <children>
+                                          <Label text="%license_label_text">
+                                             <font>
+                                                <Font name="System Bold" size="15.0" />
+                                             </font>
+                                          </Label>
+                                          <Text fx:id="empLicenseText" strokeType="OUTSIDE" strokeWidth="0.0" text="empLicenseText">
+                                             <font>
+                                                <Font size="15.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </HBox>
+                                    <VBox alignment="BOTTOM_LEFT" prefHeight="200.0" prefWidth="100.0" spacing="20.0">
+                                       <children>
+                                          <Button fx:id="addEmpButton" mnemonicParsing="false" text="%add_emp_text">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Button>
+                                          <Button fx:id="updateEmpButton" mnemonicParsing="false" text="%upd_emp_text">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Button>
+                                          <Button fx:id="deleteEmpButton" mnemonicParsing="false" text="%del_emp_text">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Button>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                                 <padding>
+                                    <Insets left="50.0" top="60.0" />
+                                 </padding>
+                              </VBox>
+                           </center>
+                        </BorderPane>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="%sup_vehicles_tab">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="488.0" prefWidth="800.0">
+                     <children>
+                        <BorderPane prefHeight="572.0" prefWidth="800.0">
+                           <left>
+                              <VBox prefHeight="570.0" prefWidth="450.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <Label text="%sup_vehicles_title">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <TableView fx:id="vehicleTableView" prefHeight="500.0" prefWidth="400.0">
+                                       <columns>
+                                          <TableColumn minWidth="30.0" prefWidth="200.0" text="%brand_column_text" />
+                                          <TableColumn minWidth="30.0" prefWidth="200.0" text="%reg_column_text" />
+                                       </columns>
+                                    </TableView>
+                                 </children>
+                                 <opaqueInsets>
+                                    <Insets left="20.0" />
+                                 </opaqueInsets>
+                                 <padding>
+                                    <Insets left="50.0" />
+                                 </padding>
+                              </VBox>
+                           </left>
+                           <center>
+                              <VBox prefHeight="570.0" prefWidth="300.0" spacing="20.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <Label text="%vehicle_info_text">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <HBox prefHeight="12.0" prefWidth="300.0" spacing="10.0">
+                                       <children>
+                                          <Label text="%brand_label_text">
+                                             <font>
+                                                <Font name="System Bold" size="15.0" />
+                                             </font>
+                                          </Label>
+                                          <Text fx:id="brandText" strokeType="OUTSIDE" strokeWidth="0.0" text="brandText">
+                                             <font>
+                                                <Font size="15.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </HBox>
+                                    <HBox prefHeight="12.0" prefWidth="300.0" spacing="10.0">
+                                       <children>
+                                          <Label text="%model_label_text">
+                                             <font>
+                                                <Font name="System Bold" size="15.0" />
+                                             </font>
+                                          </Label>
+                                          <Text fx:id="modelText" strokeType="OUTSIDE" strokeWidth="0.0" text="modelText">
+                                             <font>
+                                                <Font size="15.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </HBox>
+                                    <HBox prefHeight="12.0" prefWidth="300.0" spacing="10.0">
+                                       <children>
+                                          <Label text="%reg_label_text">
+                                             <font>
+                                                <Font name="System Bold" size="15.0" />
+                                             </font>
+                                          </Label>
+                                          <Text fx:id="regPlateText" strokeType="OUTSIDE" strokeWidth="0.0" text="regPlateText">
+                                             <font>
+                                                <Font size="15.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </HBox>
+                                    <HBox prefHeight="12.0" prefWidth="300.0" spacing="10.0">
+                                       <children>
+                                          <Label text="%driven_distance_text">
+                                             <font>
+                                                <Font name="System Bold" size="15.0" />
+                                             </font>
+                                          </Label>
+                                          <Text fx:id="drivenText" strokeType="OUTSIDE" strokeWidth="0.0" text="drivenText">
+                                             <font>
+                                                <Font size="15.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </HBox>
+                                    <HBox prefHeight="12.0" prefWidth="300.0" spacing="10.0">
+                                       <children>
+                                          <Label text="%max_cargo_label_text">
+                                             <font>
+                                                <Font name="System Bold" size="15.0" />
+                                             </font>
+                                          </Label>
+                                          <Text fx:id="cargoText" strokeType="OUTSIDE" strokeWidth="0.0" text="cargoText">
+                                             <font>
+                                                <Font size="15.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </HBox>
+                                    <HBox prefHeight="12.0" prefWidth="300.0" spacing="10.0">
+                                       <children>
+                                          <Label text="%sup_vehicle_maintained_text">
+                                             <font>
+                                                <Font name="System Bold" size="15.0" />
+                                             </font>
+                                          </Label>
+                                          <Text fx:id="maintainedText" strokeType="OUTSIDE" strokeWidth="0.0" text="maintainedText">
+                                             <font>
+                                                <Font size="15.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </HBox>
+                                    <VBox alignment="BOTTOM_LEFT" prefHeight="170.0" prefWidth="100.0" spacing="20.0">
+                                       <children>
+                                          <Button fx:id="addVehicleButton" mnemonicParsing="false" text="%add_vehicle_text">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Button>
+                                          <Button fx:id="updateVehicleButton" mnemonicParsing="false" text="%upd_vehicle_text">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Button>
+                                          <Button fx:id="deleteVehicleButton" mnemonicParsing="false" text="%del_vehicle_text">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Button>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                                 <padding>
+                                    <Insets left="50.0" top="60.0" />
+                                 </padding>
+                              </VBox>
+                           </center>
+                        </BorderPane>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </top>
+</BorderPane>

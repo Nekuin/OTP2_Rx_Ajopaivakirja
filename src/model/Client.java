@@ -64,19 +64,13 @@ public class Client {
 		return clientID;
 	}
 
-	/**
-	 * Method fo setting the client's id
-	 * @param clientID client's id
-	 */
-	public void setClientID(int clientID) {
-		this.clientID = clientID;
-	}
 	
 	/**
 	 * Method for getting information about the client in string format
 	 */
+	@Override
 	public String toString() {
-		return this.name + " (ID: " + this.clientID + ")";
+		return "Name: " + this.name + ", Client ID: " + this.clientID;
 	}
 	
 	

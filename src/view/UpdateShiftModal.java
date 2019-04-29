@@ -1,6 +1,7 @@
 package view;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 import controller.IController;
 import javafx.application.Platform;
@@ -12,17 +13,19 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import model.Cargo;
 import model.Client;
 import model.DrivingShift;
+import util.ErrorTooltip;
 import util.Strings;
 
 /**
  * Modal for updating driving shifts
- * @author tuoma
+ * @author Nekuin
  *
  */
 public class UpdateShiftModal implements ViewModule {
@@ -48,6 +51,9 @@ public class UpdateShiftModal implements ViewModule {
     @FXML
     private VBox listItem_remove_box;
     
+    @FXML
+    private DatePicker deadlinePicker;
+    
     private BorderPane root;
     private ObservableList<Cargo> selectedCargoList;
     private DrivingShift shift;
@@ -65,7 +71,7 @@ public class UpdateShiftModal implements ViewModule {
 		this.shift = shift;
 		this.observer = observer;
 		
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("UpdateShiftView.fxml"), strings.getBundle());
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/xml/UpdateShiftView.fxml"), strings.getBundle());
 		loader.setController(this);
 		try {
 			loader.load();
@@ -90,10 +96,27 @@ public class UpdateShiftModal implements ViewModule {
 		
 		populateCargoBox();
 		populateClientBox();
+		
+		//set deadline
+		deadlinePicker.setValue(shift.getDeadline());
+		//onAction listener that updates the shifts deadline
+		deadlinePicker.setOnAction(e -> {
+			LocalDate newDate = deadlinePicker.getValue();
+			//check if the newly selected date is in the past
+			if(newDate.isBefore(LocalDate.now())) {
+				//in the past, reset value and display error
+				deadlinePicker.setValue(shift.getDeadline());
+				ErrorTooltip.showErrorTooltip(deadlinePicker, "past");
+			} else {
+				//not in the past, set newDate as Deadline
+				shift.setDeadline(newDate);
+			}
+		});
 	}
 
 	/**
-	 * Populates the items into the combobox
+	 * Populates the Client ComboBox, and creates an onAction listener
+	 * for setting the Client for the shift
 	 */
 	private void populateClientBox() {
 		ObservableList<Client> clientList = FXCollections.observableArrayList();
@@ -111,7 +134,8 @@ public class UpdateShiftModal implements ViewModule {
 
 
 	/**
-	 * Populates the items into the combobox
+	 * Populates the Cargo ComboBox, and creates an onAction listener
+	 * that adds selected cargo to the shift
 	 */
 	private void populateCargoBox() {
 		selectedCargoList = FXCollections.observableArrayList();
@@ -181,7 +205,7 @@ public class UpdateShiftModal implements ViewModule {
 	}
 	
 	/**
-	 * Confirms the driving shift information
+	 * Submits the driving shift information
 	 * @param event
 	 */
 	private void confirmAction(ActionEvent event) {

@@ -3,12 +3,19 @@ package util;
 import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
-
+/**
+ * Wrapper for ResourceBundle used for translations
+ * @author Nekuin
+ *
+ */
 public enum Strings {
 	
 	INSTANCE;
 	private ResourceBundle bundle;
 	
+	/**
+	 * Private constructor, Singleton
+	 */
 	private Strings() {
 	}
 	

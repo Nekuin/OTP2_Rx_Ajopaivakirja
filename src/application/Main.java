@@ -2,10 +2,8 @@ package application;
 	
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Locale;
 
 import javax.persistence.EntityManager;
@@ -28,19 +26,13 @@ import view.*;
 
 public class Main extends Application implements IView {
 	
-	public static int DRIVER_VIEW = 1, HR_VIEW = 2, SUPERIOR_VIEW = 3;
-	public static int LOGGED_IN_ID = 0;
+	public final static int DRIVER_VIEW = 1, HR_VIEW = 2, SUPERIOR_VIEW = 3;
+	private static int LOGGED_IN_ID = 0;
 	private BorderPane root;
-	private DriverView dv;
-	private HRView hr;
 	private ViewModule landing;
-	private ViewModule driverRes;
-	private ViewModule personalShift;
-	private ViewModule supView;
-	private ViewModule supEmpView;
 	private IController controller;
-	private ViewModule supShiftView;
-	private NavBar supNav;
+	private ViewModule superiorView;
+	private ViewModule hrView;
 	private HBox bottomBox;
 	private EntityManager entityManager;
 	private boolean startUpFinish = false;
@@ -102,6 +94,7 @@ public class Main extends Application implements IView {
 						Thread.sleep(100);
 					} catch (InterruptedException e1) {
 						e1.printStackTrace();
+						Thread.currentThread().interrupt();
 					}
 				
 				//createViews must be called on UI thread!!
@@ -128,34 +121,21 @@ public class Main extends Application implements IView {
 	@Override
 	public void createViews() {
 		
-		//navigation for Driver
-		//createDriverNavBar();
-		
 		//create and set landing view
 		this.landing = new LandingView(this.controller, this);
 		root.setCenter(landing.getView());
 		
-		//create hr view
-		this.hr = new HRView(this.controller);
+		//create HR view
+		this.hrView = new HRView(controller);
 		
 		//logout button
 		Button logout = createLogoutButton();	
 		bottomBox = new HBox();
 		bottomBox.setPadding(new Insets(0, 50, 50, 50));
 		bottomBox.getChildren().addAll(logout);
-		//root.setBottom(bottomBox);
 		
 		//create SuperiorView
-		this.supView = new SuperiorView(this.controller);
-		
-		//create SuperiorEmployeeView
-		this.supEmpView = new SuperiorEmployeeView(this.controller);
-		
-		//create SuperiorShiftView
-		this.supShiftView = new SuperiorShiftView(this.controller);
-		
-		//create Buttons for Superior navBar
-		createSuperiorNavBar();
+		this.superiorView = new SuperiorViewController(controller);
 		
 	}
 	
@@ -163,31 +143,11 @@ public class Main extends Application implements IView {
 		Button logout = new Button(strings.getString("logout_text"));
 		logout.setOnAction(e -> {
 			this.root.setCenter(landing.getView());
-			Main.LOGGED_IN_ID = 0;
+			Main.setLoggedInId(0);
 			this.root.setTop(null);
 			root.setBottom(null);
 		});
 		return logout;
-	}
-	
-	private void createSuperiorNavBar() {
-		Button supViewButton = new Button("Superior Vehicle");
-		Button supEmpViewButton = new Button("Superior Employees");
-		Button supShiftViewButton = new Button("Superior Shifts");
-		
-		//create navBar for Superior
-		supNav = new NavBar(this, supViewButton, supEmpViewButton, supShiftViewButton);
-		supEmpViewButton.setOnAction(e -> {
-			root.setCenter(supEmpView.getView());
-		});
-		
-		supViewButton.setOnAction(e -> {
-			root.setCenter(supView.getView());
-		});
-		
-		supShiftViewButton.setOnAction(e -> {
-			root.setCenter(supShiftView.getView());
-		});
 	}
 	
 	public static void main(String[] args) {
@@ -262,10 +222,11 @@ public class Main extends Application implements IView {
 		Collection<DrivingShift> shifts = new ArrayList<>();
 		for(int i = 0; i < 4; i++) {
 			Cargo cargo = new Cargo(i, false);
-			DrivingShift shift = new DrivingShift(new Client("Reiskan paja"), cargo, LocalDate.of(2018, 5, 26));
+			DrivingShift shift = new DrivingShift(new Client("Reiskan paja"), cargo, LocalDate.now());
 			cargo.setShift(shift);
 			if(i == 1) {
 				cargo.setHazardous(true);
+				shift.getClient().setName("Reiskan paja[h]");
 			}
 			shifts.add(shift);
 		}
@@ -294,21 +255,13 @@ public class Main extends Application implements IView {
 	public void changeView(int view) {
 		root.setBottom(bottomBox);
 		if(view == Main.DRIVER_VIEW) {
-			/*this.dv.updateDriver();
-			List<DrivingShift> shifts = this.controller.readGoodDrivingShifts(this.controller.readDriver(Main.LOGGED_IN_ID));
-			((DriverReserveView)this.driverRes).updateShiftList(shifts);
-			this.root.setCenter(this.driverRes.getView());
-			((PersonalShiftView)this.personalShift).updateShifts(shifts);
-			this.root.setCenter(this.personalShift.getView());
-			this.root.setTop(driverNav.getNavBar());*/
-			this.dv = new DriverView(controller);
-			this.root.setCenter(this.dv.getView());
+			//creates a new DriverView every time to handle language changes
+			this.root.setCenter(new DriverView(controller).getView());
 		} else if(view == Main.HR_VIEW) {
-			this.hr.updateDrivers(this.controller.readAllDrivers());
-			this.root.setCenter(this.hr.getView());
+			((HRView)hrView).updateReports();
+			this.root.setCenter(this.hrView.getView());
 		} else if(view == Main.SUPERIOR_VIEW) {
-			this.root.setCenter(this.supView.getView());
-			this.root.setTop(supNav.getNavBar());
+			this.root.setCenter(this.superiorView.getView());
 		}
 	}
 
@@ -325,6 +278,14 @@ public class Main extends Application implements IView {
 	@Override
 	public void resetRootBottom() {
 		root.setBottom(bottomBox);
+	}
+	
+	public static void setLoggedInId(int id) {
+		Main.LOGGED_IN_ID = id;
+	}
+	
+	public static int loggedInId() {
+		return Main.LOGGED_IN_ID;
 	}
 
 }

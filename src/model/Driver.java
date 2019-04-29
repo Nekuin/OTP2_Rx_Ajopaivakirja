@@ -1,8 +1,12 @@
 package model;
-
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.*;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 
 
 /**
@@ -28,8 +32,11 @@ public class Driver extends Employee {
 	@Column(name="candrivehazardous")
 	private boolean canDriveHazardous;
 	
+	@Column(name="shiftsReserved")
+	private int shiftsReserved;
+	
 	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
-	private List<DrivingShift> shift;
+	private List<DrivingShift> shifts;
 	
 	/**
 	 * Constructor for the driver
@@ -39,9 +46,9 @@ public class Driver extends Employee {
 	 */
 	public Driver(String name, String driversLicense, boolean canDriveHazardous) {
 		super(name);
+		super.setRole("Driver");
 		this.driversLicense = driversLicense; 
-		//this.shifts = new HashSet<>();
-		this.shift = new ArrayList<>();
+		this.shifts = new ArrayList<>();
 		this.canDriveHazardous = canDriveHazardous;
 	}
 	
@@ -52,9 +59,9 @@ public class Driver extends Employee {
 	 */
 	public Driver(String name, String driversLicense) {
 		super(name);
+		super.setRole("Driver");
 		this.driversLicense = driversLicense; 
-		//this.shifts = new HashSet<>();
-		this.shift = new ArrayList<>();
+		this.shifts = new ArrayList<>();
 		this.canDriveHazardous = false;
 	}
 	
@@ -69,7 +76,7 @@ public class Driver extends Employee {
 	 * Method that returns the drivers ability to drive hazardous cargo
 	 * @return
 	 */
-	public boolean getCanDriveHazardous() {
+	public boolean canDriveHazardous() {
 		return canDriveHazardous;
 	}
 	
@@ -197,8 +204,9 @@ public class Driver extends Employee {
 	/**
 	 * Method that returns information about the driver in string format
 	 */
+	@Override
 	public String toString() {
-		return super.toString() + ", License: " + this.driversLicense + ", Shifts: " + this.getShift();
+		return super.toString() + ", License: " + this.driversLicense;
 	}
 
 	
@@ -207,10 +215,8 @@ public class Driver extends Employee {
 	 * @param drivingShift shift thats going to bo added for a driver
 	 */
 	public void addDrivingShift(DrivingShift drivingShift) {
-		//shifts.add(drivingShift);
-		this.shift.add(drivingShift);
+		this.shifts.add(drivingShift);
 		System.out.println("added shift: " + drivingShift);
-		//this.shiftID = drivingShift.getShiftID();
 	}
 
 	
@@ -218,10 +224,13 @@ public class Driver extends Employee {
 	 * Returns list of shifts the driver has
 	 * @return
 	 */
-	public List<DrivingShift> getShift() {
-		return this.shift;
+	public List<DrivingShift> getShifts() {
+		return this.shifts;
 	}
-
 	
+	public int getShiftsReserved() {
+		shiftsReserved = getShifts().size();
+		return shiftsReserved;
+	}
 	
 }

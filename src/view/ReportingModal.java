@@ -41,6 +41,7 @@ public class ReportingModal {
 	private LocalDate localDate;
 	private TextField startTimeTextF;
 	private TextField finishTimeTextF;
+	private DatePicker datePicker;
 
 	/**
 	 * Constructor for reporting view
@@ -126,7 +127,7 @@ public class ReportingModal {
 		dateHBox.setSpacing(20);
 		dateHBox.setPadding(new Insets(20, 20, 0, 0));
 		Text dateText = new Text(strings.getString("date_field"));
-		DatePicker datePicker = new DatePicker();
+		datePicker = new DatePicker();
 		datePicker.showWeekNumbersProperty();
 		datePicker.setOnAction(action -> {
 			localDate = datePicker.getValue();
@@ -195,11 +196,13 @@ public class ReportingModal {
 					drivingShift.setVehicle(carDropDown.getValue());
 					drivingShift.setStartTime(startTimeTextF.getText());
 					drivingShift.setFinishTime(finishTimeTextF.getText());
+					drivingShift.setShiftReported(true);
+					drivingShift.setDrivenDate(datePicker.getValue());
 					controller.updateDrivingShift(drivingShift);
 					Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setTitle(strings.getString("reproted_alert_title"));
 					alert.setHeaderText(null);
-					alert.setContentText(strings.getString("shift_id") + " "+drivingShift.getShiftID() + "\n" + strings.getString("customer_name") + ": "+ drivingShift.getClient().getName());
+					alert.setContentText(strings.getString("shift_id") + " "+drivingShift.getShiftID() + "\n" + strings.getString("customer_name") + " " + drivingShift.getClient().getName());
 					alert.showAndWait();
 					((Node) e.getSource()).getScene().getWindow().hide();
 				}

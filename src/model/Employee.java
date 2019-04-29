@@ -1,6 +1,14 @@
 package model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Transient;
+
 /**
  * Class for Employee
  * @author Nekuin
@@ -18,12 +26,32 @@ public class Employee {
 	@Column(name="name")
 	private String name;
 	
+	@Transient
+	private String role;
+	
 	/**
 	 * Constructor of the employee
 	 * @param name name of the employee
 	 */
 	public Employee(String name) {
 		this.name = name;
+		role = "";
+	}
+	
+	/**
+	 * Get the role of this Employee
+	 * @return
+	 */
+	public String getRole() {
+		return role;
+	}
+	
+	/**
+	 * Set the role of this Employee
+	 * @param role
+	 */
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 	/**
@@ -59,22 +87,13 @@ public class Employee {
 		return employeeID;
 	}
 
-	
-	/**
-	 * Sets id of the employee
-	 * @param employeeID id of the employee
-	 */
-	public void setEmployeeID(int employeeID) {
-		this.employeeID = employeeID;
-	}
-
 
 	/**
 	 * Returns a String representation of the Employee
 	 */
 	@Override
 	public String toString() {
-		return "Name: " + this.name + ", Employee ID: " + this.employeeID;
+		return "Name: " + this.name + ", Role: " + this.role + ", Employee ID: " + this.employeeID;
 	}
 	
 }

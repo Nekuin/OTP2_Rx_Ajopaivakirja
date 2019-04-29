@@ -1,6 +1,11 @@
 package model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * Class for the Vehicle
@@ -165,15 +170,6 @@ public class Vehicle {
 
 	
 	/**
-	 * Sets id of the vehicle
-	 * @param carID id of the vehicle
-	 */
-	public void setCarID(int carID) {
-		this.carID = carID;
-	}
-
-	
-	/**
 	 * Returns whether the vehicle is maintained or not
 	 * @return boolean
 	 */
@@ -195,6 +191,6 @@ public class Vehicle {
 	 */
 	@Override
 	public String toString() {
-		return this.brand + " " + this.model + " "  + this.regNr; 
+		return this.brand + " " + this.model + " ("  + this.regNr + ")"; 
 	}
 }
