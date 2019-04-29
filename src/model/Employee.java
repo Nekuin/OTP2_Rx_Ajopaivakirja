@@ -87,22 +87,13 @@ public class Employee {
 		return employeeID;
 	}
 
-	
-	/**
-	 * Sets id of the employee
-	 * @param employeeID id of the employee
-	 */
-	public void setEmployeeID(int employeeID) {
-		this.employeeID = employeeID;
-	}
-
 
 	/**
 	 * Returns a String representation of the Employee
 	 */
 	@Override
 	public String toString() {
-		return "Name: " + this.name + ", Employee ID: " + this.employeeID;
+		return "Name: " + this.name + ", Role: " + this.role + ", Employee ID: " + this.employeeID;
 	}
 	
 }

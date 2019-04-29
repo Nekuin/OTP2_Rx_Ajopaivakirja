@@ -133,7 +133,7 @@ public class VehicleTest {
 	}
 	
 	/**
-	 * Tests max acrgo load setter
+	 * Tests max cargo load setter
 	 */
 	@Test
 	@DisplayName("Test setMaxCargoLoad")
@@ -142,14 +142,5 @@ public class VehicleTest {
 		assertEquals(5000, testCar.getMaxCargoLoad(), "Max cargo not correct.");
 	}
 	
-	/**
-	 * Tests car ID setter
-	 */
-	@Test
-	@DisplayName("Test carID")
-	void setCarID() {
-		testCar.setCarID(2002);
-		assertEquals(2002, testCar.getCarID(), "Car ID not changed.");
-	}
 	
 }

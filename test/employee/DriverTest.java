@@ -130,9 +130,12 @@ public class DriverTest {
 	@Test
 	@DisplayName("Assign shift")
 	void testAssign() {
+		Driver dr = new Driver("Make", "C2", true);
 		DrivingShift shift = new DrivingShift(new Client(), LocalDate.now());
-		controller.assignShift(testdriver, shift);
-		assertEquals(testdriver, shift.getShiftDriver(), "Driver was not assigned.");
+		controller.assignShift(dr, shift);
+		assertEquals(dr, shift.getShiftDriver(), "Driver was not assigned.");
+		controller.deleteShift(shift);
+		controller.deleteDriver(dr);
 	}
 	
 	/**
@@ -141,10 +144,13 @@ public class DriverTest {
 	@Test
 	@DisplayName("Update driver info")
 	void updateDriver() {
-		controller.createDriver(testdriver);
-		testdriver.setName("Kimmo");
-		controller.updateDriver(testdriver);
-		assertEquals("Kimmo", controller.readDriver(1).getName());
+		Driver dr = new Driver("Make", "C2", true);
+		controller.createDriver(dr);
+		int id = dr.getEmployeeID();
+		dr.setName("Kimmo");
+		controller.updateDriver(dr);
+		assertEquals("Kimmo", controller.readDriver(id).getName());
+		controller.deleteDriver(dr);
 	}
 	
 	/**
@@ -153,8 +159,9 @@ public class DriverTest {
 	@Test
 	@DisplayName("Delete driver")
 	void testDelete(){
-		int id = testdriver.getEmployeeID();
-		controller.deleteDriver(testdriver);
+		Driver dr = new Driver("Make", "C2", true);
+		int id = dr.getEmployeeID();
+		controller.deleteDriver(dr);
 		assertEquals(null, controller.readDriver(id));
 	}
 	

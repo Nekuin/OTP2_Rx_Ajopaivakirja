@@ -75,6 +75,13 @@ public interface IController {
 	public Driver readDriver(int id);
 	
 	/**
+	 * Returns an employee from database
+	 * @param id id of the employee
+	 * @return
+	 */
+	public Employee readEmployee(int id);
+	
+	/**
 	 * Deletes a driver from database
 	 * @param driver driver thats going to be deleted
 	 */

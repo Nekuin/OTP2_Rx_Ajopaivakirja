@@ -176,7 +176,7 @@ public class VehicleModal implements ViewModule {
     }
     
     private boolean validateFields(String reg, String model, String brand, String distance, String cargo) {
-    	//TODO: replace [ph] texts
+    	
     	if(brand.length() == 0) {
     		ErrorTooltip.showErrorTooltip(brandTextField, strings.getString("sup_veh_brand_err"));
     		return false;

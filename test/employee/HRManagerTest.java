@@ -82,6 +82,7 @@ public class HRManagerTest {
 		controller.createHrManager(mng);
 		List<HrManager> managers = controller.readAllHrManagers();
 		assertTrue(managers.contains(mng));
+		controller.deleteEmployee(mng);
 	}
 	
 	

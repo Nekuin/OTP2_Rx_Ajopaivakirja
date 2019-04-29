@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test;
 
 import controller.Controller;
 import controller.IController;
-import model.Cargo;
 import model.Client;
 
 /**
@@ -37,15 +36,7 @@ public class ClientTest {
 	void resetClient() {
 		testClient = new Client("Hookoo");
 	}
-	/**
-	 * Tests getter and setter of client ID
-	 */
-	@Test
-	@DisplayName("Test clientID")
-	void setClientID() {
-		testClient.setClientID(999);
-		assertEquals(999, testClient.getClientID(), "Client ID not changed.");
-	}
+	
 	
 	/**
 	 * Tests getter of client name

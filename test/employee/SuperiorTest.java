@@ -78,6 +78,7 @@ public class SuperiorTest {
 		controller.createSuperior(spr);
 		List<Superior> superiorList = controller.readAllSuperiors();
 		assertTrue(superiorList.contains(spr),"Database should have the superior!");
+		controller.deleteEmployee(spr);
 	}
 
 }

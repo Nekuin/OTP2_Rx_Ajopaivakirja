@@ -38,15 +38,6 @@ public class CargoTest {
 		controller = new Controller(null, true);
 	}
 	
-	/**
-	 * Tests the setter and getter of cargo object
-	 */
-	@Test
-	@DisplayName("Test cargoID")
-	void getCargoID() {	
-		testCargo.setCargoID(7001);
-		assertEquals(7001, testCargo.getCargoID(), "Cargo ID not correct.");
-	}
 	
 	/**
 	 * Tests if we can create a cargo object, store it in the database
@@ -62,15 +53,7 @@ public class CargoTest {
 		assertTrue(cargoList.contains(cargo),"Database should have the cargo!");
 	}
 	
-	/**
-	 * Tests the setter and getter of ID of a cargo object
-	 */
-	@Test
-	@DisplayName("Test setCargoID")
-	void setCargoID() {	
-		testCargo.setCargoID(8002);
-		assertEquals(8002, testCargo.getCargoID(), "Cargo ID not changed.");
-	}
+	
 	/**
 	 * Tests the setter and getter of ID of a cargo object
 	 */
