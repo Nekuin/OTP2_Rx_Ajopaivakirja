@@ -2,8 +2,10 @@ package cargo;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.time.LocalDate;
 import java.util.List;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import controller.Controller;
 import controller.IController;
 import model.Cargo;
+import model.Client;
 import model.DrivingShift;
 import util.TestUtil;
 
@@ -110,5 +113,20 @@ public class CargoTest {
 		cargo.setHazardous(true);
 		contains = cargo.toString().contains("Hazardous");
 		assertTrue(contains, "toString prints without Hazardous text!");
+	}
+	
+	@Test
+	@DisplayName("unassigned cargo test")
+	void unassignedCargo() {
+		Cargo c1 = new Cargo(50);
+		Cargo c2 = new Cargo(60);
+		DrivingShift shift = new DrivingShift(new Client(""), c1, LocalDate.now());
+		controller.createDrivingShift(shift);
+		controller.createCargo(c2);
+		
+		List<Cargo> cargo = controller.readAllUnassignedCargo();
+		assertEquals(1, cargo.size(), "more than 1 cargo");
+		controller.deleteShift(shift);
+		controller.deleteCargo(c2);
 	}
 }

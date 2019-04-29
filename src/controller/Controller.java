@@ -267,11 +267,9 @@ public class Controller implements IController{
 		cargoAO.update(cargo);
 	}
 
-	
-
-
-	
-	
-
+	@Override
+	public void deleteCargo(Cargo cargo) {
+		cargoAO.delete(cargo);
+	}
 
 }

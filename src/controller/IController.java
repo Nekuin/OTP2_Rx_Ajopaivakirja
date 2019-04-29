@@ -229,4 +229,10 @@ public interface IController {
 	 * @return
 	 */
 	public List<DrivingShift> readReportedShifts();
+	
+	/**
+	 * Delete a cargo from the database
+	 * @param cargo
+	 */
+	public void deleteCargo(Cargo cargo);
 }
