@@ -25,7 +25,7 @@
                      <children>
                         <HBox prefHeight="570.0" prefWidth="939.0" spacing="50.0">
                            <children>
-                              <VBox prefHeight="600.0" prefWidth="480.0">
+                              <VBox prefHeight="600.0" prefWidth="500.0">
                                  <children>
                                     <Label text="%drivers_label">
                                        <font>
@@ -35,12 +35,12 @@
                                           <Insets bottom="20.0" top="20.0" />
                                        </padding>
                                     </Label>
-                                    <TableView fx:id="hr_tableView" prefHeight="490.0" prefWidth="490.0">
+                                    <TableView fx:id="hr_tableView" prefHeight="490.0" prefWidth="500.0">
                                        <columns>
                                           <TableColumn prefWidth="120.0" text="%namePrompt_text" />
                                           <TableColumn prefWidth="120.0" text="%employeeIDPrompt_text" />
                                           <TableColumn prefWidth="120.0" text="%driversLicensePrompt_text" />
-                                          <TableColumn prefWidth="120.0" text="%shiftsPrompt_text" />
+                                          <TableColumn prefWidth="128.80001831054688" text="%shiftsPrompt_text" />
                                        </columns>
                                     </TableView>
                                  </children>
@@ -146,7 +146,7 @@
                      <children>
                         <HBox prefHeight="570.0" prefWidth="900.0" spacing="50.0">
                            <children>
-                              <VBox prefHeight="550.0" prefWidth="490.0">
+                              <VBox prefHeight="550.0" prefWidth="500.0">
                                  <children>
                                     <Label text="%reports_label">
                                        <font>
@@ -156,12 +156,12 @@
                                           <Insets bottom="20.0" top="20.0" />
                                        </padding>
                                     </Label>
-                                    <TableView fx:id="hr_ReportsTableView" prefHeight="490.0" prefWidth="490.0">
+                                    <TableView fx:id="hr_ReportsTableView" prefHeight="490.0" prefWidth="500.0">
                                        <columns>
                                           <TableColumn prefWidth="120.0" text="%client_text" />
                                           <TableColumn prefWidth="120.0" text="%shift_ID_text" />
                                           <TableColumn prefWidth="120.0" text="%cargo_textt" />
-                                          <TableColumn prefWidth="120.0" text="%deadline_info" />
+                                          <TableColumn prefWidth="122.40001220703124" text="%deadline_info" />
                                        </columns>
                                     </TableView>
                                  </children>
