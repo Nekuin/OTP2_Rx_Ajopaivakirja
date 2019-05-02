@@ -45,6 +45,20 @@ public class HRManagerTest {
 	}
 	
 	/**
+	 * Testing the empty constructor
+	 */
+	@Test
+	@DisplayName("Empty constructor test")
+	void emptyContructorTest() {
+		HrManager temp = new HrManager();
+		boolean test = false;
+		if (temp != null) {
+			test = true;
+		}
+		assertEquals(true, test, "Empty Hr Manager was not created.");
+	}
+	
+	/**
 	 * Tests name getter
 	 */
 	@Test

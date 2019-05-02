@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import controller.Controller;
 import controller.IController;
+import model.Employee;
 import model.Superior;
 import util.TestUtil;
 /**
@@ -37,6 +38,20 @@ public class SuperiorTest {
 	@BeforeEach
 	void resetSuperior() {
 		testSuperior = new Superior("SupremeLeader");
+	}
+	
+	/**
+	 * Testing the empty constructor
+	 */
+	@Test
+	@DisplayName("Empty constructor test")
+	void emptyContructorTest() {
+		Superior temp = new Superior();
+		boolean test = false;
+		if (temp != null) {
+			test = true;
+		}
+		assertEquals(true, test, "Empty superior was not created.");
 	}
 	
 	/**

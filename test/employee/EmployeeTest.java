@@ -39,6 +39,20 @@ public class EmployeeTest {
 	}
 	
 	/**
+	 * Testing the empty constructor
+	 */
+	@Test
+	@DisplayName("Empty constructor test")
+	void emptyContructorTest() {
+		Employee temp = new Employee();
+		boolean test = false;
+		if (temp != null) {
+			test = true;
+		}
+		assertEquals(true, test, "Empty employee was not created.");
+	}
+	
+	/**
 	 * Tests getter for name
 	 */
 	@Test
@@ -67,6 +81,16 @@ public class EmployeeTest {
 	}
 	
 	/**
+	 * Tests the role setter
+	 */
+	@Test
+	@DisplayName("Set role")
+	void setRole() {
+		testEmployee.setRole("Rölli");
+		assertEquals("Rölli", testEmployee.getRole(), "Role wasn't set.");
+	}
+	
+	/**
 	 * Tests creating employee to database
 	 */
 	@Test
@@ -92,6 +116,16 @@ public class EmployeeTest {
 		controller.updateEmployee(emp);
 		assertEquals("Kimmo", controller.readEmployee(id).getName());
 		controller.deleteEmployee(emp);
+	}
+	
+	/**
+	 * Tests toString method
+	 */
+	@Test
+	@DisplayName("toString test")
+	void toStringTest() {
+		boolean contains = testEmployee.toString().contains("Ukko");
+		assertTrue(contains, "toString method is not working properly.");
 	}
 	
 }
