@@ -208,6 +208,13 @@ public interface IController {
 	public List<Client> readAllClients();
 	
 	/**
+	 * Returns a client from database
+	 * @param id
+	 * @return Client
+	 */
+	public Client readClient(int id);
+	
+	/**
 	 * Create a Cargo
 	 * @param cargo instance of Cargo
 	 */

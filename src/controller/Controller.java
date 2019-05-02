@@ -249,6 +249,11 @@ public class Controller implements IController{
 	public List<Client> readAllClients() {
 		return this.clientAO.getAll();
 	}
+	
+	@Override
+	public Client readClient(int id) {
+		return this.clientAO.get(id);
+	}
 
 	@Override
 	public void createCargo(Cargo cargo) {
@@ -266,6 +271,8 @@ public class Controller implements IController{
 	public void updateCargo(Cargo cargo) {
 		cargoAO.update(cargo);
 	}
+
+	
 
 	
 
