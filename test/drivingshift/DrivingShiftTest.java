@@ -181,5 +181,24 @@ public class DrivingShiftTest {
 		assertEquals(expectedWeight, testShift.getTotalCargoWeight(), "Cargo weight was wrong");
 	}
 	
+	/**
+	 * Tests shifts reported status getter and setter
+	 */
+	@Test
+	@DisplayName("Test shift reported")
+	void shiftReported() {
+		testShift.setShiftReported(true);
+		assertTrue(testShift.getShiftReported(), "Shift was not reported!");
+	}
 	
+	/**
+	 * Tests driven date getter and setter
+	 */
+	@Test
+	@DisplayName("Driven date test")
+	void drivenDate() {
+		LocalDate driven = LocalDate.of(2019, 5, 3);
+		testShift.setDrivenDate(driven);
+		assertEquals(driven, testShift.getDrivenDate(), "Driven date is incorrect.");
+	}
 }
