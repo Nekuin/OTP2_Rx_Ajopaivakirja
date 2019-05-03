@@ -96,5 +96,20 @@ public class SuperiorTest {
 		assertTrue(superiorList.contains(spr),"Database should have the superior!");
 		controller.deleteEmployee(spr);
 	}
+	
+	/**
+	 * Tests updating superior information
+	 */
+	@Test
+	@DisplayName("Update superior info")
+	void updateSuperior() {
+		Superior emp = new Superior("Kalle Kylma");
+		controller.createSuperior(emp);
+		int id = emp.getEmployeeID();
+		emp.setName("Kimmo");
+		controller.updateEmployee(emp);
+		assertEquals("Kimmo", controller.readEmployee(id).getName());
+		controller.deleteEmployee(emp);
+	}
 
 }

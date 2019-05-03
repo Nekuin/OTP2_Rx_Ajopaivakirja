@@ -102,6 +102,19 @@ public class DrivingShiftTest {
 	}
 	
 	/**
+	 * Test shift id getter
+	 */
+	@Test
+	@DisplayName("Driving shift id")
+	void testID() {
+		DrivingShift s = new DrivingShift(new Client(), new Cargo(), LocalDate.now());
+		controller.createDrivingShift(s);
+		int id = s.getShiftID();
+		assertEquals(id, s.getShiftID(), "Shift id is not correct");
+		controller.deleteShift(s);
+	}
+	
+	/**
 	 * Tests updating driving shift to database
 	 */
 	@Test
@@ -114,6 +127,7 @@ public class DrivingShiftTest {
 		controller.updateDrivingShift(s);
 		assertEquals("OK", s.getClient().getName(), "Update was not completed.");
 		controller.deleteShift(s);
+		
 	}
 	
 	/**

@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import model.Employee;
 import model.Vehicle;
 
 /**
@@ -25,6 +26,20 @@ public class VehicleTest {
 	@BeforeEach
 	void resetVehicle() {
 		testCar = new Vehicle("YKS-111", 0.0, 1000, "Sprinter", "Mercedes-Benz", true); 
+	}
+	
+	/**
+	 * Testing the empty constructor
+	 */
+	@Test
+	@DisplayName("Empty constructor test")
+	void emptyContructorTest() {
+		Vehicle temp = new Vehicle();
+		boolean test = false;
+		if (temp != null) {
+			test = true;
+		}
+		assertTrue(test, "Empty employee was not created.");
 	}
 	
 	

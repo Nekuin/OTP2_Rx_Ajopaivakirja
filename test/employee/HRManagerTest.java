@@ -100,6 +100,21 @@ public class HRManagerTest {
 		controller.deleteEmployee(mng);
 	}
 	
+	/**
+	 * Tests updating hr manager information
+	 */
+	@Test
+	@DisplayName("Update employee info")
+	void updateEmployee() {
+		HrManager emp = new HrManager("Kalle Kylma");
+		controller.createHrManager(emp);
+		int id = emp.getEmployeeID();
+		emp.setName("Kimmo");
+		controller.updateEmployee(emp);
+		assertEquals("Kimmo", controller.readEmployee(id).getName());
+		controller.deleteEmployee(emp);
+	}
+	
 	
 	
 

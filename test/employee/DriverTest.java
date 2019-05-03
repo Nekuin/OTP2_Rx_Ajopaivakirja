@@ -95,6 +95,15 @@ public class DriverTest {
 	}
 	
 	/**
+	 * Testing reserved shifts
+	 */
+	@Test
+	@DisplayName("Drivers shifts")
+	void shiftsReserved() {
+		assertEquals(0, testdriver.getShiftsReserved(), "There sould be no reserved shifts.");
+	}
+	
+	/**
 	 * Tests getter for canDriveHazardous parameter
 	 */
 	@Test
@@ -111,6 +120,19 @@ public class DriverTest {
 	void setCanDriveHazardous() {
 		testdriver.setCanDriveHazardous(true);
 		assertEquals(true,testdriver.canDriveHazardous(),"This driver should be able to drive hazardous!");
+	}
+	
+	/**
+	 * Tests getter for shift list
+	 */
+	@Test
+	@DisplayName("Get shifts")
+	void getShifts() {
+		DrivingShift test = new DrivingShift();
+		testdriver.addDrivingShift(test);
+		List<DrivingShift> testList = testdriver.getShifts();
+		boolean contains = testList.contains(test);
+		assertTrue(contains, "Driving shift not added.");
 	}
 	
 	/**
