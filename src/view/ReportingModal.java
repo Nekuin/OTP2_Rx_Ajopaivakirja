@@ -26,8 +26,7 @@ import util.Strings;
 
 /**
  * 
- * @author tuoma
- * View class for reporting
+ * @author tuoma View class for reporting
  */
 public class ReportingModal {
 
@@ -45,7 +44,8 @@ public class ReportingModal {
 
 	/**
 	 * Constructor for reporting view
-	 * @param controller controller of reporting view
+	 * 
+	 * @param controller   controller of reporting view
 	 * @param drivingShift drivingShift for reporting view
 	 */
 	public ReportingModal(IController controller, DrivingShift drivingShift) {
@@ -66,9 +66,10 @@ public class ReportingModal {
 		viewVBox.setAlignment(Pos.TOP_CENTER);
 		this.bpane.setCenter(viewVBox);
 	}
-	
+
 	/**
 	 * Gets the driving shift information and returns it as a grid pane
+	 * 
 	 * @param drivingShift driving shift that has been chosen from previous view
 	 * @return GridPane
 	 */
@@ -81,18 +82,18 @@ public class ReportingModal {
 
 		Text title = new Text(strings.getString("now_repoting_title"));
 		title.setStyle("-fx-font: 22 arial;");
-		
-		  Text client = new Text(strings.getString("customer_name") + " " + drivingShift.getClient().getName()); 
-		  Text shift = new Text(strings.getString("shift_id") + " " +drivingShift.getShiftID()); 
-		  Text cargo = new Text(strings.getString("cargo_text") + " " +drivingShift.getTotalCargoWeight() + " kg");
-		  Text deadLine = new Text(strings.getString("deadline_info") + ": " + drivingShift.getDeadline());
-		  
+
+		Text client = new Text(strings.getString("customer_name") + " " + drivingShift.getClient().getName());
+		Text shift = new Text(strings.getString("shift_id") + " " + drivingShift.getShiftID());
+		Text cargo = new Text(strings.getString("cargo_text") + " " + drivingShift.getTotalCargoWeight() + " kg");
+		Text deadLine = new Text(strings.getString("deadline_info") + ": " + drivingShift.getDeadline());
+
 		shiftInfoVBox.getChildren().addAll(title, client, shift, cargo, deadLine);
 		grid.add(shiftInfoVBox, 0, 0);
 
 		return grid;
 	}
-	
+
 	/**
 	 * Creates the fillable fields into the modal
 	 * @return GridPane
@@ -100,25 +101,55 @@ public class ReportingModal {
 	private GridPane getFillableInfo() {
 		GridPane grid = new GridPane();
 
-		VBox labelVBox = new VBox();
-		labelVBox.setSpacing(25);
-		labelVBox.setPadding(new Insets(20, 20, 40, 20));
-		Text label = new Text(strings.getString("fill_in_info"));
-		label.setStyle("-fx-font: 20 arial;");
-		Text mandatoryText = new Text(strings.getString("mandatory_info"));
-		mandatoryText.setStyle("-fx-font: 17 arial;");
-		labelVBox.getChildren().addAll(label, mandatoryText);
+		grid.add(getLabelVBox(), 0, 0);
+		grid.add(getCarHBox(), 0, 1);
+		grid.add(getTimeInfoVbox(), 0, 2);
+		grid.add(getAdditionalInfoVBox(), 0, 3);
+		grid.add(getCheckBeforeSubmitHBox(), 0, 4);
 
-		HBox carHBox = new HBox();
-		carHBox.setSpacing(20);
-		carHBox.setPadding(new Insets(0, 20, 0, 20));
-		this.carList = FXCollections.observableArrayList();
-		this.carList.addAll(controller.readAllVehicles());
-		carDropDown = new ComboBox<>(carList);
-		carDropDown.setPrefWidth(200);
-		Text carSelectText = new Text(strings.getString("which_car"));
-		carHBox.getChildren().addAll(carSelectText, carDropDown);
+		return grid;
+	}
+	
+	/**
+	 * Creates and returns the checkbox and its info
+	 * @return HBox
+	 */
+	private HBox getCheckBeforeSubmitHBox() {
+		
+		HBox checkBeforeSubmitHBox = new HBox();
+		checkBeforeSubmitHBox.setSpacing(20);
+		checkBeforeSubmitHBox.setPadding(new Insets(0, 20, 20, 20));
+		confirmBox = new CheckBox();
+		Text confirmText = new Text(strings.getString("confirmBox_info"));
+		checkBeforeSubmitHBox.getChildren().addAll(confirmText, confirmBox);
+		
+		return checkBeforeSubmitHBox;
+	}
 
+	/**
+	 * Creates and returns the addiotional info section
+	 * @return VBox
+	 */
+	private VBox getAdditionalInfoVBox() {
+		
+		VBox additionalInfoVBox = new VBox();
+		additionalInfoVBox.setSpacing(10);
+		additionalInfoVBox.setPadding(new Insets(0, 20, 20, 20));
+		Text additionalInfoText = new Text(strings.getString("Additional_info"));
+		TextArea additionalInfo = new TextArea();
+		additionalInfo.setPrefSize(300, 150);
+		additionalInfo.setWrapText(true);
+		additionalInfoVBox.getChildren().addAll(additionalInfoText, additionalInfo);
+		return additionalInfoVBox;
+	
+	}
+
+	/**
+	 * Creates and returns a VBox that includes all the time related fields
+	 * @return VBox
+	 */
+	private VBox getTimeInfoVbox() {
+		
 		VBox timeInfoVbox = new VBox();
 		timeInfoVbox.setSpacing(20);
 		timeInfoVbox.setPadding(new Insets(0, 20, 20, 20));
@@ -147,40 +178,69 @@ public class ReportingModal {
 		finishHBox.getChildren().addAll(finishTimeText, finishTimeTextF);
 
 		timeInfoVbox.getChildren().addAll(dateHBox, startHBox, finishHBox);
-
-		VBox additionalInfoVBox = new VBox();
-		additionalInfoVBox.setSpacing(10);
-		additionalInfoVBox.setPadding(new Insets(0, 20, 20, 20));
-		Text additionalInfoText = new Text(strings.getString("Additional_info"));
-		TextArea additionalInfo = new TextArea();
-		additionalInfo.setPrefSize(300, 150);
-		additionalInfo.setWrapText(true);
-		additionalInfoVBox.getChildren().addAll(additionalInfoText, additionalInfo);
-
-		HBox checkBeforeSubmitHBox = new HBox();
-		checkBeforeSubmitHBox.setSpacing(20);
-		checkBeforeSubmitHBox.setPadding(new Insets(0, 20, 20, 20));
-		confirmBox = new CheckBox();
-		Text confirmText = new Text(strings.getString("confirmBox_info"));
-		checkBeforeSubmitHBox.getChildren().addAll(confirmText, confirmBox);
-
-		grid.add(labelVBox, 0, 0);
-		grid.add(carHBox, 0, 1);
-		grid.add(timeInfoVbox, 0, 2);
-		grid.add(additionalInfoVBox, 0, 3);
-		grid.add(checkBeforeSubmitHBox, 0, 4);
-
-		return grid;
+		return timeInfoVbox;
+		
 	}
-	
-	
+
+	/**
+	 * Creates and returns a HBox with car dropdown
+	 * @return HBox
+	 */
+	private HBox getCarHBox() {
+		HBox carHBox = new HBox();
+		carHBox.setSpacing(20);
+		carHBox.setPadding(new Insets(0, 20, 0, 20));
+		this.carList = FXCollections.observableArrayList();
+		this.carList.addAll(controller.readAllVehicles());
+		carDropDown = new ComboBox<>(carList);
+		carDropDown.setPrefWidth(200);
+		Text carSelectText = new Text(strings.getString("which_car"));
+		carHBox.getChildren().addAll(carSelectText, carDropDown);
+		return carHBox;
+		
+	}
+
+	/**
+	 * Creates and returns a vBox with label texts
+	 * @return VBox
+	 */
+	private VBox getLabelVBox() {
+
+		VBox labelVBox = new VBox();
+		labelVBox.setSpacing(25);
+		labelVBox.setPadding(new Insets(20, 20, 40, 20));
+		Text label = new Text(strings.getString("fill_in_info"));
+		label.setStyle("-fx-font: 20 arial;");
+		Text mandatoryText = new Text(strings.getString("mandatory_info"));
+		mandatoryText.setStyle("-fx-font: 17 arial;");
+		labelVBox.getChildren().addAll(label, mandatoryText);
+
+		return labelVBox;
+	}
+
 	/**
 	 * Adds buttons and their functions into the grid pane
+	 * 
 	 * @return GridPane
 	 */
 	private GridPane addButtons() {
 		GridPane buttonPane = new GridPane();
+		
+		Button closeButton = new Button(strings.getString("cancel_button_text"));
+		closeButton.setOnAction(e -> {
+			((Node) e.getSource()).getScene().getWindow().hide();
+		});
 
+		HBox buttonHBox = new HBox();
+		buttonHBox.setPadding(new Insets(0, 20, 20, 20));
+		buttonHBox.setSpacing(20);
+		buttonHBox.getChildren().addAll(closeButton, getSubmitButton());
+		buttonPane.add(buttonHBox, 0, 0);
+		return buttonPane;
+	}
+
+	private Button getSubmitButton() {
+		
 		Button submitButton = new Button(strings.getString("submit_button_text"));
 		submitButton.setOnAction(e -> {
 
@@ -202,32 +262,21 @@ public class ReportingModal {
 					Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setTitle(strings.getString("reproted_alert_title"));
 					alert.setHeaderText(null);
-					alert.setContentText(strings.getString("shift_id") + " "+drivingShift.getShiftID() + "\n" + strings.getString("customer_name") + " " + drivingShift.getClient().getName());
+					alert.setContentText(strings.getString("shift_id") + " " + drivingShift.getShiftID() + "\n"
+							+ strings.getString("customer_name") + " " + drivingShift.getClient().getName());
 					alert.showAndWait();
 					((Node) e.getSource()).getScene().getWindow().hide();
 				}
-
 			} else {
 				System.out.println("missing info");
 			}
-
 		});
-
-		Button closeButton = new Button(strings.getString("cancel_button_text"));
-		closeButton.setOnAction(e -> {
-			((Node) e.getSource()).getScene().getWindow().hide();
-		});
-
-		HBox buttonHBox = new HBox();
-		buttonHBox.setPadding(new Insets(0, 20, 20, 20));
-		buttonHBox.setSpacing(20);
-		buttonHBox.getChildren().addAll(closeButton, submitButton);
-		buttonPane.add(buttonHBox, 0, 0);
-		return buttonPane;
+		return submitButton;
 	}
-	
+
 	/**
 	 * Checks the user inputs
+	 * 
 	 * @return boolean
 	 */
 	public boolean checkInput() {
@@ -274,9 +323,10 @@ public class ReportingModal {
 		return true;
 
 	}
-	
+
 	/**
-	 * returns the whole modal 
+	 * returns the whole modal
+	 * 
 	 * @return BorderPane
 	 */
 	public BorderPane getReportingView() {
