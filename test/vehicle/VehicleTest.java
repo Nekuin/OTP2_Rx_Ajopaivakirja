@@ -1,6 +1,7 @@
 package vehicle;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -140,6 +141,27 @@ public class VehicleTest {
 	void setMaxCargoLoad() {
 		testCar.setMaxCargoLoad(5000);
 		assertEquals(5000, testCar.getMaxCargoLoad(), "Max cargo not correct.");
+	}
+	
+	/**
+	 * Tests driven distance setter
+	 */
+	@Test
+	@DisplayName("Test setDrivenDistance")
+	void setDrivenDistance() {
+		testCar.setDrivenDistance(100);
+		assertEquals(100, testCar.getDrivenDistance(), "Driven distance not correct");
+	}
+	
+	/**
+	 * Tests toString method
+	 */
+	@Test
+	@DisplayName("toString test")
+	void testToString() {
+		
+		boolean contains = testCar.toString().contains("Sprinter");
+		assertTrue(contains, "toString not working properly!");
 	}
 	
 	

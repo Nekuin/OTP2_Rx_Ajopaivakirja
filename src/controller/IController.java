@@ -230,6 +230,12 @@ public interface IController {
 	 * @param cargo
 	 */
 	public void updateCargo(Cargo cargo);
+	
+	/**
+	 * Delete cargo from database
+	 * @param cargo
+	 */
+	public void deleteCargo(Cargo cargo);
 
 	/**
 	 * Read reported drivingshifts

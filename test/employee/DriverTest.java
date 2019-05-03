@@ -37,9 +37,33 @@ public class DriverTest {
 	 */
 	@BeforeEach
 	public void resetDriver() {
-		testdriver = new Driver("Kalle", "AB", false);
+		//defaults can drive hazardous to false
+		testdriver = new Driver("Kalle", "AB");
 		
 	}
+	
+	@Test
+	@DisplayName("Testing the complex constructor")
+	void complexConstructor() {
+		Driver testD = new Driver("Sakke", "AB", true);
+		assertTrue(testD.canDriveHazardous(), "Driver was not successfully created.");
+	}
+	
+	/**
+	 * Testing the empty constructor
+	 */
+	@Test
+	@DisplayName("Empty constructor test")
+	void emptyContructorTest() {
+		Driver temp = new Driver();
+		boolean test = false;
+		if (temp != null) {
+			test = true;
+		}
+		assertEquals(true, test, "Empty driver was not created.");
+	}
+	
+	
 	
 	/**
 	 * Tests the role getter
@@ -207,6 +231,86 @@ public class DriverTest {
 		controller.deleteShift(nonHazShift);
 		System.out.println("/non haz");
 	}
+	
+	/**
+	 * Tests toString method
+	 */
+	@Test
+	@DisplayName("toString test")
+	void toStringTest() {
+		boolean contains = testdriver.toString().contains("License");
+		assertTrue(contains, "toString method is not working properly.");
+	}
+	
+	/**
+	 * Tests driven distance setter and getter
+	 */
+	@Test
+	@DisplayName("driven distance getter and setter")
+	void drivenDistanceTest() {
+		testdriver.setDrivenDistance(1000);
+		assertEquals(1000, testdriver.getDrivenDistance(), "Driven distance was not correct!");
+	}
+	
+	/**
+	 * Tests adding to driven distance
+	 */
+	@Test
+	@DisplayName("add driven distance")
+	void addDrivenDistanceTest() {
+		testdriver.setDrivenDistance(1000);
+		testdriver.addDrivenDistance(1000);
+		assertEquals(2000, testdriver.getDrivenDistance(), "Driven distance was not correct!");
+	}
+	
+	/**
+	 * Tests driven hours setter and getter
+	 */
+	@Test
+	@DisplayName("driven hours getter and setter")
+	void drivenHoursTest() {
+		testdriver.setDrivenHours(1000);
+		assertEquals(1000, testdriver.getDrivenHours(), "Driven hours were not correct!");
+	}
+	
+	/**
+	 * Tests adding to driven hours
+	 */
+	@Test
+	@DisplayName(" add driven hours")
+	void addDrivenHoursTest() {
+		testdriver.setDrivenHours(1000);
+		testdriver.addDrivenHours(1000);
+		assertEquals(2000, testdriver.getDrivenHours(), "Driven hours were not correct!");
+	}
+	
+	/**
+	 * Tests driven cargo setter and getter
+	 */
+	@Test
+	@DisplayName("driven cargo getter and setter")
+	void drivenCargoTest() {
+		testdriver.setDrivenCargo(1000);
+		assertEquals(1000, testdriver.getDrivenCargo(), "Driven cargo was not correct!");
+	}
+	
+	/**
+	 * Tests adding to driven cargo
+	 */
+	@Test
+	@DisplayName("add driven cargo")
+	void addDrivenCargoTest() {
+		testdriver.setDrivenCargo(1000);
+		testdriver.addDrivenCargo(1000);
+		assertEquals(2000, testdriver.getDrivenCargo(), "Driven cargo was not correct!");
+	}
+	
+	
+	
+	
+	
+	
+	
 	
 	
 }

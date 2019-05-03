@@ -52,6 +52,7 @@ public class CargoTest {
 		controller.createCargo(cargo);
 		List<Cargo> cargoList = controller.readAllCargo();
 		assertTrue(cargoList.contains(cargo),"Database should have the cargo!");
+		controller.deleteCargo(cargo);
 	}
 	
 	
@@ -93,6 +94,9 @@ public class CargoTest {
 		assertEquals(true, testCargo.isHazardous(), "Cargo hazardous status not changed.");
 	}
 	
+	/**
+	 * Tests driving shift setter
+	 */
 	@Test
 	@DisplayName("Test setDrivingshift")
 	void setDrivingShift() {
@@ -101,6 +105,9 @@ public class CargoTest {
 		assertEquals(s, testCargo.getShift(), "Setting shift didn't work.");
 	}
 	
+	/**
+	 * Tests toString method
+	 */
 	@Test
 	@DisplayName("toString test")
 	void testToString() {
