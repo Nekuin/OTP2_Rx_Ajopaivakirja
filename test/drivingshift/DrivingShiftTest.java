@@ -102,6 +102,21 @@ public class DrivingShiftTest {
 	}
 	
 	/**
+	 * Tests updating driving shift to database
+	 */
+	@Test
+	@DisplayName("Update driving shift")
+	void updateDrivingShift() {
+		DrivingShift s = new DrivingShift(new Client(), new Cargo(), LocalDate.now());
+		Client client = new Client("OK");
+		controller.createDrivingShift(s);
+		s.setClient(client);
+		controller.updateDrivingShift(s);
+		assertEquals("OK", s.getClient().getName(), "Update was not completed.");
+		controller.deleteShift(s);
+	}
+	
+	/**
 	 * Tests if we can set the Deadline correctly
 	 */
 	@Test
