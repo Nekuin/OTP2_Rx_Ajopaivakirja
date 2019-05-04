@@ -102,9 +102,16 @@ public interface IController {
 	
 	/**
 	 * Returns a list of all vehicles in the database
-	 * @return
+	 * @return List<Vehicle>
 	 */
 	public List<Vehicle> readAllVehicles();
+	
+	/**
+	 * Return a vehicle from database
+	 * @param id
+	 * @return Vehicle
+	 */
+	public Vehicle readVehicle(int id);
 	
 	/**
 	 * Creates a vehicle in the database

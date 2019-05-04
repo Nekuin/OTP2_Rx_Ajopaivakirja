@@ -109,6 +109,11 @@ public class Controller implements IController{
 	}
 	
 	@Override
+	public Vehicle readVehicle(int id) {
+		return this.vehicleAO.get(id);
+	}
+	
+	@Override
 	public List<Vehicle> readAllVehicles(){
 		List<Vehicle> vehicles = this.vehicleAO.getAll();
 		return vehicles;
@@ -276,6 +281,8 @@ public class Controller implements IController{
 	public void deleteCargo(Cargo cargo) {
 		cargoAO.delete(cargo);
 	}
+
+	
 
 	
 
