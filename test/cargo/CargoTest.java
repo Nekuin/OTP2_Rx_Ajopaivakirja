@@ -70,9 +70,22 @@ public class CargoTest {
 		controller.deleteCargo(cargo);
 	}
 	
+	/**
+	 * Tests reading all unassigned cargo from the database 
+	 */
+	@Test
+	@DisplayName("Testing read all unassigned from db")
+	void readAllUnassigned() {
+		Cargo cargo = new Cargo(50, false);
+		controller.createCargo(cargo);
+		List<Cargo> cargoList = controller.readAllUnassignedCargo();
+		assertTrue(cargoList.contains(cargo),"Database should have the cargo!");
+		controller.deleteCargo(cargo);
+	}
+	
 	
 	/**
-	 * Tests the setter and getter of ID of a cargo object
+	 * Tests the setter and getter of weight of a cargo object
 	 */
 	@Test
 	@DisplayName("Test getWeight")

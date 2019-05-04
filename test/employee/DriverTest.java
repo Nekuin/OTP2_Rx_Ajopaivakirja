@@ -177,10 +177,18 @@ public class DriverTest {
 	@Test
 	@DisplayName("Assign shift")
 	void testAssign() {
+		boolean test = false;
 		Driver dr = new Driver("Make", "C2", true);
 		DrivingShift shift = new DrivingShift(new Client(), LocalDate.now());
+		shift.setShiftTaken(true);
 		controller.assignShift(dr, shift);
-		assertEquals(dr, shift.getShiftDriver(), "Driver was not assigned.");
+		assertFalse(test, "Driver was not assigned.");
+		shift.setShiftTaken(false);
+		controller.assignShift(dr, shift);
+		if(dr == shift.getShiftDriver()) {
+			test = true;
+		}
+		assertTrue(test, "Driver was not assigned");
 		controller.deleteShift(shift);
 		controller.deleteDriver(dr);
 	}

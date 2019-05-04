@@ -230,4 +230,18 @@ public class DrivingShiftTest {
 		testShift.setDrivenDate(driven);
 		assertEquals(driven, testShift.getDrivenDate(), "Driven date is incorrect.");
 	}
+	
+	/**
+	 * Tests reading reported shifts
+	 */
+	@Test
+	@DisplayName("Test reading reported shifts")
+	void readReported() {
+		DrivingShift s = new DrivingShift(new Client(), new Cargo(), LocalDate.now());
+		s.setShiftReported(true);
+		controller.createDrivingShift(s);
+		List<DrivingShift> shifts = controller.readReportedShifts();
+		assertTrue(shifts.contains(s), "Reported shift was not found.");
+		controller.deleteShift(s);
+	}
 }
