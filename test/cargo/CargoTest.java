@@ -55,6 +55,21 @@ public class CargoTest {
 		controller.deleteCargo(cargo);
 	}
 	
+	/**
+	 * Tests updating cargo
+	 */
+	@Test
+	@DisplayName("Update cargo")
+	void updateCargo() {
+		Cargo cargo = new Cargo(50, false);
+		controller.createCargo(cargo);
+		int id = cargo.getCargoID();
+		cargo.setWeight(100);
+		controller.updateCargo(cargo);
+		assertEquals(100, controller.readCargo(id).getWeight(), "Cargo was not updated.");
+		controller.deleteCargo(cargo);
+	}
+	
 	
 	/**
 	 * Tests the setter and getter of ID of a cargo object

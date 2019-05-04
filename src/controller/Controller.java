@@ -264,6 +264,11 @@ public class Controller implements IController{
 	public void createCargo(Cargo cargo) {
 		this.cargoAO.create(cargo);
 	}
+	
+	@Override
+	public Cargo readCargo(int id) {
+		return this.cargoAO.get(id);
+	}
 
 	@Override
 	public List<Cargo> readAllUnassignedCargo() {
@@ -281,6 +286,8 @@ public class Controller implements IController{
 	public void deleteCargo(Cargo cargo) {
 		cargoAO.delete(cargo);
 	}
+
+	
 
 	
 
