@@ -53,6 +53,9 @@ public class StringsTest {
 		assertTrue(test, "Bundle was not set");
 	}
 	
+	/**
+	 * Tests getting string with a key
+	 */
 	@Test
 	@DisplayName("Get string from bundle")
 	void getString() {
@@ -60,6 +63,9 @@ public class StringsTest {
 		assertEquals("Vahvista", temp, "String was not found");
 	}
 	
+	/**
+	 * Tests getting a string with an incorrect key
+	 */
 	@Test
 	@DisplayName("Try to find with incorrect key")
 	void getNotString() {
