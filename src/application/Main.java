@@ -55,6 +55,7 @@ public class Main extends Application implements IView {
 			createTestHRManagers();
 			createSuperiors();
 			createTestCargo();
+			createTestClients();
 			
 			startUpFinish = true;
 		}).start();
@@ -226,7 +227,12 @@ public class Main extends Application implements IView {
 			cargo.setShift(shift);
 			if(i == 1) {
 				cargo.setHazardous(true);
-				shift.getClient().setName("Reiskan paja[h]");
+			} else if(i == 2) {
+				shift.getClient().setName("Metropolia");
+			} else if(i == 3) {
+				shift.getClient().setName("Shell");
+			} else if(i == 0) {
+				shift.getClient().setName("Iso Omena");
 			}
 			shifts.add(shift);
 		}
@@ -242,10 +248,28 @@ public class Main extends Application implements IView {
 	private Collection<Cargo> createTestCargo(){
 		Collection<Cargo> cargo = new ArrayList<>();
 		for(int i = 0; i < 7; i++) {
-			cargo.add(new Cargo(i+1500, true));
+			if(i < 3) {
+				cargo.add(new Cargo(i+1500, true));
+			} else {
+				cargo.add(new Cargo(i+1500, false));
+			}
+			
 		}
 		cargo.forEach(controller::createCargo);
 		return cargo;
+	}
+	
+	private Collection<Client> createTestClients() {
+		Collection<Client> clients = new ArrayList<>();
+		for(int i = 0; i < 2; i++) {
+			Client client = new Client("Sello");
+			clients.add(client);
+			if(i == 0) {
+				client.setName("Rovio");
+			}
+		}
+		clients.forEach(controller::createClient);
+		return clients;
 	}
 
 	/**
