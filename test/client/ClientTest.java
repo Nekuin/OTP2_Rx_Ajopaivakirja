@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import controller.Controller;
 import controller.IController;
 import model.Client;
+import model.Employee;
 import util.TestUtil;
 
 /**
@@ -36,6 +37,20 @@ public class ClientTest {
 	@BeforeEach
 	void resetClient() {
 		testClient = new Client("Hookoo");
+	}
+	
+	/**
+	 * Testing the empty constructor
+	 */
+	@Test
+	@DisplayName("Empty constructor test")
+	void emptyContructorTest() {
+		Client temp = new Client();
+		boolean test = false;
+		if (temp != null) {
+			test = true;
+		}
+		assertEquals(true, test, "Empty client was not created.");
 	}
 	
 	
@@ -69,5 +84,26 @@ public class ClientTest {
 		controller.createClient(client);
 		List<Client> clientList = controller.readAllClients();
 		assertTrue(clientList.contains(client),"Database should have the client!");
+		controller.deleteClient(client);
+	}
+	
+	@Test
+	@DisplayName("Update to database")
+	void updateClient() {
+		Client client = new Client("Ranen Rengas");
+		controller.createClient(client);
+		int id = client.getClientID();
+		client.setName("Ranen Renkaat");
+		controller.updateClient(client);
+		assertEquals("Ranen Renkaat", controller.readClient(id).getName());
+		controller.deleteClient(client);
+	}
+	
+	@Test
+	@DisplayName("Test toString")
+	void testToString() {
+		Client client = new Client("Asiakas");
+		boolean contains = client.toString().contains("Asiakas");
+		assertTrue(contains, "toString method not working properly.");
 	}
 }

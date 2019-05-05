@@ -26,6 +26,7 @@ import javafx.scene.Node;
 
 /**
  * Class for the driver's view
+ * 
  * @author tuoma
  *
  */
@@ -38,24 +39,38 @@ public class DriverView implements ViewModule {
 	private Driver driver;
 	private Strings strings;
 
-	@FXML private Button reserve_button;
-	@FXML private Button report_button;
-	@FXML private Button unassign_button;
-	@FXML private TableView<DrivingShift> reserve_tableview;
-	@FXML private TableView<DrivingShift> report_tableview;
-	@FXML private Text client_Name;
-	@FXML private Text shift_id;
-	@FXML private Text cargo_info;
-	@FXML private Text time_info2;
-	@FXML private Text client_Name1;
-	@FXML private Text shift_id1;
-	@FXML private Text cargo_info1;
-	@FXML private Text time_info3;
+	@FXML
+	private Button reserve_button;
+	@FXML
+	private Button report_button;
+	@FXML
+	private Button unassign_button;
+	@FXML
+	private TableView<DrivingShift> reserve_tableview;
+	@FXML
+	private TableView<DrivingShift> report_tableview;
+	@FXML
+	private Text client_Name;
+	@FXML
+	private Text shift_id;
+	@FXML
+	private Text cargo_info;
+	@FXML
+	private Text time_info2;
+	@FXML
+	private Text client_Name1;
+	@FXML
+	private Text shift_id1;
+	@FXML
+	private Text cargo_info1;
+	@FXML
+	private Text time_info3;
 
 	private DrivingShift clicked;
 
 	/**
 	 * Constructor for driver's view
+	 * 
 	 * @param controller
 	 */
 	public DriverView(IController controller) {
@@ -96,19 +111,24 @@ public class DriverView implements ViewModule {
 			reserve_tableview.setItems(getAvailableShifts());
 		});
 
-		// setup columns
-		setupReserveTableColumns();
-		setupReportTableColumns();
+		// setup tables
+		setupReserveTable();
+		setupReportTable();
 
-		reserve_tableview.setItems(getFilteredShifts());
+	}
+
+	/**
+	 * Sets up the reports tab table view
+	 */
+	private void setupReportTable() {
+
+		TableColumn<DrivingShift, ?> clienCol = report_tableview.getColumns().get(1);
+		clienCol.setCellValueFactory(new PropertyValueFactory<>("client"));
+
+		TableColumn<DrivingShift, ?> timeCol = report_tableview.getColumns().get(0);
+		timeCol.setCellValueFactory(new PropertyValueFactory<>("deadline"));
+
 		report_tableview.setItems(getReservedShifts());
-
-		reserve_tableview.setOnMouseClicked(e -> {
-			clicked = reserve_tableview.getSelectionModel().getSelectedItem();
-			if (clicked != null) {
-				updateReserveShiftInfo();
-			}
-		});
 
 		report_tableview.setOnMouseClicked(e -> {
 			clicked = report_tableview.getSelectionModel().getSelectedItem();
@@ -116,33 +136,27 @@ public class DriverView implements ViewModule {
 				updateReportShiftInfo();
 			}
 		});
-
 	}
 
 	/**
-	 * Set CellValueFactory on Report tab table columns
+	 * Sets up the reserve tab table view
 	 */
-	private void setupReportTableColumns() {
-		TableColumn<DrivingShift, ?> clienCol = report_tableview.getColumns().get(1);
-		clienCol.setCellValueFactory(new PropertyValueFactory<>("client"));
+	private void setupReserveTable() {
 
-		TableColumn<DrivingShift, ?> timeCol = report_tableview.getColumns().get(0);
-		timeCol.setCellValueFactory(new PropertyValueFactory<>("deadline"));
-	}
-
-	/**
-	 * Set CellValueFactory on Reserve tab table columns
-	 */
-	private void setupReserveTableColumns() {
 		TableColumn<DrivingShift, ?> clientCol = reserve_tableview.getColumns().get(1);
-		// "client" comes from DrivingShift instance variables
-		// the string HAS TO match one of them exactly
-		// client is row 56 in DrivingShift
 		clientCol.setCellValueFactory(new PropertyValueFactory<>("client"));
 
 		TableColumn<DrivingShift, ?> timeCol = reserve_tableview.getColumns().get(0);
-		// startTime row 24 in DrivingShift
 		timeCol.setCellValueFactory(new PropertyValueFactory<>("deadline"));
+		
+		reserve_tableview.setItems(getFilteredShifts());
+		
+		reserve_tableview.setOnMouseClicked(e -> {
+			clicked = reserve_tableview.getSelectionModel().getSelectedItem();
+			if (clicked != null) {
+				updateReserveShiftInfo();
+			}
+		});
 	}
 
 	/**
@@ -236,10 +250,10 @@ public class DriverView implements ViewModule {
 		stage.initOwner(((Node) e.getSource()).getScene().getWindow());
 		stage.show();
 		stage.setOnHidden(e1 -> {
-			if(clicked.isShiftDriven()) {
+			if (clicked.isShiftDriven()) {
 				reportShifts.remove(clicked);
 			}
-			updateReportShiftInfo();			
+			updateReportShiftInfo();
 		});
 	}
 

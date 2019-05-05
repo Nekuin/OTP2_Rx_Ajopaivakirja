@@ -55,11 +55,40 @@ public class CargoTest {
 		controller.createCargo(cargo);
 		List<Cargo> cargoList = controller.readAllCargo();
 		assertTrue(cargoList.contains(cargo),"Database should have the cargo!");
+		controller.deleteCargo(cargo);
+	}
+	
+	/**
+	 * Tests updating cargo
+	 */
+	@Test
+	@DisplayName("Update cargo")
+	void updateCargo() {
+		Cargo cargo = new Cargo(50, false);
+		controller.createCargo(cargo);
+		int id = cargo.getCargoID();
+		cargo.setWeight(100);
+		controller.updateCargo(cargo);
+		assertEquals(100, controller.readCargo(id).getWeight(), "Cargo was not updated.");
+		controller.deleteCargo(cargo);
+	}
+	
+	/**
+	 * Tests reading all unassigned cargo from the database 
+	 */
+	@Test
+	@DisplayName("Testing read all unassigned from db")
+	void readAllUnassigned() {
+		Cargo cargo = new Cargo(50, false);
+		controller.createCargo(cargo);
+		List<Cargo> cargoList = controller.readAllUnassignedCargo();
+		assertTrue(cargoList.contains(cargo),"Database should have the cargo!");
+		controller.deleteCargo(cargo);
 	}
 	
 	
 	/**
-	 * Tests the setter and getter of ID of a cargo object
+	 * Tests the setter and getter of weight of a cargo object
 	 */
 	@Test
 	@DisplayName("Test getWeight")
@@ -96,6 +125,9 @@ public class CargoTest {
 		assertEquals(true, testCargo.isHazardous(), "Cargo hazardous status not changed.");
 	}
 	
+	/**
+	 * Tests driving shift setter
+	 */
 	@Test
 	@DisplayName("Test setDrivingshift")
 	void setDrivingShift() {
@@ -104,6 +136,9 @@ public class CargoTest {
 		assertEquals(s, testCargo.getShift(), "Setting shift didn't work.");
 	}
 	
+	/**
+	 * Tests toString method
+	 */
 	@Test
 	@DisplayName("toString test")
 	void testToString() {

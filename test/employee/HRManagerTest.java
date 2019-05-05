@@ -45,6 +45,20 @@ public class HRManagerTest {
 	}
 	
 	/**
+	 * Testing the empty constructor
+	 */
+	@Test
+	@DisplayName("Empty constructor test")
+	void emptyContructorTest() {
+		HrManager temp = new HrManager();
+		boolean test = false;
+		if (temp != null) {
+			test = true;
+		}
+		assertEquals(true, test, "Empty Hr Manager was not created.");
+	}
+	
+	/**
 	 * Tests name getter
 	 */
 	@Test
@@ -84,6 +98,21 @@ public class HRManagerTest {
 		List<HrManager> managers = controller.readAllHrManagers();
 		assertTrue(managers.contains(mng));
 		controller.deleteEmployee(mng);
+	}
+	
+	/**
+	 * Tests updating hr manager information
+	 */
+	@Test
+	@DisplayName("Update employee info")
+	void updateEmployee() {
+		HrManager emp = new HrManager("Kalle Kylma");
+		controller.createHrManager(emp);
+		int id = emp.getEmployeeID();
+		emp.setName("Kimmo");
+		controller.updateEmployee(emp);
+		assertEquals("Kimmo", controller.readEmployee(id).getName());
+		controller.deleteEmployee(emp);
 	}
 	
 	

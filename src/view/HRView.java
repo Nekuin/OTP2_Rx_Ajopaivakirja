@@ -98,13 +98,38 @@ public class HRView implements ViewModule, UndoObserver {
 	/**
 	 * Initializes the Hr-managers view
 	 * Creates  the stage
-	 * Adds table with all drivers
-	 * Adds buttons for updating, adding and deleting drivers
+	 * Calls methods that create control buttons and table views for drivers and reports
 	 */
 	@FXML
 	private void initialize() {
 			
 		hazardous_box.setDisable(true);
+		setupUpButtons();
+		setUpTableviewFunctions();
+	}
+	/**
+	 * Sets up the columns for the infos of drivers and reported shifts
+	 */
+	private void setUpTableviewFunctions() {	
+		
+		hr_tableView.setOnMouseClicked(e -> {
+			clicked = hr_tableView.getSelectionModel().getSelectedItem();
+			if (clicked != null) {
+				updateDriverInfo();
+			}
+		});
+		
+		hr_ReportsTableView.setOnMouseClicked(e1 ->{
+			clickedReport = hr_ReportsTableView.getSelectionModel().getSelectedItem();
+			if(clickedReport != null) {
+				updateReportsInfo();
+			}
+		});
+	}
+	/**
+	 * Adds buttons for updating, adding and deleting drivers
+	 */
+	private void setupUpButtons() {
 		
 		addDriverBtn.setOnAction(e -> {
 			Stage stage = new Stage();
@@ -126,22 +151,7 @@ public class HRView implements ViewModule, UndoObserver {
 				clicked = null;
 			}
 		});
-
-	
-		hr_tableView.setOnMouseClicked(e -> {
-			clicked = hr_tableView.getSelectionModel().getSelectedItem();
-			if (clicked != null) {
-				updateDriverInfo();
-			}
-		});
 		
-		hr_ReportsTableView.setOnMouseClicked(e1 ->{
-			clickedReport = hr_ReportsTableView.getSelectionModel().getSelectedItem();
-			if(clickedReport != null) {
-				updateReportsInfo();
-			}
-		});
-
 		updateDriverBtn.setOnAction(e -> {
 			if(clicked != null) {
 				Stage stage = new Stage();
@@ -156,8 +166,8 @@ public class HRView implements ViewModule, UndoObserver {
 				});
 			}
 		});
-
 	}
+	
 	/**
 	 * Updates the text fields with information about clicked driving shift 
 	 */
