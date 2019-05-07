@@ -12,20 +12,21 @@ import org.junit.jupiter.api.Test;
 
 import controller.Controller;
 import controller.IController;
-import model.Employee;
 import model.Superior;
 import util.TestUtil;
 /**
- * 
+ * Test class for superior objects
  * @author jorin
  *
  */
-
 public class SuperiorTest {
 	
 	static Superior testSuperior;
 	static IController controller;
 	
+	/**
+	 * Creates test version of controller
+	 */
 	@BeforeAll
 	static void init() {
 		//use test version of controller by passing true as the last argument

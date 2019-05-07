@@ -13,7 +13,6 @@ import org.junit.jupiter.api.Test;
 import controller.Controller;
 import controller.IController;
 import model.Client;
-import model.Employee;
 import util.TestUtil;
 
 /**
@@ -25,6 +24,9 @@ public class ClientTest {
 	static Client testClient;
 	static IController controller;
 	
+	/**
+	 * Creates a test version of controller
+	 */
 	@BeforeAll
 	static void init() {
 		//use test version of controller by passing true as the last argument
@@ -87,6 +89,9 @@ public class ClientTest {
 		controller.deleteClient(client);
 	}
 	
+	/**
+	 * Tests updating client information to database
+	 */
 	@Test
 	@DisplayName("Update to database")
 	void updateClient() {
@@ -99,6 +104,9 @@ public class ClientTest {
 		controller.deleteClient(client);
 	}
 	
+	/**
+	 * Tests client toString method
+	 */
 	@Test
 	@DisplayName("Test toString")
 	void testToString() {

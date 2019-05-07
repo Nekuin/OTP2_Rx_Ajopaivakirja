@@ -20,6 +20,11 @@ import model.DrivingShift;
 import model.Vehicle;
 import util.TestUtil;
 
+/**
+ * Tests for driving shift objects
+ * 
+ *
+ */
 public class DrivingShiftTest {
 	static DrivingShift testShift;
 	static Driver testDriver;

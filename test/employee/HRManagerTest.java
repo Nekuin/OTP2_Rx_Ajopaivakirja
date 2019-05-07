@@ -15,7 +15,7 @@ import controller.IController;
 import model.*;
 import util.TestUtil;
 /**
- * 
+ * Test class for hr manager objects
  * @author jorin
  *
  */

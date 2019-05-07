@@ -17,7 +17,7 @@ import util.TestUtil;
 
 /**
  * 
- * Test class for vehicles
+ * Test class for vehicle objects
  *
  */
 public class VehicleTest {
@@ -26,6 +26,9 @@ public class VehicleTest {
 	static Vehicle testCar;
 	static IController controller;
 	
+	/**
+	 * Creates a test version of the controller
+	 */
 	@BeforeAll
 	static void setup() {
 		controller = new Controller(null, TestUtil.testVersion);

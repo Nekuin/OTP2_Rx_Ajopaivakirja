@@ -15,6 +15,11 @@ import controller.IController;
 import model.Employee;
 import util.TestUtil;
 
+/**
+ * Test class for employee objects
+ * @author jorin, tuoma
+ *
+ */
 public class EmployeeTest {
 	
 	static Employee testEmployee;

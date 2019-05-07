@@ -2,7 +2,6 @@ package cargo;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
@@ -36,6 +35,9 @@ public class CargoTest {
 		testCargo = new Cargo(2300, false);
 	}
 	
+	/**
+	 * Creates test version of the controller
+	 */
 	@BeforeAll
 	static void init() {
 		//use test version of controller by passing true as the last argument
@@ -150,6 +152,9 @@ public class CargoTest {
 		assertTrue(contains, "toString prints without Hazardous text!");
 	}
 	
+	/**
+	 * Tests reading unassigned cargo objects from database
+	 */
 	@Test
 	@DisplayName("unassigned cargo test")
 	void unassignedCargo() {

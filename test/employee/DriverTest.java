@@ -16,6 +16,11 @@ import controller.IController;
 import model.*;
 import util.TestUtil;
 
+/**
+ * 
+ * Tests for driver objects
+ *
+ */
 public class DriverTest {
 	
 	
@@ -42,6 +47,9 @@ public class DriverTest {
 		
 	}
 	
+	/**
+	 * Testing to create driver with the canDriveHazardous boolean
+	 */
 	@Test
 	@DisplayName("Testing the complex constructor")
 	void complexConstructor() {
