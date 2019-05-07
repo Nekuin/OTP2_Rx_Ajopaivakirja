@@ -1,5 +1,9 @@
 package application;
 
+/**
+ * Test for mock
+ * 
+ */
 public class MockTest {
 	
 	public MockTest() {

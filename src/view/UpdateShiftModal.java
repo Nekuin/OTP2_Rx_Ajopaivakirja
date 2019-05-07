@@ -149,14 +149,14 @@ public class UpdateShiftModal implements ViewModule {
 		cargoList.addAll(controller.readAllUnassignedCargo());
 		cargo_combobox.setItems(cargoList);
 		setCargoBoxFunctions();
-	
+
 	}
-	
+
 	/**
 	 * Sets up different functions to combobox
 	 */
 	private void setCargoBoxFunctions() {
-		
+
 		cargo_combobox.setOnAction(e -> {
 			Cargo selected = cargo_combobox.getSelectionModel().getSelectedItem();
 			if (selected != null) {

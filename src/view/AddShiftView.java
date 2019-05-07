@@ -78,7 +78,9 @@ public class AddShiftView implements ViewModule {
 		}
 		root = loader.getRoot();
 	}
-	
+	/**
+	 * Initializes the view
+	 */
 	@FXML
 	private void initialize() {
 		cancel_button.setOnAction(e -> {

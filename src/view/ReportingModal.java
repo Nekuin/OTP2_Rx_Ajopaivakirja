@@ -239,6 +239,10 @@ public class ReportingModal {
 		return buttonPane;
 	}
 
+	/**
+	 * Creates and returns button for submitting the report
+	 * @return Button submitButton
+	 */
 	private Button getSubmitButton() {
 		
 		Button submitButton = new Button(strings.getString("submit_button_text"));
