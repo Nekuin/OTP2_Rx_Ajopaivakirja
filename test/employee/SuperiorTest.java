@@ -13,21 +13,24 @@ import org.junit.jupiter.api.Test;
 import controller.Controller;
 import controller.IController;
 import model.Superior;
+import util.TestUtil;
 /**
- * 
+ * Test class for superior objects
  * @author jorin
  *
  */
-
 public class SuperiorTest {
 	
 	static Superior testSuperior;
 	static IController controller;
 	
+	/**
+	 * Creates test version of controller
+	 */
 	@BeforeAll
 	static void init() {
 		//use test version of controller by passing true as the last argument
-		controller = new Controller(null,true);
+		controller = new Controller(null, TestUtil.testVersion);
 	}
 	
 	/**
@@ -36,6 +39,20 @@ public class SuperiorTest {
 	@BeforeEach
 	void resetSuperior() {
 		testSuperior = new Superior("SupremeLeader");
+	}
+	
+	/**
+	 * Testing the empty constructor
+	 */
+	@Test
+	@DisplayName("Empty constructor test")
+	void emptyContructorTest() {
+		Superior temp = new Superior();
+		boolean test = false;
+		if (temp != null) {
+			test = true;
+		}
+		assertEquals(true, test, "Empty superior was not created.");
 	}
 	
 	/**
@@ -79,6 +96,21 @@ public class SuperiorTest {
 		List<Superior> superiorList = controller.readAllSuperiors();
 		assertTrue(superiorList.contains(spr),"Database should have the superior!");
 		controller.deleteEmployee(spr);
+	}
+	
+	/**
+	 * Tests updating superior information
+	 */
+	@Test
+	@DisplayName("Update superior info")
+	void updateSuperior() {
+		Superior emp = new Superior("Kalle Kylma");
+		controller.createSuperior(emp);
+		int id = emp.getEmployeeID();
+		emp.setName("Kimmo");
+		controller.updateEmployee(emp);
+		assertEquals("Kimmo", controller.readEmployee(id).getName());
+		controller.deleteEmployee(emp);
 	}
 
 }

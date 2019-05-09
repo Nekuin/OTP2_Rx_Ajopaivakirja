@@ -85,7 +85,7 @@
                               </VBox>
                            </center>
                            <left>
-                              <VBox prefHeight="570.0" prefWidth="450.0" BorderPane.alignment="CENTER">
+                              <VBox prefHeight="574.0" prefWidth="452.0" BorderPane.alignment="CENTER">
                                  <children>
                                     <Label alignment="CENTER" text="%free_shifts_label">
                                        <padding>
@@ -95,10 +95,10 @@
                                           <Font name="System Bold" size="18.0" />
                                        </font>
                                     </Label>
-                                    <TableView fx:id="reserve_tableview" prefHeight="500.0" prefWidth="400.0">
+                                    <TableView fx:id="reserve_tableview" prefHeight="490.0" prefWidth="400.0">
                                       <columns>
                                         <TableColumn fx:id="shift_time" minWidth="30.0" prefWidth="200.0" text="%time_info" />
-                                        <TableColumn fx:id="customer_name" minWidth="30.0" prefWidth="200.0" text="%client_name" />
+                                        <TableColumn fx:id="customer_name" minWidth="30.0" prefWidth="200.0" text="%client_name_label" />
                                       </columns>
                                     </TableView>
                                  </children>
@@ -189,7 +189,7 @@
                               </VBox>
                            </center>
                            <left>
-                              <VBox prefHeight="570.0" prefWidth="450.0" BorderPane.alignment="CENTER">
+                              <VBox prefHeight="570.0" prefWidth="452.0" BorderPane.alignment="CENTER">
                                  <children>
                                     <Label alignment="CENTER" text="%own_shifts_label">
                                        <padding>
@@ -202,10 +202,10 @@
                                           <Font name="System Bold" size="18.0" />
                                        </font>
                                     </Label>
-                                    <TableView fx:id="report_tableview" prefHeight="500.0" prefWidth="400.0">
+                                    <TableView fx:id="report_tableview" prefHeight="490.0" prefWidth="400.0">
                                       <columns>
                                           <TableColumn fx:id="time_info" minWidth="30.0" prefWidth="200.0" text="%time_info" />
-                                          <TableColumn fx:id="customer_name" minWidth="30.0" prefWidth="200.0" text="%client_name" />
+                                          <TableColumn fx:id="customer_name" minWidth="30.0" prefWidth="200.0" text="%client_name_label" />
                                       </columns>
                                     </TableView>
                                  </children>

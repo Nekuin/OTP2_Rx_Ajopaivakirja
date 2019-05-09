@@ -87,6 +87,9 @@ public class DrivingShift {
 		this.deadline = deadline;
 		this.cargo = new ArrayList<>();
 		this.cargo.add(cargo);
+		if(cargo.getShift() == null) {
+			cargo.setShift(this);
+		}
 		this.client = client;
 		this.clientID = client.getClientID();
 		this.shiftTaken = false;

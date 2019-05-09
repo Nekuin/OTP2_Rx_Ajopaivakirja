@@ -13,8 +13,9 @@ import org.junit.jupiter.api.Test;
 import controller.Controller;
 import controller.IController;
 import model.*;
+import util.TestUtil;
 /**
- * 
+ * Test class for hr manager objects
  * @author jorin
  *
  */
@@ -31,7 +32,7 @@ public class HRManagerTest {
 	@BeforeAll
 	static void setup() {
 		System.out.println("testing HR manager");
-		controller = new Controller(null, true);
+		controller = new Controller(null, TestUtil.testVersion);
 		
 	}
 
@@ -41,6 +42,20 @@ public class HRManagerTest {
 	@BeforeEach
 	void resetHR() {
 		testHR = new HrManager("HR Heikki");
+	}
+	
+	/**
+	 * Testing the empty constructor
+	 */
+	@Test
+	@DisplayName("Empty constructor test")
+	void emptyContructorTest() {
+		HrManager temp = new HrManager();
+		boolean test = false;
+		if (temp != null) {
+			test = true;
+		}
+		assertEquals(true, test, "Empty Hr Manager was not created.");
 	}
 	
 	/**
@@ -83,6 +98,21 @@ public class HRManagerTest {
 		List<HrManager> managers = controller.readAllHrManagers();
 		assertTrue(managers.contains(mng));
 		controller.deleteEmployee(mng);
+	}
+	
+	/**
+	 * Tests updating hr manager information
+	 */
+	@Test
+	@DisplayName("Update employee info")
+	void updateEmployee() {
+		HrManager emp = new HrManager("Kalle Kylma");
+		controller.createHrManager(emp);
+		int id = emp.getEmployeeID();
+		emp.setName("Kimmo");
+		controller.updateEmployee(emp);
+		assertEquals("Kimmo", controller.readEmployee(id).getName());
+		controller.deleteEmployee(emp);
 	}
 	
 	

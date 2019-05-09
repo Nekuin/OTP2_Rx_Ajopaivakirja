@@ -18,7 +18,13 @@ import model.Client;
 import model.Driver;
 import model.DrivingShift;
 import model.Vehicle;
+import util.TestUtil;
 
+/**
+ * Tests for driving shift objects
+ * 
+ *
+ */
 public class DrivingShiftTest {
 	static DrivingShift testShift;
 	static Driver testDriver;
@@ -33,7 +39,7 @@ public class DrivingShiftTest {
 		//we don't have an instance of view => null as first parameter
 		//use false as the second if you want to test locally
 		//and use true if you want Jenkins to test
-		controller = new Controller(null, true);
+		controller = new Controller(null, TestUtil.testVersion);
 	}
 	
 	/**
@@ -97,6 +103,36 @@ public class DrivingShiftTest {
 		controller.createDrivingShift(s);
 		List<DrivingShift> shifts = controller.readAllDrivingShifts();
 		assertTrue(shifts.contains(s));
+		controller.deleteShift(s);
+	}
+	
+	/**
+	 * Test shift id getter
+	 */
+	@Test
+	@DisplayName("Driving shift id")
+	void testID() {
+		DrivingShift s = new DrivingShift(new Client(), new Cargo(), LocalDate.now());
+		controller.createDrivingShift(s);
+		int id = s.getShiftID();
+		assertEquals(id, s.getShiftID(), "Shift id is not correct");
+		controller.deleteShift(s);
+	}
+	
+	/**
+	 * Tests updating driving shift to database
+	 */
+	@Test
+	@DisplayName("Update driving shift")
+	void updateDrivingShift() {
+		DrivingShift s = new DrivingShift(new Client(), new Cargo(), LocalDate.now());
+		Client client = new Client("OK");
+		controller.createDrivingShift(s);
+		s.setClient(client);
+		controller.updateDrivingShift(s);
+		assertEquals("OK", s.getClient().getName(), "Update was not completed.");
+		controller.deleteShift(s);
+		
 	}
 	
 	/**
@@ -179,5 +215,38 @@ public class DrivingShiftTest {
 		assertEquals(expectedWeight, testShift.getTotalCargoWeight(), "Cargo weight was wrong");
 	}
 	
+	/**
+	 * Tests shifts reported status getter and setter
+	 */
+	@Test
+	@DisplayName("Test shift reported")
+	void shiftReported() {
+		testShift.setShiftReported(true);
+		assertTrue(testShift.getShiftReported(), "Shift was not reported!");
+	}
 	
+	/**
+	 * Tests driven date getter and setter
+	 */
+	@Test
+	@DisplayName("Driven date test")
+	void drivenDate() {
+		LocalDate driven = LocalDate.of(2019, 5, 3);
+		testShift.setDrivenDate(driven);
+		assertEquals(driven, testShift.getDrivenDate(), "Driven date is incorrect.");
+	}
+	
+	/**
+	 * Tests reading reported shifts
+	 */
+	@Test
+	@DisplayName("Test reading reported shifts")
+	void readReported() {
+		DrivingShift s = new DrivingShift(new Client(), new Cargo(), LocalDate.now());
+		s.setShiftReported(true);
+		controller.createDrivingShift(s);
+		List<DrivingShift> shifts = controller.readReportedShifts();
+		assertTrue(shifts.contains(s), "Reported shift was not found.");
+		controller.deleteShift(s);
+	}
 }

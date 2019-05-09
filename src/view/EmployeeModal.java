@@ -113,6 +113,9 @@ public class EmployeeModal implements ViewModule {
 		}
 	}
 	
+	/**
+	 * Initializes the modal
+	 */
 	@FXML
 	private void initialize() {
 		//create listeners for Buttons

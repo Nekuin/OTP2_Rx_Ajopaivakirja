@@ -102,19 +102,26 @@ public interface IController {
 	
 	/**
 	 * Returns a list of all vehicles in the database
-	 * @return
+	 * @return List<Vehicle>
 	 */
 	public List<Vehicle> readAllVehicles();
 	
 	/**
+	 * Return a vehicle from database
+	 * @param id id of the vehicle
+	 * @return Vehicle
+	 */
+	public Vehicle readVehicle(int id);
+	
+	/**
 	 * Creates a vehicle in the database
-	 * @param vehicle
+	 * @param vehicle vehicle to be created
 	 */
 	public void createVehicle(Vehicle vehicle);
 
 	/**
 	 * Deletes a vehicle from database
-	 * @param vehicle
+	 * @param vehicle vehicle to be deleted
 	 */
 	public void deleteVehicle(Vehicle vehicle);
 	
@@ -132,7 +139,7 @@ public interface IController {
 
 	/**
 	 * Update vehicle information
-	 * @param vehicle
+	 * @param vehicle vehicle to be updated
 	 */
 	public void updateVehicle(Vehicle vehicle);
 	
@@ -184,6 +191,13 @@ public interface IController {
 	public List<Cargo> readAllCargo();
 	
 	/**
+	 * Returns cargo from database
+	 * @param id id of the cargo
+	 * @return Cargo
+	 */
+	public Cargo readCargo(int id);
+	
+	/**
 	 * Create a client object in the database
 	 * @param client
 	 */
@@ -208,6 +222,13 @@ public interface IController {
 	public List<Client> readAllClients();
 	
 	/**
+	 * Returns a client from database
+	 * @param id
+	 * @return Client
+	 */
+	public Client readClient(int id);
+	
+	/**
 	 * Create a Cargo
 	 * @param cargo instance of Cargo
 	 */
@@ -229,4 +250,10 @@ public interface IController {
 	 * @return
 	 */
 	public List<DrivingShift> readReportedShifts();
+	
+	/**
+	 * Delete a cargo from the database
+	 * @param cargo
+	 */
+	public void deleteCargo(Cargo cargo);
 }

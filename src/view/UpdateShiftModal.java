@@ -25,52 +25,54 @@ import util.Strings;
 
 /**
  * Modal for updating driving shifts
+ * 
  * @author Nekuin
  *
  */
 public class UpdateShiftModal implements ViewModule {
-	
+
 	private IController controller;
 	private Strings strings;
-	
-    @FXML
-    private ComboBox<Cargo> cargo_combobox;
 
-    @FXML
-    private ListView<Cargo> cargo_listView;
+	@FXML
+	private ComboBox<Cargo> cargo_combobox;
 
-    @FXML
-    private ComboBox<Client> client_combobox;
+	@FXML
+	private ListView<Cargo> cargo_listView;
 
-    @FXML
-    private Button confirm_button;
+	@FXML
+	private ComboBox<Client> client_combobox;
 
-    @FXML
-    private Button cancel_button;
-    
-    @FXML
-    private VBox listItem_remove_box;
-    
-    @FXML
-    private DatePicker deadlinePicker;
-    
-    private BorderPane root;
-    private ObservableList<Cargo> selectedCargoList;
-    private DrivingShift shift;
-    private SubmitObserver observer;
-	
-    /**
-     * Constructor for the modal
-     * @param IController controller
-     * @param DrivingShift shift
-     * @param SubmitObserver observer
-     */
+	@FXML
+	private Button confirm_button;
+
+	@FXML
+	private Button cancel_button;
+
+	@FXML
+	private VBox listItem_remove_box;
+
+	@FXML
+	private DatePicker deadlinePicker;
+
+	private BorderPane root;
+	private ObservableList<Cargo> selectedCargoList;
+	private DrivingShift shift;
+	private SubmitObserver observer;
+
+	/**
+	 * Constructor for the modal
+	 * 
+	 * @param IController    controller
+	 * @param DrivingShift   shift
+	 * @param SubmitObserver observer
+	 */
 	public UpdateShiftModal(IController controller, DrivingShift shift, SubmitObserver observer) {
 		this.controller = controller;
 		this.strings = Strings.getInstance();
 		this.shift = shift;
 		this.observer = observer;
-		
+
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/xml/UpdateShiftView.fxml"), strings.getBundle());
 		loader.setController(this);
 		try {
@@ -80,7 +82,7 @@ public class UpdateShiftModal implements ViewModule {
 		}
 		root = loader.getRoot();
 	}
-	
+
 	/**
 	 * Initializes the buttons in the modal
 	 */
@@ -89,53 +91,52 @@ public class UpdateShiftModal implements ViewModule {
 		cancel_button.setOnAction(e -> {
 			((Node) e.getSource()).getScene().getWindow().hide();
 		});
-		
+
 		confirm_button.setOnAction(e -> {
 			confirmAction(e);
 		});
-		
+
 		populateCargoBox();
 		populateClientBox();
-		
-		//set deadline
+
+		// set deadline
 		deadlinePicker.setValue(shift.getDeadline());
-		//onAction listener that updates the shifts deadline
+		// onAction listener that updates the shifts deadline
 		deadlinePicker.setOnAction(e -> {
 			LocalDate newDate = deadlinePicker.getValue();
-			//check if the newly selected date is in the past
-			if(newDate.isBefore(LocalDate.now())) {
-				//in the past, reset value and display error
+			// check if the newly selected date is in the past
+			if (newDate.isBefore(LocalDate.now())) {
+				// in the past, reset value and display error
 				deadlinePicker.setValue(shift.getDeadline());
 				ErrorTooltip.showErrorTooltip(deadlinePicker, "past");
 			} else {
-				//not in the past, set newDate as Deadline
+				// not in the past, set newDate as Deadline
 				shift.setDeadline(newDate);
 			}
 		});
 	}
 
 	/**
-	 * Populates the Client ComboBox, and creates an onAction listener
-	 * for setting the Client for the shift
+	 * Populates the Client ComboBox, and creates an onAction listener for setting
+	 * the Client for the shift
 	 */
 	private void populateClientBox() {
 		ObservableList<Client> clientList = FXCollections.observableArrayList();
 		clientList.addAll(controller.readAllClients());
 		client_combobox.setItems(clientList);
-		//default the selection to the client that is already used in shift
+		// default the selection to the client that is already used in shift
 		client_combobox.getSelectionModel().select(shift.getClient());
 		client_combobox.setOnAction(e -> {
 			Client selected = client_combobox.getSelectionModel().getSelectedItem();
-			if(selected != null) {
+			if (selected != null) {
 				shift.setClient(selected);
 			}
 		});
 	}
 
-
 	/**
-	 * Populates the Cargo ComboBox, and creates an onAction listener
-	 * that adds selected cargo to the shift
+	 * Populates the Cargo ComboBox, and creates an onAction listener that adds
+	 * selected cargo to the shift
 	 */
 	private void populateCargoBox() {
 		selectedCargoList = FXCollections.observableArrayList();
@@ -147,16 +148,25 @@ public class UpdateShiftModal implements ViewModule {
 		ObservableList<Cargo> cargoList = FXCollections.observableArrayList();
 		cargoList.addAll(controller.readAllUnassignedCargo());
 		cargo_combobox.setItems(cargoList);
+		setCargoBoxFunctions();
+
+	}
+
+	/**
+	 * Sets up different functions to combobox
+	 */
+	private void setCargoBoxFunctions() {
+
 		cargo_combobox.setOnAction(e -> {
 			Cargo selected = cargo_combobox.getSelectionModel().getSelectedItem();
-			if(selected != null) {
-				//add cargo to the ListView
+			if (selected != null) {
+				// add cargo to the ListView
 				selectedCargoList.add(selected);
-				//add cargo to the shift object
+				// add cargo to the shift object
 				shift.addCargo(selected);
-				//set shift to the cargo object
+				// set shift to the cargo object
 				selected.setShift(shift);
-				if(cargo_listView.getOpacity() < 1) {
+				if (cargo_listView.getOpacity() < 1) {
 					cargo_listView.setOpacity(1);
 				}
 				Platform.runLater(() -> {
@@ -166,7 +176,7 @@ public class UpdateShiftModal implements ViewModule {
 			}
 		});
 	}
-	
+
 	/**
 	 * Updates the cargo in the combobox
 	 */
@@ -174,38 +184,40 @@ public class UpdateShiftModal implements ViewModule {
 		cargo_combobox.getItems().clear();
 		cargo_combobox.getItems().addAll(controller.readAllUnassignedCargo());
 	}
-	
+
 	/**
 	 * Creates remove button and its functionalities
+	 * 
 	 * @param Cargo cargo
 	 */
 	private void createRemoveButton(Cargo cargo) {
 		Button button = new Button("X");
-		//mimic cell height
+		// mimic cell height
 		button.setMaxHeight(23);
 		button.setPrefHeight(23);
 		button.setMinHeight(23);
-		//create onAction listener
+		// create onAction listener
 		button.setOnAction(e -> {
-			//remove self
+			// remove self
 			listItem_remove_box.getChildren().remove(button);
-			//remove cargo from list
+			// remove cargo from list
 			selectedCargoList.remove(cargo);
-			//remove cargo from shift object
+			// remove cargo from shift object
 			shift.getCargo().remove(cargo);
-			//remove shift from cargo object
+			// remove shift from cargo object
 			cargo.setShift(null);
-			//update cargo in the database
+			// update cargo in the database
 			controller.updateCargo(cargo);
-			//update combobox list
+			// update combobox list
 			updateAvailableCargo();
 		});
-		//add button next to the item on the list
+		// add button next to the item on the list
 		listItem_remove_box.getChildren().add(button);
 	}
-	
+
 	/**
 	 * Submits the driving shift information
+	 * 
 	 * @param event
 	 */
 	private void confirmAction(ActionEvent event) {

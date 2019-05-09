@@ -109,6 +109,11 @@ public class Controller implements IController{
 	}
 	
 	@Override
+	public Vehicle readVehicle(int id) {
+		return this.vehicleAO.get(id);
+	}
+	
+	@Override
 	public List<Vehicle> readAllVehicles(){
 		List<Vehicle> vehicles = this.vehicleAO.getAll();
 		return vehicles;
@@ -249,10 +254,20 @@ public class Controller implements IController{
 	public List<Client> readAllClients() {
 		return this.clientAO.getAll();
 	}
+	
+	@Override
+	public Client readClient(int id) {
+		return this.clientAO.get(id);
+	}
 
 	@Override
 	public void createCargo(Cargo cargo) {
 		this.cargoAO.create(cargo);
+	}
+	
+	@Override
+	public Cargo readCargo(int id) {
+		return this.cargoAO.get(id);
 	}
 
 	@Override
@@ -267,11 +282,9 @@ public class Controller implements IController{
 		cargoAO.update(cargo);
 	}
 
+	@Override
+	public void deleteCargo(Cargo cargo) {
+		cargoAO.delete(cargo);
+	}
 	
-
-
-	
-	
-
-
 }

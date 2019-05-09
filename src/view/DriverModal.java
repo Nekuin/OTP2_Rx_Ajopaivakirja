@@ -30,6 +30,10 @@ public class DriverModal implements ViewModule {
 	private TextField driversLicenseTextF;
 	private Driver driver;
 
+	/**
+	 * Constructor
+	 * @param controller
+	 */
 	private DriverModal(IController controller) {
 		this.strings = Strings.getInstance();
 		this.controller = controller;
@@ -37,6 +41,11 @@ public class DriverModal implements ViewModule {
 		setup();
 	}
 	
+	/**
+	 * Constructor
+	 * @param controller
+	 * @param driver
+	 */
 	private DriverModal(IController controller, Driver driver) {
 		this.strings = Strings.getInstance();
 		this.controller = controller;
@@ -54,6 +63,9 @@ public class DriverModal implements ViewModule {
 		
 	}
 
+	/**
+	 * Sets up the driver modal
+	 */
 	private void setup() {
 
 		// button box
@@ -72,6 +84,10 @@ public class DriverModal implements ViewModule {
 		modalPane.setBottom(pane);
 	}
 	
+	/**
+	 * Creates the title for modal
+	 * @return VBox labelBox
+	 */
 	private VBox createTitle() {
 		VBox labelBox = new VBox();
 		labelBox.setSpacing(30);
@@ -81,6 +97,10 @@ public class DriverModal implements ViewModule {
 		return labelBox;
 	}
 	
+	/**
+	 * Creates the HBox which includes textfield for the driver name and info text
+	 * @return HBox driverNameBox
+	 */
 	private HBox createDriverNameBox() {
 		HBox driverNameBox = new HBox();
 		driverNameBox.setSpacing(20);
@@ -91,6 +111,10 @@ public class DriverModal implements ViewModule {
 		return driverNameBox;
 	}
 	
+	/**
+	 * Creates the HBox which includes textfield for the driver's license and info text
+	 * @return HBox driversLicenceBox
+	 */
 	private HBox createDriversLicenseBox() {
 		HBox driversLicenseBox = new HBox();
 		driversLicenseBox.setSpacing(20);
@@ -101,6 +125,10 @@ public class DriverModal implements ViewModule {
 		return driversLicenseBox;
 	}
 	
+	/**
+	 * Creates the HBox that includes combobox for possible canDriveHazardous attribute
+	 * @return HBox hazardousInfoBox
+	 */
 	private HBox createHazardousInfoBox() {
 		HBox hazardousInfoBox = new HBox();
 		hazardousInfoBox.setSpacing(20);
@@ -111,6 +139,10 @@ public class DriverModal implements ViewModule {
 		return hazardousInfoBox;
 	}
 	
+	/**
+	 * Creates confirm button and its functionalties
+	 * @return Button addDriver
+	 */
 	private Button createConfirmButton() {
 		Button addDriver = new Button(strings.getString("submit_button_text"));	
 		addDriver.setOnAction(e -> {
@@ -131,6 +163,9 @@ public class DriverModal implements ViewModule {
 		return addDriver;
 	}
 	
+	/**
+	 * Checks if the hazaBox combobox is selected and changes the canDriverHazarous boolean if necessary
+	 */
 	private void canDriveHazardous() {
 		if(hazaBox.isSelected()) {
 			canDriveHazardous = true;
@@ -139,6 +174,10 @@ public class DriverModal implements ViewModule {
 		}
 	}
 	
+	/**
+	 * Creates cancel button and its functionalties
+	 * @return Button cancelButton
+	 */
 	private Button createCancelButton() {
 		Button cancelButton = new Button(strings.getString("cancel_button_text"));
 		cancelButton.setOnAction(e -> {
@@ -147,10 +186,21 @@ public class DriverModal implements ViewModule {
 		return cancelButton;
 	}
 	
+	/**
+	 * Creates a new DriverModal
+	 * @param controller
+	 * @param driver
+	 * @return DriverModal
+	 */
 	public static DriverModal createEditModal(IController controller, Driver driver) {
 		return new DriverModal(controller, driver);
 	}
 	
+	/**
+	 * Creates a new DriverModal 
+	 * @param controller
+	 * @return
+	 */
 	public static DriverModal createAddModal(IController controller) {
 		return new DriverModal(controller);
 	}
